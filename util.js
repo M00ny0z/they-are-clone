@@ -25,8 +25,8 @@ window.requestAnimFrame = (function () {
         };
 })();
 
-// add global parameters here
-
-//var params = {
-// 
-//};
+const PARAMS = {
+    BITWIDTH: 16, // size of one block
+    MAPWIDTH: 100,
+    MAPHEIGHT: 100,
+};
