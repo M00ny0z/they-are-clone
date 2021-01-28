@@ -14,6 +14,8 @@ ASSET_MANAGER.queueDownload("./sprites/firebolt.png");
 
 //Projectiles
 ASSET_MANAGER.queueDownload("./sprites/arrow.png");
+ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
+
 
 ASSET_MANAGER.downloadAll(function () {
 	var canvas = document.getElementById('gameWorld');
@@ -24,6 +26,7 @@ ASSET_MANAGER.downloadAll(function () {
 
 	gameEngine.init(ctx);
 	//gameEngine.addEntity(new Map(gameEngine));
+	gameEngine.addEntity(new MapOne(gameEngine));
 	gameEngine.addEntity(new Soldier(gameEngine, 250, 250, [{x: 500, y: 500}]));	//target
 	//gameEngine.addEntity(new InfectedUnit(gameEngine, 0, 0));
 	//gameEngine.addEntity(new InfectedChubby(gameEngine, 500, 500, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));
