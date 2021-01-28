@@ -2,7 +2,7 @@ class Soldier {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
 
-        this.radius = 20;
+        this.radius = 45;
         this.visualRadius = 200;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier.png");
@@ -143,11 +143,33 @@ class Soldier {
     };
 
     draw(ctx) {
-        for (var i = 0; i < 4; i++) {
-            for (var j = 0; j < this.animations[i].length; j++) {
-                this.animations[i][j].drawFrame(this.game.clockTick, ctx, this.x + j * 100, this.y + 100 * i, 1)
-            }
+        // for (var i = 0; i < 4; i++) {
+        //     for (var j = 0; j < this.animations[i].length; j++) {
+        //         this.animations[i][j].drawFrame(this.game.clockTick, ctx, this.x + j * 100, this.y + 100 * i, 1)
+        //     }
+        // }
+
+        this.state = 0;
+        var xOffset = 30;
+        var yOffset = 40;
+
+        if (PARAMS.DEBUG) {
+            ctx.strokeStyle = "Red";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.setLineDash([5, 15]);
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.visualRadius, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.setLineDash([]);
         }
+
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
+
         //this.animations[3][1].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1)
         /*
         var xOffset = 25;

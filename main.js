@@ -24,10 +24,10 @@ ASSET_MANAGER.downloadAll(function () {
 
 	gameEngine.init(ctx);
 	//gameEngine.addEntity(new Map(gameEngine));
-	//gameEngine.addEntity(new Soldier(gameEngine, 0, 0));
+	gameEngine.addEntity(new Soldier(gameEngine, 800, 250));
 	//gameEngine.addEntity(new InfectedUnit(gameEngine, 0, 0));
 	//gameEngine.addEntity(new InfectedVenom(gameEngine, 250, 250));
 	//gameEngine.addEntity(new InfectedChubby(gameEngine, 250, 250));
-	gameEngine.addEntity(new FireBolt(gameEngine, 250, 250));
+	//gameEngine.addEntity(new FireBolt(gameEngine, 250, 250));
 	gameEngine.start();
 });
