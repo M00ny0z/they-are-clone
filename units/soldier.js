@@ -159,6 +159,7 @@ class Soldier {
             if (this.targetID < this.path.length - 1 && this.target === this.path[this.targetID]) {
                 this.targetID++;
             }
+            this.target = this.path[this.targetID];
         }
 
         //Determine whether to attack a nearby unit
@@ -186,6 +187,7 @@ class Soldier {
 
 
         this.facing = getFacing(this.velocity);
+         
     };
 
     draw(ctx) {
