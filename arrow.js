@@ -96,7 +96,7 @@ class Arrow {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (this.zombieteam && (ent instanceof Archer || ent instanceof Footman) && collide(this, ent)) {
+            if (!this.zombieteam && (ent instanceof Archer || ent instanceof Footman) && collide(this, ent)) {
                 ent.hitpoints -= 10;
                 this.removeFromWorld = true;
             }
@@ -111,18 +111,13 @@ class Arrow {
     };
 
     draw(ctx) {
-        var xOffset = 34;
-        var yOffset = 34;
-        if (this.smooth) {
-            let angle = Math.atan2(this.velocity.y , this.velocity.x);
-            if (angle < 0) angle += Math.PI * 2;
-            let degrees = Math.floor(angle / Math.PI / 2 * 360);
+        let angle = Math.atan2(this.velocity.y, this.velocity.x);
+        if (angle < 0) angle += Math.PI * 2;
+        let degrees = Math.floor(angle / Math.PI / 2 * 360);
 
-            this.drawAngle(ctx, degrees);
-        } else {
-                this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
-        }
-        /*
+        this.drawAngle(ctx, degrees);
+
+
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
@@ -130,6 +125,5 @@ class Arrow {
             ctx.closePath();
             ctx.stroke();
         }
-        */
     };
 };
