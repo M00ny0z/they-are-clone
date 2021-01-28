@@ -26,7 +26,47 @@ class InfectedUnit {
         this.animations = [];
         var spriteInfo = {};
 
-        //0 = walk/run animations
+        //0 = attack animations
+        var spriteInfo = [];
+
+        const spritesInfo = [
+            {
+                'state' :0, 
+                'xStart':0, 
+                'width':128, 
+                'height':80, 
+                'frames':12, 
+                'speed':.05, 
+                'padding':0 
+            },
+            {   
+                'state' :1, 
+                'xStart':1537, 
+                'width':128, 
+                'height':80, 
+                'frames':12, 
+                'speed':.05, 
+                'padding':0 
+            },
+            {   
+                'state' :2, 
+                'xStart':3073, 
+                'width':128, 
+                'height':80, 
+                'frames':11, 
+                'speed':.05, 
+                'padding':0 
+            },
+            {   'state' :3, 
+                'xStart':0, 
+                'width':128, 
+                'height':80, 
+                'frames':12, 
+                'speed':.05, 
+                'padding':0 
+            }
+        ];
+
         this.animations.push([]);
         spriteInfo= {   'state' :0, 
                         'xStart':0, 
@@ -134,6 +174,13 @@ class InfectedUnit {
         //7 = SE
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1484, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
+        this.state = 0; // 0 walking, 1 attacking, 2 dead
+
+        this.facing = 0; // 0 = up, clockwise
+
+        this.elapsedTime = 0;
+
+        console.log(this.animations);
     };
 
     update() {
