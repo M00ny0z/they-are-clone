@@ -14,7 +14,7 @@ class Soldier {
         
         var dist = distance(this, this.target);
 
-        this.maxSpeed = 50; // pixels per second
+        this.maxSpeed = 100; // pixels per second
 
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
@@ -159,7 +159,6 @@ class Soldier {
             if (this.targetID < this.path.length - 1 && this.target === this.path[this.targetID]) {
                 this.targetID++;
             }
-            this.target = this.path[this.targetID];
         }
 
         //Determine whether to attack a nearby unit
@@ -187,7 +186,6 @@ class Soldier {
 
 
         this.facing = getFacing(this.velocity);
-         
     };
 
     draw(ctx) {
