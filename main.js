@@ -6,17 +6,19 @@ ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
 
 ASSET_MANAGER.queueDownload("./sprites/soldier.png");
+ASSET_MANAGER.queueDownload("./sprites/sniper.png");
+
 ASSET_MANAGER.queueDownload("./sprites/infected_unit.png");
 ASSET_MANAGER.queueDownload("./sprites/infected_venom.png");
 ASSET_MANAGER.queueDownload("./sprites/infected_chubby.png");
 
-ASSET_MANAGER.queueDownload("./sprites/firebolt.png");
+ASSET_MANAGER.queueDownload("./sprites/ballista.png");
 
 //Projectiles
+ASSET_MANAGER.queueDownload("./sprites/firebolt.png");
 ASSET_MANAGER.queueDownload("./sprites/arrow.png");
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 ASSET_MANAGER.queueDownload("./sprites/mech.png");
-ASSET_MANAGER.queueDownload("./sprites/sniper.png");
 
 
 ASSET_MANAGER.downloadAll(function () {
@@ -30,12 +32,26 @@ ASSET_MANAGER.downloadAll(function () {
 
 	//gameEngine.addEntity(new Map(gameEngine));
 	gameEngine.addEntity(new MapOne(gameEngine));
-	gameEngine.addEntity(new Soldier(gameEngine, 250, 250, [{x: 500, y: 500}]));
+
+	//gameEngine.addEntity(new Soldier(gameEngine, 250, 250, [{x: 500, y: 500}]));
 	//gameEngine.addEntity(new InfectedUnit(gameEngine, 0, 0));
 	//gameEngine.addEntity(new InfectedChubby(gameEngine, 500, 500, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));
 	//gameEngine.addEntity(new InfectedVenom(gameEngine, 1000, 500, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));
 	//gameEngine.addEntity(new Sniper(gameEngine, 0, 0, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));
-	gameEngine.addEntity(new InfectedVenom(gameEngine, 1000, 500, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));
+
+	/*
+	gameEngine.addEntity(new Soldier(gameEngine, 1200, 1500, [{x: 2500, y: 1500}]));    //target
+    gameEngine.addEntity(new Soldier(gameEngine, 1000, 1500, [{x: 2450, y: 1500}]));    //target
+	gameEngine.addEntity(new Soldier(gameEngine, 800, 1500, [{x: 2400, y: 1500}]));    //target
 	
+	gameEngine.addEntity(new InfectedUnit(gameEngine, 64 * 26, 64 * 50,  [{x: 64 * 20, y: 64 * 25}]));
+	gameEngine.addEntity(new InfectedVenom(gameEngine, 64 * 25, 64 * 50,  [{x: 64 * 21, y: 64 * 25}]));
+	gameEngine.addEntity(new InfectedChubby(gameEngine, 64 * 23,  64 * 50,  [{x: 64 * 23, y: 64 * 25}]));
+
+*/
+
+	gameEngine.addEntity(new InfectedUnit(gameEngine, 64 * 20, 64 * 30,  [{x: 64 * 20, y: 64 * 25}]));
+
+	gameEngine.addEntity(new Ballista(gameEngine, 1500, 2000)); 	// not implemented yet
 	gameEngine.start();
 });
