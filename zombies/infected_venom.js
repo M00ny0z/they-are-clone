@@ -1,20 +1,31 @@
 class InfectedVenom {
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
+    constructor(game, x, y, path) {
+        Object.assign(this, { game, x, y, path });
 
         this.radius = 50;
         this.visualRadius = 200;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_venom.png");
 
-        this.velocity = { x: 0, y: 0 };
-        this.maxSpeed = 50; // pixels per second
+        this.targetID = 0;
+        if(this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
 
-        this.state = 3; // 0 walking, 1 attacking, 2 dead, 3 idel
+        // Calculating the velocity
+        var dist = distance(this, this.target);
+        this.maxSpeed = 100; // pixels per second
+        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+
+        this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
+        this.hitpoints = 100;
+
         this.animations = [];
+        this.loadAnimations();
+    };
+
+    loadAnimations() {
         var spriteInfo = {};
 
         //0 = walk/run animations
@@ -130,20 +141,48 @@ class InfectedVenom {
         //7 = SE
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2435, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-    };
+    }
 
     update() {
         this.elapsedTime += this.game.clockTick;
-        this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+        var dist = distance(this, this.target);
+
+        if (this.hitpoints <= 0) {
+            this.removeFromWorld = true;
+        }
+
+        if (this.target.removeFromWorld) this.state = 0;
+
+        if (dist < 5) {
+            if (this.targetID < this.path.length - 1 && this.target === this.path[this.targetID]) {
+                this.targetID++;
+            }
+            this.target = this.path[this.targetID];
+        }
+
+        for (var i = 0; i < this.game.entities.length; i++) {
+            var ent = this.game.entities[i];
+            if (ent instanceof Soldier && canSee(this,ent)) {
+                if (this.state === 0) {
+                    this.state = 1;
+                    this.target = ent;
+                    this.elapsedTime = 0;
+                } else if (this.elapsedTime > 1.0) {
+                    this.game.addEntity(new FireBolt(this.game, this.x, this.y, ent, true));
+                    this.elapsedTime = 0;
+                }
+            }
+        }
+        if(this.state == 0) {   // only moves when it is in walking state
+            dist = distance(this, this.target);
+            this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+            this.x += this.velocity.x * this.game.clockTick;
+            this.y += this.velocity.y * this.game.clockTick;
+        }
         this.facing = getFacing(this.velocity);
     };
 
     draw(ctx) {
-        // for(var i = 0; i < 4; i++) {
-        //     for(var j = 0; j < this.animations[i].length; j++) {
-        //         this.animations[i][j].drawFrame(this.game.clockTick, ctx, this.x + j * 100, this.y + 200 * i, 1)
-        //     }
-        // }
 
         var xOffset = 50;
         var yOffset = 90;
@@ -183,8 +222,7 @@ class InfectedVenom {
                     break;
             }
         }
-        
-        this.state = 1;
+
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
 
         if (PARAMS.DEBUG) {
