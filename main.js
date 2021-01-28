@@ -15,6 +15,8 @@ ASSET_MANAGER.queueDownload("./sprites/firebolt.png");
 //Projectiles
 ASSET_MANAGER.queueDownload("./sprites/arrow.png");
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
+ASSET_MANAGER.queueDownload("./sprites/mech.png");
+ASSET_MANAGER.queueDownload("./sprites/sniper.png");
 
 
 ASSET_MANAGER.downloadAll(function () {
