@@ -10,12 +10,45 @@ class InfectedUnit {
         this.velocity = { x: 0, y: 0 };
         this.maxSpeed = 50; // pixels per second
 
-        this.animations = [];
+        this.state = 0; // 0 walking, 1 attacking, 2 dead
 
-        //0 = attack animations
-        var spriteInfo = [];
+        this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
+
+        this.elapsedTime = 0;
+
+        this.animations = [];
+        var spriteInfo = {};
+
+        //0 = walk/run animations
         this.animations.push([]);
         spriteInfo= {   'state' :0, 
+                        'xStart':0, 
+                        'width':128, 
+                        'height':80, 
+                        'frames':12, 
+                        'speed':.05, 
+                        'padding':0 
+                    };
+        //0 = EAST
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1387, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //1 = NE
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1290, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //2 = N
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1193, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //3 = NW
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1096, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //4 = W
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 999, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //5 = SW
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 902, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //6 = S
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 805, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+        //7 = SE
+        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1484, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+
+        //1 = attack animations
+        this.animations.push([]);
+        spriteInfo= {   'state' :1, 
                         'xStart':0, 
                         'width':128, 
                         'height':80, 
@@ -40,9 +73,9 @@ class InfectedUnit {
         //7 = SE
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 702, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-        //1 = death animations
+        //2 = death animations
         this.animations.push([]);
-        spriteInfo= {   'state' :1, 
+        spriteInfo= {   'state' :2, 
                         'xStart':1537, 
                         'width':128, 
                         'height':80, 
@@ -67,9 +100,9 @@ class InfectedUnit {
         //7 = SE
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 702, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-        //2 = idle animations
+        //3 = idle animations
         this.animations.push([]);
-        spriteInfo= {   'state' :2, 
+        spriteInfo= {   'state' :3, 
                         'xStart':3073, 
                         'width':128, 
                         'height':80, 
@@ -94,38 +127,6 @@ class InfectedUnit {
         //7 = SE
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1484, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-        //3 = walk/run animations
-        this.animations.push([]);
-        spriteInfo= {   'state' :3, 
-                        'xStart':0, 
-                        'width':128, 
-                        'height':80, 
-                        'frames':12, 
-                        'speed':.05, 
-                        'padding':0 
-                    };
-        //0 = EAST
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1387, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //1 = NE
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1290, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //2 = N
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1193, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //3 = NW
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1096, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //4 = W
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 999, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //5 = SW
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 902, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //6 = S
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 805, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-        //7 = SE
-        this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1484, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-
-        this.state = 0; // 0 walking, 1 attacking, 2 dead
-
-        this.facing = 0; // 0 = up, clockwise
-
-        this.elapsedTime = 0;
     };
 
     update() {
