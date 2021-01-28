@@ -127,14 +127,6 @@ class Arrow {
             }
         }
 
-        /*
-        let angle = Math.atan2(this.velocity.y, this.velocity.x);
-        if (angle < 0) angle += Math.PI * 2;
-        let degrees = Math.floor(angle / Math.PI / 2 * 360);
-
-        this.drawAngle(ctx, degrees);
-        */
-
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();

@@ -24,7 +24,7 @@ ASSET_MANAGER.downloadAll(function () {
 
 	gameEngine.init(ctx);
 	//gameEngine.addEntity(new Map(gameEngine));
-	gameEngine.addEntity(new Soldier(gameEngine, 250, 250, [{x: 300, y: 300}]));	//target
+	gameEngine.addEntity(new Soldier(gameEngine, 250, 250, [{x: 500, y: 500}]));	//target
 	//gameEngine.addEntity(new InfectedUnit(gameEngine, 0, 0));
 	//gameEngine.addEntity(new InfectedChubby(gameEngine, 500, 500, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));
 	//gameEngine.addEntity(new InfectedVenom(gameEngine, 1000, 500, [{x : 600, y: 500}, {x : 400, y: 400}, {x : 200, y: 400}, {x : 0, y: 0}]));

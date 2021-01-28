@@ -167,12 +167,11 @@ class Soldier {
             var ent = this.game.entities[i];
             if ((ent instanceof InfectedUnit || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)) {
                 this.target = ent;
-            }
-            if ((ent instanceof InfectedUnit || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;
                 } else if (this.elapsedTime > 0.8) {
+                    this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, false, true));
                     ent.hitpoints -= 8;
                     this.elapsedTime = 0;
                 }
