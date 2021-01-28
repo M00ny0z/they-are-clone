@@ -14,6 +14,8 @@ class Soldier {
 
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
 
+        this.hitpoints = 100;
+
         this.elapsedTime = 0;
 
         this.animations = [];
@@ -134,12 +136,9 @@ class Soldier {
     };
 
     update() {
-        /* 
-         this.elapsedTime += this.game.clockTick;
-         this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
- 
-         this.facing = getFacing(this.velocity);
-         */
+        if (this.hitpoints <= 0) {
+            this.removeFromWorld = true;
+        }
     };
 
     draw(ctx) {
