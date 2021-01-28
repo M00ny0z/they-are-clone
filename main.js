@@ -24,10 +24,13 @@ ASSET_MANAGER.downloadAll(function () {
 
 	gameEngine.init(ctx);
 	//gameEngine.addEntity(new Map(gameEngine));
-	gameEngine.addEntity(new Soldier(gameEngine, 800, 250));
+	gameEngine.addEntity(new Soldier(gameEngine, 800, 800, [{ x: 400, y: 300}]));
+	var t = new InfectedUnit(gameEngine, 800, 250, [{ x: 800, y: 450}, { x: 400, y: 450}, { x: 200, y: 250}]);
+	gameEngine.addEntity(t);
 	//gameEngine.addEntity(new InfectedUnit(gameEngine, 0, 0));
 	//gameEngine.addEntity(new InfectedVenom(gameEngine, 250, 250));
 	//gameEngine.addEntity(new InfectedChubby(gameEngine, 250, 250));
 	//gameEngine.addEntity(new FireBolt(gameEngine, 250, 250));
+	//gameEngine.addEntity(new Arrow(gameEngine, 100, 100, t, false, true))
 	gameEngine.start();
 });

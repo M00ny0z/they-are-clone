@@ -2,18 +2,20 @@ class Arrow {
     constructor(game, x, y, target, zombieteam, heatSeeking) {
         Object.assign(this, { game, x, y, target, zombieteam, heatSeeking });
         this.radius = 12;
-        this.smooth = false;
+        this.smooth = true;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/arrow.png");
 
-        //var dist = distance(this, this.target);
-        this.maxSpeed = 200; // pixels per second
+        var dist = distance(this, this.target);
+        this.maxSpeed = 400; // pixels per second
 
-        //this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
 
         this.animations = [];
+        this.animations.push(new Animator(this.spritesheet, 1, 1165, 95, 95, 1, 1, 0, false, true));
+        /*
         var spriteInfo={   'xStart':1, 
                             'width':95, 
                             'height':95, 
@@ -37,8 +39,8 @@ class Arrow {
         this.animations.push(new Animator(this.spritesheet, spriteInfo['xStart'], 1, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
         //7 = SE
         this.animations.push(new Animator(this.spritesheet, spriteInfo['xStart'], 1456, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-
-        this.facing = 4;
+        */
+        this.facing = 5;
         
         this.elapsedTime = 0;
     };
@@ -60,7 +62,7 @@ class Arrow {
             offscreenCtx.translate(16, 16);
             offscreenCtx.rotate(radians);
             offscreenCtx.translate(-16, -16);
-            offscreenCtx.drawImage(this.spritesheet, 80, 0, 32, 32, 0, 0, 32, 32);
+            offscreenCtx.drawImage(this.spritesheet, 1, 1165, 95, 95, 10, 10, 48, 48);
             offscreenCtx.restore();
             this.cache[angle] = offscreenCanvas;
         }
@@ -77,14 +79,14 @@ class Arrow {
     update() {
         //this.facing = (this.facing + 1) % 8;
 
-        
+        /*
         this.elapsedTime += this.game.clockTick;
         this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
         this.facing = getFacing(this.velocity);
-        
-        /*
-        this.heatSeeking = document.getElementById("heatseeking").checked;
-        this.smooth = document.getElementById("smooth").checked;
+        */
+       
+        //this.heatSeeking = document.getElementById("heatSeeking").checked;
+        //this.smooth = document.getElementById("smooth").checked;
 
         if (this.heatSeeking) {
             var dist = distance(this, this.target);
@@ -96,27 +98,42 @@ class Arrow {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (!this.zombieteam && (ent instanceof Archer || ent instanceof Footman) && collide(this, ent)) {
-                ent.hitpoints -= 10;
-                this.removeFromWorld = true;
-            }
-            if (!this.zombieteam && ent instanceof Tower && collide(this, ent)) {
+            if (!this.zombieteam && (ent instanceof InfectedUnit || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
                 ent.hitpoints -= 10;
                 this.removeFromWorld = true;
             }
         }
 
         this.facing = getFacing(this.velocity);
-        */
     };
 
     draw(ctx) {
+        var xOffset = 16;
+        var yOffset = 16;
+        if (this.smooth) {
+            let angle = Math.atan2(this.velocity.y , this.velocity.x);
+            if (angle < 0) angle += Math.PI * 2;
+            let degrees = Math.floor(angle / Math.PI / 2 * 360);
+
+            this.drawAngle(ctx, degrees);
+        } else {
+            if (this.facing < 5) {
+                this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
+            } else {
+                ctx.save();
+                ctx.scale(-1, 1);
+                this.animations[8 - this.facing].drawFrame(this.game.clockTick, ctx, -(this.x) - 32 + xOffset, this.y - yOffset, 1);
+                ctx.restore();
+            }
+        }
+
+        /*
         let angle = Math.atan2(this.velocity.y, this.velocity.x);
         if (angle < 0) angle += Math.PI * 2;
         let degrees = Math.floor(angle / Math.PI / 2 * 360);
 
         this.drawAngle(ctx, degrees);
-
+        */
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
