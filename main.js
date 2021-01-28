@@ -38,9 +38,9 @@ ASSET_MANAGER.downloadAll(function () {
 	}
 	gameEngine.addEntity(new InfectedVenom(gameEngine, 2496, -150, [{x : 2496, y: 480}, {x : 2112, y: 480}, {x : 2112, y: 1050}, {x : 2304, y: 1050}, {x : 2304, y: 1420}, {x : 1500, y: 1420}]));
 
-	gameEngine.addEntity(new Soldier(gameEngine, 1200, 1500, [{x: 2500, y: 1500}, {x: 2000, y: 800}]));    //target
+	gameEngine.addEntity(new Soldier(gameEngine, 1200, 1500, [{x: 2500, y: 1500}, {x: 2000, y: 700}]));    //target
     gameEngine.addEntity(new Soldier(gameEngine, 1000, 1500, [{x: 2450, y: 1500}, {x: 2100, y: 700}]));    //target
-	gameEngine.addEntity(new Soldier(gameEngine, 800, 1500, [{x: 2400, y: 1500}, {x: 2200, y: 900}]));    //target
+	gameEngine.addEntity(new Soldier(gameEngine, 800, 1500, [{x: 2400, y: 1500}, {x: 2200, y: 600}]));    //target
 
 	gameEngine.addEntity(new InfectedVenom(gameEngine, 64 * 25, 64 * 48,  [{x: 64 * 28, y: 64 * 32}]));
 	gameEngine.addEntity(new InfectedVenom(gameEngine, 64 * 25, 64 * 42,  [{x: 64 * 27, y: 64 * 32}]));
