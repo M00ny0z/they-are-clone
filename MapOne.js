@@ -4,9 +4,7 @@ class MapOne {
         this.game.camera = this;
         this.cameraX = 25;
         this.cameraY = 25;
-
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
-
     }
 
     update() {
