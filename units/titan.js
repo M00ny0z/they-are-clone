@@ -1,11 +1,17 @@
 class Titan {
     constructor(game, x, y, path) {
-        Object.assign(this, { game, x, y, path });
+        Object.assign(this, { game, path });
+
+        this.x = x * PARAMS.BLOCKWIDTH - 32;
+        this.y = y * PARAMS.BLOCKWIDTH - 32;
+        for (var i = 0; i < this.path.length; i++) {
+            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
+        }
+
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/titan.png");
 
         this.radius = 50;
         this.visualRadius = 200;
-
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/titan.png");
 
         this.targetID = 0;
         if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
@@ -39,7 +45,6 @@ class Titan {
             'speed': 0.1,
             'padding': 0
         };
-
         //0 = E
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1375, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
         //1 = NE
@@ -140,45 +145,58 @@ class Titan {
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1375, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
         //7 = SE
         this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1280, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
-
     }
 
     update() {
         this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
 
-        if (this.hitpoints <= 0) {
-            this.removeFromWorld = true;
-        }
+        if (this.hitpoints <= 0) this.removeFromWorld = true;
 
-        if (this.target.removeFromWorld) this.state = 0;
-
-        if (dist < 5) {
-            if (this.targetID < this.path.length - 1 && this.target === this.path[this.targetID]) {
-                this.targetID++;
-            }
+        if (this.target.removeFromWorld) {
+            this.state = 0;
             this.target = this.path[this.targetID];
         }
 
+        // If the entity arrived at the target, change to the next target.
+        if (dist < 5) {
+            // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
+            var incrementedTargetID = this.targetID + 1;
+            if (this.path[incrementedTargetID] === undefined && this.target === this.path[this.targetID]) {
+                this.state = 3;
+            }
+            // Check if there is another target in the list of path - If not, just stay on the last target. &&
+            // Check if the target is not the last point in the path (meaning it was a building) then don't advance to the next point of the path
+            if (this.targetID < this.path.length - 1 && this.target === this.path[this.targetID]) {
+                this.targetID++;
+                this.target = this.path[this.targetID];
+            }
+        }
+
+        // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (ent instanceof Soldier && canSee(this, ent)) {
+            if (ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby && canSee(this,ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
                 } else if (this.elapsedTime > 2.0) {
-                    this.game.addEntity(new TitanArrow(this.game, this.x, this.y, ent, true));
+                    this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }
             }
         }
-        if (this.state == 0) {   // only moves when it is in walking state
+
+       if(this.state == 0) {   // only moves when it is in walking state
             dist = distance(this, this.target);
+            // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
+            // If reached to the target, new velocity will be calculated.
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
             this.x += this.velocity.x * this.game.clockTick;
             this.y += this.velocity.y * this.game.clockTick;
         }
+        
         this.facing = getFacing(this.velocity);
     };
 

@@ -60,7 +60,7 @@ class FireBolt {
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
             if ((ent instanceof Soldier) && collide(this, ent)) {
-                ent.hitpoints -= 10;
+                ent.hitpoints -= 50;
                 this.removeFromWorld = true;
             }
         }

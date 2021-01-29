@@ -5,10 +5,12 @@ class Ballista {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ballista.png");
         this.radius = 30;
         this.visualRadius = 600;
-        this.model = randomInt(3);
+
         this.fireRate = 1;
 
         this.hitpoints = 100;
+
+        this.facing = 0
 
         this.elapsedTime = 0;
     };
@@ -27,12 +29,11 @@ class Ballista {
                 this.game.addEntity(new FireBolt(this.game, this.x, this.y, ent, true));
             }
         }
-
     };
 
     draw(ctx) {
-        var x = this.x - 32;
-        var y = this.y - 32;
+        var x = this.x - 32; // 32 is the offset
+        var y = this.y - 32; // 32 is the offset
         this.size = 64;
 
         ctx.drawImage(this.spritesheet, 132, 60, 64, 64, x, y, this.size, this.size);

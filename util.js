@@ -29,7 +29,6 @@ function getFacing(velocity) {
     //Idle
     if (velocity.x === 0 && velocity.y === 0) return 4;
     let angle = Math.atan2(velocity.y, velocity.x) / Math.PI;
-
     //N
     if (-0.625 < angle && angle < -0.375) return 2;
     //NE
@@ -60,7 +59,7 @@ window.requestAnimFrame = (function () {
 
 var PARAMS = {
     DEBUG: true,
-    BITWIDTH: 64,
+    BLOCKWIDTH: 64,
     MAPWIDTH: 3200,
     MAPHEIGHT: 3200
 };
