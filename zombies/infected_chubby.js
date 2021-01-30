@@ -1,12 +1,6 @@
 class InfectedChubby {
     constructor(game, x, y, path) {
-        Object.assign(this, { game, path });
-
-        this.x = x * PARAMS.BLOCKWIDTH - 32;
-        this.y = y * PARAMS.BLOCKWIDTH - 32;
-        for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
-        }
+        Object.assign(this, { game, x, y, path });
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_chubby.png");
 
@@ -176,10 +170,10 @@ class InfectedChubby {
         // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && canSee(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
                 this.target = ent;
             }
-            if (ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && collide(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;

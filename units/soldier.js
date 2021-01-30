@@ -1,12 +1,12 @@
 class Soldier {
     constructor(game, x, y, path) {
-        Object.assign(this, { game, path});
+        Object.assign(this, { game, x, y, path});
 
-        this.x = x * PARAMS.BLOCKWIDTH - 32;
-        this.y = y * PARAMS.BLOCKWIDTH - 32;
-        for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
-        }
+        // this.x = x * PARAMS.BLOCKWIDTH - 32;
+        // this.y = y * PARAMS.BLOCKWIDTH - 32;
+        // for (var i = 0; i < this.path.length; i++) {
+        //     this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
+        // }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier.png");
 
@@ -176,13 +176,13 @@ class Soldier {
         // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby && canSee(this,ent)) {
+            if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this,ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
                 } else if (this.elapsedTime > 2.0) {
-                    this.game.addEntity(new SoldierBolt(this.game, this.x, this.y, ent, true));
+                    this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }
             }

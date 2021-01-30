@@ -1,12 +1,12 @@
 class InfectedVenom {
     constructor(game, x, y, path) {
-        Object.assign(this, { game, path });
+        Object.assign(this, { game, x, y, path });
 
-        this.x = x * PARAMS.BLOCKWIDTH - 32;
-        this.y = y * PARAMS.BLOCKWIDTH - 32;
-        for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
-        }
+        // this.x = x * PARAMS.BLOCKWIDTH - 32;
+        // this.y = y * PARAMS.BLOCKWIDTH - 32;
+        // for (var i = 0; i < this.path.length; i++) {
+        //     this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
+        // }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_venom.png");
 
@@ -176,7 +176,7 @@ class InfectedVenom {
         // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && canSee(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
                 if (this.state === 0) {
                     this.target = ent;
                     this.state = 1;
@@ -204,10 +204,10 @@ class InfectedVenom {
         var xOffset = 50;
         var yOffset = 90;
 
-        if (true) {
+        if (this.state == 0) {
             switch (this.facing) {
                 case 0:
-                    xOffset = 40;
+                    xOffset = 45;
                     yOffset = 90;
                     break;
                 case 1:
@@ -216,7 +216,7 @@ class InfectedVenom {
                     break;
                 case 2:
                     xOffset = 45;
-                    yOffset = 100;
+                    yOffset = 50;
                     break;
                 case 3:
                     xOffset = 50;

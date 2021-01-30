@@ -18,6 +18,8 @@ ASSET_MANAGER.queueDownload("./sprites/buildings.png");
 
 ASSET_MANAGER.queueDownload("./sprites/firebolt.png");
 ASSET_MANAGER.queueDownload("./sprites/arrow.png");
+ASSET_MANAGER.queueDownload("./sprites/sniper_arrow.png");
+ASSET_MANAGER.queueDownload("./sprites/soldier_bolt.png");
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 ASSET_MANAGER.queueDownload("./sprites/mech.png");
 
@@ -30,11 +32,12 @@ ASSET_MANAGER.downloadAll(function () {
 
 	gameEngine.addEntity(new MapOne(gameEngine));
 
-	gameEngine.addEntity(new InfectedUnit(gameEngine, 10, 10, [{x: 5, y: 1}, {x: 1, y: 1}]));
-	//gameEngine.addEntity(new Soldier(gameEngine, 100, 100, [{x: 150, y: 150}]));
+	//gameEngine.addEntity(new InfectedVenom(gameEngine, 150, 150, [{x: 5, y: 1}, {x: 1, y: 1}]));
+	// gameEngine.addEntity(new Soldier(gameEngine, 50, 50, [{x: 25, y: 25}, {x: 10, y: 30}]));
+	// gameEngine.addEntity(new InfectedVenom(gameEngine, 500, 500, [{x: 150, y: 150}]));
 
 
-	/*
+	
 	//Spawn 10 zombies from the top of map to follow railroad
 	for(var i = 0; i < 10; i++) {
 		gameEngine.addEntity(new InfectedUnit(gameEngine, 2496, -100 + i * 50, [{x : 2496, y: 480}, {x : 2112, y: 480}, {x : 2112, y: 1050}, {x : 2304, y: 1050}, {x : 2304, y: 1420}, {x : 1500, y: 1420}]));
@@ -50,8 +53,8 @@ ASSET_MANAGER.downloadAll(function () {
 	gameEngine.addEntity(new InfectedVenom(gameEngine, 64 * 25, 64 * 42,  [{x: 64 * 27, y: 64 * 32}]));
 	gameEngine.addEntity(new InfectedVenom(gameEngine, 64 * 25, 64 * 50,  [{x: 64 * 31, y: 64 * 32}]));
 	gameEngine.addEntity(new InfectedVenom(gameEngine, 64 * 25, 64 * 51,  [{x: 64 * 25, y: 64 * 32}]));
-	gameEngine.addEntity(new Ballista(gameEngine, 64 * 32, 64 * 32));
-	gameEngine.addEntity(new CommandCenter(gameEngine, 0, 0));*/
+	
+	//gameEngine.addEntity(new Ballista(gameEngine, 64 * 32, 64 * 32));
 
 	gameEngine.start();
 });

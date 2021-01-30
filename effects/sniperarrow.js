@@ -59,7 +59,7 @@ class SniperArrow {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Soldier) && collide(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
                 ent.hitpoints -= 10;
                 this.removeFromWorld = true;
             }

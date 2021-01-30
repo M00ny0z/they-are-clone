@@ -59,7 +59,7 @@ class FireBolt {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Soldier) && collide(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
                 ent.hitpoints -= 50;
                 this.removeFromWorld = true;
             }
@@ -84,3 +84,6 @@ class FireBolt {
         }
     };
 };
+
+
+//            offscreenCtx.drawImage(this.spritesheet, 1, 1165, 95, 95, 10, 10, 48, 48);
