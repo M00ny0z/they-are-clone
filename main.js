@@ -5,6 +5,7 @@ var ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
 
+ASSET_MANAGER.queueDownload("./sprites/ranger.png");
 ASSET_MANAGER.queueDownload("./sprites/soldier.png");
 ASSET_MANAGER.queueDownload("./sprites/sniper.png");
 ASSET_MANAGER.queueDownload("./sprites/titan.png");
@@ -41,7 +42,7 @@ ASSET_MANAGER.downloadAll(function () {
 	gameEngine.addEntity(t);
 	gameEngine.addEntity(new FireBolt(gameEngine, 50, 150, t, true))
 
-	//gameEngine.addEntity(new Ranger(gameEngine, 500, 150, [{x: 449, y: 150}]));
+	gameEngine.addEntity(new Ranger(gameEngine, 500, 150, [{x: 449, y: 150}]));
 
 
 	
