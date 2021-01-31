@@ -41,6 +41,8 @@ ASSET_MANAGER.downloadAll(function () {
 	gameEngine.addEntity(t);
 	gameEngine.addEntity(new FireBolt(gameEngine, 50, 150, t, true))
 
+	//gameEngine.addEntity(new Ranger(gameEngine, 500, 150, [{x: 449, y: 150}]));
+
 
 	
 	//Spawn 10 zombies from the top of map to follow railroad
