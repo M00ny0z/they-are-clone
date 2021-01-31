@@ -2,13 +2,13 @@ class SniperArrow {
     constructor(game, x, y, target, heatSeeking) {
         Object.assign(this, { game, x, y, target, heatSeeking});
 
-        this.radius = 12;
+        this.radius = 16;
         this.smooth = false;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sniper_arrow.png");
 
         var dist = distance(this, this.target);
-        this.maxSpeed = 200; // pixels per second
+        this.maxSpeed = 300; // pixels per second
 
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
@@ -34,7 +34,7 @@ class SniperArrow {
             offscreenCtx.translate(16, 16);
             offscreenCtx.rotate(radians);
             offscreenCtx.translate(-16, -16);
-            offscreenCtx.drawImage(this.spritesheet, 40, 1190, 50, 20, 0, 0, 32, 32);
+            offscreenCtx.drawImage(this.spritesheet, 9, 398, 43, 43, 0, 0, 32, 32);
             offscreenCtx.restore();
             this.cache[angle] = offscreenCanvas;
         }
@@ -49,6 +49,8 @@ class SniperArrow {
     };
 
     update() {
+        this.elapsedTime += this.game.clockTick;
+
         if (this.heatSeeking) {
             var dist = distance(this, this.target);
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
@@ -57,9 +59,12 @@ class SniperArrow {
         this.x += this.velocity.x * this.game.clockTick;
         this.y += this.velocity.y * this.game.clockTick;
 
+        //For testing (make animation rotate clockwise)
+        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
+            if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
                 ent.hitpoints -= 10;
                 this.removeFromWorld = true;
             }

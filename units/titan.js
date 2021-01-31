@@ -10,7 +10,7 @@ class Titan {
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/titan.png");
 
-        this.radius = 50;
+        this.radius = 45;
         this.visualRadius = 200;
 
         this.targetID = 0;
@@ -182,7 +182,7 @@ class Titan {
                     this.target = ent;
                     this.elapsedTime = 0;
                 } else if (this.elapsedTime > 2.0) {
-                    this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
+                    this.game.addEntity(new TitanArrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }
             }
@@ -196,13 +196,35 @@ class Titan {
             this.x += this.velocity.x * this.game.clockTick;
             this.y += this.velocity.y * this.game.clockTick;
         }
+
+        //For testing (make animation rotate clockwise)
+        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
         
         this.facing = getFacing(this.velocity);
     };
 
     draw(ctx) {
-        var xOffset = 40;
-        var yOffset = 40;
+        var xOffset = 0;
+        var yOffset = 0;
+
+        switch(this.state) {
+            case 0:
+                xOffset = Math.floor(96/2);
+                yOffset = Math.floor(87/2);
+                break;
+            case 1:
+                xOffset = Math.floor(96/2);
+                yOffset = Math.floor(90/2);
+                break;
+            case 2:
+                xOffset = Math.floor(128/2);
+                yOffset = Math.floor(90/2);
+                break;
+            case 3:
+                xOffset = Math.floor(96/2);
+                yOffset = Math.floor((90+10)/2);
+                break;
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
 

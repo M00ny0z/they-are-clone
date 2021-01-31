@@ -10,7 +10,7 @@ class Sniper {
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sniper.png");
 
-        this.radius = 50;
+        this.radius = 40;
         this.visualRadius = 200;
 
         this.targetID = 0;
@@ -181,7 +181,7 @@ class Sniper {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 2.0) {
+                } else if (this.elapsedTime > 1.4) {
                     this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }
@@ -197,12 +197,35 @@ class Sniper {
             this.y += this.velocity.y * this.game.clockTick;
         }
 
+        //For testing (make animation rotate clockwise)
+        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+        // this.state = 1;
+
         this.facing = getFacing(this.velocity);
     };
 
     draw(ctx) {
-        var xOffset = 30;
-        var yOffset = 40;
+        var xOffset = 0;
+        var yOffset = 0;
+
+        switch(this.state) {
+            case 0:
+                xOffset = Math.floor(64/2);
+                yOffset = Math.floor(82/2);
+                break;
+            case 1:
+                xOffset = Math.floor(76/2);
+                yOffset = Math.floor(87/2);
+                break;
+            case 2:
+                xOffset = Math.floor(60/2);
+                yOffset = Math.floor(78/2);
+                break;
+            case 3:
+                xOffset = Math.floor(60/2);
+                yOffset = Math.floor(78/2);
+                break;
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
 
