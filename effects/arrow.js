@@ -2,13 +2,13 @@ class Arrow {
     constructor(game, x, y, target, heatSeeking) {
         Object.assign(this, { game, x, y, target, heatSeeking});
 
-        this.radius = 12;
+        this.radius = 16;
         this.smooth = false;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/arrow.png");
 
         var dist = distance(this, this.target);
-        this.maxSpeed = 200; // pixels per second
+        this.maxSpeed = 300; // pixels per second
 
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
@@ -34,7 +34,7 @@ class Arrow {
             offscreenCtx.translate(16, 16);
             offscreenCtx.rotate(radians);
             offscreenCtx.translate(-16, -16);
-            offscreenCtx.drawImage(this.spritesheet, 1, 1165, 95, 95, 10, 10, 48, 48);
+            offscreenCtx.drawImage(this.spritesheet, 42, 1183, 40, 40, 0, 0, 32, 32);
             offscreenCtx.restore();
             this.cache[angle] = offscreenCanvas;
         }
@@ -49,6 +49,10 @@ class Arrow {
     };
 
     update() {
+        this.elapsedTime += this.game.clockTick;
+
+        //For testing (make animation rotate clockwise)
+        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
         if (this.heatSeeking) {
             var dist = distance(this, this.target);
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
@@ -60,7 +64,7 @@ class Arrow {
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                ent.hitpoints -= 50;
+                ent.hitpoints -= 20;
                 this.removeFromWorld = true;
             }
         }

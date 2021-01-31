@@ -10,7 +10,7 @@ class InfectedUnit {
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_unit.png");
 
-        this.radius = 50;
+        this.radius = 40;
         this.visualRadius = 200;
 
         this.targetID = 0;
@@ -176,10 +176,10 @@ class InfectedUnit {
         // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
+            if (ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && canSee(this, ent)) {
                 this.target = ent;
             }
-            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
+            if (ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && collide(this, ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;
@@ -198,6 +198,9 @@ class InfectedUnit {
             this.x += this.velocity.x * this.game.clockTick;
             this.y += this.velocity.y * this.game.clockTick;
         }
+
+        //For testing (make animation rotate clockwise)
+        //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
 
         this.facing = getFacing(this.velocity);
     };

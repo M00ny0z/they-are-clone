@@ -173,7 +173,7 @@ class Soldier {
             }
         }
 
-        // collision detection
+        //collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this,ent)) {
@@ -181,8 +181,8 @@ class Soldier {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 2.0) {
-                    this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, true));
+                } else if (this.elapsedTime > 0.77) {
+                    this.game.addEntity(new SoldierBolt(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }
             }
@@ -197,6 +197,9 @@ class Soldier {
             this.y += this.velocity.y * this.game.clockTick;
         }
 
+        //For testing (make animation rotate clockwise)
+        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+
         this.facing = getFacing(this.velocity);
     };
 
@@ -206,8 +209,29 @@ class Soldier {
         //         this.animations[i][j].drawFrame(this.game.clockTick, ctx, this.x + j * 100, this.y + 100 * i, 1)
         //     }
         // }
-        var xOffset = 30;
-        var yOffset = 40;
+
+        var xOffset = 0;
+        var yOffset = 0;
+
+        switch(this.state) {
+            case 0:
+                xOffset = Math.floor(60/2);
+                yOffset = Math.floor(72/2);
+                break;
+            case 1:
+                xOffset = Math.floor(125/2);
+                yOffset = Math.floor(80/2);
+                break;
+            case 2:
+                xOffset = Math.floor(66/2);
+                yOffset = Math.floor(72/2);
+                break;
+            case 3:
+                xOffset = Math.floor(66/2);
+                yOffset = Math.floor(72/2);
+                break;
+        }
+        
     
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
     

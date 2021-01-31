@@ -2,7 +2,7 @@ class TitanArrow {
     constructor(game, x, y, target, heatSeeking) {
         Object.assign(this, { game, x, y, target, heatSeeking});
 
-        this.radius = 12;
+        this.radius = 16;
         this.smooth = false;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/titan_arrow.png");
@@ -34,7 +34,7 @@ class TitanArrow {
             offscreenCtx.translate(16, 16);
             offscreenCtx.rotate(radians);
             offscreenCtx.translate(-16, -16);
-            offscreenCtx.drawImage(this.spritesheet, 42, 1193, 50, 20, 0, 0, 32, 32);
+            offscreenCtx.drawImage(this.spritesheet, 11, 401, 40, 40, 0, 0, 32, 32);
             offscreenCtx.restore();
             this.cache[angle] = offscreenCanvas;
         }
@@ -49,6 +49,8 @@ class TitanArrow {
     };
 
     update() {
+        this.elapsedTime += this.game.clockTick;
+
         if (this.heatSeeking) {
             var dist = distance(this, this.target);
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
@@ -57,10 +59,13 @@ class TitanArrow {
         this.x += this.velocity.x * this.game.clockTick;
         this.y += this.velocity.y * this.game.clockTick;
 
+        //For testing (make animation rotate clockwise)
+        //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Soldier) && collide(this, ent)) {
-                ent.hitpoints -= 10;
+            if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
+                ent.hitpoints -= 50;
                 this.removeFromWorld = true;
             }
         }

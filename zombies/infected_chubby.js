@@ -192,6 +192,9 @@ class InfectedChubby {
             this.x += this.velocity.x * this.game.clockTick;
             this.y += this.velocity.y * this.game.clockTick;
         }
+
+        //For testing (make animation rotate clockwise)
+        //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
         
         this.facing = getFacing(this.velocity);
     };
