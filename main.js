@@ -35,8 +35,6 @@ ASSET_MANAGER.downloadAll(function () {
 	//gameEngine.addEntity(new InfectedVenom(gameEngine, 150, 150, [{x: 5, y: 1}, {x: 1, y: 1}]));
 	// gameEngine.addEntity(new Soldier(gameEngine, 50, 50, [{x: 25, y: 25}, {x: 10, y: 30}]));
 	// gameEngine.addEntity(new InfectedVenom(gameEngine, 500, 500, [{x: 150, y: 150}]));
-
-
 	
 	//Spawn 10 zombies from the top of map to follow railroad
 	for(var i = 0; i < 10; i++) {
