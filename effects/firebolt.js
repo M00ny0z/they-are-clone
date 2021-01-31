@@ -56,11 +56,11 @@ class FireBolt {
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
         }
 
-        // this.x += this.velocity.x * this.game.clockTick;
-        // this.y += this.velocity.y * this.game.clockTick;
+        this.x += this.velocity.x * this.game.clockTick;
+        this.y += this.velocity.y * this.game.clockTick;
 
         //For testing (make animation rotate clockwise)
-        this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+        //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];

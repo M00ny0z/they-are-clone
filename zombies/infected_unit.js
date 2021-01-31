@@ -176,10 +176,10 @@ class InfectedUnit {
         // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if (ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && canSee(this, ent)) {
+            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
                 this.target = ent;
             }
-            if (ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan && collide(this, ent)) {
+            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;

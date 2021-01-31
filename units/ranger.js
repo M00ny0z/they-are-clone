@@ -10,7 +10,7 @@ class Ranger {
 
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ranger.png");
 
-    this.radius = 50;
+    this.radius = 40;
     this.visualRadius = 200;
 
     this.targetID = 0;
@@ -195,6 +195,7 @@ class Ranger {
     spriteInfo = {
       state: 1,
       xStart: 1,
+      yStart: 15,
       width: 69,
       height: 90,
       frames: 15,
@@ -705,12 +706,35 @@ class Ranger {
       this.y += this.velocity.y * this.game.clockTick;
     }
 
+    //For testing (make animation rotate clockwise)
+    //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+
     this.facing = getFacing(this.velocity);
   }
 
   draw(ctx) {
-    var xOffset = 30;
-    var yOffset = 40;
+    var xOffset = 0;
+    var yOffset = 0;
+
+    this.state = 1;
+    switch(this.state) {
+        case 0:
+            xOffset = Math.floor(77/2);
+            yOffset = Math.floor(69/2);
+            break;
+        case 1:
+            xOffset = Math.floor(69/2);
+            yOffset = Math.floor((90 + 20)/2);
+            break;
+        case 2:
+            xOffset = Math.floor(94/2);
+            yOffset = Math.floor(90/2);
+            break;
+        case 3:
+            xOffset = Math.floor(56/2);
+            yOffset = Math.floor(69/2);
+            break;
+    }
 
     this.animations[this.state][this.facing].drawFrame(
       this.game.clockTick,

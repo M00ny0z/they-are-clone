@@ -26,7 +26,7 @@ class Ballista {
             var ent = this.game.entities[i];
             if ((ent instanceof InfectedChubby || ent instanceof InfectedUnit || ent instanceof InfectedVenom) && canSee(this, ent) && this.elapsedTime > this.fireRate) {
                 this.elapsedTime = 0;
-                this.game.addEntity(new FireBolt(this.game, this.x, this.y, ent, true));
+                this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, true));
             }
         }
     };
