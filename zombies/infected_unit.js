@@ -205,6 +205,24 @@ class InfectedUnit {
         this.facing = getFacing(this.velocity);
     };
 
+    drawHealthbar(ctx, percent) {
+        const posX = this.x - 45;
+        const posY = this.y - 40;
+
+        ctx.save();
+
+        ctx.strokeStyle = 'gray';
+        ctx.strokeRect(posX, posY, 100, 15);
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(posX + 1, posY + 1, 98, 13);
+
+        ctx.fillStyle = percent >= 50 ? 'green' : 'red';
+        ctx.fillRect(posX + 2, posY + 2, 96 * (percent / 100), 11);
+        
+        ctx.restore();
+    };
+
     draw(ctx) {
         /*
         for(var i = 0; i < 4; i++) {
@@ -218,11 +236,7 @@ class InfectedUnit {
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
         
-        ctx.save();
-        ctx.fillStyle = "black";
-        ctx.font = "italic "+10+"pt Arial ";
-        ctx.fillText(`Health: ${50}%`, this.x - 20, this.y - 25);
-        ctx.restore();
+        this.drawHealthbar(ctx, 50);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
