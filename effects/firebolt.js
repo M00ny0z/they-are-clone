@@ -56,18 +56,23 @@ class FireBolt {
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
         }
 
-        // this.x += this.velocity.x * this.game.clockTick;
-        // this.y += this.velocity.y * this.game.clockTick;
+        this.x += this.velocity.x * this.game.clockTick;
+        this.y += this.velocity.y * this.game.clockTick;
 
         //For testing (make animation rotate clockwise)
-        this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+        //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan ||
+                ent instanceof Ballista) && collide(this, ent)) {
                 ent.hitpoints -= 30;
                 this.removeFromWorld = true;
             }
+        }
+
+        if(this.target.removeFromWorld == true){
+            this.removeFromWorld = true;
         }
     };
 
@@ -89,6 +94,3 @@ class FireBolt {
         }
     };
 };
-
-
-//            offscreenCtx.drawImage(this.spritesheet, 1, 1165, 95, 95, 10, 10, 48, 48);

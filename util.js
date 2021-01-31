@@ -60,6 +60,5 @@ window.requestAnimFrame = (function () {
 var PARAMS = {
     DEBUG: true,
     BLOCKWIDTH: 64,
-    MAPWIDTH: 3200,
-    MAPHEIGHT: 3200
+    MAPWIDTH: 50
 };

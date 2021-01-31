@@ -39,10 +39,10 @@ class GameEngine {
             var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
             var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
 
-            x = Math.floor(x / PARAMS.BITWIDTH);
-            y = Math.floor(y / PARAMS.BITWIDTH);
+            x = Math.floor(x / PARAMS.BLOCKWIDTH);
+            y = Math.floor(y / PARAMS.BLOCKWIDTH);
 
-            if (x < 0 || x > PARAMS.MAPWIDTH || y < 0 || y > PARAMS.MAPHEIGHT) return null;
+            if (x < 0 || x > PARAMS.MAPWIDTH || y < 0 || y > PARAMS.MAPWIDTH) return null;
 
             return { x: x, y: y };
         }

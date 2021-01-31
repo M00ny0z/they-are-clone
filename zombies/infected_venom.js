@@ -176,7 +176,8 @@ class InfectedVenom {
         // collision detection
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
+            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
+                ent instanceof Ballista) && canSee(this, ent)) {
                 if (this.state === 0) {
                     this.target = ent;
                     this.state = 1;
@@ -197,52 +198,12 @@ class InfectedVenom {
             this.y += this.velocity.y * this.game.clockTick;
         }
 
-        //For testing (make animation rotate clockwise)
-        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
-
         this.facing = getFacing(this.velocity);
     };
 
     draw(ctx) {
-        var xOffset = 50;
-        var yOffset = 90;
-
-        if (this.state == 0) {
-            switch (this.facing) {
-                case 0:
-                    xOffset = 45;
-                    yOffset = 90;
-                    break;
-                case 1:
-                    xOffset = 40;
-                    yOffset = 90;
-                    break;
-                case 2:
-                    xOffset = 45;
-                    yOffset = 50;
-                    break;
-                case 3:
-                    xOffset = 50;
-                    yOffset = 90;
-                    break;
-                case 4:
-                    xOffset = 50;
-                    yOffset = 90;
-                    break;
-                case 5:
-                    xOffset = 40;
-                    yOffset = 90;
-                    break;
-                case 6:
-                    xOffset = 45;
-                    yOffset = 90;
-                    break;
-                case 7:
-                    xOffset = 40;
-                    yOffset = 90;
-                    break;
-            }
-        }
+        var xOffset = 45;
+        var yOffset = 100;
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
 

@@ -1,4 +1,4 @@
-class CommandCenter { 
+class WoodWall { 
    constructor(game, x, y) {
        Object.assign(this, { game, x, y });
        this.health = 100;
@@ -14,9 +14,9 @@ class CommandCenter {
    }
 
    draw(ctx) {
-      const width = 64;
-      const height = 64;
-      const startY = 161;
+      const width = 32;
+      const height = 32;
+      const startY = 64;
       const startX = 128;
       const xOffset = 20;
       const yOffset = 20;

@@ -10,7 +10,7 @@ class Ranger {
 
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ranger.png");
 
-    this.radius = 50;
+    this.radius = 40;
     this.visualRadius = 200;
 
     this.targetID = 0;
@@ -195,6 +195,7 @@ class Ranger {
     spriteInfo = {
       state: 1,
       xStart: 1,
+      yStart: 15,
       width: 69,
       height: 90,
       frames: 15,
@@ -204,24 +205,7 @@ class Ranger {
 
     //2 = N
     this.animations[spriteInfo["state"]].push(
-        new Animator(
-          this.spritesheet,
-          spriteInfo["xStart"],
-          spriteInfo.yStart,
-          spriteInfo["width"],
-          spriteInfo["height"],
-          spriteInfo["frames"],
-          spriteInfo["speed"],
-          spriteInfo["padding"],
-          false,
-          true
-        )
-      );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -232,13 +216,30 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
+    );
+    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
+
+    //1 = NE
+    this.animations[spriteInfo["state"]].push(
+      new Animator(
+        this.spritesheet,
+        spriteInfo["xStart"],
+        spriteInfo.yStart,
+        spriteInfo["width"],
+        spriteInfo["height"],
+        spriteInfo["frames"],
+        spriteInfo["speed"],
+        spriteInfo["padding"],
+        false,
+        true
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //0 = E
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -249,13 +250,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //7 = SE
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -266,13 +267,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //6 = S
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -283,13 +284,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //5 = SW
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -300,13 +301,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //4 = W
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -317,13 +318,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //3 = NW
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -334,7 +335,7 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
 
     //---------------------
@@ -350,27 +351,10 @@ class Ranger {
       speed: 0.1,
       padding: 1,
     };
- 
+
     //2 = N
     this.animations[spriteInfo["state"]].push(
-        new Animator(
-          this.spritesheet,
-          spriteInfo["xStart"],
-          spriteInfo.yStart,
-          spriteInfo["width"],
-          spriteInfo["height"],
-          spriteInfo["frames"],
-          spriteInfo["speed"],
-          spriteInfo["padding"],
-          false,
-          true
-        )
-      );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -381,13 +365,30 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
+    );
+    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
+
+    //1 = NE
+    this.animations[spriteInfo["state"]].push(
+      new Animator(
+        this.spritesheet,
+        spriteInfo["xStart"],
+        spriteInfo.yStart,
+        spriteInfo["width"],
+        spriteInfo["height"],
+        spriteInfo["frames"],
+        spriteInfo["speed"],
+        spriteInfo["padding"],
+        false,
+        true
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //0 = E
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -398,13 +399,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //7 = SE
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -415,13 +416,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //6 = S
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -432,13 +433,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //5 = SW
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -449,13 +450,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //4 = W
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -466,13 +467,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //3 = NW
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -483,7 +484,7 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
 
 
@@ -503,24 +504,7 @@ class Ranger {
 
     //2 = N
     this.animations[spriteInfo["state"]].push(
-        new Animator(
-          this.spritesheet,
-          spriteInfo["xStart"],
-          spriteInfo.yStart,
-          spriteInfo["width"],
-          spriteInfo["height"],
-          spriteInfo["frames"],
-          spriteInfo["speed"],
-          spriteInfo["padding"],
-          false,
-          true
-        )
-      );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -531,13 +515,30 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
+    );
+    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
+
+    //1 = NE
+    this.animations[spriteInfo["state"]].push(
+      new Animator(
+        this.spritesheet,
+        spriteInfo["xStart"],
+        spriteInfo.yStart,
+        spriteInfo["width"],
+        spriteInfo["height"],
+        spriteInfo["frames"],
+        spriteInfo["speed"],
+        spriteInfo["padding"],
+        false,
+        true
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //0 = E
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -548,13 +549,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //7 = SE
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -565,13 +566,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //6 = S
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -582,13 +583,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //5 = SW
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -599,13 +600,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //4 = W
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -616,13 +617,13 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
     spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
 
     //3 = NW
     this.animations[spriteInfo["state"]].push(
-    new Animator(
+      new Animator(
         this.spritesheet,
         spriteInfo["xStart"],
         spriteInfo.yStart,
@@ -633,7 +634,7 @@ class Ranger {
         spriteInfo["padding"],
         false,
         true
-    )
+      )
     );
   }
 
@@ -672,13 +673,7 @@ class Ranger {
     // collision detection
     for (var i = 0; i < this.game.entities.length; i++) {
       var ent = this.game.entities[i];
-      if (
-        (ent instanceof InfectedUnit ||
-          ent instanceof InfectedHarpy ||
-          ent instanceof InfectedVenom ||
-          ent instanceof InfectedChubby) &&
-        canSee(this, ent)
-      ) {
+      if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)) {
         if (this.state === 0) {
           this.state = 1;
           this.target = ent;
@@ -705,20 +700,37 @@ class Ranger {
       this.y += this.velocity.y * this.game.clockTick;
     }
 
+    //For testing (make animation rotate clockwise)
+    //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
+
     this.facing = getFacing(this.velocity);
   }
 
   draw(ctx) {
-    var xOffset = 30;
-    var yOffset = 40;
+    var xOffset = 0;
+    var yOffset = 0;
 
-    this.animations[this.state][this.facing].drawFrame(
-      this.game.clockTick,
-      ctx,
-      this.x - xOffset,
-      this.y - yOffset,
-      1
-    );
+    this.state = 1;
+    switch (this.state) {
+      case 0:
+        xOffset = Math.floor(77 / 2);
+        yOffset = Math.floor(69 / 2);
+        break;
+      case 1:
+        xOffset = Math.floor(69 / 2);
+        yOffset = Math.floor((90 + 20) / 2);
+        break;
+      case 2:
+        xOffset = Math.floor(94 / 2);
+        yOffset = Math.floor(90 / 2);
+        break;
+      case 3:
+        xOffset = Math.floor(56 / 2);
+        yOffset = Math.floor(69 / 2);
+        break;
+    }
+
+    this.animations[this.state][this.facing].drawFrame(this.game.clockTick,ctx, this.x - xOffset, this.y - yOffset,1);
 
     if (PARAMS.DEBUG) {
       ctx.strokeStyle = "Red";

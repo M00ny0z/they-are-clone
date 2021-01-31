@@ -9,7 +9,7 @@ class Arrow {
 
         var dist = distance(this, this.target);
         this.maxSpeed = 300; // pixels per second
-
+        
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
@@ -51,8 +51,6 @@ class Arrow {
     update() {
         this.elapsedTime += this.game.clockTick;
 
-        //For testing (make animation rotate clockwise)
-        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
         if (this.heatSeeking) {
             var dist = distance(this, this.target);
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
@@ -67,6 +65,10 @@ class Arrow {
                 ent.hitpoints -= 20;
                 this.removeFromWorld = true;
             }
+        }
+
+        if(this.target.removeFromWorld == true){
+            this.removeFromWorld = true;
         }
     };
 

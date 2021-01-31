@@ -69,6 +69,10 @@ class TitanArrow {
                 this.removeFromWorld = true;
             }
         }
+
+        if(this.target.removeFromWorld == true){
+            this.removeFromWorld = true;
+        }
     };
 
     draw(ctx) {
