@@ -8,6 +8,14 @@ function rgb(r, g, b) {
     return "rgb(" + r + "," + g + "," + b + ")";
 };
 
+function drawHealthbar(ctx, percent) {
+    ctx.save();
+    ctx.fillStyle = "black";
+    ctx.font = "italic "+96+"pt Arial ";
+    ctx.fillText(`Health: ${percent}`, this.x, this.y - 5);
+    ctx.restore();
+ }
+
 // returns a string that can be used as a hsl web color
 function hsl(h, s, l) {
     return "hsl(" + h + "," + s + "%," + l + "%)";

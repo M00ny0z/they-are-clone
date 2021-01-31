@@ -217,6 +217,12 @@ class InfectedUnit {
         var yOffset = 40;
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
+        
+        ctx.save();
+        ctx.fillStyle = "black";
+        ctx.font = "italic "+10+"pt Arial ";
+        ctx.fillText(`Health: ${50}%`, this.x - 20, this.y - 25);
+        ctx.restore();
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
