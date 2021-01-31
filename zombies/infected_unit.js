@@ -217,7 +217,7 @@ class InfectedUnit {
         ctx.fillStyle = 'white';
         ctx.fillRect(posX + 1, posY + 1, 98, 13);
 
-        ctx.fillStyle = percent >= 50 ? 'green' : 'red';
+        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
         ctx.fillRect(posX + 2, posY + 2, 96 * (this.hitpoints / 100), 11);
         
         ctx.restore();
