@@ -25,10 +25,8 @@ class MapOne {
                 }
             }
         }
-
         // console.log(this.map);
     }
-
 
     update() {
 
