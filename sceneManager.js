@@ -14,20 +14,20 @@ class SceneManager {
 
         this.game.addEntity(new MapOne(this.game));
 
-        this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
-        this.game.addEntity(new Quarry(this.game, 64 * 11, 64 * 30));
-        this.game.addEntity(new Sawmill(this.game, 64 * 12, 64 * 30));
+        // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
+        // this.game.addEntity(new Quarry(this.game, 64 * 11, 64 * 30));
+        // this.game.addEntity(new Sawmill(this.game, 64 * 12, 64 * 30));
 
-        this.game.addEntity(new MachineGunTurret(this.game, 64 * 14, 64 * 30));
-        this.game.addEntity(new StoneGateVertical(this.game, 64 * 10, 64 * 35));
-        this.game.addEntity(new WoodGateVertical(this.game, 64 * 10, 64 * 36));
+        // this.game.addEntity(new MachineGunTurret(this.game, 64 * 14, 64 * 30));
+        // this.game.addEntity(new StoneGateVertical(this.game, 64 * 10, 64 * 35));
+        // this.game.addEntity(new WoodGateVertical(this.game, 64 * 10, 64 * 36));
     
-        this.game.addEntity(new StoneGateHorizontal(this.game, 64 * 12, 64 * 35));
-        this.game.addEntity(new WoodGateHorizontal(this.game, 64 * 12, 64 * 36));
-        this.game.addEntity(new WoodWall(this.game, 64 * 15, 64 * 36));
-        this.game.addEntity(new StoneWall(this.game, 64 * 15, 64 * 35));
+        // this.game.addEntity(new StoneGateHorizontal(this.game, 64 * 12, 64 * 35));
+        // this.game.addEntity(new WoodGateHorizontal(this.game, 64 * 12, 64 * 36));
+        // this.game.addEntity(new WoodWall(this.game, 64 * 15, 64 * 36));
+        // this.game.addEntity(new StoneWall(this.game, 64 * 15, 64 * 35));
         
-        this.game.addEntity(new CommandCenter(this.game, 64 * 28, 64 * 35));
+        // this.game.addEntity(new CommandCenter(this.game, 64 * 28, 64 * 35));
     
         //Spawn 10 zombies from the top of map to follow railroad
         for(var i = 0; i < 10; i++) {
