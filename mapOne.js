@@ -26,16 +26,18 @@ class MapOne {
     }
 
     update() {
-        if (this.game.click) {
-            var x = this.game.click.x + this.game.camera.cameraX;
-            var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.map[y][x].filled && !this.map[y][x].collisions) {
-                this.map[y][x].filled = true;
-                let unit = new Ballista(this.game, x, y);
-                this.game.addEntity(unit);
-            }
-            this.game.click = null;
-        }
+        // if (this.game.click) {
+        //     if(this.game.click.y < 11) {
+        //         var x = this.game.click.x + this.game.camera.cameraX;
+        //         var y = this.game.click.y + this.game.camera.cameraY;
+        //         if (!this.map[y][x].filled && !this.map[y][x].collisions) {
+        //             this.map[y][x].filled = true;
+        //             let unit = new Ballista(this.game, x, y);
+        //             this.game.addEntity(unit);
+        //         }
+        //         this.game.click = null;
+        //     }
+        // }
     }
 
     draw(ctx) {

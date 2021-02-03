@@ -8,6 +8,7 @@ class GameEngine {
         this.surfaceHeight = null;
 
         this.click = null;
+        this.clickCanvas = null;
         this.mouse = null;
 
         this.left = false;
@@ -55,6 +56,7 @@ class GameEngine {
         this.ctx.canvas.addEventListener("click", function (e) {
             //console.log(getXandY(e));
             that.click = getXandY(e);
+            that.clickCanvas = e;
         }, false);
 
         this.ctx.canvas.addEventListener("keydown", function (e) {
