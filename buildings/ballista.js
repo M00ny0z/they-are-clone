@@ -6,6 +6,7 @@ class Ballista {
         this.y = y * PARAMS.BLOCKWIDTH;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ballista.png");
+
         this.radius = 30;
         this.visualRadius = 600;
 
@@ -102,11 +103,11 @@ class Ballista {
         var yOffset = 0;
 
         if (this.facing < 5) {
-            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
+            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
         } else {
             ctx.save();
             ctx.scale(-1, 1);
-            this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x) - 48 + xOffset, this.y - yOffset, 1);
+            this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x) - 48 + xOffset + (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
             ctx.restore();
         }
 
@@ -114,13 +115,13 @@ class Ballista {
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x + 32, this.y + 32, this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x + 32 - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + 32 - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
 
             ctx.setLineDash([5, 15]);
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.visualRadius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.visualRadius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
             ctx.setLineDash([]);

@@ -41,10 +41,10 @@ class Arrow {
 
         var xOffset = 16;
         var yOffset = 16;
-        ctx.drawImage(this.cache[angle], this.x - xOffset, this.y - yOffset);
+        ctx.drawImage(this.cache[angle], this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Green';
-            ctx.strokeRect(this.x - xOffset, this.y - yOffset, 32, 32);
+            ctx.strokeRect(this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 32, 32);
         }
     };
 
@@ -84,7 +84,7 @@ class Arrow {
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
         }

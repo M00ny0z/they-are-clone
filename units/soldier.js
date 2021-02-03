@@ -2,11 +2,11 @@ class Soldier {
     constructor(game, x, y, path) {
         Object.assign(this, { game, x, y, path});
 
-        // this.x = x * PARAMS.BLOCKWIDTH - 32;
-        // this.y = y * PARAMS.BLOCKWIDTH - 32;
-        // for (var i = 0; i < this.path.length; i++) {
-        //     this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
-        // }
+        this.x = x * PARAMS.BLOCKWIDTH - 32;
+        this.y = y * PARAMS.BLOCKWIDTH - 32;
+        for (var i = 0; i < this.path.length; i++) {
+            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
+        }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier.png");
 
@@ -150,7 +150,8 @@ class Soldier {
     update() {
         this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
-
+        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+           
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -181,35 +182,25 @@ class Soldier {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 0.77) {
+                } else if (this.elapsedTime > 1.0) {
                     this.game.addEntity(new SoldierBolt(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }
             }
         }
 
-        if(this.state == 0) {   // only moves when it is in walking state
+        if (this.state == 0) {   // only moves when it is in walking state
             dist = distance(this, this.target);
             // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
             // If reached to the target, new velocity will be calculated.
-            this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
             this.x += this.velocity.x * this.game.clockTick;
             this.y += this.velocity.y * this.game.clockTick;
         }
-
-        //For testing (make animation rotate clockwise)
-        // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
 
         this.facing = getFacing(this.velocity);
     };
 
     draw(ctx) {
-        // for (var i = 0; i < 4; i++) {
-        //     for (var j = 0; j < this.animations[i].length; j++) {
-        //         this.animations[i][j].drawFrame(this.game.clockTick, ctx, this.x + j * 100, this.y + 100 * i, 1)
-        //     }
-        // }
-
         var xOffset = 0;
         var yOffset = 0;
 
@@ -232,23 +223,21 @@ class Soldier {
                 break;
         }
         
-    
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset, this.y - yOffset, 1);
-    
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
 
             ctx.setLineDash([5, 15]);
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.visualRadius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.visualRadius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
             ctx.setLineDash([]);
         }
-
     };
 }

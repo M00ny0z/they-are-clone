@@ -1,9 +1,6 @@
 class MapOne {
     constructor(game) {
         Object.assign(this, { game });
-        this.game.camera = this;
-        this.cameraX = 25;
-        this.cameraY = 25;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
 
         this.map = [];
@@ -29,44 +26,12 @@ class MapOne {
     }
 
     update() {
-
-        if (this.game.left) {
-            this.cameraX -= 1;
-        }
-
-        if (this.game.right) {
-            this.cameraX += 1;
-        }
-
-        if (this.game.up) {
-            this.cameraY -= 1;
-        }
-
-        if (this.game.down) {
-            this.cameraY += 1;
-        }
-        if (this.cameraX > 50) {
-            this.cameraX = 50;
-        }
-        if (this.cameraX < 0) {
-            this.cameraX = 0;
-        }
-        if (this.cameraY > 50) {
-            this.cameraY = 50;
-        }
-        if (this.cameraY < 0) {
-            this.cameraY = 0;
-        }
-
         if (this.game.click) {
-            // var x = this.game.click.x + 25;
-            // var y = this.game.click.y + 25;
-
-            var x = this.game.click.x;
-            var y = this.game.click.y;
-            console.log(x + " : " + y);
+            var x = this.game.click.x + this.game.camera.cameraX;
+            var y = this.game.click.y + this.game.camera.cameraY;
             if (!this.map[y][x].filled && !this.map[y][x].collisions) {
                 this.map[y][x].filled = true;
+                console.log(x + " : " + y);
                 let unit = new Ballista(this.game, x, y);
                 this.game.addEntity(unit);
             }
@@ -75,8 +40,6 @@ class MapOne {
     }
 
     draw(ctx) {
-        var mapImg = new Image();
-        mapImg.src = './sprites/mapOneWithGrid.png';
-        ctx.drawImage(mapImg, 0, 0)
+        ctx.drawImage(this.spritesheet, (-this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (-this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
     }
 }

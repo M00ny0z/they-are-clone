@@ -41,10 +41,10 @@ class FireBolt {
 
         var xOffset = 16;
         var yOffset = 16;
-        ctx.drawImage(this.cache[angle], this.x - xOffset, this.y - yOffset);
+        ctx.drawImage(this.cache[angle], this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Green';
-            ctx.strokeRect(this.x - xOffset, this.y - yOffset, 32, 32);
+            ctx.strokeRect(this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 32, 32);
         }
     };
 
@@ -58,9 +58,6 @@ class FireBolt {
 
         this.x += this.velocity.x * this.game.clockTick;
         this.y += this.velocity.y * this.game.clockTick;
-
-        //For testing (make animation rotate clockwise)
-        //this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
@@ -84,11 +81,10 @@ class FireBolt {
 
         this.drawAngle(ctx, degrees);
 
-
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
         }
