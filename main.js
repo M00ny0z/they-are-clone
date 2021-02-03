@@ -4,6 +4,8 @@ var ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 
+ASSET_MANAGER.queueDownload("./sprites/ui-layout.png");
+
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
 

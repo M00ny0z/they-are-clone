@@ -31,7 +31,6 @@ class MapOne {
             var y = this.game.click.y + this.game.camera.cameraY;
             if (!this.map[y][x].filled && !this.map[y][x].collisions) {
                 this.map[y][x].filled = true;
-                console.log(x + " : " + y);
                 let unit = new Ballista(this.game, x, y);
                 this.game.addEntity(unit);
             }

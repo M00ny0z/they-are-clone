@@ -5,6 +5,9 @@ class SceneManager {
         this.cameraX = 0;
         this.cameraY = 0;
 
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui-layout.png");
+
+
         this.loadEntities();
     };
 
@@ -71,8 +74,8 @@ class SceneManager {
         if (this.cameraX < 0) {
             this.cameraX = 0;
         }
-        if (this.cameraY > (PARAMS.MAPHEIGHT-PARAMS.CAMERAHEIGHT)) {
-            this.cameraY = PARAMS.MAPHEIGHT-PARAMS.CAMERAHEIGHT;
+        if (this.cameraY > (PARAMS.MAPHEIGHT-PARAMS.CAMERAHEIGHT) + 3) {
+            this.cameraY = PARAMS.MAPHEIGHT-PARAMS.CAMERAHEIGHT + 3;
         }
         if (this.cameraY < 0) {
             this.cameraY = 0;
@@ -80,6 +83,6 @@ class SceneManager {
     };
 
     draw(ctx) {
-       
+       ctx.drawImage(this.spritesheet, 0, 594, 1600, 300);
     };
 };
