@@ -7,14 +7,21 @@ class SceneManager {
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui/frame.png");
 
-        this.homeIcon = ASSET_MANAGER.getAsset("./sprites/ui/home_icon.png");
-        this.workIcon = ASSET_MANAGER.getAsset("./sprites/ui/work_icon.png");
+        this.colonistIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_colonist.png");
+        this.resourcesIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_resources.png");
 
-        this.tentIcon = ASSET_MANAGER.getAsset("./sprites/ui/tent_icon.png");
+        this.tentIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_tent.png");
+
+        this.fishermanCottageIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_fishermanCottage.png");
+        this.farmIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_farm.png");
+        this.quarryIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_quarry.png");
+        this.sawmillIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_sawmill.png");
+
+        this.backIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_back.png");
 
         this.selected = null;
-        
-        this.main = true;
+
+        this.display = 0; // 0 main, 1 colonist, 2 resources
         this.loadEntities();
     };
 
@@ -57,6 +64,19 @@ class SceneManager {
 
     };
 
+
+    // placeBuilding() {
+    //     var x = this.game.click.x + this.game.camera.cameraX;
+    //     var y = this.game.click.y + this.game.camera.cameraY;
+    //     console.log(x + " : " + y);
+    //     if (this.game.click && this.selectedBuilding &&
+    //         !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions) {
+    //         this.game.mainMap.map[y][x].filled = true;
+    //         console.log(new (BUILDINGS[this.selectedBuilding])(this.game, this.game.click.x, this.game.click.y));
+    //         this.game.addEntity(new (BUILDINGS[this.selectedBuilding])(this.game));
+    //     }
+    // }
+
     update() {
         if (this.game.left) {
             this.cameraX -= 1;
@@ -90,18 +110,30 @@ class SceneManager {
         if (this.game.clickCanvas) {
             var x = this.game.clickCanvas.clientX;
             var y = this.game.clickCanvas.clientY;
+
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                if (this.main) {
-                    this.main = false;
-                } else {
+                if (this.display == 0) {
+                    this.display = 1;
+                } else if (this.display == 1) {
                     let tent = new Tent(this.game);
                     this.game.addEntity(tent);
                     this.selected = tent;
-                    
-                      
+
                     //this.selected = TENT;
                     //this.game.addEntity(new (ENTITIES[this.selected])(this.game));
+                } else if (this.display == 2) {
+                    
                 }
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                if (this.display == 0) {
+                    this.display = 2;
+                } else if (this.display == 1) {
+                    
+                } else if (this.display == 2) {
+                    
+                }
+            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                this.display = 0;
             }
             this.game.clickCanvas = null;
         }
@@ -121,27 +153,20 @@ class SceneManager {
         }
     };
 
-    // placeBuilding() {
-    //     var x = this.game.click.x + this.game.camera.cameraX;
-    //     var y = this.game.click.y + this.game.camera.cameraY;
-    //     console.log(x + " : " + y);
-    //     if (this.game.click && this.selectedBuilding &&
-    //         !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions) {
-    //         this.game.mainMap.map[y][x].filled = true;
-    //         console.log(new (BUILDINGS[this.selectedBuilding])(this.game, this.game.click.x, this.game.click.y));
-    //         this.game.addEntity(new (BUILDINGS[this.selectedBuilding])(this.game));
-    //     }
-    // }
-
-
-
     draw(ctx) {
         ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
-        if (this.main) {
-            ctx.drawImage(this.homeIcon, 1037, 739, 45, 45);
-            ctx.drawImage(this.workIcon, 1087, 739, 45, 45);
-        } else {
+        if (this.display == 0) {
+            ctx.drawImage(this.colonistIcon, 1037, 739, 45, 45);
+            ctx.drawImage(this.resourcesIcon, 1087, 739, 45, 45);
+        } else if (this.display == 1) {
             ctx.drawImage(this.tentIcon, 1037, 739, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
+        } else if (this.display == 2) {
+            ctx.drawImage(this.fishermanCottageIcon, 1037, 739, 45, 45);
+            ctx.drawImage(this.farmIcon, 1086, 739, 45, 45);
+            ctx.drawImage(this.quarryIcon, 1134, 739, 45, 45);
+            ctx.drawImage(this.sawmillIcon, 1184, 739, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
         }
     };
 };
