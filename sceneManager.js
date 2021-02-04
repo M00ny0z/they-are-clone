@@ -13,18 +13,10 @@ class SceneManager {
         this.tentIcon = ASSET_MANAGER.getAsset("./sprites/ui/tent_icon.png");
 
         this.selected = null;
+        
         this.main = true;
         this.loadEntities();
     };
-
-    placeBuilding() {
-        if (this.game.click && this.selectedBuilding && 
-            !this.map[y][x].filled && !this.map[y][x].collisions) {
-           this.map[y][x].filled = true;
-           this.game.addEntity(new (BUILDINGS[this.selectedBuilding])(this.game, this.game.click.x, this.game.click.y));
-        }
-     }
-
 
     loadEntities() {
         this.game.entities = [];
@@ -94,9 +86,8 @@ class SceneManager {
             this.cameraY = 0;
         }
 
+        // checking if UI is clicked
         if (this.game.clickCanvas) {
-            console.log(this.game.clickCanvas.clientX);
-            console.log(this.game.clickCanvas.clientY);
             var x = this.game.clickCanvas.clientX;
             var y = this.game.clickCanvas.clientY;
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
@@ -106,40 +97,43 @@ class SceneManager {
                     let tent = new Tent(this.game);
                     this.game.addEntity(tent);
                     this.selected = tent;
+                    
+                      
+                    //this.selected = TENT;
+                    //this.game.addEntity(new (ENTITIES[this.selected])(this.game));
                 }
             }
             this.game.clickCanvas = null;
         }
 
+        // placing selected entity
         if (this.game.click) {
-            if (this.game.click.y < 11) {
-                var x = this.game.click.x + this.game.camera.cameraX;
-                var y = this.game.click.y + this.game.camera.cameraY;
-              //  if (!this.map[y][x].filled && !this.map[y][x].collisions) {
-                 //ds   this.map[y][x].filled = true;
-                 if(this.selected != null){
-                    this.selected.followMouse = false;
-                    this.selected.x = x;
-                    this.selected.y = y;
-               // }
-                 }
-                this.game.click = null;
+            var x = this.game.click.x + this.game.camera.cameraX;
+            var y = this.game.click.y + this.game.camera.cameraY;
+            if (this.selected != null && !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11) {
+                this.game.mainMap.map[y][x].filled = true;
+                this.selected.followMouse = false;
+                this.selected.x = x;
+                this.selected.y = y;
+                this.selected = null;
             }
+            this.game.click = null;
         }
-
-        // if (this.game.click) {
-        //     if(this.game.click.y < 11) {
-        //         var x = this.game.click.x + this.game.camera.cameraX;
-        //         var y = this.game.click.y + this.game.camera.cameraY;
-        //         if (!this.map[y][x].filled && !this.map[y][x].collisions) {
-        //             this.map[y][x].filled = true;
-        //             let unit = new Ballista(this.game, x, y);
-        //             this.game.addEntity(unit);
-        //         }
-        //         this.game.click = null;
-        //     }
-        // }
     };
+
+    // placeBuilding() {
+    //     var x = this.game.click.x + this.game.camera.cameraX;
+    //     var y = this.game.click.y + this.game.camera.cameraY;
+    //     console.log(x + " : " + y);
+    //     if (this.game.click && this.selectedBuilding &&
+    //         !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions) {
+    //         this.game.mainMap.map[y][x].filled = true;
+    //         console.log(new (BUILDINGS[this.selectedBuilding])(this.game, this.game.click.x, this.game.click.y));
+    //         this.game.addEntity(new (BUILDINGS[this.selectedBuilding])(this.game));
+    //     }
+    // }
+
+
 
     draw(ctx) {
         ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
