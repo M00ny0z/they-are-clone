@@ -15,6 +15,7 @@ class GameEngine {
         this.right = false;
         this.up = false;
         this.down = false;
+        //this.Ready = false; // wait for game to load, before we let ui clickable.
     };
 
     init(ctx) {

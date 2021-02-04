@@ -6,10 +6,21 @@ var ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
-ASSET_MANAGER.queueDownload("./sprites/ui/home_icon.png");
-ASSET_MANAGER.queueDownload("./sprites/ui/work_icon.png");
-ASSET_MANAGER.queueDownload("./sprites/ui/tent_icon.png");
 
+// ui
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_colonist.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");
+
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_tent.png");
+
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_fishermanCottage.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_farm.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_quarry.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_sawmill.png");
+
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_back.png");
+
+// 
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
 
