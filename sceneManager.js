@@ -17,6 +17,14 @@ class SceneManager {
         this.loadEntities();
     };
 
+    placeBuilding() {
+        if (this.game.click && this.selectedBuilding && 
+            !this.map[y][x].filled && !this.map[y][x].collisions) {
+           this.map[y][x].filled = true;
+           this.game.addEntity(new (BUILDINGS[this.selectedBuilding])(this.game, this.game.click.x, this.game.click.y));
+        }
+     }
+
 
     loadEntities() {
         this.game.entities = [];

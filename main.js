@@ -1,3 +1,4 @@
+let chosenBuilding;
 var gameEngine = new GameEngine();
 
 var ASSET_MANAGER = new AssetManager();
