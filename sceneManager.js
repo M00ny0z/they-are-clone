@@ -23,6 +23,7 @@ class SceneManager {
 
         this.display = 0; // 0 main, 1 colonist, 2 resources
         this.loadEntities();
+        //this.game.ready = true
     };
 
     loadEntities() {
