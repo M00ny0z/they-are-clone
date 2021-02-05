@@ -1,0 +1,40 @@
+/*
+////////////////////////////
+Fonts:
+*/
+
+@font-face {
+    font-family: AliensAmongUs;
+    src: url(../fonts/Aliens\ Among\ Us.otf);
+}
+
+@font-face {
+    font-family: Atmos;
+    src: url(../fonts/Atmos.otf);
+}
+
+@font-face {
+    font-family: GlitchInside;
+    src: url(../fonts/Glitch\ inside.otf);
+}
+
+@font-face {
+    font-family: SFDistantGalaxy;
+    src: url(../fonts/SF\ Distant\ Galaxy.ttf);
+}
+
+@font-face {
+    font-family: Subspace;
+    src: url(../fonts/Subspace.otf);
+}
+
+@font-face {
+    font-family: SubspaceBold;
+    src: url(../fonts/Subspace\ Bold.otf);
+}
+
+
+@font-face {
+    font-family: TransformersMovie;
+    src: url(../fonts/Transformers\ Movie.ttf);
+}
