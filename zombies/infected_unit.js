@@ -225,10 +225,10 @@ class InfectedUnit {
     draw(ctx) {
         var xOffset = 60;
         var yOffset = 40;
-
-        this.drawHealthbar(ctx);
         
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+
+        this.drawHealthbar(ctx);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
