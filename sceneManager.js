@@ -232,13 +232,13 @@ class SceneManager {
             ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         }
         // Day and Hours on UI
-        this.updateDayAndHours(); // get current day and hour number from gameengine state.
-        ctx.font = "28px SpaceMono-Regular";
-        ctx.fillStyle = "#f1fa53";
-        // Day
-        ctx.fillText(leftPad(this.game.day, 3), 220, 810);
-        // Hour:
-        ctx.fillText(leftPad(this.game.hour, 2), 345, 810);
+        // this.updateDayAndHours(); // get current day and hour number from gameengine state.
+        // ctx.font = "28px SpaceMono-Regular";
+        // ctx.fillStyle = "#f1fa53";
+        // // Day
+        // ctx.fillText(leftPad(this.game.day, 3), 220, 810);
+        // // Hour:
+        // ctx.fillText(leftPad(this.game.hour, 2), 345, 810);
     };
 
 

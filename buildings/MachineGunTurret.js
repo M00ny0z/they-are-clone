@@ -87,17 +87,6 @@ class MachineGunTurret {
 
       if (this.game.mouse && this.followMouse) {
          var mouse = this.game.mouse;
-<<<<<<< HEAD
-         ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
-     }
-
-     if (!this.followMouse) {
-         console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
-         ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
-     }
-   }
-}
-=======
          this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
       }
 
@@ -122,4 +111,3 @@ class MachineGunTurret {
       }
    };
 };
->>>>>>> 90cb3bc1d307f7a5d8868f954f715a815d777eb2
