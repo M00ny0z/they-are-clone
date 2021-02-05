@@ -16,7 +16,10 @@ class GameEngine {
         this.up = false;
         this.down = false;
 
-        this.time = 0; // 1 hour is 1 second, 1 day is 24 seconds
+        this.time = 0; // Raw Time: 1 hour is 1 second, 1 day is 24 seconds
+        this.timeAsIntInSeconds = 0;
+        this.day = 0;
+        this.hour = 0;
         this.food = 0;
         this.wood = 0;
         this.stone = 0;
@@ -150,8 +153,9 @@ class GameEngine {
             if (this.entities[i].removeFromWorld) {
                 this.entities.splice(i, 1);
             }
-        }
+        } 
     };
+
 
     loop() {
         this.clockTick = this.timer.tick();

@@ -65,6 +65,9 @@ class SceneManager {
         // this.game.addEntity(new InfectedVenom(this.game, 25, 50, [{ x: 31, y: 32 }]));
         // this.game.addEntity(new InfectedVenom(this.game, 25, 51, [{ x: 25, y: 32 }]));
 
+        this.game.addEntity(new DisplayLast(this.game));
+
+
     };
 
 
@@ -171,5 +174,20 @@ class SceneManager {
             ctx.drawImage(this.sawmillIcon, 1184, 739, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
         }
+        // Day and Hours on UI
+        this.updateDayAndHours(); // get current day and hour number from gameengine state.
+        ctx.font = "28px SpaceMono-Regular";
+        ctx.fillStyle = "#f1fa53";
+        // Day
+        ctx.fillText(leftPad(this.game.day, 3), 220, 810);
+        // Hour:
+        ctx.fillText(leftPad(this.game.hour, 2), 345, 810);
     };
+
+    updateDayAndHours() {
+        // 1 second = 1 hour in game time
+        this.game.timeAsIntInSeconds = Math.trunc(this.game.time); // Ex if time is 53.005, drop decimals to be 53
+        this.game.hour = this.game.timeAsIntInSeconds % 24; // Ex if time is 53.005, find relative hours which is 5 (53-24-24=5 hours into the current day)
+        this.game.day = Math.trunc(this.game.timeAsIntInSeconds/24); // ex 53 / 24 = 2 days elapsed
+    }
 };

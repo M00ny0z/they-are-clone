@@ -3,24 +3,60 @@
 Fonts:
 */
 
+/* We need a "monospaced font", where all numbers are the
+same size*/
+
+
+
+
+/* Monospace fonts:*/
+/*
+@font-face {
+    font-family: NK57-mono-no-eb;
+    src: url(../fonts/nk57-monospace-no-eb.ttf);
+}
+
+@font-face {
+    font-family: NK57-mono-no-rg;
+    src: url(../fonts/nk57-monospace-no-rg.ttf    );
+}
+
+@font-face {
+    font-family: Computo-mono;
+    src: url(../fonts/computo-monospace.otf);
+}
+*/
+
+
+@font-face {
+    font-family: SpaceMono-Bold;
+    src: url(../fonts/SpaceMono-Bold.ttf);
+}
+
+/*
+@font-face {
+    font-family: SpaceMono-BoldItalic;
+    src: url(../fonts/SpaceMono-BoldItalic.ttf);
+}
+
+
+@font-face {
+    font-family: SpaceMono-Italic;
+    src: url(../fonts/SpaceMono-Italic.ttf);
+}
+*/
+
+@font-face {
+    font-family: SpaceMono-Regular;
+    src: url(../fonts/SpaceMono-Regular.ttf);
+}
+
+/* Non-Monospaced Fonts:*/
+
+/*
 @font-face {
     font-family: AliensAmongUs;
     src: url(../fonts/Aliens\ Among\ Us.otf);
-}
-
-@font-face {
-    font-family: Atmos;
-    src: url(../fonts/Atmos.otf);
-}
-
-@font-face {
-    font-family: GlitchInside;
-    src: url(../fonts/Glitch\ inside.otf);
-}
-
-@font-face {
-    font-family: SFDistantGalaxy;
-    src: url(../fonts/SF\ Distant\ Galaxy.ttf);
 }
 
 @font-face {
@@ -33,8 +69,28 @@ Fonts:
     src: url(../fonts/Subspace\ Bold.otf);
 }
 
-
 @font-face {
     font-family: TransformersMovie;
     src: url(../fonts/Transformers\ Movie.ttf);
-}
+}*/
+
+
+/* Don't use */
+
+/* Looks awful */
+/*@font-face {
+    font-family: Atmos;
+    src: url(../fonts/Atmos.otf);
+}*/
+
+/* 1 is not the same size, DONT USE*/
+/*@font-face {
+    font-family: GlitchInside;
+    src: url(../fonts/Glitch\ inside.otf);
+}*/
+
+/* Bad */
+/*@font-face {
+    font-family: SFDistantGalaxy;
+    src: url(../fonts/SF\ Distant\ Galaxy.ttf);
+}*/

@@ -5,3 +5,7 @@ https://www.dafont.com/transformers-movie.font?text=10
 https://www.dafont.com/aliens-among-us.font?text=30&back=theme
 https://www.dafont.com/sf-distant-galaxy.font?text=21&back=theme
 https://www.dafont.com/atomic.font?text=21
+
+Monospace (what we want):
+https://www.dafont.com/nk57-monospace.font?text=11
+https://www.dafont.com/computo-monospace.font?text=11
