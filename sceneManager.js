@@ -31,9 +31,6 @@ class SceneManager {
 
         this.game.addEntity(new MapOne(this.game));
 
-        // this.game.addEntity(new InfectedUnit(this.game, 39, -1, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 },
-        //          { x: 2304 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
-
         this.game.addEntity(new EnemySpawner(this.game));
 
         // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
