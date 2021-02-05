@@ -17,10 +17,10 @@ class GameEngine {
         this.down = false;
 
         // Time: 1 hour is 1 second, 1 day is 24 seconds
-        this.time = 0; // Elapset time in Seconds (Decimal):  EX: 52.7345 
+        this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
         this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
-        this.day = 0; // integer day value:  EX: 1
-        this.hour = 0; // integer hour value (0-23): 
+        this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
+        this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
         this.food = 0;
         this.wood = 0;
         this.stone = 0;
