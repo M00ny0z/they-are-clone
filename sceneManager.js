@@ -7,21 +7,28 @@ class SceneManager {
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui/frame.png");
 
+        // display 0
         this.colonistIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_colonist.png");
         this.resourcesIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_resources.png");
-
+        this.militaryIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_military.png");
+        this.defenseIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_defense.png");
+        // display 1
         this.tentIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_tent.png");
-
+        // display 2
         this.fishermanCottageIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_fishermanCottage.png");
         this.farmIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_farm.png");
         this.quarryIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_quarry.png");
         this.sawmillIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_sawmill.png");
+        // display 3
+        this.ballistaIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_ballista.png");
+        // display 4
+        this.woodWallIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_woodWall.png");
 
         this.backIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_back.png");
 
         this.selected = null;
 
-        this.display = 0; // 0 main, 1 colonist, 2 resources
+        this.display = 0; // 0 main, 1 colonist, 2 resources, 3 military, 4 defense
         this.loadEntities();
     };
 
@@ -30,20 +37,7 @@ class SceneManager {
 
         this.game.addEntity(new MapOne(this.game));
 
-        // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
-        // this.game.addEntity(new Quarry(this.game, 64 * 11, 64 * 30));
-        // this.game.addEntity(new Sawmill(this.game, 64 * 12, 64 * 30));
-
-        // this.game.addEntity(new MachineGunTurret(this.game, 64 * 14, 64 * 30));
-        // this.game.addEntity(new StoneGateVertical(this.game, 64 * 10, 64 * 35));
-        // this.game.addEntity(new WoodGateVertical(this.game, 64 * 10, 64 * 36));
-
-        // this.game.addEntity(new StoneGateHorizontal(this.game, 64 * 12, 64 * 35));
-        // this.game.addEntity(new WoodGateHorizontal(this.game, 64 * 12, 64 * 36));
-        // this.game.addEntity(new WoodWall(this.game, 64 * 15, 64 * 36));
-        // this.game.addEntity(new StoneWall(this.game, 64 * 15, 64 * 35));
-
-        // this.game.addEntity(new CommandCenter(this.game, 64 * 28, 64 * 35));
+        this.game.addEntity(new CommandCenter(this.game, 28, 35));
         //Spawn 10 zombies from the top of map to follow railroad
         for (var i = 0; i < 10; i++) {
             this.game.addEntity(new InfectedUnit(this.game, 2496 / 64, (-100 + i * 50) / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 },
@@ -63,7 +57,6 @@ class SceneManager {
         this.game.addEntity(new InfectedVenom(this.game, 25, 51, [{ x: 25, y: 32 }]));
 
     };
-
 
     // placeBuilding() {
     //     var x = this.game.click.x + this.game.camera.cameraX;
@@ -111,29 +104,62 @@ class SceneManager {
             var x = this.game.clickCanvas.clientX;
             var y = this.game.clickCanvas.clientY;
 
-            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                if (this.display == 0) {
+            if (this.display == 0) { // display 0
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                     this.display = 1;
-                } else if (this.display == 1) {
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    this.display = 2;
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    this.display = 3;
+                } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    this.display = 4;
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                    this.display = 0;
+                }
+            } else if (this.display == 1) { // display 1
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let tent = new Tent(this.game);
                     this.game.addEntity(tent);
                     this.selected = tent;
-
-                    //this.selected = TENT;
-                    //this.game.addEntity(new (ENTITIES[this.selected])(this.game));
-                } else if (this.display == 2) {
-                    
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                    this.display = 0;
                 }
-            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
-                if (this.display == 0) {
-                    this.display = 2;
-                } else if (this.display == 1) {
-                    
-                } else if (this.display == 2) {
-                    
+            } else if (this.display == 2) { // display 2
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    let fishermansCottage = new FishermansCottage(this.game);
+                    this.game.addEntity(fishermansCottage);
+                    this.selected = fishermansCottage;
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    let farm = new Farm(this.game);
+                    this.game.addEntity(farm);
+                    this.selected = farm;
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    let quarry = new Quarry(this.game);
+                    this.game.addEntity(quarry);
+                    this.selected = quarry;
+                } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    let sawmill = new Sawmill(this.game);
+                    this.game.addEntity(sawmill);
+                    this.selected = sawmill;
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                    this.display = 0;
                 }
-            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
-                this.display = 0;
+            } else if (this.display == 3) { // display 3
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    let ballista = new Ballista(this.game);
+                    this.game.addEntity(ballista);
+                    this.selected = ballista;
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                    this.display = 0;
+                }
+            } else if (this.display == 4) { // display 4
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                    let woodWall = new WoodWall(this.game);
+                    this.game.addEntity(woodWall);
+                    this.selected = woodWall;
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                    this.display = 0;
+                }
             }
             this.game.clickCanvas = null;
         }
@@ -158,14 +184,22 @@ class SceneManager {
         if (this.display == 0) {
             ctx.drawImage(this.colonistIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.resourcesIcon, 1087, 739, 45, 45);
+            ctx.drawImage(this.militaryIcon, 1136, 739, 45, 45);
+            ctx.drawImage(this.defenseIcon, 1186, 739, 45, 45);
         } else if (this.display == 1) {
             ctx.drawImage(this.tentIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
         } else if (this.display == 2) {
             ctx.drawImage(this.fishermanCottageIcon, 1037, 739, 45, 45);
-            ctx.drawImage(this.farmIcon, 1086, 739, 45, 45);
+            ctx.drawImage(this.farmIcon, 1087, 739, 45, 45);
             ctx.drawImage(this.quarryIcon, 1134, 739, 45, 45);
             ctx.drawImage(this.sawmillIcon, 1184, 739, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
+        } else if (this.display == 3) {
+            ctx.drawImage(this.ballistaIcon, 1037, 739, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
+        } else if (this.display == 4) {
+            ctx.drawImage(this.woodWallIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
         }
     };

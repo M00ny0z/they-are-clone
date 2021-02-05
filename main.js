@@ -8,19 +8,26 @@ ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 
 // ui
+// display 0
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_colonist.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");
-
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_military.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_defense.png");
+// display 1
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_tent.png");
-
+// display 2
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_fishermanCottage.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_farm.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_quarry.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_sawmill.png");
+// display 3
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_ballista.png");
+// display 4
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_woodWall.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_back.png");
 
-// 
+
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
 

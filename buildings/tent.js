@@ -19,7 +19,7 @@ class Tent {
 
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
-            ctx.drawImage(this.spritesheet, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 64, 64);
+            ctx.drawImage(this.spritesheet, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
         if(!this.followMouse){
