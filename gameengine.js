@@ -16,10 +16,11 @@ class GameEngine {
         this.up = false;
         this.down = false;
 
-        this.time = 0; // Raw Time: 1 hour is 1 second, 1 day is 24 seconds
-        this.timeAsIntInSeconds = 0;
-        this.day = 0;
-        this.hour = 0;
+        // Time: 1 hour is 1 second, 1 day is 24 seconds
+        this.time = 0; // Elapset time in Seconds (Decimal):  EX: 52.7345 
+        this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
+        this.day = 0; // integer day value:  EX: 1
+        this.hour = 0; // integer hour value (0-23): 
         this.food = 0;
         this.wood = 0;
         this.stone = 0;
