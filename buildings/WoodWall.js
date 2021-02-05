@@ -2,6 +2,8 @@ class WoodWall {
    constructor(game) {
        Object.assign(this, { game });
        this.health = 100;
+       this.x = null;
+       this.y = null;
 
        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
    };
