@@ -15,7 +15,9 @@ class GameEngine {
         this.right = false;
         this.up = false;
         this.down = false;
-        //this.Ready = false; // wait for game to load, before we let ui clickable.
+
+        this.zoom = 1 // zoom factor of map, and all units.
+        this.ready = false; // wait for game to load, before we let ui clickable.
     };
 
     init(ctx) {
