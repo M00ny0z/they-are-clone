@@ -16,6 +16,11 @@ class GameEngine {
         this.up = false;
         this.down = false;
 
+        this.time = 0; // 1 hour is 1 second, 1 day is 24 seconds
+        this.food = 0;
+        this.wood = 0;
+        this.stone = 0;
+        this.iron = 0;
         this.zoom = 1 // zoom factor of map, and all units.
         this.ready = false; // wait for game to load, before we let ui clickable.
     };
@@ -150,6 +155,7 @@ class GameEngine {
 
     loop() {
         this.clockTick = this.timer.tick();
+        this.time += this.clockTick; // update elapsed game time
         this.update();
         this.draw();
     };
