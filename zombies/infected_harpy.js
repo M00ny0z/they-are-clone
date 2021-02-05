@@ -2,10 +2,10 @@ class InfectedHarpy {
     constructor(game, x, y, path) {
         Object.assign(this, { game, x, y, path});
 
-        this.x = x * PARAMS.BLOCKWIDTH - 32;
-        this.y = y * PARAMS.BLOCKWIDTH - 32;
+        this.x = x * PARAMS.BLOCKWIDTH + 32;
+        this.y = y * PARAMS.BLOCKWIDTH + 32;
         for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH - 32, y: this.path[i].y * PARAMS.BLOCKWIDTH - 32 };
+            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + 32, y: this.path[i].y * PARAMS.BLOCKWIDTH + 32 };
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_harpy.png");
@@ -18,7 +18,7 @@ class InfectedHarpy {
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 100; // pixels per second
+        this.maxSpeed = 175; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
@@ -42,7 +42,7 @@ class InfectedHarpy {
             'width': 128,
             'height': 95,
             'frames': 8,
-            'speed': 0.1,
+            'speed': 0.05,
             'padding': 0
         };
         //0 = E

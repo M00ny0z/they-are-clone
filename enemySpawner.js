@@ -22,15 +22,14 @@ class EnemySpawner {
             ]
         };
 
-        this.path2 = { startX : 23, startY : 51, path : [
+        this.path2 = { 
+            startX : 23, startY : 51, path : [
             { x: 22, y: 47 },
             { x: 22, y: 42 },
             { x: 28, y: 42 },
             { x: 28, y: 35 }
             ]};
     }
-
-    
 
     //Nothing needs to be drawn for the spawner
     draw() {
@@ -72,7 +71,7 @@ class EnemySpawner {
                 break;
 
             //Wave 3
-            case this.timeElapsed > 20 && !this.spawnThirdWave:
+            case this.timeElapsed > 25 && !this.spawnThirdWave:
                 //Path 1
                 for (var i = 0; i < 7; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));
@@ -98,7 +97,7 @@ class EnemySpawner {
                 break;
 
             //Wave 4   
-            case this.timeElapsed > 40 && !this.spawnFourthWave:
+            case this.timeElapsed > 50 && !this.spawnFourthWave:
                 //Path 1
                 for (var i = 0; i < 11; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));

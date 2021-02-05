@@ -50,4 +50,4 @@ class MapOne {
     draw(ctx) {
         ctx.drawImage(this.spritesheet, (-this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (-this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
     }
-}
+}A

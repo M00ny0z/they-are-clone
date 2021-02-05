@@ -4,6 +4,9 @@ class InfectedUnit {
 
         this.x = x * PARAMS.BLOCKWIDTH + 32;
         this.y = y * PARAMS.BLOCKWIDTH + 32;
+        this.xOffset = 60;
+        this.yOffset = 40;
+
         for (var i = 0; i < this.path.length; i++) {
             this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + 32, y: this.path[i].y * PARAMS.BLOCKWIDTH + 32 };
         }
@@ -205,8 +208,10 @@ class InfectedUnit {
     };
 
     drawHealthbar(ctx) {
-        const posX = this.x - 45;
-        const posY = this.y - 40;
+        // 45
+        // 40
+        const posX = this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
+        const posY = this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
 
         ctx.save();
 
@@ -223,12 +228,12 @@ class InfectedUnit {
     };
 
     draw(ctx) {
-        var xOffset = 60;
-        var yOffset = 40;
 
         this.drawHealthbar(ctx);
         
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 
+            this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
+            this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";

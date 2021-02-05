@@ -15,7 +15,18 @@ class GameEngine {
         this.right = false;
         this.up = false;
         this.down = false;
-        //this.Ready = false; // wait for game to load, before we let ui clickable.
+
+        // Time: 1 hour is 1 second, 1 day is 24 seconds
+        this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
+        this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
+        this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
+        this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
+        this.food = 0;
+        this.wood = 0;
+        this.stone = 0;
+        this.iron = 0;
+        this.zoom = 1 // zoom factor of map, and all units.
+        this.ready = false; // wait for game to load, before we let ui clickable.
     };
 
     init(ctx) {
@@ -143,11 +154,13 @@ class GameEngine {
             if (this.entities[i].removeFromWorld) {
                 this.entities.splice(i, 1);
             }
-        }
+        } 
     };
+
 
     loop() {
         this.clockTick = this.timer.tick();
+        this.time += this.clockTick; // update elapsed game time
         this.update();
         this.draw();
     };

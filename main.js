@@ -63,6 +63,7 @@ ASSET_MANAGER.queueDownload("./sprites/arrow.png");
 ASSET_MANAGER.queueDownload("./sprites/sniper_arrow.png");
 ASSET_MANAGER.queueDownload("./sprites/soldier_bolt.png");
 ASSET_MANAGER.queueDownload("./sprites/titan_arrow.png");
+ASSET_MANAGER.queueDownload("./sprites/cannonball.png");
 
 
 ASSET_MANAGER.downloadAll(function () {

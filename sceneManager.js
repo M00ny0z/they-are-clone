@@ -49,9 +49,6 @@ class SceneManager {
 
         this.game.addEntity(new MapOne(this.game));
 
-        // this.game.addEntity(new InfectedUnit(this.game, 39, -1, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 },
-        //          { x: 2304 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
-
         this.game.addEntity(new EnemySpawner(this.game));
 
         // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
@@ -76,7 +73,7 @@ class SceneManager {
         // this.game.addEntity(new InfectedVenom(this.game, 2496 / 64, -150 / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1050 / 64 },
         // { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
 
-        // this.game.addEntity(new Soldier(this.game, 1200 / 64, 1500 / 64, [{ x: 2500 / 64, y: 1500 / 64 }, { x: 2000 / 64, y: 700 / 64 }]));    //target
+         this.game.addEntity(new Soldier(this.game, 1200 / 64, 1500 / 64, [{ x: 2500 / 64, y: 1500 / 64 }, { x: 2000 / 64, y: 700 / 64 }]));    //target
         // this.game.addEntity(new Soldier(this.game, 1000 / 64, 1500 / 64, [{ x: 2450 / 64, y: 1500 / 64 }, { x: 2100 / 64, y: 700 / 64 }]));    //target
         // this.game.addEntity(new Soldier(this.game, 800 / 64, 1500 / 64, [{ x: 2400 / 64, y: 1500 / 64 }, { x: 2200 / 64, y: 600 / 64 }]));    //target
 
@@ -85,6 +82,7 @@ class SceneManager {
         // this.game.addEntity(new InfectedVenom(this.game, 25, 42, [{ x: 27, y: 32 }]));
         // this.game.addEntity(new InfectedVenom(this.game, 25, 50, [{ x: 31, y: 32 }]));
         // this.game.addEntity(new InfectedVenom(this.game, 25, 51, [{ x: 25, y: 32 }]));
+
 
     };
 
@@ -233,6 +231,14 @@ class SceneManager {
             ctx.drawImage(this.woodWallIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         }
+        // Day and Hours on UI
+        this.updateDayAndHours(); // get current day and hour number from gameengine state.
+        ctx.font = "28px SpaceMono-Regular";
+        ctx.fillStyle = "#f1fa53";
+        // Day
+        ctx.fillText(leftPad(this.game.day, 3), 220, 810);
+        // Hour:
+        ctx.fillText(leftPad(this.game.hour, 2), 345, 810);
     };
 
 
