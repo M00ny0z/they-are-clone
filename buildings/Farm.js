@@ -20,10 +20,10 @@ class Farm {
        const height = 32;
        const startY = 4*32;
        const startX = 64;
-       
+
        if (this.game.mouse && this.followMouse) {
-        var mouse = this.game.mouse;
-        ctx.drawImage(this.spritesheet, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 64, 64);
+            var mouse = this.game.mouse;
+            ctx.drawImage(this.spritesheet, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 64, 64);
         }
 
         if(!this.followMouse){
