@@ -31,7 +31,7 @@ class SceneManager {
 
         this.game.addEntity(new MapOne(this.game));
 
-        //this.game.addEntity(new EnemySpawner(this.game));
+        this.game.addEntity(new EnemySpawner(this.game));
 
         // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
         // this.game.addEntity(new Quarry(this.game, 64 * 11, 64 * 30));
