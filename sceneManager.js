@@ -24,13 +24,24 @@ class SceneManager {
         // display 4
         this.woodWallIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_woodWall.png");
 
+        this.cancelIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_cancel.png");
         this.backIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_back.png");
+        this.zeroIcon = ASSET_MANAGER.getAsset("./sprites/ui/0.png");
+        this.oneIcon = ASSET_MANAGER.getAsset("./sprites/ui/1.png");
+        this.twoIcon = ASSET_MANAGER.getAsset("./sprites/ui/2.png");
+        this.threeIcon = ASSET_MANAGER.getAsset("./sprites/ui/3.png");
+        this.fourIcon = ASSET_MANAGER.getAsset("./sprites/ui/4.png");
+        this.fiveIcon = ASSET_MANAGER.getAsset("./sprites/ui/5.png");
+        this.sixIcon = ASSET_MANAGER.getAsset("./sprites/ui/6.png");
+        this.sevenIcon = ASSET_MANAGER.getAsset("./sprites/ui/7.png");
+        this.eightIcon = ASSET_MANAGER.getAsset("./sprites/ui/8.png");
+        this.nineIcon = ASSET_MANAGER.getAsset("./sprites/ui/9.png");
 
-        this.selected = null;
+        this.elapsedHour = 0;
+        this.elapsedDay = 0;
 
         this.display = 0; // 0 main, 1 colonist, 2 resources, 3 military, 4 defense
         this.loadEntities();
-        //this.game.ready = true
     };
 
     loadEntities() {
@@ -90,6 +101,10 @@ class SceneManager {
     // }
 
     update() {
+        PARAMS.DEBUG = document.getElementById("debug").checked;
+
+        this.elapsedHour += this.game.clockTick;
+
         if (this.game.left) {
             this.cameraX -= 1;
         }
@@ -132,51 +147,44 @@ class SceneManager {
                     this.display = 3;
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
                     this.display = 4;
-                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     this.display = 0;
                 }
             } else if (this.display == 1) { // display 1
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let tent = new Tent(this.game);
                     this.game.addEntity(tent);
-                    this.selected = tent;
-                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     this.display = 0;
                 }
             } else if (this.display == 2) { // display 2
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let fishermansCottage = new FishermansCottage(this.game);
                     this.game.addEntity(fishermansCottage);
-                    this.selected = fishermansCottage;
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let farm = new Farm(this.game);
                     this.game.addEntity(farm);
-                    this.selected = farm;
                 } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let quarry = new Quarry(this.game);
                     this.game.addEntity(quarry);
-                    this.selected = quarry;
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let sawmill = new Sawmill(this.game);
                     this.game.addEntity(sawmill);
-                    this.selected = sawmill;
-                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     this.display = 0;
                 }
             } else if (this.display == 3) { // display 3
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let ballista = new Ballista(this.game);
                     this.game.addEntity(ballista);
-                    this.selected = ballista;
-                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     this.display = 0;
                 }
             } else if (this.display == 4) { // display 4
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                     let woodWall = new WoodWall(this.game);
                     this.game.addEntity(woodWall);
-                    this.selected = woodWall;
-                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 838 && y <= 838 + 45)) {
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     this.display = 0;
                 }
             }
@@ -184,42 +192,221 @@ class SceneManager {
         }
 
         // placing selected entity
-        if (this.game.click) {
-            var x = this.game.click.x + this.game.camera.cameraX;
-            var y = this.game.click.y + this.game.camera.cameraY;
-            if (this.selected != null && !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11) {
-                this.game.mainMap.map[y][x].filled = true;
-                this.selected.followMouse = false;
-                this.selected.x = x;
-                this.selected.y = y;
-                this.selected = null;
-            }
-            this.game.click = null;
-        }
+        // if (this.game.click) {
+        //     var x = this.game.click.x + this.game.camera.cameraX;
+        //     var y = this.game.click.y + this.game.camera.cameraY;
+        //     if (this.selected != null && !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11) {
+        //         this.game.mainMap.map[y][x].filled = true;
+        //         this.selected.followMouse = false;
+        //         this.selected.x = x * PARAMS.BLOCKWIDTH;
+        //         this.selected.y = y * PARAMS.BLOCKWIDTH;
+        //         this.selected = null;
+        //     }
+        //     this.game.click = null;
+        // }
     };
 
     draw(ctx) {
         ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
+
+        this.drawTimer(ctx);
+
         if (this.display == 0) {
             ctx.drawImage(this.colonistIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.resourcesIcon, 1087, 739, 45, 45);
             ctx.drawImage(this.militaryIcon, 1136, 739, 45, 45);
-            ctx.drawImage(this.defenseIcon, 1186, 739, 45, 45);
+            ctx.drawImage(this.defenseIcon, 1185, 739, 45, 45);
         } else if (this.display == 1) {
             ctx.drawImage(this.tentIcon, 1037, 739, 45, 45);
-            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
+            ctx.drawImage(this.cancelIcon, 1184, 837, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         } else if (this.display == 2) {
             ctx.drawImage(this.fishermanCottageIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.farmIcon, 1087, 739, 45, 45);
             ctx.drawImage(this.quarryIcon, 1134, 739, 45, 45);
             ctx.drawImage(this.sawmillIcon, 1184, 739, 45, 45);
-            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         } else if (this.display == 3) {
             ctx.drawImage(this.ballistaIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
         } else if (this.display == 4) {
             ctx.drawImage(this.woodWallIcon, 1037, 739, 45, 45);
-            ctx.drawImage(this.backIcon, 1233, 838, 45, 45);
+            ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         }
     };
+
+
+    drawTimer(ctx){
+        // Hour
+        if (Math.floor(this.elapsedHour / 24) == 0) {
+            switch (Math.floor(this.elapsedHour) % 10) {
+                case 0:
+                    ctx.drawImage(this.zeroIcon, 362, 786, 17, 29);
+                    break;
+                case 1:
+                    ctx.drawImage(this.oneIcon, 362, 786, 17, 29);
+                    break;
+                case 2:
+                    ctx.drawImage(this.twoIcon, 362, 786, 17, 29);
+                    break;
+                case 3:
+                    ctx.drawImage(this.threeIcon, 362, 786, 17, 29);
+                    break;
+                case 4:
+                    ctx.drawImage(this.fourIcon, 362, 786, 17, 29);
+                    break;
+                case 5:
+                    ctx.drawImage(this.fiveIcon, 362, 786, 17, 29);
+                    break;
+                case 6:
+                    ctx.drawImage(this.sixIcon, 362, 786, 17, 29);
+                    break;
+                case 7:
+                    ctx.drawImage(this.sevenIcon, 362, 786, 17, 29);
+                    break;
+                case 8:
+                    ctx.drawImage(this.eightIcon, 362, 786, 17, 29);
+                    break;
+                case 9:
+                    ctx.drawImage(this.nineIcon, 362, 786, 17, 29);
+                    break;
+            }
+
+            switch (Math.floor(this.elapsedHour / 10) % 100) {
+                case 0:
+                    ctx.drawImage(this.zeroIcon, 344, 786, 17, 29);
+                    break;
+                case 1:
+                    ctx.drawImage(this.oneIcon, 344, 786, 17, 29);
+                    break;
+                case 2:
+                    ctx.drawImage(this.twoIcon, 344, 786, 17, 29);
+                    break;
+                case 3:
+                    ctx.drawImage(this.threeIcon, 344, 786, 17, 29);
+                    break;
+                case 4:
+                    ctx.drawImage(this.fourIcon, 344, 786, 17, 29);
+                    break;
+                case 5:
+                    ctx.drawImage(this.fiveIcon, 344, 786, 17, 29);
+                    break;
+                case 6:
+                    ctx.drawImage(this.sixIcon, 344, 786, 17, 29);
+                    break;
+                case 7:
+                    ctx.drawImage(this.sevenIcon, 344, 786, 17, 29);
+                    break;
+                case 8:
+                    ctx.drawImage(this.eightIcon, 344, 786, 17, 29);
+                    break;
+                case 9:
+                    ctx.drawImage(this.nineIcon, 344, 786, 17, 29);
+                    break;
+            }
+        } else {
+            this.elapsedHour = 0;
+            this.elapsedDay++;
+        }
+
+        // Day
+        switch (Math.floor(this.elapsedDay) % 10) {
+            case 0:
+                ctx.drawImage(this.zeroIcon, 250, 786, 17, 29);
+                break;
+            case 1:
+                ctx.drawImage(this.oneIcon, 250, 786, 17, 29);
+                break;
+            case 2:
+                ctx.drawImage(this.twoIcon, 250, 786, 17, 29);
+                break;
+            case 3:
+                ctx.drawImage(this.threeIcon, 250, 786, 17, 29);
+                break;
+            case 4:
+                ctx.drawImage(this.fourIcon, 250, 786, 17, 29);
+                break;
+            case 5:
+                ctx.drawImage(this.fiveIcon, 250, 786, 17, 29);
+                break;
+            case 6:
+                ctx.drawImage(this.sixIcon, 250, 786, 17, 29);
+                break;
+            case 7:
+                ctx.drawImage(this.sevenIcon, 250, 786, 17, 29);
+                break;
+            case 8:
+                ctx.drawImage(this.eightIcon, 250, 786, 17, 29);
+                break;
+            case 9:
+                ctx.drawImage(this.nineIcon, 250, 786, 17, 29);
+                break;
+        }
+
+        switch (Math.floor(this.elapsedDay/10) % 10) {
+            case 0:
+                ctx.drawImage(this.zeroIcon, 232, 786, 17, 29);
+                break;
+            case 1:
+                ctx.drawImage(this.oneIcon, 232, 786, 17, 29);
+                break;
+            case 2:
+                ctx.drawImage(this.twoIcon, 232, 786, 17, 29);
+                break;
+            case 3:
+                ctx.drawImage(this.threeIcon, 232, 786, 17, 29);
+                break;
+            case 4:
+                ctx.drawImage(this.fourIcon, 232, 786, 17, 29);
+                break;
+            case 5:
+                ctx.drawImage(this.fiveIcon, 232, 786, 17, 29);
+                break;
+            case 6:
+                ctx.drawImage(this.sixIcon, 232, 786, 17, 29);
+                break;
+            case 7:
+                ctx.drawImage(this.sevenIcon, 232, 786, 17, 29);
+                break;
+            case 8:
+                ctx.drawImage(this.eightIcon, 232, 786, 17, 29);
+                break;
+            case 9:
+                ctx.drawImage(this.nineIcon, 232, 786, 17, 29);
+                break;
+        }
+
+        switch (Math.floor(this.elapsedDay/100) % 10) {
+            case 0:
+                ctx.drawImage(this.zeroIcon, 214, 786, 17, 29);
+                break;
+            case 1:
+                ctx.drawImage(this.oneIcon, 214, 786, 17, 29);
+                break;
+            case 2:
+                ctx.drawImage(this.twoIcon, 214, 786, 17, 29);
+                break;
+            case 3:
+                ctx.drawImage(this.threeIcon, 214, 786, 17, 29);
+                break;
+            case 4:
+                ctx.drawImage(this.fourIcon, 214, 786, 17, 29);
+                break;
+            case 5:
+                ctx.drawImage(this.fiveIcon, 214, 786, 17, 29);
+                break;
+            case 6:
+                ctx.drawImage(this.sixIcon, 214, 786, 17, 29);
+                break;
+            case 7:
+                ctx.drawImage(this.sevenIcon, 214, 786, 17, 29);
+                break;
+            case 8:
+                ctx.drawImage(this.eightIcon, 214, 786, 17, 29);
+                break;
+            case 9:
+                ctx.drawImage(this.nineIcon, 214, 786, 17, 29);
+                break;
+        }
+    }
 };

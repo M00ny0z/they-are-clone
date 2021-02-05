@@ -4,6 +4,7 @@ var gameEngine = new GameEngine();
 var ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
+ASSET_MANAGER.queueDownload("./sprites/mapOne.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 
@@ -25,8 +26,18 @@ ASSET_MANAGER.queueDownload("./sprites/ui/icon_ballista.png");
 // display 4
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_woodWall.png");
 
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_cancel.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_back.png");
-
+ASSET_MANAGER.queueDownload("./sprites/ui/0.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/1.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/2.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/3.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/4.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/5.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/6.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/7.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/8.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/9.png");
 
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
@@ -55,6 +66,8 @@ ASSET_MANAGER.queueDownload("./sprites/titan_arrow.png");
 
 
 ASSET_MANAGER.downloadAll(function () {
+	
+	console.log(PARAMS);
 	var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
 
