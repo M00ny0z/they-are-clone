@@ -11,6 +11,7 @@ class Tent {
     };
 
     update() {
+        console.log(this.game.mainMap);
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
@@ -25,7 +26,7 @@ class Tent {
         if (this.game.click && this.followMouse) {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11 && this.placeable) {
+            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
@@ -36,8 +37,6 @@ class Tent {
     };
 
     draw(ctx) {
-        const width = 64;
-        const height = 64;
 
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
@@ -52,7 +51,7 @@ class Tent {
         }
 
         if(!this.followMouse){
-            ctx.drawImage(this.spritesheet, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), width, height);
+            ctx.drawImage(this.spritesheet, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
     };
 };

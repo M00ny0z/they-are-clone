@@ -57,6 +57,7 @@ ASSET_MANAGER.queueDownload("./sprites/ballista.png");
 ASSET_MANAGER.queueDownload("./sprites/machinegun_turret.png");
 ASSET_MANAGER.queueDownload("./sprites/tent.png");
 ASSET_MANAGER.queueDownload("./sprites/buildings.png");
+ASSET_MANAGER.queueDownload("./sprites/commandCenter.png");
 
 ASSET_MANAGER.queueDownload("./sprites/firebolt.png");
 ASSET_MANAGER.queueDownload("./sprites/arrow.png");

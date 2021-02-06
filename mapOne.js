@@ -33,21 +33,9 @@ class MapOne {
         } else {
             this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
         }
-        // if (this.game.click) {
-        //     if(this.game.click.y < 11) {
-        //         var x = this.game.click.x + this.game.camera.cameraX;
-        //         var y = this.game.click.y + this.game.camera.cameraY;
-        //         if (!this.map[y][x].filled && !this.map[y][x].collisions) {
-        //             this.map[y][x].filled = true;
-        //             let unit = new Ballista(this.game, x, y);
-        //             this.game.addEntity(unit);
-        //         }
-        //         this.game.click = null;
-        //     }
-        // }
     }
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet, (-this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (-this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+        ctx.drawImage(this.spritesheet, (-this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (-this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH, PARAMS.BLOCKWIDTH * PARAMS.MAPHEIGHT);
     }
-}A
+}

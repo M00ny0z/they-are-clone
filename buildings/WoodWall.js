@@ -25,7 +25,7 @@ class WoodWall {
         if (this.game.click && this.followMouse) {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11 && this.placeable) {
+            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;

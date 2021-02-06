@@ -64,7 +64,7 @@ class SceneManager {
         // this.game.addEntity(new WoodWall(this.game, 64 * 15, 64 * 36));
         // this.game.addEntity(new StoneWall(this.game, 64 * 15, 64 * 35));
 
-        // this.game.addEntity(new CommandCenter(this.game, 64 * 28, 64 * 35));
+        this.game.addEntity(new CommandCenter(this.game, 30, 34));
         //Spawn 10 zombies from the top of map to follow railroad
         // for (var i = 0; i < 10; i++) {
         //     this.game.addEntity(new InfectedUnit(this.game, 2496 / 64, (-100 + i * 50) / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 },
@@ -73,7 +73,7 @@ class SceneManager {
         // this.game.addEntity(new InfectedVenom(this.game, 2496 / 64, -150 / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1050 / 64 },
         // { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
 
-         this.game.addEntity(new Soldier(this.game, 1200 / 64, 1500 / 64, [{ x: 2500 / 64, y: 1500 / 64 }, { x: 2000 / 64, y: 700 / 64 }]));    //target
+         this.game.addEntity(new Soldier(this.game, 1200 / PARAMS.BLOCKWIDTH, 1500 / PARAMS.BLOCKWIDTH, [{ x: 2500 / PARAMS.BLOCKWIDTH, y: 1500 / PARAMS.BLOCKWIDTH }, { x: 2000 / PARAMS.BLOCKWIDTH, y: 700 / PARAMS.BLOCKWIDTH }]));    //target
         // this.game.addEntity(new Soldier(this.game, 1000 / 64, 1500 / 64, [{ x: 2450 / 64, y: 1500 / 64 }, { x: 2100 / 64, y: 700 / 64 }]));    //target
         // this.game.addEntity(new Soldier(this.game, 800 / 64, 1500 / 64, [{ x: 2400 / 64, y: 1500 / 64 }, { x: 2200 / 64, y: 600 / 64 }]));    //target
 
@@ -118,14 +118,15 @@ class SceneManager {
         if (this.game.down) {
             this.cameraY += 1;
         }
-        if (this.cameraX > (PARAMS.MAPWIDTH - PARAMS.CAMERAWIDTH)) {
-            this.cameraX = PARAMS.MAPWIDTH - PARAMS.CAMERAWIDTH;
+        
+        if (this.cameraX > 17) {
+            this.cameraX = 17;
         }
         if (this.cameraX < 0) {
             this.cameraX = 0;
         }
-        if (this.cameraY > (PARAMS.MAPHEIGHT - PARAMS.CAMERAHEIGHT) + 1) {
-            this.cameraY = PARAMS.MAPHEIGHT - PARAMS.CAMERAHEIGHT + 1;
+        if (this.cameraY > 34) {
+            this.cameraY = 34;
         }
         if (this.cameraY < 0) {
             this.cameraY = 0;
@@ -216,7 +217,7 @@ class SceneManager {
             ctx.drawImage(this.defenseIcon, 1185, 739, 45, 45);
         } else if (this.display == 1) {
             ctx.drawImage(this.tentIcon, 1037, 739, 45, 45);
-            ctx.drawImage(this.cancelIcon, 1184, 837, 45, 45);
+            //ctx.drawImage(this.cancelIcon, 1184, 837, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         } else if (this.display == 2) {
             ctx.drawImage(this.fishermanCottageIcon, 1037, 739, 45, 45);
