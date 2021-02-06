@@ -33,9 +33,6 @@ class WoodGateHorizontal {
      }
    };
 
-   drawMinimap(ctx, mmX, mmY) {
-   }
-
    draw(ctx) {
       const width = 64;
       const height = 64;

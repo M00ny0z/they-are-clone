@@ -4,23 +4,41 @@ var gameEngine = new GameEngine();
 var ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
+ASSET_MANAGER.queueDownload("./sprites/mapOne.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 
 // ui
+// display 0
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_colonist.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");
-
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_military.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_defense.png");
+// display 1
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_tent.png");
-
+// display 2
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_fishermanCottage.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_farm.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_quarry.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_sawmill.png");
+// display 3
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_ballista.png");
+// display 4
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_woodWall.png");
 
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_cancel.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_back.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/0.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/1.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/2.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/3.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/4.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/5.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/6.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/7.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/8.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/9.png");
 
-// 
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
 ASSET_MANAGER.queueDownload("./sprites/black.png");
 
@@ -49,6 +67,8 @@ ASSET_MANAGER.queueDownload("./sprites/cannonball.png");
 
 
 ASSET_MANAGER.downloadAll(function () {
+	
+	console.log(PARAMS);
 	var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
 

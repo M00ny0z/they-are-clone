@@ -28,6 +28,11 @@ class MapOne {
     }
 
     update() {
+        if(!PARAMS.DEBUG) {
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
+        } else {
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
+        }
         // if (this.game.click) {
         //     if(this.game.click.y < 11) {
         //         var x = this.game.click.x + this.game.camera.cameraX;
@@ -45,4 +50,4 @@ class MapOne {
     draw(ctx) {
         ctx.drawImage(this.spritesheet, (-this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (-this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
     }
-}
+}A

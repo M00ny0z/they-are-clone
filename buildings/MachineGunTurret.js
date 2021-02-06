@@ -77,9 +77,6 @@ class MachineGunTurret {
         }
    };
 
-   drawMinimap(ctx, mmX, mmY) {
-   }
-
    draw(ctx) {
       const width = 128;
       const height = 128;

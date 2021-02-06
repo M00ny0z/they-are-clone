@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 class StoneGateVertical { 
+=======
+class StoneGateHorizontal {
+>>>>>>> 086e9f013d86814477aa634d40258672519293bd
     constructor(game) {
         Object.assign(this, { game });
         this.health = 100;
         this.x = null;
         this.y = null;
+<<<<<<< HEAD
  
          this.radius = 50;
          this.visualRadius = 75;
@@ -79,3 +84,30 @@ class StoneGateVertical {
      
     };
  };
+=======
+
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+    };
+
+    update() {
+
+    };
+
+    draw(ctx) {
+        const width = 32;
+        const height = 32;
+        const startY = 0;
+        const startX = 64;
+
+        if (this.game.mouse && this.followMouse) {
+            var mouse = this.game.mouse;
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+        }
+
+        if (!this.followMouse) {
+            console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+        }
+    };
+};
+>>>>>>> 086e9f013d86814477aa634d40258672519293bd

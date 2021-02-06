@@ -20,6 +20,9 @@ class Ballista {
 
         this.hitpoints = 100;
 
+        this.followMouse = true;
+        this.placeable = false;
+
         this.animations = [];
         this.loadAnimations();
     };
@@ -54,17 +57,42 @@ class Ballista {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
+            console.log()
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
                 && this.elapsedTime > this.fireRate) {
+                    console.log(canSee(this, ent));
                 this.target = ent;
                 this.elapsedTime = 0;
-                this.game.addEntity(new Arrow(this.game, this.x + 32, this.y + 32, ent, true));
+                this.game.addEntity(new Arrow(this.game, this.x+ 32, this.y + 32, ent, true));
             }
         }
 
         if (this.target != null) {
             this.velocity = { x: (this.target.x - this.x), y: (this.target.y - this.y) };
             this.facing = getFacing(this.velocity);
+        }
+
+        if (this.game.mouse && this.followMouse) {
+            var x = this.game.mouse.x + this.game.camera.cameraX;
+            var y = this.game.mouse.y + this.game.camera.cameraY;
+            if (!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
+                this.placeable = true;
+            } else {
+                this.placeable = false;
+            }
+        }
+
+        //placing selected entity
+        if (this.game.click && this.followMouse) {
+            var x = this.game.click.x + this.game.camera.cameraX;
+            var y = this.game.click.y + this.game.camera.cameraY;
+            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11 && this.placeable) {
+                this.game.mainMap.map[y][x].filled = true;
+                this.followMouse = false;
+                this.x = x * PARAMS.BLOCKWIDTH;
+                this.y = y * PARAMS.BLOCKWIDTH;
+            }
+            this.game.click = null;
         }
     };
 
@@ -101,13 +129,27 @@ class Ballista {
         var xOffset = (this.facing > 4) ? -15 : 0;
         var yOffset = 0;
 
-        if (this.facing < 5) {
-            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
-        } else {
-            ctx.save();
-            ctx.scale(-1, 1);
-            this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x) - 48 + xOffset + (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
-            ctx.restore();
+        if (this.game.mouse && this.followMouse) {
+            var mouse = this.game.mouse;
+            if (this.placeable) {
+                ctx.strokeStyle = 'Green';
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            } else {
+                ctx.strokeStyle = 'Red';
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            }
+            ctx.drawImage(this.spritesheet, 0, 0, 64, 64, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 64, 64);
+        }
+
+        if (!this.followMouse) {
+            if (this.facing < 5) {
+                this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x- xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+            } else {
+                ctx.save();
+                ctx.scale(-1, 1);
+                this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x) - 48 + xOffset + (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+                ctx.restore();
+            }
         }
 
 
@@ -124,20 +166,6 @@ class Ballista {
             ctx.closePath();
             ctx.stroke();
             ctx.setLineDash([]);
-        }
-
-        /*if (this.game.mouse) {
-            var mouse = this.game.mouse;
-            ctx.drawImage(this.spritesheet, 0, 0, 64, 64, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 64, 64);
-        }*/
-        if (this.game.mouse && this.followMouse) {
-            var mouse = this.game.mouse;
-            ctx.drawImage(this.spritesheet, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 64, 64);
-        }
-
-        if(!this.followMouse){
-            console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
-            ctx.drawImage(this.spritesheet, (this.x - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH, (this.y - this.game.camera.cameraY) * PARAMS.BLOCKWIDTH, width, height);
         }
 
     };

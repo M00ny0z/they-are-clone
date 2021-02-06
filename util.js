@@ -84,6 +84,17 @@ function getFacing(velocity) {
     if (-0.875 < angle && angle < -0.625) return 3;
 };
 
+
+// pad an input number to a string with the given number of prefaced 0's
+function leftPad(number, targetLength) {
+    var output = number + '';
+    while (output.length < targetLength) {
+        output = '0' + output;
+    }
+    return output;
+}
+
+
 // creates an alias for requestAnimationFrame for backwards compatibility
 window.requestAnimFrame = (function () {
     return window.requestAnimationFrame ||
@@ -97,12 +108,11 @@ window.requestAnimFrame = (function () {
 })();
 
 // add global parameters here
-
 var PARAMS = {
     DEBUG: true,
     BLOCKWIDTH: 64,
     MAPWIDTH: 50,
     MAPHEIGHT: 50,
     CAMERAWIDTH: 25,
-    CAMERAHEIGHT: 14 
+    CAMERAHEIGHT: 14
 };
