@@ -126,9 +126,6 @@ class Ballista {
             }
         }
 
-        var xOffset = (this.facing > 4) ? -15 : 0;
-        var yOffset = 0;
-
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
@@ -143,11 +140,11 @@ class Ballista {
 
         if (!this.followMouse) {
             if (this.facing < 5) {
-                this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x- xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.75);
+                this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.75);
             } else {
                 ctx.save();
                 ctx.scale(-1, 1);
-                this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x) - 48 + xOffset + (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.75);
+                this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x) - 48  + (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.75);
                 ctx.restore();
             }
         }
