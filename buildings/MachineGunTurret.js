@@ -22,6 +22,10 @@ class MachineGunTurret {
       this.loadAnimations();
    };
 
+   collide(other) {
+       return distance(this, other) < this.radius + other.radius;
+   };
+
    loadAnimations() {
       var spriteInfo = {};
 

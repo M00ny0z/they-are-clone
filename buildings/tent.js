@@ -10,6 +10,10 @@ class Tent {
         this.hitpoints = 100;
     };
 
+    collide(other) {
+        return distance(this, other) < this.radius + other.radius;
+    };
+    
     update() {
         console.log(this.game.mainMap);
         if (this.game.mouse && this.followMouse) {

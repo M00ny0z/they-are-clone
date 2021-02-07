@@ -10,6 +10,10 @@ class CommandCenter {
       //this.spritesheet = ASSET_MANAGER.getAsset("./sprites/commandCenter.png");
    };
 
+   collide(other) {
+      return distance(this, other) < this.radius + other.radius;
+   };
+
    update() {
       //collision detection
       for (const ent of this.game.entities) {

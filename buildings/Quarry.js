@@ -9,6 +9,10 @@ class Quarry {
         this.placeable = false;
         this.hitpoints = 100;
     };
+    
+    collide(other) {
+        return distance(this, other) < this.radius + other.radius;
+    };
 
     update() {
         if (this.game.mouse && this.followMouse) {
