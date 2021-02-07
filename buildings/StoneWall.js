@@ -8,6 +8,10 @@ class StoneWall {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
     };
 
+    collide(other) {
+        return distance(this, other) < this.radius + other.radius;
+    };
+
     update() {
         //collision detection
         for (const ent of this.game.entities) {

@@ -32,6 +32,10 @@ class StoneGateHorizontal {
           }
       }
     };
+
+    collide(other) {
+        return distance(this, other) < this.radius + other.radius;
+    };
  
     drawMinimap(ctx, mmX, mmY) {
     }

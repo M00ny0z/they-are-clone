@@ -18,6 +18,10 @@ class WoodGateHorizontal {
        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
    };
 
+   collide(other) {
+      return distance(this, other) < this.radius + other.radius;
+   };
+
    update() {
       if (this.hitpoints <= 0) this.removeFromWorld = true;
 
