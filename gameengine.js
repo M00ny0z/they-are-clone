@@ -22,9 +22,13 @@ class GameEngine {
         this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
         this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
         this.food = 0;
+        this.maxFood = 200;
         this.wood = 0;
+        this.maxWood = 200;
         this.stone = 0;
+        this.maxStone = 200;
         this.iron = 0;
+        this.maxIron = 200;
         this.zoom = 1 // zoom factor of map, and all units.
         this.ready = false; // wait for game to load, before we let ui clickable.
     };
