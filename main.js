@@ -9,6 +9,13 @@ ASSET_MANAGER.queueDownload("./sprites/mapOne.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 
 // ui
+      
+// Resources (Bottom Left) Panel
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_food.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_iron.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_stone.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_units.png");
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_wood.png");
 // display 0
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_colonist.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");

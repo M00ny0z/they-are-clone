@@ -10,6 +10,7 @@ class GameEngine {
         this.click = null;
         this.clickCanvas = null;
         this.mouse = null;
+        this.prevMouse = null;
 
         this.left = false;
         this.right = false;
@@ -21,14 +22,21 @@ class GameEngine {
         this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
         this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
         this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
-        this.food = 0;
-        this.maxFood = 200;
-        this.wood = 0;
+        this.numUnits = 3;
+        this.maxUnits = 50;
+        this.food = 500;
+        this.foodRate = 0;
+        this.maxFood = 1000;
+        this.wood = 50;
+        this.woodRate = 0;
         this.maxWood = 200;
-        this.stone = 0;
+        this.stone = 50;
+        this.stoneRate = 0;
         this.maxStone = 200;
-        this.iron = 0;
+        this.iron = 50;
+        this.ironRate = 0;
         this.maxIron = 200;
+        this.elapsedHourPrev = 1;
         this.zoom = 1 // zoom factor of map, and all units.
         this.ready = false; // wait for game to load, before we let ui clickable.
     };
@@ -39,6 +47,9 @@ class GameEngine {
         this.surfaceHeight = this.ctx.canvas.height;
         this.startInput();
         this.timer = new Timer();
+        this.times = [];
+        this.fps = 0;
+        this.refreshLoop();
     };
 
     start() {
@@ -159,7 +170,35 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         } 
+        // update the ingame resources every 1 hour
+        if (this.elapsedHour >= this.elapsedHourPrev + 1) {
+            //console.log("update");
+            this.elapsedHourPrev = (this.elapsedHourPrev + 1) %24; //cycle from 0 to 24
+            this.updateResourceCount();
+        }
     };
+
+    // update inGame resources (Every 1 hour in game)
+    updateResourceCount() {
+
+        //var foodBefore = this.food;
+        this.food += this.foodRate;
+        if (this.food > this.maxFood) {
+            this.food = this.maxFood;
+        }
+        this.wood += this.woodRate;
+        if (this.wood > this.maxWood) {
+            this.wood = this.maxWood;
+        }
+        this.stone += this.stoneRate;
+        if (this.stone > this.maxStone) {
+            this.stone = this.maxStone;
+        }
+        this.iron += this.ironRate;
+        if (this.iron > this.maxIron) {
+            this.iron = this.maxIron;
+        }
+    }
 
 
     loop() {
@@ -168,4 +207,24 @@ class GameEngine {
         this.update();
         this.draw();
     };
+
+    /////////////////////////////
+// FPS MONITOR
+// https://stackoverflow.com/questions/8279729/calculate-fps-in-canvas-using-requestanimationframe
+    refreshLoop() {
+        window.requestAnimationFrame(() => {
+          const now = performance.now();
+          //console.log("this.times is: ");
+          //console.log(this.times);
+          while (this.times.length > 0 && this.times[0] <= now - 1000) {
+            this.times.shift();
+          }
+          this.times.push(now);
+          this.fps = this.times.length;
+          //console.log(this.fps);
+          this.refreshLoop();
+        });
+      }
+
+
 };

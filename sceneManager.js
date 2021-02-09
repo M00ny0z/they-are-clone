@@ -6,6 +6,14 @@ class SceneManager {
         this.cameraY = 0;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui/frame.png");
+        
+        // Resources (Bottom Left) Panel
+        this.foodIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_food.png");
+        this.ironIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_iron.png");
+        this.stoneIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_stone.png");
+        this.unitsIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_units.png");
+        this.woodIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_wood.png");
+
 
         // display 0
         this.colonistIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_colonist.png");
@@ -37,8 +45,8 @@ class SceneManager {
         this.eightIcon = ASSET_MANAGER.getAsset("./sprites/ui/8.png");
         this.nineIcon = ASSET_MANAGER.getAsset("./sprites/ui/9.png");
 
-        this.elapsedHour = 0;
-        this.elapsedDay = 0;
+        this.game.elapsedHour = 0;
+        this.game.elapsedDay = 0;
 
         this.display = 0; // 0 main, 1 colonist, 2 resources, 3 military, 4 defense
         this.loadEntities();
@@ -49,11 +57,13 @@ class SceneManager {
 
         this.game.addEntity(new MapOne(this.game));
 
-        this.game.addEntity(new EnemySpawner(this.game));
+        this.game.addEntity(new EnemySpawner(this.game));   
 
-        // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
-        // this.game.addEntity(new Quarry(this.game, 64 * 11, 64 * 30));
-        // this.game.addEntity(new Sawmill(this.game, 64 * 12, 64 * 30));
+        //this.game.addEntity(new Farm(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH * 5));
+        //this.game.addEntity(new Quarry(this.game,PARAMS.BLOCKWIDTH * 11, PARAMS.BLOCKWIDTH * 15));
+        //this.game.addEntity(new Sawmill(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH * 6));
+        //this.game.addEntity(new FishermansCottage(this.game,PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4));
+
 
         // this.game.addEntity(new MachineGunTurret(this.game, 64 * 14, 64 * 30));
         // this.game.addEntity(new StoneGateVertical(this.game, 64 * 10, 64 * 35));
@@ -100,8 +110,10 @@ class SceneManager {
 
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
+        PARAMS.CORD = document.getElementById("cord").checked;
+        PARAMS.RESOURCEXY = document.getElementById("resourceXY").checked;
 
-        this.elapsedHour += this.game.clockTick;
+        this.game.elapsedHour += this.game.clockTick;
 
         if (this.game.left) {
             this.cameraX -= 1;
@@ -190,6 +202,7 @@ class SceneManager {
             this.game.clickCanvas = null;
         }
 
+
         // placing selected entity
         // if (this.game.click) {
         //     var x = this.game.click.x + this.game.camera.cameraX;
@@ -232,6 +245,49 @@ class SceneManager {
             ctx.drawImage(this.woodWallIcon, 1037, 739, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
         }
+
+        //ctx.drawImage(this.backIcon, 1233, 600, 45, 45);
+
+        //ctx.strokeRect(0, 0, 200, 50);
+        ctx.font = "15px SpaceMono-Regular";
+        ctx.fillStyle = "lightgreen";
+        // // Day
+        // // Hour:
+        // ctx.fillText(leftPad(this.game.hour, 2), 345, 810);
+        
+        //
+        // Units
+        ctx.drawImage(this.unitsIcon, 1360, 780, 47-20, 28-10);
+        this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.numUnits, this.game.maxUnits);
+
+        // Food
+        ctx.drawImage(this.foodIcon, 1360, 800, 47-20, 28-10);
+        this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food, this.game.maxFood);
+        ctx.fillText("+" + this.game.foodRate.toString(), 1510, 812);
+
+
+        // Wood
+        ctx.drawImage(this.woodIcon, 1360, 820, 47-20, 28-10);
+        this.drawHealthbar(ctx, 1400, 820, 100, 15, this.game.wood, this.game.maxWood);
+        ctx.fillText("+" + this.game.woodRate.toString(), 1510, 832);
+        
+        
+        // Stone
+        ctx.drawImage(this.stoneIcon, 1360, 840, 47-20, 28-10);
+        this.drawHealthbar(ctx, 1400, 840, 100, 15, this.game.stone, this.game.maxStone);
+        ctx.fillText("+" + this.game.stoneRate.toString(), 1510, 852);
+        
+        // Iron               
+        ctx.drawImage(this.ironIcon, 1360, 860, 47-20, 28-10);
+        this.drawHealthbar(ctx, 1400, 860, 100, 15, this.game.iron, this.game.maxIron);
+        ctx.fillText("+" + this.game.ironRate.toString(), 1510, 872);
+
+       // FPS               
+       ctx.fillText(this.game.fps.toString() + " fps", 1510, 770);
+
+        //console.log("healthbar");
+
+
         // Day and Hours on UI
         // this.updateDayAndHours(); // get current day and hour number from gameengine state.
         // ctx.font = "28px SpaceMono-Regular";
@@ -243,10 +299,36 @@ class SceneManager {
     };
 
 
+    drawHealthbar(ctx, x, y, width, height, val, maxVal) {
+        const posX = x;
+        //const posX = x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
+        //const posY = y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
+        const posY = y;
+
+        ctx.save();
+
+        ctx.strokeStyle = 'gray';
+        ctx.strokeRect(posX, posY, width, height);
+        
+        ctx.fillStyle = 'black';
+        ctx.fillRect(posX + 1, posY + 1, width-2, height-2);
+
+        ctx.fillStyle = val >= 50 ? 'green' : 'red';
+        ctx.fillRect(posX + 2, posY + 2, (width-4) * (val / maxVal), (height-5));
+
+        ctx.font = "10px SpaceMono-Regular";
+        ctx.fillStyle = "white";
+        ctx.fillText(val + "/" + maxVal, x+30, y+10);
+
+        
+        ctx.restore();
+    };
+
+
     drawTimer(ctx){
         // Hour
-        if (Math.floor(this.elapsedHour / 24) == 0) {
-            switch (Math.floor(this.elapsedHour) % 10) {
+        if (Math.floor(this.game.elapsedHour / 24) == 0) {
+            switch (Math.floor(this.game.elapsedHour) % 10) {
                 case 0:
                     ctx.drawImage(this.zeroIcon, 362, 786, 17, 29);
                     break;
@@ -279,7 +361,7 @@ class SceneManager {
                     break;
             }
 
-            switch (Math.floor(this.elapsedHour / 10) % 100) {
+            switch (Math.floor(this.game.elapsedHour / 10) % 100) {
                 case 0:
                     ctx.drawImage(this.zeroIcon, 344, 786, 17, 29);
                     break;
@@ -312,12 +394,12 @@ class SceneManager {
                     break;
             }
         } else {
-            this.elapsedHour = 0;
-            this.elapsedDay++;
+            this.game.elapsedHour = 0;
+            this.game.elapsedDay++;
         }
 
         // Day
-        switch (Math.floor(this.elapsedDay) % 10) {
+        switch (Math.floor(this.game.elapsedDay) % 10) {
             case 0:
                 ctx.drawImage(this.zeroIcon, 250, 786, 17, 29);
                 break;
@@ -350,7 +432,7 @@ class SceneManager {
                 break;
         }
 
-        switch (Math.floor(this.elapsedDay/10) % 10) {
+        switch (Math.floor(this.game.elapsedDay/10) % 10) {
             case 0:
                 ctx.drawImage(this.zeroIcon, 232, 786, 17, 29);
                 break;
@@ -383,7 +465,7 @@ class SceneManager {
                 break;
         }
 
-        switch (Math.floor(this.elapsedDay/100) % 10) {
+        switch (Math.floor(this.game.elapsedDay/100) % 10) {
             case 0:
                 ctx.drawImage(this.zeroIcon, 214, 786, 17, 29);
                 break;
@@ -416,4 +498,5 @@ class SceneManager {
                 break;
         }
     }
+
 };
