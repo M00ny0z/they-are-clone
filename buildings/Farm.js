@@ -11,29 +11,7 @@ class Farm {
         this.placeable = false;
         this.hitpoints = 100;
         this.foodRate = 0;
-        //console.log("farm foodRate is: " + this.foodRate);
     };
-
-    // takes gameEngines map object which is a 2D array of tiles
-    /*calcResourceRate() {
-        // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
-        let mapX = (this.x)/PARAMS.BLOCKWIDTH -2;
-        let mapY = (this.y)/PARAMS.BLOCKWIDTH -2;
-        //console.log(mapX);
-        //console.log(mapY);
-        for (var i = mapX; i <= (mapX+4); i++) {
-            for (var j = mapY; j <= (mapY+4); j++) {
-                //console.log(i + ", " + j );
-                if (this.game.mainMap.map[i][j].dirt) {
-                    //console.log("true");
-                    //console.log(i + "," + j);
-                    this.foodRate += 1;
-                }
-            }
-        }
-        //console.log("Farm Food resources is: " + this.resources);
-        this.game.foodRate += this.foodRate;
-    }*/
 
     calcResourceRate() {
         this.foodRate = 0;
@@ -54,19 +32,13 @@ class Farm {
         if (mapEndY > 49) {
             mapEndY = 49;
         }
-        //console.log(mapX);
-        //console.log(mapY);
         for (var i = mapStartX; i <= mapEndX; i++) {
             for (var j = mapStartY; j <= mapEndY; j++) {
-                //console.log(i + ", " + j );
                 if (this.game.mainMap.map[i][j].dirt) {
-                    //console.log("true");
-                    //console.log(i + "," + j);
                     this.foodRate += 1;
                 }
             }
         }
-        //console.log(this.game.mouse);
         if (PARAMS.RESOURCEXY){ 
             console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
@@ -137,10 +109,9 @@ class Farm {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
             ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
-               //ctx.strokeRect(0, 0, 200, 50);
+            //ctx.strokeRect(0, 0, 200, 50);
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
-            //ctx.fillText("Surround the dirt tiles to acquire food", (mouse.x-3) * PARAMS.BLOCKWIDTH, (mouse.y-1)*PARAMS.BLOCKWIDTH);
             ctx.fillText("Surround the dirt tiles", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
             ctx.fillText("to gain food", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.4)*PARAMS.BLOCKWIDTH);
             ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);

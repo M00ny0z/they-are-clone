@@ -17,33 +17,6 @@ class Quarry {
     };
 
      // takes gameEngines map object which is a 2D array of tiles
-     /*calcResourceRate() {
-        // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
-        let mapX = (this.x)/PARAMS.BLOCKWIDTH -2;
-        let mapY = (this.y)/PARAMS.BLOCKWIDTH -2;
-        //console.log(mapX);
-        //console.log(mapY);
-        for (var i = mapX; i <= (mapX+4); i++) {
-            for (var j = mapY; j <= (mapY+5); j++) {
-                if (this.game.mainMap.map[i][j].stone) {
-                    //console.log("true");
-                    //console.log(i + "," + j);
-                    this.stoneRate += 1;
-                }
-                if (this.game.mainMap.map[i][j].iron) {
-                    //console.log("true");
-                    //console.log(i + "," + j);
-                    this.ironRate += 1;
-                }
-            }
-        }
-        //console.log("Quarry stoneRate is: " + this.stoneRate);
-        //console.log("Quarry ironRate is: " + this.ironRate);
-        this.game.stoneRate += this.stoneRate;
-        this.game.ironRate += this.ironRate;
-    }*/
-
-     // takes gameEngines map object which is a 2D array of tiles
      calcResourceRate() {
         this.stoneRate = 0;
         this.ironRate = 0;
@@ -64,24 +37,16 @@ class Quarry {
         if (mapEndY > 49) {
             mapEndY = 49;
         }
-        //console.log(mapX);
-        //console.log(mapY);
         for (var i = mapStartX; i <= mapEndX; i++) {
             for (var j = mapStartY; j <= mapEndY; j++) {
-                //console.log(i + ", " + j );
                 if (this.game.mainMap.map[i][j].stone) {
-                    //console.log("true");
-                    //console.log(i + "," + j);
                     this.stoneRate += 1;
                 }
                 if (this.game.mainMap.map[i][j].iron) {
-                    //console.log("true");
-                    //console.log(i + "," + j);
                     this.ironRate += 1;
                 }
             }
         }
-        //console.log(this.game.mouse);
         if (PARAMS.RESOURCEXY){ 
             console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
@@ -172,16 +137,6 @@ class Quarry {
             ctx.fillText("rocks to acquire them", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.4)*PARAMS.BLOCKWIDTH);
             ctx.fillText(this.stoneRate + " stone", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
             ctx.fillText(this.ironRate + " iron", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3.3)*PARAMS.BLOCKWIDTH);
-
-
-            /*ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
-            ctx.strokeStyle = 'Purple';
-            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH);
-               //ctx.strokeRect(0, 0, 200, 50);
-            ctx.font = "15px SpaceMono-Regular";
-            ctx.fillStyle = "lightgreen";
-            ctx.fillText("Surround the stone and iron rocks to acquire them", (mouse.x-4) * PARAMS.BLOCKWIDTH, (mouse.y-1)*PARAMS.BLOCKWIDTH);
-*/
         }
 
         if (!this.followMouse) {
