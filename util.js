@@ -109,7 +109,7 @@ window.requestAnimFrame = (function () {
 
 // add global parameters here
 var PARAMS = {
-    DEBUG: true,
+    DEBUG: false,
     BLOCKWIDTH: 48,
     MAPWIDTH: 50,
     MAPHEIGHT: 50,

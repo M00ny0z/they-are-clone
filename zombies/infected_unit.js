@@ -2,18 +2,16 @@ class InfectedUnit {
     constructor(game, x, y, path) {
         Object.assign(this, { game, x, y, path });
 
-        this.x = x * PARAMS.BLOCKWIDTH + 32;
-        this.y = y * PARAMS.BLOCKWIDTH + 32;
-        this.xOffset = 60;
-        this.yOffset = 40;
+        this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
+        this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
         for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + 32, y: this.path[i].y * PARAMS.BLOCKWIDTH + 32 };
+            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2, y: this.path[i].y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2 };
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_unit.png");
 
-        this.radius = 50;
+        this.radius = 10;
         this.visualRadius = 200;
 
         this.targetID = 0;
@@ -21,7 +19,7 @@ class InfectedUnit {
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 100; // pixels per second
+        this.maxSpeed = 25; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
@@ -210,30 +208,32 @@ class InfectedUnit {
     drawHealthbar(ctx) {
         // 45
         // 40
-        const posX = this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
-        const posY = this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
+        // const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
+        // const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
 
-        ctx.save();
+        // ctx.save();
 
-        ctx.strokeStyle = 'gray';
-        ctx.strokeRect(posX, posY, 100, 15);
+        // ctx.strokeStyle = 'gray';
+        // ctx.strokeRect(posX, posY, 100, 15);
         
-        ctx.fillStyle = 'white';
-        ctx.fillRect(posX + 1, posY + 1, 98, 13);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(posX + 1, posY + 1, 98, 13);
 
-        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        ctx.fillRect(posX + 2, posY + 2, 96 * (this.hitpoints / 100), 11);
+        // ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
+        // ctx.fillRect(posX + 2, posY + 2, 96 * (this.hitpoints / 100), 11);
         
-        ctx.restore();
+        // ctx.restore();
     };
 
     draw(ctx) {
-
-        this.drawHealthbar(ctx);
+        this.xOffset = 32;
+        this.yOffset = 20;
         
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 
             this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
-            this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+            this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
+
+        this.drawHealthbar(ctx);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";

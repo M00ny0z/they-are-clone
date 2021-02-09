@@ -48,7 +48,7 @@ class SceneManager {
         this.game.entities = [];
 
         this.game.addEntity(new MapOne(this.game));
-
+        this.game.addEntity(new CommandCenter(this.game, 30, 34));
         this.game.addEntity(new EnemySpawner(this.game));
 
         // this.game.addEntity(new Farm(this.game, 64 * 10, 64 * 30));
@@ -64,7 +64,6 @@ class SceneManager {
         // this.game.addEntity(new WoodWall(this.game, 64 * 15, 64 * 36));
         // this.game.addEntity(new StoneWall(this.game, 64 * 15, 64 * 35));
 
-        this.game.addEntity(new CommandCenter(this.game, 30, 34));
         //Spawn 10 zombies from the top of map to follow railroad
         // for (var i = 0; i < 10; i++) {
         //     this.game.addEntity(new InfectedUnit(this.game, 2496 / 64, (-100 + i * 50) / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 },
@@ -73,7 +72,7 @@ class SceneManager {
         // this.game.addEntity(new InfectedVenom(this.game, 2496 / 64, -150 / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1050 / 64 },
         // { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
 
-         this.game.addEntity(new Soldier(this.game, 1200 / PARAMS.BLOCKWIDTH, 1500 / PARAMS.BLOCKWIDTH, [{ x: 2500 / PARAMS.BLOCKWIDTH, y: 1500 / PARAMS.BLOCKWIDTH }, { x: 2000 / PARAMS.BLOCKWIDTH, y: 700 / PARAMS.BLOCKWIDTH }]));    //target
+        //this.game.addEntity(new Soldier(this.game, 1200 / PARAMS.BLOCKWIDTH, 1500 / PARAMS.BLOCKWIDTH, [{ x: 2500 / PARAMS.BLOCKWIDTH, y: 1500 / PARAMS.BLOCKWIDTH }, { x: 2000 / PARAMS.BLOCKWIDTH, y: 700 / PARAMS.BLOCKWIDTH }]));    //target
         // this.game.addEntity(new Soldier(this.game, 1000 / 64, 1500 / 64, [{ x: 2450 / 64, y: 1500 / 64 }, { x: 2100 / 64, y: 700 / 64 }]));    //target
         // this.game.addEntity(new Soldier(this.game, 800 / 64, 1500 / 64, [{ x: 2400 / 64, y: 1500 / 64 }, { x: 2200 / 64, y: 600 / 64 }]));    //target
 
@@ -189,20 +188,6 @@ class SceneManager {
             }
             this.game.clickCanvas = null;
         }
-
-        // placing selected entity
-        // if (this.game.click) {
-        //     var x = this.game.click.x + this.game.camera.cameraX;
-        //     var y = this.game.click.y + this.game.camera.cameraY;
-        //     if (this.selected != null && !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 11) {
-        //         this.game.mainMap.map[y][x].filled = true;
-        //         this.selected.followMouse = false;
-        //         this.selected.x = x * PARAMS.BLOCKWIDTH;
-        //         this.selected.y = y * PARAMS.BLOCKWIDTH;
-        //         this.selected = null;
-        //     }
-        //     this.game.click = null;
-        // }
     };
 
     draw(ctx) {

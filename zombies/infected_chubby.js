@@ -2,15 +2,16 @@ class InfectedChubby {
     constructor(game, x, y, path) {
         Object.assign(this, { game, x, y, path });
 
-        this.x = x * PARAMS.BLOCKWIDTH + 32;
-        this.y = y * PARAMS.BLOCKWIDTH + 32;
+        this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
+        this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
+
         for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + 32, y: this.path[i].y * PARAMS.BLOCKWIDTH + 32 };
+            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2, y: this.path[i].y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2 };
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_chubby.png");
 
-        this.radius = 100;
+        this.radius = 20;
         this.visualRadius = 200;
 
         this.targetID = 0;
@@ -18,7 +19,7 @@ class InfectedChubby {
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 100; // pixels per second
+        this.maxSpeed = 25; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
@@ -151,7 +152,7 @@ class InfectedChubby {
         this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-         
+        
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -205,24 +206,10 @@ class InfectedChubby {
     };
 
     draw(ctx) {
-        var xOffset = 0;
-        var yOffset = 0;
+        var xOffset = 35;
+        var yOffset = 35;
 
-        if (this.state === 0) {
-            xOffset = 80;
-            yOffset = 70;
-        } else if (this.state === 1) {
-            xOffset = 110;
-            yOffset = 100;
-        } else if (this.state === 2) {
-            xOffset = 160;
-            yOffset = 60;
-        } else if (this.state === 3) {
-            xOffset = 65;
-            yOffset = 60;
-        }
-
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
