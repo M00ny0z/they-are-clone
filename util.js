@@ -38,6 +38,10 @@ function rgb(r, g, b) {
     return "rgb(" + r + "," + g + "," + b + ")";
 };
 
+const nullCheck = (todo) => {
+    return (todo === undefined || todo === null) ? false : todo;
+};
+
 // const drawHealthbar = (ctx, percent) => {
 //     ctx.save();
 
