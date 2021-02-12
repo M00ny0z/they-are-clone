@@ -12,6 +12,8 @@ const TENT = "TENT";
 const WOODGATEVERT = "WOODGATEVERT";
 const WOODGATEHORI = "WOODGATEHORI";
 const WOODWALL = "WOODWALL";
+const UNIT = 0;
+const ZOMBIE = 1;
 
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;
@@ -36,6 +38,11 @@ function randomInt(n) {
 // returns a string that can be used as a rgb web color
 function rgb(r, g, b) {
     return "rgb(" + r + "," + g + "," + b + ")";
+};
+
+const nullCheck = (todo) => {
+    console.log(todo);
+    return ((todo == undefined || todo == null) ? false : todo);
 };
 
 // const drawHealthbar = (ctx, percent) => {
