@@ -12,6 +12,8 @@ const TENT = "TENT";
 const WOODGATEVERT = "WOODGATEVERT";
 const WOODGATEHORI = "WOODGATEHORI";
 const WOODWALL = "WOODWALL";
+const UNIT = 0;
+const ZOMBIE = 1;
 
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;
@@ -39,7 +41,8 @@ function rgb(r, g, b) {
 };
 
 const nullCheck = (todo) => {
-    return (todo === undefined || todo === null) ? false : todo;
+    console.log(todo);
+    return ((todo == undefined || todo == null) ? false : todo);
 };
 
 // const drawHealthbar = (ctx, percent) => {
