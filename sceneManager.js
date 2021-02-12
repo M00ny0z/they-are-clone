@@ -199,46 +199,56 @@ class SceneManager {
                 }
             } else if (this.display == 1) { // display 1
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                    if (!this.selected) {
-                        this.selected = new Tent(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new Tent(this.game);
+                    this.game.addEntity(this.selected);
+
                 }
             } else if (this.display == 2) { // display 2
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["FishermansCottage"].enoughResource) {
-                    if (!this.selected) {
-                        this.selected = new FishermansCottage(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new FishermansCottage(this.game);
+                    this.game.addEntity(this.selected);
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Farm"].enoughResource) {
-                    if (!this.selected) {
-                        this.selected = new Farm(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new Farm(this.game);
+                    this.game.addEntity(this.selected);
                 } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Quarry"].enoughResource) {
-                    if (!this.selected) {
-                        this.selected = new Quarry(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new Quarry(this.game);
+                    this.game.addEntity(this.selected);
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sawmill"].enoughResource) {
-                    if (!this.selected) {
-                        this.selected = new Sawmill(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new Sawmill(this.game);
+                    this.game.addEntity(this.selected);
                 }
             } else if (this.display == 3) { // display 3
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                    if (!this.selected) {
-                        this.selected = new Ballista(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new Ballista(this.game);
+                    this.game.addEntity(this.selected);
+
                 }
             } else if (this.display == 4) { // display 4
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                    if (!this.selected) {
-                        this.selected = new WoodWall(this.game);
-                        this.game.addEntity(this.selected);
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
                     }
+                    this.selected = new WoodWall(this.game);
+                    this.game.addEntity(this.selected);
+
                 }
             }
             this.game.clickCanvas = null;
