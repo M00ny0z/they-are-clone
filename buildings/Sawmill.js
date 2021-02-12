@@ -1,14 +1,53 @@
 class Sawmill {
     constructor(game) {
-        Object.assign(this, { game });
+        Object.assign(this, { game});
         this.x = null;
         this.y = null;
+        //this.x = x;
+        //this.y = y;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
+
+        this.woodRate = 0;
     };
+
+    // takes gameEngines map object which is a 2D array of tiles
+    calcResourceRate() {
+        this.woodRate = 0;
+        // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
+        let mapStartX = this.game.mouse.x + this.game.camera.cameraX - 2;
+        let mapStartY = this.game.mouse.y + this.game.camera.cameraY - 2;
+        let mapEndX = mapStartX + 4;
+        let mapEndY = mapStartY + 5;
+        if (mapStartX < 0) {
+            mapStartX = 0;
+        }
+        if (mapStartY < 0) {
+            mapStartY = 0;
+        }
+        if (mapEndX > 49) {
+            mapEndX = 49;
+        }
+        if (mapEndY > 49) {
+            mapEndY = 49;
+        }
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
+                if (this.game.mainMap.map[i][j].green) {
+                    this.woodRate += 1;
+                }
+            }
+        }
+        if (PARAMS.RESOURCEXY){ 
+            console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
+        }
+        //console.log("Wood resources is: " + this.woodRate);
+        //this.game.woodRate += this.woodRate;
+    }
+
 
     collide(other) {
         return distance(this, other) < this.radius + other.radius;
@@ -36,6 +75,14 @@ class Sawmill {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
+                //this.calcResourceRate();
+                this.game.numWorkers -= this.game.requiredResources["Sawmill"].workers;
+                this.game.food -= this.game.requiredResources["Sawmill"].food;
+                this.game.wood -= this.game.requiredResources["Sawmill"].wood;
+                this.game.stone -= this.game.requiredResources["Sawmill"].stone;
+                this.game.iron -= this.game.requiredResources["Sawmill"].iron;
+
+                this.game.woodRate += this.woodRate;
             }
             this.game.click = null;
         }
@@ -57,6 +104,9 @@ class Sawmill {
         const startY = 3 * 32;
         const startX = 3 * 32;
 
+        //ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) , width*1.5, height*1.5); // draw on map using the passed in x and y
+
+
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
@@ -66,11 +116,22 @@ class Sawmill {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
             }
+            this.calcResourceRate();
+
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
+            ctx.strokeStyle = 'Purple';
+            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH);
+               //ctx.strokeRect(0, 0, 200, 50);
+            ctx.font = "15px SpaceMono-Regular";
+            ctx.fillStyle = "lightgreen";
+            ctx.fillText("Surround the green tiles", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
+            ctx.fillText("to gain wood", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.4)*PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.woodRate + " wood", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
+
         }
 
         if (!this.followMouse) {
-            console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
+            //console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
             ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
         }
     };
