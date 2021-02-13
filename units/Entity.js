@@ -1,3 +1,4 @@
+// GOODBYE HELLO
 class Entity {
    constructor(game, spritesheet, x, y, path, radius, visualRadius, maxSpeed, offset, offsetList, hitpoints, collisionFunction) {
       Object.assign(this, { game, spritesheet, x, y, path, radius, visualRadius, maxSpeed, offset, offsetList, hitpoints, collisionFunction });
