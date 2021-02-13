@@ -34,8 +34,8 @@ class Sawmill {
         if (mapEndY > 49) {
             mapEndY = 49;
         }
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
+        for (var i = mapStartY; i <= mapEndY; i++) {
+            for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].green) {
                     this.woodRate += 1;
                 }
@@ -44,8 +44,6 @@ class Sawmill {
         if (PARAMS.RESOURCEXY){ 
             console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
-        //console.log("Wood resources is: " + this.woodRate);
-        //this.game.woodRate += this.woodRate;
     }
 
 
@@ -57,13 +55,12 @@ class Sawmill {
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
-            if (((this.game.mainMap.map[y + 1][x].green == true) || (this.game.mainMap.map[y - 1][x].green == true) ||
-                (this.game.mainMap.map[y][x + 1].green == true) || (this.game.mainMap.map[y][x - 1].green == true)) &&
-                !this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
+            if (!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
             }
+            this.calcResourceRate();
         }
 
         //placing selected entity
@@ -75,7 +72,6 @@ class Sawmill {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
-                //this.calcResourceRate();
                 this.game.numWorkers -= this.game.requiredResources["Sawmill"].workers;
                 this.game.food -= this.game.requiredResources["Sawmill"].food;
                 this.game.wood -= this.game.requiredResources["Sawmill"].wood;
@@ -104,9 +100,6 @@ class Sawmill {
         const startY = 3 * 32;
         const startX = 3 * 32;
 
-        //ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) , width*1.5, height*1.5); // draw on map using the passed in x and y
-
-
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
@@ -116,7 +109,6 @@ class Sawmill {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
             }
-            this.calcResourceRate();
 
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
@@ -131,7 +123,6 @@ class Sawmill {
         }
 
         if (!this.followMouse) {
-            //console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
             ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
         }
     };

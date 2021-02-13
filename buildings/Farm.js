@@ -30,8 +30,8 @@ class Farm {
         if (mapEndY > 49) {
             mapEndY = 49;
         }
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
+        for (var i = mapStartY; i <= mapEndY; i++) {
+            for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
                     this.foodRate += 1;
                 }
@@ -56,6 +56,7 @@ class Farm {
             } else {
                 this.placeable = false;
             }
+            this.calcResourceRate();
         }
 
         //placing selected entity
@@ -67,7 +68,6 @@ class Farm {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
-                //this.calcResourceRate();
                 this.game.numWorkers -= this.game.requiredResources["Farm"].workers;
                 this.game.food -= this.game.requiredResources["Farm"].food;
                 this.game.wood -= this.game.requiredResources["Farm"].wood;
@@ -105,7 +105,6 @@ class Farm {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
-            this.calcResourceRate();
 
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';

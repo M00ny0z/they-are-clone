@@ -72,8 +72,7 @@ ASSET_MANAGER.queueDownload("./sprites/cannonball.png");
 
 
 ASSET_MANAGER.downloadAll(function () {
-	
-	console.log(PARAMS);
+	//console.log(PARAMS);
 	var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
 

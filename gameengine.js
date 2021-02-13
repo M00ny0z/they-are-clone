@@ -44,9 +44,9 @@ class GameEngine {
 
         this.requiredResources = {};
         this.requiredResources["FishermansCottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["Farm"] = { workers: 2, food: 100, wood: 50, stone: 50, iron: 50, enoughResource: false };
-        this.requiredResources["Quarry"] = { workers: 2, food: 100, wood: 50, stone: 50, iron: 50, enoughResource: false };
-        this.requiredResources["Sawmill"] = { workers: 2, food: 100, wood: 50, stone: 50, iron: 50, enoughResource: false };
+        this.requiredResources["Farm"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Quarry"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Sawmill"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         //console.log(this.requiredResources["FishermansCottage"].workers);
     };
 
@@ -190,8 +190,6 @@ class GameEngine {
 
     // update inGame resources (Every 1 hour in game)
     updateResourceCount() {
-
-        //var foodBefore = this.food;
         this.food += this.foodRate;
         if (this.food > this.maxFood) {
             this.food = this.maxFood;
@@ -209,7 +207,6 @@ class GameEngine {
             this.iron = this.maxIron;
         }
     }
-
 
     loop() {
         this.clockTick = this.timer.tick();

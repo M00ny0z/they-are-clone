@@ -34,8 +34,9 @@ class FishermansCottage {
         if (mapEndY > 49) {
             mapEndY = 49;
         }
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
+        for (var i = mapStartY; i <= mapEndY; i++) {
+            for (var j = mapStartX; j <= mapEndX; j++) {
+                console.log("x:" + j + " y:" + i + this.game.mainMap.map[i][j].water);
                 if (this.game.mainMap.map[i][j].water) {
                     this.foodRate += 1;
                 }
@@ -44,8 +45,6 @@ class FishermansCottage {
         if (PARAMS.RESOURCEXY){ 
             console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
-        //console.log("Wood resources is: " + this.woodRate);
-        //this.game.woodRate += this.woodRate;
     }
 
     collide(other) {
@@ -63,6 +62,7 @@ class FishermansCottage {
             } else {
                 this.placeable = false;
             }
+            this.calcResourceRate();
         }
 
         //placing selected entity
@@ -74,7 +74,6 @@ class FishermansCottage {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
-                //this.calcResourceRate();
                 this.game.numWorkers -= this.game.requiredResources["FishermansCottage"].workers;
                 this.game.food -= this.game.requiredResources["FishermansCottage"].food;
                 this.game.wood -= this.game.requiredResources["FishermansCottage"].wood;
@@ -103,7 +102,7 @@ class FishermansCottage {
         const height = 32;
         const startY = 4 * 32;
         const startX = 32;
-        
+        //console.log(this.foodRate);
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
@@ -113,7 +112,6 @@ class FishermansCottage {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
-            this.calcResourceRate();
 
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
