@@ -1,34 +1,45 @@
-class InfectedChubby {
+class InfectedChubby extends Entity {
     constructor(game, x, y, path) {
-        Object.assign(this, { game, x, y, path });
-
-        this.x = x * PARAMS.BLOCKWIDTH + 32;
-        this.y = y * PARAMS.BLOCKWIDTH + 32;
-        for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + 32, y: this.path[i].y * PARAMS.BLOCKWIDTH + 32 };
-        }
-
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_chubby.png");
-
-        this.radius = 100;
-        this.visualRadius = 200;
-
-        this.targetID = 0;
-        if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
-
-        // Calculating the velocity
-        var dist = distance(this, this.target);
-        this.maxSpeed = 100; // pixels per second
-        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-
-        this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
-        this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
-        this.elapsedTime = 0;
-
-        this.hitpoints = 100;
-
-        this.animations = [];
-        this.loadAnimations();
+        const offset = 32;
+        const radius = 100;
+        const visualRadius = 200;
+        const maxSpeed = 100; // pixels per second
+        const hitpoints = 100;
+        const offsetList = [
+            { x: 80, y: 70 },
+            { x: 110, y: 100 },
+            { x: 160, y: 60 },
+            { x: 65, y: 60 }
+        ];
+        const collisionFunction = () => {
+            // collision detection
+            for (const ent of this.game.entities) {
+                const enemyEntityList = ent instanceof Ranger ||  ent instanceof Soldier ||
+                                        ent instanceof Sniper || ent instanceof Titan || 
+                                        ent instanceof Ballista || ent instanceof CommandCenter || 
+                                        ent instanceof Farm || ent instanceof FishermansCottage ||
+                                        ent instanceof Quarry || ent instanceof Sawmill ||
+                                        ent instanceof StoneWall || ent instanceof Tent ||
+                                        ent instanceof WoodWall || ent instanceof MachineGunTurret;
+                if (enemyEntityList && canSee(this, ent)) {
+                    this.target = ent;
+                }
+                if (enemyEntityList && collide(this, ent)) {
+                    if (this.state === 0) {
+                        this.state = 1;
+                        this.elapsedTime = 0;
+                    } else if (this.elapsedTime > 1.5) {
+                        ent.hitpoints -= 15;
+                        this.elapsedTime = 0;
+                    }
+                }
+            } 
+        };
+        super(
+            game, ASSET_MANAGER.getAsset("./sprites/infected_chubby.png"), 
+            x, y, path, radius, visualRadius, maxSpeed, offset, offsetList, hitpoints, 
+            collisionFunction
+        );
     };
 
     loadAnimations() {
@@ -202,41 +213,5 @@ class InfectedChubby {
         }
 
         this.facing = getFacing(this.velocity);
-    };
-
-    draw(ctx) {
-        var xOffset = 0;
-        var yOffset = 0;
-
-        if (this.state === 0) {
-            xOffset = 80;
-            yOffset = 70;
-        } else if (this.state === 1) {
-            xOffset = 110;
-            yOffset = 100;
-        } else if (this.state === 2) {
-            xOffset = 160;
-            yOffset = 60;
-        } else if (this.state === 3) {
-            xOffset = 65;
-            yOffset = 60;
-        }
-
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
-
-        if (PARAMS.DEBUG) {
-            ctx.strokeStyle = "Red";
-            ctx.beginPath();
-            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
-            ctx.closePath();
-            ctx.stroke();
-
-            ctx.setLineDash([5, 15]);
-            ctx.beginPath();
-            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.visualRadius, 0, 2 * Math.PI);
-            ctx.closePath();
-            ctx.stroke();
-            ctx.setLineDash([]);
-        }
     };
 }

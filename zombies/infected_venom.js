@@ -9,8 +9,14 @@ class InfectedVenom extends Entity {
         const collisionFunction = () => {
             // collision detection
             for (const ent of this.game.entities) {
-                if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
-                    ent instanceof Ballista) && canSee(this, ent)) {
+                const enemyEntityList = ent instanceof Ranger ||  ent instanceof Soldier ||
+                                        ent instanceof Sniper || ent instanceof Titan || 
+                                        ent instanceof Ballista || ent instanceof CommandCenter || 
+                                        ent instanceof Farm || ent instanceof FishermansCottage ||
+                                        ent instanceof Quarry || ent instanceof Sawmill ||
+                                        ent instanceof StoneWall || ent instanceof Tent ||
+                                        ent instanceof WoodWall || ent instanceof MachineGunTurret;
+                if (enemyEntityList && canSee(this, ent)) {
                     if (this.state === 0) {
                         this.target = ent;
                         this.state = 1;

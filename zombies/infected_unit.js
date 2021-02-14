@@ -9,13 +9,18 @@ class InfectedUnit extends Entity {
         const collisionFunction = () => {
             // collision detection
             for (const ent of this.game.entities) {
-                if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
-                    ent instanceof Ballista) && canSee(this, ent)) {
+                const enemyEntityList = ent instanceof Ranger ||  ent instanceof Soldier ||
+                                        ent instanceof Sniper || ent instanceof Titan || 
+                                        ent instanceof Ballista || ent instanceof CommandCenter || 
+                                        ent instanceof Farm || ent instanceof FishermansCottage ||
+                                        ent instanceof Quarry || ent instanceof Sawmill ||
+                                        ent instanceof StoneWall || ent instanceof Tent ||
+                                        ent instanceof WoodWall || ent instanceof MachineGunTurret;
+                if (enemyEntityList && canSee(this, ent)) {
                     this.target = ent;
                 }
-                if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
-                    ent instanceof Ballista) && collide(this, ent)) {
-                    if (this.state === 0) {
+                if (enemyEntityList && collide(this, ent)) {
+                    if (this.state === 0 || this.state === 3) {
                         this.state = 1;
                         this.elapsedTime = 0;
                     } else if (this.elapsedTime > 1.5) {
@@ -169,6 +174,8 @@ class InfectedUnit extends Entity {
     };
 
     draw(ctx) {
+        console.log(this.state);
+        this.drawHealthbar(ctx);
         
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 
             this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
@@ -189,4 +196,4 @@ class InfectedUnit extends Entity {
             ctx.setLineDash([]);
         }
     };
-}
+}   
