@@ -15,6 +15,8 @@ class CommandCenter {
    };
 
    update() {
+      if (this.hitpoints <= 0) this.removeFromWorld = true;
+      
       //collision detection
       for (const ent of this.game.entities) {
          if ((ent instanceof InfectedUnit || 

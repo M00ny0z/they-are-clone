@@ -50,9 +50,7 @@ class Ballista {
     update() {
         this.elapsedTime += this.game.clockTick;
 
-        if (this.hitpoints <= 0) {
-            this.removeFromWorld = true;
-        }
+        if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
