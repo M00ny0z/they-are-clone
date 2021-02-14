@@ -667,7 +667,7 @@ class SceneManager {
             // wood wall icon
             ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
             if (this.game.requiredResources["WoodWall"].enoughResource) {
-                ctx.drawImage(this.buildingsImg, 128, 64, 32, 32, 1042, 744, 35, 35);
+                ctx.drawImage(this.buildingsImg, 128, 32, 32, 32, 1042, 744, 35, 35);
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 128, 64, 32, 32, 1042, 744, 35, 35);
             }

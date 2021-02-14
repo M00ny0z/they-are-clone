@@ -59,7 +59,7 @@ class WoodWall {
     draw(ctx) {
         const width = 32;
         const height = 32;
-        const startY = 64;
+        const startY = 32;
         const startX = 128;
 
         if (this.game.mouse && this.followMouse) {
