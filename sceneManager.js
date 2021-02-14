@@ -51,20 +51,19 @@ class SceneManager {
         this.loadEntities();
     };
 
-    //Helper function to deep copy paths
-    copyPath(originalPath) {
-        let copiedPath = [];
-        for(let i = 0; i < originalPath.length; i++) {
-            copiedPath[i] = { x : originalPath[i].x, y : originalPath[i].y }
-        }
-        return copiedPath;
-    }
-
     loadEntities() {
         this.game.entities = [];
 
         this.game.addEntity(new MapOne(this.game));
 
+        this.game.addEntity(this.game.enemyspawner);
+
+        // UNCOMMENT THE FOLLOWING CODE TO DEMONSTRATE ALLY/ENEMY SPAWNERS
+        // this.game.allyspawner.spawnAllyPrewrittenPath(2, 1); //Spawn soldier that travels up
+        // this.game.allyspawner.spawnAllyPrewrittenPath(3, 1); //Spawn sniper that travels up
+        // this.game.enemyspawner.spawnEnemy(4, 1, 1, [ {x: 30, y: 1} ]); //Spawn infected chubby that goes from (1, 1) to (30, 1)
+
+        // FOR TESTING MINIMAP
         // this.path1 = { 
         //     startX : 47, startY : 0, path : [
         //     { x: 0, y: 0 }
@@ -72,8 +71,6 @@ class SceneManager {
         // };
         // this.infected = (new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (0 * -1), this.copyPath(this.path1.path)));
         // this.game.entities[1] = this.infected;
-        
-        this.game.addEntity(new EnemySpawner(this.game));
 
         //this.game.addEntity(new Farm(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH * 5));
         //this.game.addEntity(new Quarry(this.game,PARAMS.BLOCKWIDTH * 11, PARAMS.BLOCKWIDTH * 15));

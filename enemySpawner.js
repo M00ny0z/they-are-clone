@@ -1,4 +1,8 @@
 class EnemySpawner {
+    /**
+     * Can be used to spawn enemy units along either a predefined path or a manual path. Useful for debugging.
+     * Can also be inserted into the game engine's gameEntities to spawn waves of enemies.
+     */
     constructor(game) {
         Object.assign(this, { game });
 
@@ -23,12 +27,59 @@ class EnemySpawner {
         };
 
         this.path2 = { 
-            startX : 23, startY : 51, path : [
-            { x: 22, y: 47 },
+            startX : 25, startY : 51, path : [
+            { x: 25, y: 48 },
+            { x: 22, y: 48 },
             { x: 22, y: 42 },
             { x: 28, y: 42 },
             { x: 28, y: 35 }
             ]};
+    }
+
+    /**
+     * Spawns an Enemy that travels a prewritten path specified by the pathNum parameter.
+     * @param {integer} id The type of you unit you want to spawn. 1 = InfectedUnit, 2 = InfectedVenom, 3 = InfectedHarpy, 4 = InfectedChubby
+     * @param {integer} pathNum Path to travel on this map. 1 = Path goes from TOP towards town center, 2 = Path goes from BOTTOM towards town center
+     */
+    spawnEnemyPrewrittenPath(id, pathNum) {
+        if(pathNum < 1 || pathNum > 2) {
+            console.log("Enter an integer pathNum between 1 and 2 for the unit to travel.")
+        }
+        
+        if(pathNum == 1) {
+            this.spawnEnemy(id, this.path1.startX, this.path1.startY, this.copyPath(this.path1.path));
+        } else if(pathNum == 2) {
+            this.spawnEnemy(id, this.path2.startX, this.path2.startY, this.copyPath(this.path2.path));
+        }
+    }
+
+    /**
+     * Spawns an Enemy that travels along a manual path provided.
+     * @param {integer} id The type of you unit you want to spawn. 1 = InfectedUnit, 
+     * 2 = InfectedVenom, 3 = InfectedHarpy, 4 = InfectedChubby
+     * @param {integer} pathStartX X spawn coordinate.
+     * @param {integer} pathStartY Y spawn coordinate.
+     * @param {array} path A manual path to travel. ex. [ { x: 28, y: 42 }, { x: 22, y: 42 } ]
+     */
+    spawnEnemy(id, pathStartX, pathStartY, path) {
+        if(id < 1 || id > 4) {
+            console.log("Enter an integer id between 1 and 4 to spawn an allied unit.")
+        }
+
+        switch(id) {
+            case 1:
+                this.game.addEntity(new InfectedUnit(this.game, pathStartX, pathStartY, path));
+                break;
+            case 2:
+                this.game.addEntity(new InfectedVenom(this.game, pathStartX, pathStartY, path));
+                break;
+            case 3:
+                this.game.addEntity(new InfectedHarpy(this.game, pathStartX, pathStartY, path));
+                break;
+            case 4:
+                this.game.addEntity(new InfectedChubby(this.game, pathStartX, pathStartY, path));
+                break;
+        }
     }
 
     //Nothing needs to be drawn for the spawner
@@ -47,12 +98,12 @@ class EnemySpawner {
             case this.timeElapsed > 0.5 && !this.spawnFirstWave:
                 //Path 1
                 for (var i = 0; i < 2; i++) {
-                    this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.copyPath(this.path1.path))));
+                    this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));
                 }
 
                 //Path 2
                 for (var i = 0; i < 3; i++) {
-                    this.game.addEntity(new InfectedUnit(this.game, this.path2.startX, this.path2.startY + (i * 1), this.copyPath(this.copyPath(this.path2.path))));
+                    this.game.addEntity(new InfectedUnit(this.game, this.path2.startX, this.path2.startY + (i * 1), this.copyPath(this.path2.path)));
                 }
                 this.spawnFirstWave = true;
                 break;

@@ -71,6 +71,10 @@ class GameEngine {
         this.times = [];
         this.fps = 0;
         this.refreshLoop();
+
+        //Spawners for use in game/debugging
+        this.allyspawner = new AllySpawner(this);
+        this.enemyspawner = new EnemySpawner(this);
     };
 
     start() {
