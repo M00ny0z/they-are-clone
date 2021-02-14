@@ -10,7 +10,6 @@ class Ballista {
         this.visualRadius = 600;
 
         this.target = null;
-        this.velocity = null;
 
         this.fireRate = 1;
 
@@ -60,7 +59,6 @@ class Ballista {
             console.log()
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
                 && this.elapsedTime > this.fireRate) {
-                    console.log(canSee(this, ent));
                 this.target = ent;
                 this.elapsedTime = 0;
                 this.game.addEntity(new Arrow(this.game, this.x+ 32, this.y + 32, ent, true));
@@ -68,8 +66,8 @@ class Ballista {
         }
 
         if (this.target != null) {
-            this.velocity = { x: (this.target.x - this.x), y: (this.target.y - this.y) };
-            this.facing = getFacing(this.velocity);
+            this.directionVector = { x: (this.target.x - this.x), y: (this.target.y - this.y) };
+            this.facing = getFacing(this.directionVector);
         }
 
         if (this.game.mouse && this.followMouse) {
@@ -91,6 +89,12 @@ class Ballista {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
+
+                this.game.workers -= this.game.requiredResources["Ballista"].workers;
+                this.game.food -= this.game.requiredResources["Ballista"].food;
+                this.game.wood -= this.game.requiredResources["Ballista"].wood;
+                this.game.stone -= this.game.requiredResources["Ballista"].stone;
+                this.game.iron -= this.game.requiredResources["Ballista"].iron;
             }
             this.game.click = null;
         }

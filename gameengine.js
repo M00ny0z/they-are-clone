@@ -24,7 +24,8 @@ class GameEngine {
         // this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
         this.elapsedHour = 0;
         this.elapsedDay = 0;
-        this.numWorkers = 3;
+        this.workers = 3;
+        this.workerRate = 0;
         this.maxWorkers = 50;
         this.food = 500;
         this.foodRate = 0;
@@ -43,11 +44,22 @@ class GameEngine {
         this.ready = false; // wait for game to load, before we let ui clickable.
 
         this.requiredResources = {};
+        this.requiredResources["Tent"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Cottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+
         this.requiredResources["FishermansCottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Farm"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Quarry"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Sawmill"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
-        //console.log(this.requiredResources["FishermansCottage"].workers);
+        
+        this.requiredResources["Ballista"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["MachineGunTurret"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+
+        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
     };
 
     init(ctx) {
@@ -190,6 +202,11 @@ class GameEngine {
 
     // update inGame resources (Every 1 hour in game)
     updateResourceCount() {
+        this.workers += this.workerRate;
+        if (this.workers > this.maxWorkers) {
+            this.workers = this.maxWorkers;
+        }
+
         this.food += this.foodRate;
         if (this.food > this.maxFood) {
             this.food = this.maxFood;

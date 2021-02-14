@@ -68,6 +68,7 @@ class Farm {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
+
                 this.game.numWorkers -= this.game.requiredResources["Farm"].workers;
                 this.game.food -= this.game.requiredResources["Farm"].food;
                 this.game.wood -= this.game.requiredResources["Farm"].wood;
@@ -109,7 +110,6 @@ class Farm {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
             ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
-            //ctx.strokeRect(0, 0, 200, 50);
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Surround the dirt tiles", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
@@ -119,7 +119,6 @@ class Farm {
         }
 
         if (!this.followMouse) {
-            //console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
             ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
     };

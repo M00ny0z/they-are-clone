@@ -35,6 +35,12 @@ class WoodWall {
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
+
+                this.game.workers -= this.game.requiredResources["WoodWall"].workers;
+                this.game.food -= this.game.requiredResources["WoodWall"].food;
+                this.game.wood -= this.game.requiredResources["WoodWall"].wood;
+                this.game.stone -= this.game.requiredResources["WoodWall"].stone;
+                this.game.iron -= this.game.requiredResources["WoodWall"].iron;
             }
             this.game.click = null;
         }
@@ -69,7 +75,6 @@ class WoodWall {
         }
 
         if (!this.followMouse) {
-            console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
             ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
     };

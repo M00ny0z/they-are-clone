@@ -52,11 +52,9 @@ class MapOne {
             ctx.fillStyle = "black";
             for (var i = 0; i < 50; i++) {
                 for (var j = 0; j < 50; j++) {
-                    //var x = (i * PARAMS.BLOCKWIDTH);
-                    //var y = (j * PARAMS.BLOCKWIDTH);
-                    var x = (i - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH;
-                    var y = (j - this.game.camera.cameraY + 1) * PARAMS.BLOCKWIDTH;
-                    ctx.fillText("(" + i + ", " + j + ")", x, y);
+                    var x = (j - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH;
+                    var y = (i - this.game.camera.cameraY + 1) * PARAMS.BLOCKWIDTH;
+                    ctx.fillText("(" + j + ", " + i + ")", x, y);
                 }
             }
 

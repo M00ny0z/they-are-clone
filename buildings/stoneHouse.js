@@ -1,4 +1,4 @@
-class Tent {
+class StoneHouse {
     constructor(game) {
         Object.assign(this, { game });
         this.x = null;
@@ -8,7 +8,7 @@ class Tent {
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
-        this.workerRate = 1;
+        this.workerRate = 3;
     };
 
     collide(other) {
@@ -16,6 +16,7 @@ class Tent {
     };
     
     update() {
+        console.log(this.game.mainMap);
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
@@ -26,7 +27,7 @@ class Tent {
             }
         }
 
-        // placing selected entity
+        //placing selected entity
         if (this.game.click && this.followMouse) {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
@@ -36,11 +37,11 @@ class Tent {
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
 
-                this.game.workers -= this.game.requiredResources["Tent"].workers;
-                this.game.food -= this.game.requiredResources["Tent"].food;
-                this.game.wood -= this.game.requiredResources["Tent"].wood;
-                this.game.stone -= this.game.requiredResources["Tent"].stone;
-                this.game.iron -= this.game.requiredResources["Tent"].iron;
+                this.game.workers -= this.game.requiredResources["StoneHouse"].workers;
+                this.game.food -= this.game.requiredResources["StoneHouse"].food;
+                this.game.wood -= this.game.requiredResources["StoneHouse"].wood;
+                this.game.stone -= this.game.requiredResources["StoneHouse"].stone;
+                this.game.iron -= this.game.requiredResources["StoneHouse"].iron;
                 
                 this.game.workerRate += this.workerRate;
             }
@@ -58,31 +59,31 @@ class Tent {
     };
 
     draw(ctx) {
-        const width = 32;
-        const height = 39;
-        const startY = 395;
-        const startX = 96;
+        const width = 48;
+        const height = 41;
+        const startY = 393;
+        const startX = 0;
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
                 ctx.strokeStyle = 'Green';
-                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             } else {
                 ctx.strokeStyle = 'Red';
-                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
-            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
+            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
             ctx.font = "15px SpaceMono-Regular";
-            ctx.fillStyle = "lighdstgreen";
+            ctx.fillStyle = "lightgreen";
             ctx.fillText("Place to recruit workers.", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
             ctx.fillText(this.workerRate + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
 
         }
 
         if(!this.followMouse){
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
     };
 };

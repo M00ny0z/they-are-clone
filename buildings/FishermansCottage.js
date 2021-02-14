@@ -3,8 +3,6 @@ class FishermansCottage {
         Object.assign(this, { game });
         this.x = null;
         this.y = null;
-        //this.x = x;
-        //this.y = y;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.followMouse = true;
@@ -112,8 +110,8 @@ class FishermansCottage {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
-
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            
             ctx.strokeStyle = 'Purple';
             ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
                //ctx.strokeRect(0, 0, 200, 50);

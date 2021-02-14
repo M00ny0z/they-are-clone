@@ -70,8 +70,6 @@ class Quarry {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
             if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
-            //if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15) {
-            
                 this.game.mainMap.map[y][x].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH;
@@ -122,7 +120,6 @@ class Quarry {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
             ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH);
-               //ctx.strokeRect(0, 0, 200, 50);
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Surround the stone and iron", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);

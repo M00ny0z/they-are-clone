@@ -34,12 +34,11 @@ class SceneManager {
         this.militaryIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_military.png");
         this.defenseIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_defense.png");
         // display 1
-        this.tentIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_tent.png");
         // display 2
         // display 3
-        this.ballistaIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_ballista.png");
+        this.ballistaIcon = ASSET_MANAGER.getAsset("./sprites/ballista.png");
+        this.machineGunTurretIcon = ASSET_MANAGER.getAsset("./sprites/machinegun_turret.png");
         // display 4
-        this.woodWallIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_woodWall.png");
 
         this.cancelIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_cancel.png");
         this.backIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_back.png");
@@ -143,7 +142,37 @@ class SceneManager {
         }
 
         // checking if there are enough resources to construct builidngs.
-        if (this.game.numWorkers >= this.game.requiredResources["FishermansCottage"].workers &&
+        if (this.game.workers >= this.game.requiredResources["Tent"].workers &&
+            this.game.food >= this.game.requiredResources["Tent"].food &&
+            this.game.wood >= this.game.requiredResources["Tent"].wood &&
+            this.game.stone >= this.game.requiredResources["Tent"].stone &&
+            this.game.iron >= this.game.requiredResources["Tent"].iron) {
+            this.game.requiredResources["Tent"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Tent"].enoughResource = false;
+        }
+
+        if (this.game.workers >= this.game.requiredResources["Cottage"].workers &&
+            this.game.food >= this.game.requiredResources["Cottage"].food &&
+            this.game.wood >= this.game.requiredResources["Cottage"].wood &&
+            this.game.stone >= this.game.requiredResources["Cottage"].stone &&
+            this.game.iron >= this.game.requiredResources["Cottage"].iron) {
+            this.game.requiredResources["Cottage"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Cottage"].enoughResource = false;
+        }
+
+        if (this.game.workers >= this.game.requiredResources["StoneHouse"].workers &&
+            this.game.food >= this.game.requiredResources["StoneHouse"].food &&
+            this.game.wood >= this.game.requiredResources["StoneHouse"].wood &&
+            this.game.stone >= this.game.requiredResources["StoneHouse"].stone &&
+            this.game.iron >= this.game.requiredResources["StoneHouse"].iron) {
+            this.game.requiredResources["StoneHouse"].enoughResource = true;
+        } else {
+            this.game.requiredResources["StoneHouse"].enoughResource = false;
+        }
+
+        if (this.game.workers >= this.game.requiredResources["FishermansCottage"].workers &&
             this.game.food >= this.game.requiredResources["FishermansCottage"].food &&
             this.game.wood >= this.game.requiredResources["FishermansCottage"].wood &&
             this.game.stone >= this.game.requiredResources["FishermansCottage"].stone &&
@@ -152,7 +181,7 @@ class SceneManager {
         } else {
             this.game.requiredResources["FishermansCottage"].enoughResource = false;
         }
-        if (this.game.numWorkers >= this.game.requiredResources["Farm"].workers &&
+        if (this.game.workers >= this.game.requiredResources["Farm"].workers &&
             this.game.food >= this.game.requiredResources["Farm"].food &&
             this.game.wood >= this.game.requiredResources["Farm"].wood &&
             this.game.stone >= this.game.requiredResources["Farm"].stone &&
@@ -161,7 +190,7 @@ class SceneManager {
         } else {
             this.game.requiredResources["Farm"].enoughResource = false;
         }
-        if (this.game.numWorkers >= this.game.requiredResources["Quarry"].workers &&
+        if (this.game.workers >= this.game.requiredResources["Quarry"].workers &&
             this.game.food >= this.game.requiredResources["Quarry"].food &&
             this.game.wood >= this.game.requiredResources["Quarry"].wood &&
             this.game.stone >= this.game.requiredResources["Quarry"].stone &&
@@ -170,7 +199,7 @@ class SceneManager {
         } else {
             this.game.requiredResources["Quarry"].enoughResource = false;
         }
-        if (this.game.numWorkers >= this.game.requiredResources["Sawmill"].workers &&
+        if (this.game.workers >= this.game.requiredResources["Sawmill"].workers &&
             this.game.food >= this.game.requiredResources["Sawmill"].food &&
             this.game.wood >= this.game.requiredResources["Sawmill"].wood &&
             this.game.stone >= this.game.requiredResources["Sawmill"].stone &&
@@ -178,6 +207,60 @@ class SceneManager {
             this.game.requiredResources["Sawmill"].enoughResource = true;
         } else {
             this.game.requiredResources["Sawmill"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["Ballista"].workers &&
+            this.game.food >= this.game.requiredResources["Ballista"].food &&
+            this.game.wood >= this.game.requiredResources["Ballista"].wood &&
+            this.game.stone >= this.game.requiredResources["Ballista"].stone &&
+            this.game.iron >= this.game.requiredResources["Ballista"].iron) {
+            this.game.requiredResources["Ballista"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Ballista"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["MachineGunTurret"].workers &&
+            this.game.food >= this.game.requiredResources["MachineGunTurret"].food &&
+            this.game.wood >= this.game.requiredResources["MachineGunTurret"].wood &&
+            this.game.stone >= this.game.requiredResources["MachineGunTurret"].stone &&
+            this.game.iron >= this.game.requiredResources["MachineGunTurret"].iron) {
+            this.game.requiredResources["MachineGunTurret"].enoughResource = true;
+        } else {
+            this.game.requiredResources["MachineGunTurret"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["WoodWall"].workers &&
+            this.game.food >= this.game.requiredResources["WoodWall"].food &&
+            this.game.wood >= this.game.requiredResources["WoodWall"].wood &&
+            this.game.stone >= this.game.requiredResources["WoodWall"].stone &&
+            this.game.iron >= this.game.requiredResources["WoodWall"].iron) {
+            this.game.requiredResources["WoodWall"].enoughResource = true;
+        } else {
+            this.game.requiredResources["WoodWall"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["WoodGate"].workers &&
+            this.game.food >= this.game.requiredResources["WoodGate"].food &&
+            this.game.wood >= this.game.requiredResources["WoodGate"].wood &&
+            this.game.stone >= this.game.requiredResources["WoodGate"].stone &&
+            this.game.iron >= this.game.requiredResources["WoodGate"].iron) {
+            this.game.requiredResources["WoodGate"].enoughResource = true;
+        } else {
+            this.game.requiredResources["WoodGate"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["StoneWall"].workers &&
+            this.game.food >= this.game.requiredResources["StoneWall"].food &&
+            this.game.wood >= this.game.requiredResources["StoneWall"].wood &&
+            this.game.stone >= this.game.requiredResources["StoneWall"].stone &&
+            this.game.iron >= this.game.requiredResources["StoneWall"].iron) {
+            this.game.requiredResources["StoneWall"].enoughResource = true;
+        } else {
+            this.game.requiredResources["StoneWall"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["StoneGate"].workers &&
+            this.game.food >= this.game.requiredResources["StoneGate"].food &&
+            this.game.wood >= this.game.requiredResources["StoneGate"].wood &&
+            this.game.stone >= this.game.requiredResources["StoneGate"].stone &&
+            this.game.iron >= this.game.requiredResources["StoneGate"].iron) {
+            this.game.requiredResources["StoneGate"].enoughResource = true;
+        } else {
+            this.game.requiredResources["StoneGate"].enoughResource = false;
         }
 
         // checking if UI is clicked
@@ -198,13 +281,24 @@ class SceneManager {
                     this.display = 0;
                 }
             } else if (this.display == 1) { // display 1
-                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Tent"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new Tent(this.game);
                     this.game.addEntity(this.selected);
-
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Cottage"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new Cottage(this.game);
+                    this.game.addEntity(this.selected);
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["StoneHouse"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new StoneHouse(this.game);
+                    this.game.addEntity(this.selected);
                 }
             } else if (this.display == 2) { // display 2
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["FishermansCottage"].enoughResource) {
@@ -233,22 +327,57 @@ class SceneManager {
                     this.game.addEntity(this.selected);
                 }
             } else if (this.display == 3) { // display 3
-                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new Ballista(this.game);
                     this.game.addEntity(this.selected);
 
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new MachineGunTurret(this.game);
+                    this.game.addEntity(this.selected);
                 }
             } else if (this.display == 4) { // display 4
-                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodWall"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new WoodWall(this.game);
                     this.game.addEntity(this.selected);
-
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodGate"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new WoodGateHorizontal(this.game);
+                    this.game.addEntity(this.selected);
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodGate"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new WoodGateVertical(this.game);
+                    this.game.addEntity(this.selected);
+                } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneWall"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new StoneWall(this.game);
+                    this.game.addEntity(this.selected);
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneGate"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new StoneGateHorizontal(this.game);
+                    this.game.addEntity(this.selected);
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneGate"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new StoneGateVertical(this.game);
+                    this.game.addEntity(this.selected);
                 }
             }
             this.game.clickCanvas = null;
@@ -286,6 +415,8 @@ class SceneManager {
             ctx.drawImage(this.resourcesIcon, 1087, 739, 45, 45);
             ctx.drawImage(this.militaryIcon, 1136, 739, 45, 45);
             ctx.drawImage(this.defenseIcon, 1185, 739, 45, 45);
+
+            // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
 
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
@@ -298,11 +429,82 @@ class SceneManager {
 
             }
         } else if (this.display == 1) {
-            ctx.drawImage(this.tentIcon, 1037, 739, 45, 45);
+            // tent icon
+            ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
+            if (this.game.requiredResources["Tent"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 96, 395, 32, 39, 1042, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 96, 395, 32, 39, 1042, 744, 35, 35);
+            }
+            // cottage icon
+            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            if (this.game.requiredResources["Cottage"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 56, 387, 32, 47, 1092, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 56, 387, 32, 47, 1092, 744, 35, 35);
+            }
+            // stone house icon
+            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
+            if (this.game.requiredResources["StoneHouse"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 0, 393, 48, 41, 1139, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 0, 393, 48, 41, 1139, 744, 35, 35);
+            }
+            // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
 
-            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("TENT", 500, 782);
 
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Basic dwelling for the colonists.", 500, 842);
+                ctx.fillText("Colonists provide workers for the colony.", 500, 862);
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("COTTAGE", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Medium level dwelling for the colonists.", 500, 842);
+                ctx.fillText("Colonists provide workers for the colony.", 500, 862);
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("STONE HOUSE", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Highest dwelling for the colonists.", 500, 842);
+                ctx.fillText("Colonists provide workers for the colony.", 500, 862);
             }
         } else if (this.display == 2) {
             // fishermanCottage icon
@@ -334,6 +536,7 @@ class SceneManager {
                 ctx.drawImage(this.buildingsGreyImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 35);
             }
 
+            // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
@@ -348,7 +551,6 @@ class SceneManager {
                 ctx.font = "15px SpaceMono-Regular";
                 ctx.fillStyle = "green";
                 ctx.fillText("Gold: 300", 500, 812);
-                ctx.fillText("Gold: 30", 500, 812);
 
                 ctx.fillStyle = "white";
                 ctx.fillText("Produces food from surrounding sea cells.", 500, 842);
@@ -409,20 +611,247 @@ class SceneManager {
                 ctx.fillText("Produces wood from surrounding trees.", 500, 842);
             }
         } else if (this.display == 3) {
-            ctx.drawImage(this.ballistaIcon, 1037, 739, 45, 45);
-            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+            // ballista icon
+            ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
+            if (this.game.requiredResources["Ballista"].enoughResource) {
+                ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 744, 35, 35);
+            }
+            // machine gun turret icon
+            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            if (this.game.requiredResources["MachineGunTurret"].enoughResource) {
+                ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 744, 35, 35);
+            }
 
+            // descriptions
+            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("BALLISTA", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Attacks nearby enemies by shooting large arrows.", 500, 842);
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("MACHINE GUN TURRET", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 80", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Attacks nearby enemies inflicting massive damage within", 500, 842);
+                ctx.fillText("an effect area of 0.6 cells radius.", 500, 862);
             }
         } else if (this.display == 4) {
-            ctx.drawImage(this.woodWallIcon, 1037, 739, 45, 45);
-            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-
+            // wood wall icon
+            ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
+            if (this.game.requiredResources["WoodWall"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 128, 64, 32, 32, 1042, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 128, 64, 32, 32, 1042, 744, 35, 35);
             }
+            // wood gate horizontal icon
+            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            if (this.game.requiredResources["WoodGate"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 0, 32, 32, 32, 1092, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 0, 32, 32, 32, 1092, 744, 35, 35);
+            }
+            // wood gate vertical icon
+            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
+            if (this.game.requiredResources["WoodGate"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 64, 32, 32, 32, 1139, 744, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 64, 32, 32, 32, 1139, 744, 35, 35);
+            }
+            // stone wall icon
+            ctx.drawImage(this.emptyIcon, 1037, 789, 45, 45);
+            if (this.game.requiredResources["StoneWall"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 128, 0, 32, 32, 1042, 794, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 128, 0, 32, 32, 1042, 794, 35, 35);
+            }
+            // stone gate horizontal icon
+            ctx.drawImage(this.emptyIcon, 1087, 789, 45, 45);
+            if (this.game.requiredResources["StoneGate"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 0, 0, 32, 32, 1092, 794, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 0, 0, 32, 32, 1092, 794, 35, 35);
+            }
+            // stone gate vertical icon
+            ctx.drawImage(this.emptyIcon, 1134, 789, 45, 45);
+            if (this.game.requiredResources["StoneGate"].enoughResource) {
+                ctx.drawImage(this.buildingsImg, 64, 0, 32, 32, 1139, 794, 35, 35);
+            } else {
+                ctx.drawImage(this.buildingsGreyImg, 96, 0, 32, 32, 1139, 794, 35, 35);
+            }
+
+            // descriptions
+            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("WOOD WALL", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Walls keep the colony defended from nearby enemies.", 500, 842);
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("WOOD GATE (horizontal)", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Gates automatically allow friendly units to", 500, 842);
+                ctx.fillText("pass through the walls.", 500, 862);
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("WOOD GATE (vertical)", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Gates automatically allow friendly units to", 500, 842);
+                ctx.fillText("pass through the walls.", 500, 862);
+            }else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("STONE WALL", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Strong walls that keep the colony defended", 500, 842);
+                ctx.fillText("from nearby enemies.", 500, 862);
+            }else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("STONE GATE (horizontal)", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Stronger quality. Gates open and close automatically", 500, 842);
+                ctx.fillText("to allow friendly units to pass through the walls.", 500, 862);
+            }else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("STONE GATE (vertical)", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Stronger quality. Gates open and close automatically", 500, 842);
+                ctx.fillText("to allow friendly units to pass through the walls.", 500, 862);
+            } 
         }
 
         if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
             ctx.drawImage(this.cancelIcon, 1184, 837, 45, 45);
             ctx.drawImage(this.backIcon, 1233, 837, 45, 45);
+
+            if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "yellow";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("Cancel", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "white";
+                ctx.fillText("Cancel the selected building.", 500, 812);
+            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "yellow";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("Back", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "white";
+                ctx.fillText("Go back to the previous screen.", 500, 812);
+            }
+
         }
 
         // RESOURCES
@@ -430,7 +859,8 @@ class SceneManager {
         ctx.fillStyle = "lightgreen";
         // Workers
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
-        this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.numWorkers, this.game.maxWorkers);
+        this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
+        ctx.fillText("+" + this.game.workerRate.toString(), 1510, 792);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
@@ -460,8 +890,6 @@ class SceneManager {
 
     drawHealthbar(ctx, x, y, width, height, val, maxVal) {
         const posX = x;
-        //const posX = x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
-        //const posY = y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
         const posY = y;
 
         ctx.save();

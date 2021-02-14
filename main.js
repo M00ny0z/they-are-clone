@@ -23,10 +23,8 @@ ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_military.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_defense.png");
 // display 1
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_tent.png");
 // display 2
 // display 3
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_ballista.png");
 // display 4
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_woodWall.png");
 
