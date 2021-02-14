@@ -36,6 +36,10 @@ class EnemySpawner {
 
     }
 
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
+
     update() {
         this.timeElapsed += this.game.clockTick;
         switch(true) {

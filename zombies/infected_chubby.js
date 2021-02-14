@@ -226,4 +226,11 @@ class InfectedChubby {
             ctx.setLineDash([]);
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        if(this.x >= 0 && this.x <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
+            ctx.fillStyle = "Red";
+            ctx.fillRect(mmX + this.x * PARAMS.MINIMAPSCALE, mmY + this.y * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+        }
+    }
 }

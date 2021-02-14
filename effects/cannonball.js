@@ -52,4 +52,8 @@ class CannonBall {
             ctx.stroke();
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
 };

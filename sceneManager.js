@@ -6,6 +6,7 @@ class SceneManager {
         this.cameraY = 0;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui/frame.png");
+        this.minimap = new Minimap(this.game, .15 * PARAMS.BLOCKWIDTH, 14.45 * PARAMS.BLOCKWIDTH);
 
         this.emptyIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_empty.png");
         this.buildingsImg = ASSET_MANAGER.getAsset("./sprites/buildings.png");
@@ -50,11 +51,28 @@ class SceneManager {
         this.loadEntities();
     };
 
+    //Helper function to deep copy paths
+    copyPath(originalPath) {
+        let copiedPath = [];
+        for(let i = 0; i < originalPath.length; i++) {
+            copiedPath[i] = { x : originalPath[i].x, y : originalPath[i].y }
+        }
+        return copiedPath;
+    }
+
     loadEntities() {
         this.game.entities = [];
 
         this.game.addEntity(new MapOne(this.game));
 
+        // this.path1 = { 
+        //     startX : 47, startY : 0, path : [
+        //     { x: 0, y: 0 }
+        //     ]
+        // };
+        // this.infected = (new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (0 * -1), this.copyPath(this.path1.path)));
+        // this.game.entities[1] = this.infected;
+        
         this.game.addEntity(new EnemySpawner(this.game));
 
         //this.game.addEntity(new Farm(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH * 5));
@@ -885,6 +903,9 @@ class SceneManager {
 
         // FPS               
         ctx.fillText(this.game.fps.toString() + " fps", 1510, 770);
+
+        // Minimap
+        this.minimap.draw(ctx, this.infected);
     };
 
 

@@ -89,4 +89,8 @@ class SniperArrow {
             ctx.stroke();
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
 };

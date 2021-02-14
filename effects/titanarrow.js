@@ -88,4 +88,8 @@ class TitanArrow {
             ctx.stroke();
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
 };

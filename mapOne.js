@@ -44,6 +44,8 @@ class MapOne {
     }
 
     draw(ctx) {
+        console.log("map x: " + -this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
+        console.log("map y: " + -this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
         ctx.drawImage(this.spritesheet, (-this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (-this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH, PARAMS.BLOCKWIDTH * PARAMS.MAPHEIGHT);
         if (PARAMS.CORD) {
             //ctx.strokeStyle = 'Green';
@@ -59,5 +61,9 @@ class MapOne {
             }
 
         }
+    }
+
+    drawMinimap(ctx, mmX, mmY) {
+        ctx.drawImage(this.spritesheet, mmX, mmY, PARAMS.BLOCKWIDTH * 4, PARAMS.BLOCKWIDTH * 4);
     }
 }
