@@ -10,20 +10,23 @@ class GameEngine {
         this.click = null;
         this.clickCanvas = null;
         this.mouse = null;
-        this.prevMouse = null;
+        this.mouseCanvas = null;
 
         this.left = false;
         this.right = false;
         this.up = false;
         this.down = false;
 
-        // Time: 1 hour is 1 second, 1 day is 24 seconds
-        this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
-        this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
-        this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
-        this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
-        this.numUnits = 3;
-        this.maxUnits = 50;
+        // // Time: 1 hour is 1 second, 1 day is 24 seconds
+        // this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
+        // this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
+        // this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
+        // this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
+        this.elapsedHour = 0;
+        this.elapsedDay = 0;
+        this.workers = 3;
+        this.workerRate = 0;
+        this.maxWorkers = 50;
         this.food = 500;
         this.foodRate = 0;
         this.maxFood = 1000;
@@ -39,6 +42,24 @@ class GameEngine {
         this.elapsedHourPrev = 1;
         this.zoom = 1 // zoom factor of map, and all units.
         this.ready = false; // wait for game to load, before we let ui clickable.
+
+        this.requiredResources = {};
+        this.requiredResources["Tent"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Cottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+
+        this.requiredResources["FishermansCottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Farm"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Quarry"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Sawmill"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        
+        this.requiredResources["Ballista"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["MachineGunTurret"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+
+        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
     };
 
     init(ctx) {
@@ -50,6 +71,10 @@ class GameEngine {
         this.times = [];
         this.fps = 0;
         this.refreshLoop();
+
+        //Spawners for use in game/debugging
+        this.allyspawner = new AllySpawner(this);
+        this.enemyspawner = new EnemySpawner(this);
     };
 
     start() {
@@ -78,6 +103,7 @@ class GameEngine {
         this.ctx.canvas.addEventListener("mousemove", function (e) {
             //console.log(getXandY(e));
             that.mouse = getXandY(e);
+            that.mouseCanvas = e;
         }, false);
 
         this.ctx.canvas.addEventListener("click", function (e) {
@@ -180,8 +206,11 @@ class GameEngine {
 
     // update inGame resources (Every 1 hour in game)
     updateResourceCount() {
+        this.workers += this.workerRate;
+        if (this.workers > this.maxWorkers) {
+            this.workers = this.maxWorkers;
+        }
 
-        //var foodBefore = this.food;
         this.food += this.foodRate;
         if (this.food > this.maxFood) {
             this.food = this.maxFood;
@@ -199,7 +228,6 @@ class GameEngine {
             this.iron = this.maxIron;
         }
     }
-
 
     loop() {
         this.clockTick = this.timer.tick();

@@ -156,29 +156,34 @@ class InfectedUnit extends Entity {
     }
 
     drawHealthbar(ctx) {
-        const posX = this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
-        const posY = this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
+        // 45
+        // 40
+        // const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
+        // const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
 
-        ctx.save();
+        // ctx.save();
 
-        ctx.strokeStyle = 'gray';
-        ctx.strokeRect(posX, posY, 100, 15);
+        // ctx.strokeStyle = 'gray';
+        // ctx.strokeRect(posX, posY, 100, 15);
         
-        ctx.fillStyle = 'white';
-        ctx.fillRect(posX + 1, posY + 1, 98, 13);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(posX + 1, posY + 1, 98, 13);
 
-        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        ctx.fillRect(posX + 2, posY + 2, 96 * (this.hitpoints / 100), 11);
+        // ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
+        // ctx.fillRect(posX + 2, posY + 2, 96 * (this.hitpoints / 100), 11);
         
-        ctx.restore();
+        // ctx.restore();
     };
 
     draw(ctx) {
-        this.drawHealthbar(ctx);
+        this.xOffset = 32;
+        this.yOffset = 20;
         
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 
             this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
-            this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 1);
+            this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
+
+        this.drawHealthbar(ctx);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
@@ -195,4 +200,4 @@ class InfectedUnit extends Entity {
             ctx.setLineDash([]);
         }
     };
-}   
+}

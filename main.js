@@ -9,7 +9,8 @@ ASSET_MANAGER.queueDownload("./sprites/mapOne.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 
 // ui
-      
+ASSET_MANAGER.queueDownload("./sprites/ui/icon_empty.png");
+ASSET_MANAGER.queueDownload("./sprites/buildings_grey.png");
 // Resources (Bottom Left) Panel
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_food.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_iron.png");
@@ -22,14 +23,8 @@ ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_military.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_defense.png");
 // display 1
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_tent.png");
 // display 2
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_fishermanCottage.png");
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_farm.png");
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_quarry.png");
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_sawmill.png");
 // display 3
-ASSET_MANAGER.queueDownload("./sprites/ui/icon_ballista.png");
 // display 4
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_woodWall.png");
 
@@ -75,8 +70,7 @@ ASSET_MANAGER.queueDownload("./sprites/cannonball.png");
 
 
 ASSET_MANAGER.downloadAll(function () {
-	
-	console.log(PARAMS);
+	//console.log(PARAMS);
 	var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
 

@@ -89,4 +89,8 @@ class SoldierBolt {
             ctx.stroke();
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
 };

@@ -14,6 +14,15 @@ const WOODGATEHORI = "WOODGATEHORI";
 const WOODWALL = "WOODWALL";
 const UNIT = 0;
 const ZOMBIE = 1;
+//Units
+const RANGER = "Ranger";
+const SOLDIER = "Soldier";
+const SNIPER = "Sniper";
+const TITAN = "Titan";
+const INFECTEDUNIT = "InfectedUnit";
+const INFECTEDVENOM = "InfectedVenom";
+const INFECTEDHARPY = "InfectedHarpy";
+const INFECTEDCHUBBY = "InfectedChubby";
 
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;
@@ -29,6 +38,8 @@ ENTITIES[TENT] = Tent;
 ENTITIES[WOODGATEVERT] = WoodGateVertical;
 ENTITIES[WOODGATEHORI] = WoodGateHorizontal;
 ENTITIES[WOODWALL] = WoodWall;
+//
+
 
 // returns a random integer between 0 and n-1
 function randomInt(n) {
@@ -123,5 +134,7 @@ var PARAMS = {
     MAPWIDTH: 50,
     MAPHEIGHT: 50,
     CAMERAWIDTH: 25,
-    CAMERAHEIGHT: 14
+    CAMERAHEIGHT: 14,
+    MINIMAPSCALE: 0.08,
+    MINIMAPUNITSIZE: 4
 };

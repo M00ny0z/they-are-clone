@@ -1,6 +1,6 @@
-class WoodWall {
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
+class Cottage {
+    constructor(game) {
+        Object.assign(this, { game });
         this.x = null;
         this.y = null;
 
@@ -8,13 +8,13 @@ class WoodWall {
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
-        this.radius = 1;
+        this.workerRate = 2;
     };
 
     collide(other) {
         return distance(this, other) < this.radius + other.radius;
     };
-
+    
     update() {
         if (this.hitpoints <= 0) this.removeFromWorld = true;
         
@@ -38,21 +38,22 @@ class WoodWall {
                 this.x = x * PARAMS.BLOCKWIDTH;
                 this.y = y * PARAMS.BLOCKWIDTH;
 
-                this.game.workers -= this.game.requiredResources["WoodWall"].workers;
-                this.game.food -= this.game.requiredResources["WoodWall"].food;
-                this.game.wood -= this.game.requiredResources["WoodWall"].wood;
-                this.game.stone -= this.game.requiredResources["WoodWall"].stone;
-                this.game.iron -= this.game.requiredResources["WoodWall"].iron;
+                this.game.workers -= this.game.requiredResources["Cottage"].workers;
+                this.game.food -= this.game.requiredResources["Cottage"].food;
+                this.game.wood -= this.game.requiredResources["Cottage"].wood;
+                this.game.stone -= this.game.requiredResources["Cottage"].stone;
+                this.game.iron -= this.game.requiredResources["Cottage"].iron;
+                
+                this.game.workerRate += this.workerRate;
             }
             this.game.click = null;
         }
-
         //collision detection
         for (const ent of this.game.entities) {
             if ((ent instanceof InfectedUnit || 
-                 ent instanceof InfectedHarpy || 
-                 ent instanceof InfectedVenom || 
-                 ent instanceof InfectedChubby) && this.collide(ent)) {
+                    ent instanceof InfectedHarpy || 
+                    ent instanceof InfectedVenom || 
+                    ent instanceof InfectedChubby) && this.collide(ent)) {
                 ent.state = 3;
             }
         }
@@ -60,24 +61,29 @@ class WoodWall {
 
     draw(ctx) {
         const width = 32;
-        const height = 32;
-        const startY = 32;
-        const startX = 128;
-
+        const height = 47;
+        const startY = 387;
+        const startX = 56;
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
                 ctx.strokeStyle = 'Green';
-                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
             } else {
                 ctx.strokeStyle = 'Red';
-                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
             }
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
+            ctx.strokeStyle = 'Purple';
+            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH);
+            ctx.font = "15px SpaceMono-Regular";
+            ctx.fillStyle = "lightgreen";
+            ctx.fillText("Place to recruit workers.", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.workerRate + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
         }
 
-        if (!this.followMouse) {
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+        if(!this.followMouse){
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
         }
     };
 

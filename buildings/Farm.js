@@ -45,7 +45,5 @@ class Farm extends Building {
         if (PARAMS.RESOURCEXY){ 
             console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
-        //console.log("Wood resources is: " + this.woodRate);
-        //this.game.woodRate += this.woodRate;
     }
 };

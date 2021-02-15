@@ -89,4 +89,8 @@ class Arrow {
             ctx.stroke();
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
 };

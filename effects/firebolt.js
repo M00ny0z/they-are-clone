@@ -89,4 +89,8 @@ class FireBolt {
             ctx.stroke();
         }
     };
+
+    drawMinimap(ctx, mmX, mmY) {
+        
+    }
 };

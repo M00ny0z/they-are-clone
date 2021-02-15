@@ -1,8 +1,5 @@
 class Sniper extends Entity {
     constructor(game, x, y, path) {
-        Object.assign(this, { game, x, y, path });
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sniper.png");
-
         const radius = 40;
         const visualRadius = 200;
         const offset = 32;
