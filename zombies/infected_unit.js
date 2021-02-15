@@ -20,7 +20,7 @@ class InfectedUnit extends Entity {
                     this.target = ent;
                 }
                 if (enemyEntityList && collide(this, ent)) {
-                    if (this.state === 0 || this.state === 3) {
+                    if (this.state === 0 ) {
                         this.state = 1;
                         this.elapsedTime = 0;
                     } else if (this.elapsedTime > 1.5) {
@@ -174,7 +174,6 @@ class InfectedUnit extends Entity {
     };
 
     draw(ctx) {
-        console.log(this.state);
         this.drawHealthbar(ctx);
         
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 

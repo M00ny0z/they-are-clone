@@ -175,7 +175,7 @@ class InfectedChubby extends Entity {
             // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
             var incrementedTargetID = this.targetID + 1;
             if (this.path[incrementedTargetID] === undefined && this.target === this.path[this.targetID]) {
-                this.state = 3;
+                this.state = 0;
             }
             // Check if there is another target in the list of path - If not, just stay on the last target. &&
             // Check if the target is not the last point in the path (meaning it was a building) then don't advance to the next point of the path
