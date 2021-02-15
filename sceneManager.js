@@ -58,10 +58,11 @@ class SceneManager {
 
         this.game.addEntity(this.game.enemyspawner);
 
-        // UNCOMMENT THE FOLLOWING CODE TO DEMONSTRATE ALLY/ENEMY SPAWNERS
-        // this.game.allyspawner.spawnAllyPrewrittenPath(2, 1); //Spawn soldier that travels up
-        // this.game.allyspawner.spawnAllyPrewrittenPath(3, 1); //Spawn sniper that travels up
-        // this.game.enemyspawner.spawnEnemy(4, 1, 1, [ {x: 30, y: 1} ]); //Spawn infected chubby that goes from (1, 1) to (30, 1)
+        //UNCOMMENT THE FOLLOWING CODE TO DEMONSTRATE ALLY/ENEMY SPAWNERS
+        this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
+        //this.game.allyspawner.spawnAllyPrewrittenPath(2, 1); //Spawn soldier that travels up
+        //this.game.allyspawner.spawnAllyPrewrittenPath(2, 2); //Spawn sniper that travels up
+        //this.game.enemyspawner.spawnEnemy(4, 1, 1, [ {x: 30, y: 1} ]); //Spawn infected chubby that goes from (1, 1) to (30, 1)
 
         // FOR TESTING MINIMAP
         // this.path1 = { 

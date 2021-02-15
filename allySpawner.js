@@ -31,8 +31,21 @@ class AllySpawner {
     }
 
     /**
+     * Spawns an Ally on a random path along the railroads.
+     * @param {entity} id The type of you unit you want to spawn. ENTITIES.RANGER = Ranger, etc.
+     */
+    spawnAllyRandomPath(id) {
+        let roll = Math.random();
+        if(roll <= 0.5) {
+            this.spawnAllyPrewrittenPath(id, 1);
+        } else {
+            this.spawnAllyPrewrittenPath(id, 2);
+        }
+    }
+
+    /**
      * Spawns an ally that travels a prewritten path specified by the pathNum parameter.
-     * @param {integer} id The type of you unit you want to spawn. 1 = Ranger, 2 = Soldier, 3 = Sniper, 4 = Titan
+     * @param {entity} id The type of you unit you want to spawn. ENTITIES.RANGER = Ranger, etc.
      * @param {integer} pathNum Path to travel on this map. 1 = Path goes up railroad, 2 = Path goes down railroad
      */
     spawnAllyPrewrittenPath(id, pathNum) {
@@ -49,27 +62,23 @@ class AllySpawner {
 
     /**
      * Spawns an ally that travels along a manual path provided.
-     * @param {integer} id The type of you unit you want to spawn. 1 = Ranger, 2 = Soldier, 3 = Sniper, 4 = Titan
+     * @param {entity} id The type of you unit you want to spawn. ENTITIES.RANGER = Ranger, etc.
      * @param {integer} pathStartX X spawn coordinate.
      * @param {integer} pathStartY Y spawn coordinate.
      * @param {array} path A manual path to travel. ex. [ { x: 28, y: 42 }, { x: 22, y: 42 } ]
      */
     spawnAlly(id, pathStartX, pathStartY, path) {
-        if(id < 1 || id > 4) {
-            console.log("Enter an integer id between 1 and 4 to spawn an allied unit.")
-        }
-
         switch(id) {
-            case 1:
+            case RANGER:
                 this.game.addEntity(new Ranger(this.game, pathStartX, pathStartY, path));
                 break;
-            case 2:
+            case SOLDIER:
                 this.game.addEntity(new Soldier(this.game, pathStartX, pathStartY, path));
                 break;
-            case 3:
+            case SNIPER:
                 this.game.addEntity(new Sniper(this.game, pathStartX, pathStartY, path));
                 break;
-            case 4:
+            case TITAN:
                 this.game.addEntity(new Titan(this.game, pathStartX, pathStartY, path));
                 break;
         }

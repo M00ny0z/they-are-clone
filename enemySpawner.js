@@ -37,8 +37,21 @@ class EnemySpawner {
     }
 
     /**
+     * Spawns an Enemy on a random path along the railroads.
+     * @param {entity} id The type of you unit you want to spawn. ENTITIES.INFECTEDUNIT = InfectedUnit, etc.
+     */
+    spawnEnemyPrewrittenPath(id) {
+        let roll = Math.random();  
+        if(roll <= 0.5) {
+            this.spawnEnemyPrewrittenPath(id, 1);
+        } else {
+            this.spawnEnemyPrewrittenPath(id, 2);
+        }
+    }
+
+    /**
      * Spawns an Enemy that travels a prewritten path specified by the pathNum parameter.
-     * @param {integer} id The type of you unit you want to spawn. 1 = InfectedUnit, 2 = InfectedVenom, 3 = InfectedHarpy, 4 = InfectedChubby
+     * @param {entity} id The type of you unit you want to spawn. ENTITIES.INFECTEDUNIT = InfectedUnit, etc.
      * @param {integer} pathNum Path to travel on this map. 1 = Path goes from TOP towards town center, 2 = Path goes from BOTTOM towards town center
      */
     spawnEnemyPrewrittenPath(id, pathNum) {
@@ -55,30 +68,27 @@ class EnemySpawner {
 
     /**
      * Spawns an Enemy that travels along a manual path provided.
-     * @param {integer} id The type of you unit you want to spawn. 1 = InfectedUnit, 
-     * 2 = InfectedVenom, 3 = InfectedHarpy, 4 = InfectedChubby
+     * @param {entity} id The type of you unit you want to spawn. ENTITIES.INFECTEDUNIT = InfectedUnit, etc.
      * @param {integer} pathStartX X spawn coordinate.
      * @param {integer} pathStartY Y spawn coordinate.
      * @param {array} path A manual path to travel. ex. [ { x: 28, y: 42 }, { x: 22, y: 42 } ]
      */
     spawnEnemy(id, pathStartX, pathStartY, path) {
-        if(id < 1 || id > 4) {
-            console.log("Enter an integer id between 1 and 4 to spawn an allied unit.")
-        }
-
         switch(id) {
-            case 1:
+            case INFECTEDUNIT:
                 this.game.addEntity(new InfectedUnit(this.game, pathStartX, pathStartY, path));
                 break;
-            case 2:
+            case INFECTEDVENOM:
                 this.game.addEntity(new InfectedVenom(this.game, pathStartX, pathStartY, path));
                 break;
-            case 3:
+            case INFECTEDHARPY:
                 this.game.addEntity(new InfectedHarpy(this.game, pathStartX, pathStartY, path));
                 break;
-            case 4:
+            case INFECTEDCHUBBY:
                 this.game.addEntity(new InfectedChubby(this.game, pathStartX, pathStartY, path));
                 break;
+            default:
+                console.log("Id doesn't match any existing unit.");
         }
     }
 
