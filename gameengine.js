@@ -202,7 +202,32 @@ class GameEngine {
             this.elapsedHourPrev = (this.elapsedHourPrev + 1) %24; //cycle from 0 to 24
             this.updateResourceCount();
         }
+
+        // Check if the game is over (when 10 days is reached. If it is, print some victory text)
+        if(this.elapsedDay >= 10) {
+            this.gameEnd(this, true);
+        }
     };
+
+    gameEnd(winorloss) {
+        //Draw an opaque rectangle to fill the screen
+        if(this.elapsedDay > 11) {
+            this.ctx.globalAlpha = 0.1;
+        } else {
+            this.ctx.globalAlpha = 0.3;
+        }
+               
+            
+        this.ctx.fillRect(0, 0, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH)
+        if(!this.gameOver) {
+            if(winorloss == "win") {
+                this.addEntity(new GameOverText(this, "win"));
+            } else {
+                this.addEntity(new GameOverText(this, "lose"));
+            }
+            this.gameOver = true;
+        }
+    }
 
     // update inGame resources (Every 1 hour in game)
     updateResourceCount() {
