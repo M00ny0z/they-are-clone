@@ -66,7 +66,7 @@ class Entity {
          // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
          const incrementedTargetID = this.targetID + 1;
          if (this.path[incrementedTargetID] === undefined && this.target === this.path[this.targetID]) {
-            this.state = 3;
+            this.state = 0;
          }
          // Check if there is another target in the list of path - If not, just stay on the last target. &&
          // Check if the target is not the last point in the path (meaning it was a building) then don't advance to the next point of the path
@@ -90,6 +90,8 @@ class Entity {
    }
  
    draw(ctx) {
+      this.drawHealthbar(ctx);
+
       if (this.offsetList.length > 0) {
          this.xOffset = this.offsetList[this.state].x;
          this.yOffset = this.offsetList[this.state].y;
@@ -117,6 +119,13 @@ class Entity {
          ctx.closePath();
          ctx.stroke();
          ctx.setLineDash([]);
+      }
+   }
+
+   drawMinimap(ctx, mmX, mmY) {
+      if(this.x >= 0 && this.x <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
+          ctx.fillStyle = "Red";
+          ctx.fillRect(mmX + this.x * PARAMS.MINIMAPSCALE, mmY + this.y * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
       }
    }
  }
