@@ -11,6 +11,8 @@ class Building {
         this.y = null;
         this.placeable = false;
         this.hitpoints = 100;
+        this.visualRadius = 50;
+        this.radius = 50;
     };
 
 
@@ -19,6 +21,8 @@ class Building {
     };
 
     update() {
+        if (this.hitpoints <= 0) this.removeFromWorld = true;
+        
         let logic;
         if (this.game.mouse && this.followMouse) {
             const x = this.game.mouse.x + this.game.camera.cameraX;
@@ -43,16 +47,6 @@ class Building {
                 this.updateFunction();
             }
             this.game.click = null;
-        }
-
-        //collision detection
-        for (const ent of this.game.entities) {
-            if ((ent instanceof InfectedUnit || 
-                    ent instanceof InfectedHarpy || 
-                    ent instanceof InfectedVenom || 
-                    ent instanceof InfectedChubby) && this.collide(ent)) {
-                ent.state = 3;
-            }
         }
     };
 
