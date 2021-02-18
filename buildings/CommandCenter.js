@@ -6,10 +6,8 @@ class CommandCenter {
       this.y = y * PARAMS.BLOCKWIDTH;
       this.hitpoints = 100;
       this.radius = 5;
-      this.visualRadius = 5;
 
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
-      //this.spritesheet = ASSET_MANAGER.getAsset("./sprites/commandCenter.png");
    };
 
    collide(other) {
@@ -17,7 +15,9 @@ class CommandCenter {
    };
 
    update() {
-      if (this.hitpoints <= 0) this.removeFromWorld = true;
+      if (this.hitpoints <= 0) {
+         this.game.gameEnd(false);
+      }
    };
    
    draw(ctx) {
@@ -27,7 +27,6 @@ class CommandCenter {
       const startX = 128;
 
       ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) , width * 2, height * 2);
-     // ctx.drawImage(this.spritesheet, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 48 * 3, 48 * 3);
    };
 
    drawMinimap(ctx, mmX, mmY) {

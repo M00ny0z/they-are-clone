@@ -61,8 +61,23 @@ class FireBolt {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan ||
-                ent instanceof Ballista) && collide(this, ent)) {
+            const enemyCheck = (
+                ent instanceof Ranger ||  
+                ent instanceof Soldier || 
+                ent instanceof Sniper || 
+                ent instanceof Titan || 
+                ent instanceof Ballista ||
+                ent instanceof Farm ||
+                ent instanceof Cottage ||
+                ent instanceof FishermansCottage ||
+                ent instanceof Quarry ||
+                ent instanceof Sawmill ||
+                ent instanceof StoneWall ||
+                ent instanceof Tent || 
+                ent instanceof WoodWall ||
+                ent instanceof CommandCenter
+            );
+            if (enemyCheck && collide(this, ent)) {
                 ent.hitpoints -= 30;
                 this.removeFromWorld = true;
             }

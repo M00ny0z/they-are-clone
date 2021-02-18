@@ -190,7 +190,8 @@ class InfectedVenom {
                 ent instanceof Sawmill ||
                 ent instanceof StoneWall ||
                 ent instanceof Tent || 
-                ent instanceof WoodWall
+                ent instanceof WoodWall ||
+                ent instanceof CommandCenter
             );
             if (enemyCheck && canSee(this, ent)) {
                 if (this.state === 0) {

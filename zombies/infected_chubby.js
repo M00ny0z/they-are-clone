@@ -190,7 +190,8 @@ class InfectedChubby {
                 ent instanceof Sawmill ||
                 ent instanceof StoneWall ||
                 ent instanceof Tent || 
-                ent instanceof WoodWall
+                ent instanceof WoodWall ||
+                ent instanceof CommandCenter
             );
             if (enemyCheck && canSee(this, ent)) {
                 this.target = ent;

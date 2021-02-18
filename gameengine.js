@@ -209,7 +209,7 @@ class GameEngine {
 
         // Check if the game is over (when 10 days is reached. If it is, print some victory text)
         if(this.elapsedDay >= 10) {
-            this.gameEnd(this, true);
+            this.gameEnd(true);
         }
     };
 
@@ -222,12 +222,12 @@ class GameEngine {
         }
                
             
-        this.ctx.fillRect(0, 0, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH)
+        this.ctx.fillRect(0, 0, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH);
         if(!this.gameOver) {
-            if(winorloss == "win") {
-                this.addEntity(new GameOverText(this, "win"));
+            if(winorloss) {
+                this.addEntity(new GameOverText(this, true)); // win
             } else {
-                this.addEntity(new GameOverText(this, "lose"));
+                this.addEntity(new GameOverText(this, false)); // lose
             }
             this.gameOver = true;
         }
