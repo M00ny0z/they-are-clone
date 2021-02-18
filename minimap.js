@@ -15,7 +15,6 @@ class Minimap {
     };
 
     draw(ctx) {
-        console.log("cameraWidthOnMinimap: " + this.cameraHeightOnMinimap)
         if(PARAMS.DEBUG) {
             // ctx.strokeStyle = "Yellow";
             // ctx.strokeRect(this.x, this.y, this.width, this.height);
