@@ -176,10 +176,20 @@ class InfectedHarpy {
         }
 
         //collision detection
-        for (var i = 0; i < this.game.entities.length; i++) {
-            var ent = this.game.entities[i];
-            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
-                ent instanceof Ballista) && canSee(this, ent)) {
+        for (const ent of this.game.entities) {
+            if ((ent instanceof Ranger ||  
+                ent instanceof Soldier || 
+                ent instanceof Sniper || 
+                ent instanceof Titan || 
+                ent instanceof Ballista ||
+                ent instanceof Farm ||
+                ent instanceof Cottage ||
+                ent instanceof FishermansCottage ||
+                ent instanceof Quarry ||
+                ent instanceof Sawmill ||
+                ent instanceof StoneWall ||
+                ent instanceof Tent || 
+                ent instanceof WoodWall) && canSee(this, ent)) {
                 this.target = ent;
             }
             if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
