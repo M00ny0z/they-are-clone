@@ -17,10 +17,6 @@ class WoodGateHorizontal {
       this.state = 0;
    };
 
-   collide(other) {
-      return distance(this, other) < this.radius + other.radius;
-   };
-
    update() {
       if (this.hitpoints <= 0) {
          this.removeFromWorld = true;
@@ -64,16 +60,6 @@ class WoodGateHorizontal {
             this.game.iron -= this.game.requiredResources["WoodGate"].iron;
          }
          this.game.click = null;
-      }
-
-      //collision detection
-      for (const ent of this.game.entities) {
-         if ((ent instanceof InfectedUnit ||
-            ent instanceof InfectedHarpy ||
-            ent instanceof InfectedVenom ||
-            ent instanceof InfectedChubby) && this.collide(ent)) {
-            ent.state = 3;
-         }
       }
    };
 
