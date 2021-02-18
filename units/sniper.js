@@ -202,8 +202,27 @@ class Sniper {
     };
 
     draw(ctx) {
-        var xOffset = 12;
-        var yOffset = 20;
+        var xOffset = 0;
+        var yOffset = 0;
+
+        switch(this.state) {
+            case 0:
+                xOffset = Math.floor(64/2/2);
+                yOffset = Math.floor(82/2/2);
+                break;
+            case 1:
+                xOffset = Math.floor(76/2/2);
+                yOffset = Math.floor(87/2/2);
+                break;
+            case 2:
+                xOffset = Math.floor(76/2/2);
+                yOffset = Math.floor(87/2/2);
+                break;
+            case 3:
+                xOffset = Math.floor(60/2/2);
+                yOffset = Math.floor(78/2/2);
+                break;
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
