@@ -183,7 +183,7 @@ class Sniper {
                     this.target = ent;
                     this.state = 1;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 1.4) {
+                } else if (this.elapsedTime > 2) {
                     this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }

@@ -34,16 +34,15 @@ class SceneManager {
         this.resourcesIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_resources.png");
         this.militaryIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_military.png");
         this.defenseIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_defense.png");
-        // display 1
-        // display 2
-        // display 3
-        this.ballistaIcon = ASSET_MANAGER.getAsset("./sprites/ballista.png");
-        this.machineGunTurretIcon = ASSET_MANAGER.getAsset("./sprites/machinegun_turret.png");
-        // display 4
-
         this.cancelIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_cancel.png");
         this.backIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_back.png");
 
+        this.rangerIcon = ASSET_MANAGER.getAsset("./sprites/ranger.png");
+        this.soldierIcon = ASSET_MANAGER.getAsset("./sprites/soldier.png");
+        this.sniperIcon = ASSET_MANAGER.getAsset("./sprites/sniper.png");
+        this.titanIcon = ASSET_MANAGER.getAsset("./sprites/titan.png");
+        this.ballistaIcon = ASSET_MANAGER.getAsset("./sprites/ballista.png");
+        this.machineGunTurretIcon = ASSET_MANAGER.getAsset("./sprites/machinegun_turret.png");
 
         this.display = 0; // 0 main, 1 colonist, 2 resources, 3 military, 4 defense
         this.selected = 0;
@@ -59,7 +58,7 @@ class SceneManager {
         this.game.addEntity(this.game.enemyspawner);
 
         //UNCOMMENT THE FOLLOWING CODE TO DEMONSTRATE ALLY/ENEMY SPAWNERS
-        this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
+        //this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
         //this.game.allyspawner.spawnAllyPrewrittenPath(2, 1); //Spawn soldier that travels up
         //this.game.allyspawner.spawnAllyPrewrittenPath(2, 2); //Spawn sniper that travels up
         //this.game.enemyspawner.spawnEnemy(4, 1, 1, [ {x: 30, y: 1} ]); //Spawn infected chubby that goes from (1, 1) to (30, 1)
@@ -224,6 +223,42 @@ class SceneManager {
         } else {
             this.game.requiredResources["Sawmill"].enoughResource = false;
         }
+        if (this.game.workers >= this.game.requiredResources["Ranger"].workers &&
+            this.game.food >= this.game.requiredResources["Ranger"].food &&
+            this.game.wood >= this.game.requiredResources["Ranger"].wood &&
+            this.game.stone >= this.game.requiredResources["Ranger"].stone &&
+            this.game.iron >= this.game.requiredResources["Ranger"].iron) {
+            this.game.requiredResources["Ranger"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Ranger"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["Soldier"].workers &&
+            this.game.food >= this.game.requiredResources["Soldier"].food &&
+            this.game.wood >= this.game.requiredResources["Soldier"].wood &&
+            this.game.stone >= this.game.requiredResources["Soldier"].stone &&
+            this.game.iron >= this.game.requiredResources["Soldier"].iron) {
+            this.game.requiredResources["Soldier"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Soldier"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["Sniper"].workers &&
+            this.game.food >= this.game.requiredResources["Sniper"].food &&
+            this.game.wood >= this.game.requiredResources["Sniper"].wood &&
+            this.game.stone >= this.game.requiredResources["Sniper"].stone &&
+            this.game.iron >= this.game.requiredResources["Sniper"].iron) {
+            this.game.requiredResources["Sniper"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Sniper"].enoughResource = false;
+        }
+        if (this.game.workers >= this.game.requiredResources["Titan"].workers &&
+            this.game.food >= this.game.requiredResources["Titan"].food &&
+            this.game.wood >= this.game.requiredResources["Titan"].wood &&
+            this.game.stone >= this.game.requiredResources["Titan"].stone &&
+            this.game.iron >= this.game.requiredResources["Titan"].iron) {
+            this.game.requiredResources["Titan"].enoughResource = true;
+        } else {
+            this.game.requiredResources["Titan"].enoughResource = false;
+        }
         if (this.game.workers >= this.game.requiredResources["Ballista"].workers &&
             this.game.food >= this.game.requiredResources["Ballista"].food &&
             this.game.wood >= this.game.requiredResources["Ballista"].wood &&
@@ -343,14 +378,33 @@ class SceneManager {
                     this.game.addEntity(this.selected);
                 }
             } else if (this.display == 3) { // display 3
-                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.game.allyspawner.spawnAllyRandomPath(RANGER);
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Soldier"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sniper"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.game.allyspawner.spawnAllyRandomPath(SNIPER);
+                } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.game.allyspawner.spawnAllyRandomPath(TITAN);
+                } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new Ballista(this.game);
                     this.game.addEntity(this.selected);
-
-                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
@@ -433,16 +487,64 @@ class SceneManager {
             ctx.drawImage(this.defenseIcon, 1185, 739, 45, 45);
 
             // descriptions
-            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) { // COLONISTS
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
 
-            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "AliceBlue";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("COLONISTS", 500, 782);
 
-            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "white";
+                ctx.fillText("Dwellings for the colonists.", 500, 812);
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) { // RESOURCES
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
 
-            } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "AliceBlue";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("RESOURCES", 500, 782);
 
-            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "white";
+                ctx.fillText("Structures dedicated to the resources prodcution.", 500, 812);
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {  // MILITARY
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
 
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "AliceBlue";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("MILITARY", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillStyle = "white";
+                ctx.fillText("Military structures for attacking and units training.", 500, 812);
+            } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) { // DEFENSE
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "AliceBlue";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("DEFENSE", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillStyle = "white";
+                ctx.fillText("Defensive and surveillance structures for the colony.", 500, 812);
             }
         } else if (this.display == 1) {
             // tent icon
@@ -627,23 +729,122 @@ class SceneManager {
                 ctx.fillText("Produces wood from surrounding trees.", 500, 842);
             }
         } else if (this.display == 3) {
-            // ballista icon
+            // ranger icon
             ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
-            if (this.game.requiredResources["Ballista"].enoughResource) {
-                ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 744, 35, 35);
+            if (this.game.requiredResources["Ranger"].enoughResource) {
+                ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1046, 743, 35, 35);
             } else {
-                ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 744, 35, 35);
+                ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1046, 743, 35, 35);
+            }
+            // soldier icon
+            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            if (this.game.requiredResources["Soldier"].enoughResource) {
+                ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1096, 744, 28, 33);
+            } else {
+                ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1096, 744, 28, 33);
+            }
+            // sniper icon
+            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
+            if (this.game.requiredResources["Sniper"].enoughResource) {
+                ctx.drawImage(this.sniperIcon, 717, 14, 64, 82, 1145, 742, 28, 40);
+            } else {
+                ctx.drawImage(this.sniperIcon, 717, 14, 64, 82, 1145, 742, 28, 40);
+            }
+            // titan icon
+            ctx.drawImage(this.emptyIcon, 1184, 739, 45, 45);
+            if (this.game.requiredResources["Titan"].enoughResource) {
+                ctx.drawImage(this.titanIcon, 3651, 795, 96, 87, 1184, 739, 45, 43);
+            } else {
+                ctx.drawImage(this.titanIcon, 3651, 795, 96, 87, 1184, 739, 45, 43);
+            }
+            // ballista icon
+            ctx.drawImage(this.emptyIcon, 1037, 789, 45, 45);
+            if (this.game.requiredResources["Ballista"].enoughResource) {
+                ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 794, 35, 35);
+            } else {
+                ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 794, 35, 35);
             }
             // machine gun turret icon
-            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            ctx.drawImage(this.emptyIcon, 1087, 789, 45, 45);
             if (this.game.requiredResources["MachineGunTurret"].enoughResource) {
-                ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 744, 35, 35);
+                ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 794, 35, 35);
             } else {
-                ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 744, 35, 35);
+                ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 794, 35, 35);
             }
 
             // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("RANGER", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 300", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("They run extremely fast and can shoot their", 500, 842);
+                ctx.fillText("arrows with their silent bow.", 500, 862);
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("SOLDIER", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 80", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("This versatile unit can serve any purpose.", 500, 842);
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("SNIPER", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 80", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Snipers walk very slowly.", 500, 842);
+                ctx.fillText("However, Snipers have a very high attack range.", 500, 862);
+            } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
+                ctx.strokeStyle = "grey";
+                ctx.moveTo(500, 782);
+                ctx.lineTo(985, 782);
+                ctx.stroke();
+
+                ctx.font = "25px SpaceMono-Regular";
+                ctx.fillStyle = "lightgreen";
+                ctx.textBaseline = "bottom";
+                ctx.fillText("TITAN", 500, 782);
+
+                ctx.font = "15px SpaceMono-Regular";
+                ctx.fillStyle = "green";
+                ctx.fillText("Gold: 80", 500, 812);
+
+                ctx.fillStyle = "white";
+                ctx.fillText("Titans has an ultra fast burst shot and a wide", 500, 842);
+                ctx.fillText("area of effect.", 500, 862);
+            } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -660,7 +861,7 @@ class SceneManager {
 
                 ctx.fillStyle = "white";
                 ctx.fillText("Attacks nearby enemies by shooting large arrows.", 500, 842);
-            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -777,7 +978,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Gates automatically allow friendly units to", 500, 842);
                 ctx.fillText("pass through the walls.", 500, 862);
-            }else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
+            } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -795,7 +996,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Strong walls that keep the colony defended", 500, 842);
                 ctx.fillText("from nearby enemies.", 500, 862);
-            }else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45)) {
+            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -813,7 +1014,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Stronger quality. Gates open and close automatically", 500, 842);
                 ctx.fillText("to allow friendly units to pass through the walls.", 500, 862);
-            }else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45)) {
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -831,7 +1032,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Stronger quality. Gates open and close automatically", 500, 842);
                 ctx.fillText("to allow friendly units to pass through the walls.", 500, 862);
-            } 
+            }
         }
 
         if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {

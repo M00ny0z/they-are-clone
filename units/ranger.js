@@ -48,7 +48,6 @@ class Ranger {
       speed: 0.1,
       padding: 1,
     };
-    console.log(spriteInfo.yStart);
 
     //2 = N
     this.animations[spriteInfo["state"]].push(

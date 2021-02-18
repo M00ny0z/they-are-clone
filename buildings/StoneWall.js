@@ -17,7 +17,10 @@ class StoneWall {
     };
 
     update() {
-        if (this.hitpoints <= 0) this.removeFromWorld = true;
+        if (this.hitpoints <= 0) {
+            this.removeFromWorld = true;
+            this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+        }
         
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;

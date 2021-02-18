@@ -9,8 +9,6 @@ class Ballista {
         this.radius = 30;
         this.visualRadius = 600;
 
-        this.target = null;
-
         this.fireRate = 1;
 
         this.facing = 0;
@@ -50,7 +48,10 @@ class Ballista {
     update() {
         this.elapsedTime += this.game.clockTick;
 
-        if (this.hitpoints <= 0) this.removeFromWorld = true;
+        if (this.hitpoints <= 0) {
+            this.removeFromWorld = true;
+            this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+        }
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
@@ -59,7 +60,7 @@ class Ballista {
                 && this.elapsedTime > this.fireRate) {
                 this.target = ent;
                 this.elapsedTime = 0;
-                this.game.addEntity(new Arrow(this.game, this.x+ 32, this.y + 32, ent, true));
+                this.game.addEntity(new Arrow(this.game, this.x+ 24, this.y + 24, ent, true));
             }
         }
 
@@ -151,8 +152,7 @@ class Ballista {
             }
         }
 
-
-        if (PARAMS.DEBUG) {
+        if (PARAMS.DEBUG && !this.followMouse) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
             ctx.arc(this.x + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);

@@ -22,7 +22,10 @@ class WoodGateHorizontal {
    };
 
    update() {
-      if (this.hitpoints <= 0) this.removeFromWorld = true;
+      if (this.hitpoints <= 0) {
+         this.removeFromWorld = true;
+         this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+     }
 
       //detect if an ally unit is in range. if so, open gate.
       for (var i = 0; i < this.game.entities.length; i++) {

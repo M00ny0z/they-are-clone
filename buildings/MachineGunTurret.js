@@ -31,7 +31,7 @@ class MachineGunTurret {
     loadAnimations() {
         var spriteInfo = {};
         spriteInfo = {
-            'xStart': 0,
+            'xStart': -8,
             'width': 128,
             'height': 128,
             'frames': 1,
@@ -59,7 +59,10 @@ class MachineGunTurret {
     update() {
         this.elapsedTime += this.game.clockTick;
 
-        if (this.hitpoints <= 0) this.removeFromWorld = true;
+        if (this.hitpoints <= 0) {
+            this.removeFromWorld = true;
+            this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+        }
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
@@ -67,7 +70,7 @@ class MachineGunTurret {
                 && this.elapsedTime > this.fireRate) {
                 this.target = ent;
                 this.elapsedTime = 0;
-                this.game.addEntity(new CannonBall(this.game, this.x, this.y, ent, false));
+                this.game.addEntity(new CannonBall(this.game, this.x + 24, this.y + 24, ent, true));
             }
         }
 
@@ -107,9 +110,6 @@ class MachineGunTurret {
     };
 
     draw(ctx) {
-        const xOffset = 27;
-        const yOffset = 38;
-
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
@@ -119,19 +119,17 @@ class MachineGunTurret {
                 ctx.strokeStyle = 'Red';
                 ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
-            console.log(mouse.x * PARAMS.BLOCKWIDTH);
-            ctx.drawImage(this.spritesheet, 0, 0, 125, 125, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, -8, 0, 128, 128, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
         if (!this.followMouse) {
-            console.log(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH));
-            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
+            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.384);
         }
 
-        if (PARAMS.DEBUG) {
+        if (PARAMS.DEBUG && !this.followMouse) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
 

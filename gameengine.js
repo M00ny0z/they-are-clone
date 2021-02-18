@@ -53,6 +53,10 @@ class GameEngine {
         this.requiredResources["Quarry"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Sawmill"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         
+        this.requiredResources["Ranger"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Soldier"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Sniper"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Titan"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Ballista"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["MachineGunTurret"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
 
