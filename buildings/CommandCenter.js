@@ -5,6 +5,8 @@ class CommandCenter {
       this.x = x * PARAMS.BLOCKWIDTH;
       this.y = y * PARAMS.BLOCKWIDTH;
       this.hitpoints = 100;
+      this.radius = 5;
+      this.visualRadius = 5;
 
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
       //this.spritesheet = ASSET_MANAGER.getAsset("./sprites/commandCenter.png");
@@ -16,16 +18,6 @@ class CommandCenter {
 
    update() {
       if (this.hitpoints <= 0) this.removeFromWorld = true;
-      
-      //collision detection
-      for (const ent of this.game.entities) {
-         if ((ent instanceof InfectedUnit || 
-                  ent instanceof InfectedHarpy || 
-                  ent instanceof InfectedVenom || 
-                  ent instanceof InfectedChubby) && this.collide(ent)) {
-               ent.state = 3;
-         }
-      }
    };
    
    draw(ctx) {

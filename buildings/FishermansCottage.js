@@ -8,7 +8,8 @@ class FishermansCottage {
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
-
+        this.radius = 5;
+        this.visualRadius = 5;
         this.foodRate = 0;
     };
 
@@ -86,16 +87,6 @@ class FishermansCottage {
                 this.game.foodRate += this.foodRate;
             }
             this.game.click = null;
-        }
-
-        //collision detection
-        for (const ent of this.game.entities) {
-            if ((ent instanceof InfectedUnit || 
-                    ent instanceof InfectedHarpy || 
-                    ent instanceof InfectedVenom || 
-                    ent instanceof InfectedChubby) && this.collide(ent)) {
-                ent.state = 3;
-            }
         }
     };
 

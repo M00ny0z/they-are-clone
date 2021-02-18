@@ -10,7 +10,9 @@ class Sawmill {
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
-
+        this.radius = 5;
+        this.visualRadius = 5;
+        
         this.woodRate = 0;
     };
 
@@ -86,16 +88,6 @@ class Sawmill {
                 this.game.woodRate += this.woodRate;
             }
             this.game.click = null;
-        }
-
-        //collision detection
-        for (const ent of this.game.entities) {
-            if ((ent instanceof InfectedUnit || 
-                    ent instanceof InfectedHarpy || 
-                    ent instanceof InfectedVenom || 
-                    ent instanceof InfectedChubby) && this.collide(ent)) {
-                ent.state = 3;
-            }
         }
     };
 

@@ -8,6 +8,7 @@ class WoodWall {
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
+        this.visualRadius = 5;
         this.radius = 1;
     };
 
@@ -48,16 +49,6 @@ class WoodWall {
                 this.game.iron -= this.game.requiredResources["WoodWall"].iron;
             }
             this.game.click = null;
-        }
-
-        //collision detection
-        for (const ent of this.game.entities) {
-            if ((ent instanceof InfectedUnit || 
-                 ent instanceof InfectedHarpy || 
-                 ent instanceof InfectedVenom || 
-                 ent instanceof InfectedChubby) && this.collide(ent)) {
-                ent.state = 3;
-            }
         }
     };
 
