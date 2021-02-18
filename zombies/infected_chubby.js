@@ -177,7 +177,8 @@ class InfectedChubby {
 
         // collision detection
         for (const ent of this.game.entities) {
-            if ((ent instanceof Ranger ||  
+            const enemyCheck = (
+                ent instanceof Ranger ||  
                 ent instanceof Soldier || 
                 ent instanceof Sniper || 
                 ent instanceof Titan || 
@@ -189,11 +190,12 @@ class InfectedChubby {
                 ent instanceof Sawmill ||
                 ent instanceof StoneWall ||
                 ent instanceof Tent || 
-                ent instanceof WoodWall) && canSee(this, ent)) {
+                ent instanceof WoodWall
+            );
+            if (enemyCheck && canSee(this, ent)) {
                 this.target = ent;
             }
-            if ((ent instanceof Ranger ||  ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan || 
-                ent instanceof Ballista) && collide(this, ent)) {
+            if (enemyCheck && collide(this, ent)) {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;
