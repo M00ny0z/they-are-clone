@@ -22,6 +22,8 @@ class StoneGateVertical {
     };
     
     update() {
+        this.gateOpenThisFrame = false;
+
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
@@ -30,12 +32,13 @@ class StoneGateVertical {
         //detect if an ally unit is in range. if so, open gate.
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
-                this.state = 1;
-            } else {
-                this.state = 0;
+            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan ) && canSee(this, ent)) {
+                this.gateOpenThisFrame = true;
+                break;
             }
         }
+
+      this.gateOpenThisFrame ? this.state = 1 : this.state = 0;
 
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
