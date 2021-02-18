@@ -54,9 +54,71 @@ class SceneManager {
         this.game.entities = [];
 
         this.game.addEntity(new MapOne(this.game));
-        this.game.addEntity(new CommandCenter(this.game, 27, 34));
+
         this.game.addEntity(this.game.enemyspawner);
+
+        //UNCOMMENT THE FOLLOWING CODE TO DEMONSTRATE ALLY/ENEMY SPAWNERS
+        //this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
+        //this.game.allyspawner.spawnAllyPrewrittenPath(2, 1); //Spawn soldier that travels up
+        //this.game.allyspawner.spawnAllyPrewrittenPath(2, 2); //Spawn sniper that travels up
+        //this.game.enemyspawner.spawnEnemy(4, 1, 1, [ {x: 30, y: 1} ]); //Spawn infected chubby that goes from (1, 1) to (30, 1)
+
+        // FOR TESTING MINIMAP
+        // this.path1 = { 
+        //     startX : 47, startY : 0, path : [
+        //     { x: 0, y: 0 }
+        //     ]
+        // };
+        // this.infected = (new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (0 * -1), this.copyPath(this.path1.path)));
+        // this.game.entities[1] = this.infected;
+
+        //this.game.addEntity(new Farm(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH * 5));
+        //this.game.addEntity(new Quarry(this.game,PARAMS.BLOCKWIDTH * 11, PARAMS.BLOCKWIDTH * 15));
+        //this.game.addEntity(new Sawmill(this.game, PARAMS.BLOCKWIDTH * 14, PARAMS.BLOCKWIDTH * 6));
+        //this.game.addEntity(new FishermansCottage(this.game,PARAMS.BLOCKWIDTH * 8, PARAMS.BLOCKWIDTH * 4));
+
+
+        // this.game.addEntity(new MachineGunTurret(this.game, 64 * 14, 64 * 30));
+        // this.game.addEntity(new StoneGateVertical(this.game, 64 * 10, 64 * 35));
+        // this.game.addEntity(new WoodGateVertical(this.game, 64 * 10, 64 * 36));
+
+        // this.game.addEntity(new StoneGateHorizontal(this.game, 64 * 12, 64 * 35));
+        // this.game.addEntity(new WoodGateHorizontal(this.game, 64 * 12, 64 * 36));
+        // this.game.addEntity(new WoodWall(this.game, 64 * 15, 64 * 36));
+        // this.game.addEntity(new StoneWall(this.game, 64 * 15, 64 * 35));
+
+        //Spawn 10 zombies from the top of map to follow railroad
+        // for (var i = 0; i < 10; i++) {
+        //     this.game.addEntity(new InfectedUnit(this.game, 2496 / 64, (-100 + i * 50) / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 },
+        //     { x: 2304 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
+        // }
+        // this.game.addEntity(new InfectedVenom(this.game, 2496 / 64, -150 / 64, [{ x: 2496 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 480 / 64 }, { x: 2112 / 64, y: 1050 / 64 }, { x: 2304 / 64, y: 1050 / 64 },
+        // { x: 2304 / 64, y: 1420 / 64 }, { x: 1500 / 64, y: 1420 / 64 }]));
+
+        //this.game.addEntity(new Soldier(this.game, 1200 / PARAMS.BLOCKWIDTH, 1500 / PARAMS.BLOCKWIDTH, [{ x: 2500 / PARAMS.BLOCKWIDTH, y: 1500 / PARAMS.BLOCKWIDTH }, { x: 2000 / PARAMS.BLOCKWIDTH, y: 700 / PARAMS.BLOCKWIDTH }]));    //target
+        // this.game.addEntity(new Soldier(this.game, 1000 / 64, 1500 / 64, [{ x: 2450 / 64, y: 1500 / 64 }, { x: 2100 / 64, y: 700 / 64 }]));    //target
+        // this.game.addEntity(new Soldier(this.game, 800 / 64, 1500 / 64, [{ x: 2400 / 64, y: 1500 / 64 }, { x: 2200 / 64, y: 600 / 64 }]));    //target
+
+
+        // this.game.addEntity(new InfectedVenom(this.game, 25, 48, [{ x: 28, y: 32 }]));
+        // this.game.addEntity(new InfectedVenom(this.game, 25, 42, [{ x: 27, y: 32 }]));
+        // this.game.addEntity(new InfectedVenom(this.game, 25, 50, [{ x: 31, y: 32 }]));
+        // this.game.addEntity(new InfectedVenom(this.game, 25, 51, [{ x: 25, y: 32 }]));
+
+
     };
+
+    // placeBuilding() {
+    //     var x = this.game.click.x + this.game.camera.cameraX;
+    //     var y = this.game.click.y + this.game.camera.cameraY;
+    //     console.log(x + " : " + y);
+    //     if (this.game.click && this.selectedBuilding &&
+    //         !this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions) {
+    //         this.game.mainMap.map[y][x].filled = true;
+    //         console.log(new (BUILDINGS[this.selectedBuilding])(this.game, this.game.click.x, this.game.click.y));
+    //         this.game.addEntity(new (BUILDINGS[this.selectedBuilding])(this.game));
+    //     }
+    // }
 
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;

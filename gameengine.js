@@ -189,7 +189,7 @@ class GameEngine {
 
     update() {
         // Check if the game is over (when 10 days is reached. If it is, print some victory text)
-        if(this.elapsedDay >= 10 && (this.gameOver == false)) {
+        if(this.elapsedDay >= 1 && (this.gameOver == false)) {
             this.wonTheGameFlag = true;
             this.gameOver = true;
         }
