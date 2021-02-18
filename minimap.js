@@ -5,33 +5,32 @@ class Minimap {
         this.width = 4 * PARAMS.BLOCKWIDTH;
         this.height = 4 * PARAMS.BLOCKWIDTH;
 
+        this.cameraWidthOnMinimap = 4 * PARAMS.CAMERAWIDTH / PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH;
+        this.cameraHeightOnMinimap = 4 * PARAMS.CAMERAHEIGHT / PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH;
+
     };
 
     update() {
 
     };
 
-    //Helper function to deep copy paths
-    copyPath(originalPath) {
-        let copiedPath = [];
-        for(let i = 0; i < originalPath.length; i++) {
-            copiedPath[i] = { x : originalPath[i].x, y : originalPath[i].y }
-        }
-        return copiedPath;
-    }
-
     draw(ctx) {
+        console.log("cameraWidthOnMinimap: " + this.cameraHeightOnMinimap)
         if(PARAMS.DEBUG) {
             // ctx.strokeStyle = "Yellow";
             // ctx.strokeRect(this.x, this.y, this.width, this.height);
         }
-        
 
-        
         //this.game.entities[1].drawMinimap(ctx, this.x, this.y);
         for (var i = 0; i < this.game.entities.length; i++) {
             // console.log(this.game.entities[i]);
             this.game.entities[i].drawMinimap(ctx, this.x, this.y);
         }
+
+        //Draw a rectangle on minimap to show where player is currently looking
+        ctx.strokeStyle = "Blue";
+        var cameraStartXOnMinimap = this.x + this.game.camera.cameraX * PARAMS.MINIMAPSCALE * PARAMS.BLOCKWIDTH;
+        var cameraStartYOnMinimap = this.y + this.game.camera.cameraY * PARAMS.MINIMAPSCALE * PARAMS.BLOCKWIDTH;
+        ctx.strokeRect(cameraStartXOnMinimap, cameraStartYOnMinimap, this.cameraWidthOnMinimap, this.cameraHeightOnMinimap);
     };
 }

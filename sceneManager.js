@@ -1042,7 +1042,7 @@ class SceneManager {
         ctx.fillText(this.game.fps.toString() + " fps", 1510, 770);
 
         // Minimap
-        this.minimap.draw(ctx, this.infected);
+        this.minimap.draw(ctx);
     };
 
 
