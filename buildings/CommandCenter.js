@@ -4,7 +4,7 @@ class CommandCenter {
 
       this.x = x * PARAMS.BLOCKWIDTH;
       this.y = y * PARAMS.BLOCKWIDTH;
-      this.hitpoints = 100;
+      this.hitpoints = 1000;
       this.radius = 5;
 
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
@@ -16,8 +16,9 @@ class CommandCenter {
 
    update() {
       if (this.hitpoints <= 0) {
-         this.game.gameEnd(false);
-      }
+         this.removeFromWorld = true;
+         this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+     }
    };
    
    draw(ctx) {
