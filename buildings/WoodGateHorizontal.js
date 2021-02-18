@@ -17,10 +17,6 @@ class WoodGateHorizontal {
       this.state = 0;
    };
 
-   collide(other) {
-      return distance(this, other) < this.radius + other.radius;
-   };
-
    update() {
       this.gateOpenThisFrame = false;
 
