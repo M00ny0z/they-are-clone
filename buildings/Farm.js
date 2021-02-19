@@ -14,9 +14,9 @@ class Farm {
 
         this.cropLocationsSpriteSheet = [];
         //Crop locations on spritesheet are randomly determined at initialization
-        for(let i = 0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             this.cropLocationsSpriteSheet.push([]);
-            for(let j = 0; j < 5; j++) {
+            for (let j = 0; j < 5; j++) {
                 this.cropLocationsSpriteSheet[i][j] = { x: this.getRandomInt(0, 31) * 32, y: (this.getRandomInt(2, 8) * 64 + 16) };
             }
         }
@@ -54,8 +54,8 @@ class Farm {
                 }
             }
         }
-        if (PARAMS.RESOURCEXY){ 
-            console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
+        if (PARAMS.RESOURCEXY) {
+            console.log("mapStartX:" + mapStartX + ", mapStartY:" + mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
     }
 
@@ -63,16 +63,29 @@ class Farm {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.foodRate -= this.foodRate;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            for (var i = 0; i < 5; i++) {
+                for (var j = 0; j < 5; j++) {
+                    this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].filled = false;
+                }
+            }
         }
-        
+
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
-                this.placeable = true;
-            } else {
-                this.placeable = false;
+            var stop = false;
+            for (var i = 0; i < 5; i++) {
+                for (var j = 0; j < 5; j++) {
+                    if (!this.game.mainMap.map[y + i - 2][x + j - 2].collisions && !this.game.mainMap.map[y + i - 2][x + j - 2].filled) {
+                        this.placeable = true;
+                    } else {
+                        stop = true;
+                    }
+                }
+                if (stop) {
+                    this.placeable = false;
+                    break;
+                }
             }
             this.calcResourceRate();
         }
@@ -81,18 +94,22 @@ class Farm {
         if (this.game.click && this.followMouse) {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[y][x].filled = true;
+            if (this.game.click.y < 15 && this.placeable) {
+                for (var i = 0; i < 5; i++) {
+                    for (var j = 0; j < 5; j++) {
+                        this.game.mainMap.map[y + i - 2][x + j - 2].filled = true;
+                    }
+                }
                 this.followMouse = false;
-                this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
-                this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
+                this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
+                this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
 
                 this.game.numWorkers -= this.game.requiredResources["Farm"].workers;
                 this.game.food -= this.game.requiredResources["Farm"].food;
                 this.game.wood -= this.game.requiredResources["Farm"].wood;
                 this.game.stone -= this.game.requiredResources["Farm"].stone;
                 this.game.iron -= this.game.requiredResources["Farm"].iron;
-                
+
                 this.game.foodRate += this.foodRate;
             }
             this.game.click = null;
@@ -117,12 +134,12 @@ class Farm {
 
             ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
-            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
+            ctx.strokeRect((mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
-            ctx.fillText("Surround the dirt tiles", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
-            ctx.fillText("to gain food", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.4)*PARAMS.BLOCKWIDTH);
-            ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
+            ctx.fillText("Surround the dirt tiles", (mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 1.7) * PARAMS.BLOCKWIDTH);
+            ctx.fillText("to gain food", (mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 1.4) * PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y + 3) * PARAMS.BLOCKWIDTH);
 
         }
 
@@ -132,20 +149,20 @@ class Farm {
         const cropsHeight = 48;
         if (!this.followMouse) {
             //Draw farm building in center
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             //Draw crops around building
-            for(let i = 0; i < 5; i++) {
-                for(let j = 0; j < 5; j++) {
-                    if(!(i == 2 && j == 2)) {
-                        ctx.drawImage(  this.spritesheetCrops, 
-                                        this.cropLocationsSpriteSheet[i][j].x, 
-                                        this.cropLocationsSpriteSheet[i][j].y, 
-                                        cropsWidth, 
-                                        cropsHeight, 
-                                        (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - (i - 2) * PARAMS.BLOCKWIDTH, 
-                                        (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - (j - 2) * PARAMS.BLOCKWIDTH, 
-                                        PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH
-                                    );
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    if (!(i == 2 && j == 2)) {
+                        ctx.drawImage(this.spritesheetCrops,
+                            this.cropLocationsSpriteSheet[i][j].x,
+                            this.cropLocationsSpriteSheet[i][j].y,
+                            cropsWidth,
+                            cropsHeight,
+                            (this.x - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - (j - 2) * PARAMS.BLOCKWIDTH,
+                            (this.y - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - (i - 2) * PARAMS.BLOCKWIDTH,
+                            PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH
+                        );
                     }
                 }
             }
@@ -161,9 +178,13 @@ class Farm {
     };
 
     drawMinimap(ctx, mmX, mmY) {
-        if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
-          ctx.fillStyle = "Green";
-          ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+        if ((this.x - PARAMS.BLOCKWIDTH / 2) >= 0 && (this.x - PARAMS.BLOCKWIDTH / 2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH / 2) >= 0 && (this.y - PARAMS.BLOCKWIDTH / 2) <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
+            ctx.fillStyle = "Green";
+            for (var i = 0; i < 5; i++) {
+                for (var j = 0; j < 5; j++) {
+                    ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH / 2) * PARAMS.MINIMAPSCALE + i - 2, mmY + (this.y - PARAMS.BLOCKWIDTH / 2) * PARAMS.MINIMAPSCALE + j - 2, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+                }
+            }
         }
     }
 };

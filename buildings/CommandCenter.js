@@ -7,6 +7,11 @@ class CommandCenter {
       this.hitpoints = 1000;
       this.radius = 80;
 
+      for (var i = 34; i <= 36; i++) {
+         for(var j = 27; j <= 29; j++) {
+            this.game.mainMap.map[i][j].filled = true;
+         }
+      }
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
    };
 

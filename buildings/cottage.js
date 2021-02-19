@@ -17,12 +17,14 @@ class Cottage {
             this.removeFromWorld = true;
             this.game.workerRate -= this.workerRate;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
         }
         
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
+            if ((!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) &&
+                (!this.game.mainMap.map[y+1][x].collisions && !this.game.mainMap.map[y+1][x].filled)) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -33,8 +35,9 @@ class Cottage {
         if (this.game.click && this.followMouse) {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
+            if (this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
+                this.game.mainMap.map[y+1][x].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
@@ -89,8 +92,9 @@ class Cottage {
 
     drawMinimap(ctx, mmX, mmY) {
         if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2)<= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
-            ctx.fillStyle = "lightgreen";
+            ctx.fillStyle = "Green";
             ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+            ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE + 1, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
           }
     }
 };
