@@ -1009,37 +1009,40 @@ class SceneManager {
 
         }
 
+        //console.log("x is: ")
+
         // RESOURCES
         ctx.font = "15px SpaceMono-Regular";
+        ctx.textBaseline = "bottom";
         ctx.fillStyle = "lightgreen";
         // Workers
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
         this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
-        ctx.fillText("+" + this.game.workerRate.toString(), 1510, 792);
+        ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
         this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food, this.game.maxFood);
-        ctx.fillText("+" + this.game.foodRate.toString(), 1510, 812);
+        ctx.fillText("+" + this.game.foodRate.toString(), 1510, 816);
 
 
         // Wood
         ctx.drawImage(this.woodIcon, 1365, 820, 20, 18);
         this.drawHealthbar(ctx, 1400, 820, 100, 15, this.game.wood, this.game.maxWood);
-        ctx.fillText("+" + this.game.woodRate.toString(), 1510, 832);
+        ctx.fillText("+" + this.game.woodRate.toString(), 1510, 836);
 
         // Stone
         ctx.drawImage(this.stoneIcon, 1365, 840, 20, 18);
         this.drawHealthbar(ctx, 1400, 840, 100, 15, this.game.stone, this.game.maxStone);
-        ctx.fillText("+" + this.game.stoneRate.toString(), 1510, 852);
+        ctx.fillText("+" + this.game.stoneRate.toString(), 1510, 856);
 
         // Iron               
         ctx.drawImage(this.ironIcon, 1365, 860, 20, 18);
         this.drawHealthbar(ctx, 1400, 860, 100, 15, this.game.iron, this.game.maxIron);
-        ctx.fillText("+" + this.game.ironRate.toString(), 1510, 872);
+        ctx.fillText("+" + this.game.ironRate.toString(), 1510, 876);
 
         // FPS               
-        ctx.fillText(this.game.fps.toString() + " fps", 1510, 770);
+        ctx.fillText(this.game.fps.toString() + " fps", 1510, 776);
 
         // Minimap
         this.minimap.draw(ctx);
@@ -1063,7 +1066,7 @@ class SceneManager {
 
         ctx.font = "10px SpaceMono-Regular";
         ctx.fillStyle = "white";
-        ctx.fillText(val + "/" + maxVal, x + 30, y + 10);
+        ctx.fillText(val + "/" + maxVal, x + 30, y + 12);
 
 
         ctx.restore();
