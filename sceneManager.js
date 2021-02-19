@@ -1061,7 +1061,8 @@ class SceneManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(posX + 1, posY + 1, width - 2, height - 2);
 
-        ctx.fillStyle = val >= 50 ? 'green' : 'red';
+        //ctx.fillStyle = val >= (maxVal / 2) ? 'green' : 'red';
+        ctx.fillStyle = 'green';
         ctx.fillRect(posX + 2, posY + 2, (width - 4) * (val / maxVal), (height - 5));
 
         ctx.font = "10px SpaceMono-Regular";
