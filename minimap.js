@@ -2,8 +2,8 @@ class Minimap {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
 
-        this.width = PARAMS.BLOCKWIDTH;
-        this.height = PARAMS.BLOCKWIDTH;
+        this.width = 4 * PARAMS.BLOCKWIDTH;
+        this.height = 4 * PARAMS.BLOCKWIDTH;
 
         this.cameraWidthOnMinimap = 4 * PARAMS.CAMERAWIDTH;
         this.cameraHeightOnMinimap = 4 * PARAMS.CAMERAHEIGHT;
