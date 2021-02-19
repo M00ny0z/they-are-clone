@@ -27,7 +27,7 @@ class GameOverText {
         PARAMS.CAMERAWIDTH * PARAMS.BLOCKWIDTH / 2,
         PARAMS.CAMERAHEIGHT * PARAMS.BLOCKWIDTH / 2);
         this.game.ctx.fillStyle = "black";
-
+        this.game.ctx.textAlign = "start"; // resets text allign back to what it was before for the UI text allignment.
     }
 
     drawMinimap() {
