@@ -2,8 +2,9 @@ class MapOne {
     constructor(game) {
         Object.assign(this, { game });
         this.game.camera = this;
-        this.cameraX = 25;
-        this.cameraY = 25;
+        this.cameraX = 10;
+        this.cameraY = 27;
+
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
 
         this.map = [];
@@ -25,8 +26,6 @@ class MapOne {
                 }
             }
         }
-
-        // console.log(this.map);
     }
 
 
@@ -47,26 +46,23 @@ class MapOne {
         if (this.game.down) {
             this.cameraY += 1;
         }
-        if (this.cameraX > 50) {
-            this.cameraX = 50;
+
+        if (this.cameraX > 17) {
+            this.cameraX = 17;
         }
         if (this.cameraX < 0) {
             this.cameraX = 0;
         }
-        if (this.cameraY > 50) {
-            this.cameraY = 50;
+        if (this.cameraY > 31) {
+            this.cameraY = 31;
         }
         if (this.cameraY < 0) {
             this.cameraY = 0;
         }
 
         if (this.game.click) {
-            // var x = this.game.click.x + 25;
-            // var y = this.game.click.y + 25;
-
             var x = this.game.click.x;
             var y = this.game.click.y;
-            console.log(x + " : " + y);
             if (!this.map[y][x].filled && !this.map[y][x].collisions && chosenBuilding) {
                 this.map[y][x].filled = true;
                 this.game.addEntity(chosenBuilding);

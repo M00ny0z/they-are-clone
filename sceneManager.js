@@ -2,8 +2,8 @@ class SceneManager {
     constructor(game) {
         this.game = game;
         this.game.camera = this;
-        this.cameraX = 0;
-        this.cameraY = 0;
+        this.cameraX = 10;
+        this.cameraY = 27;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui/frame.png");
         this.minimap = new Minimap(this.game, .15 * PARAMS.BLOCKWIDTH, 14.45 * PARAMS.BLOCKWIDTH);
