@@ -57,7 +57,7 @@ ASSET_MANAGER.queueDownload("./sprites/infected_chubby.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ballista.png");
 ASSET_MANAGER.queueDownload("./sprites/machinegun_turret.png");
-ASSET_MANAGER.queueDownload("./sprites/tent.png");
+//ASSET_MANAGER.queueDownload("./sprites/tent.png");
 ASSET_MANAGER.queueDownload("./sprites/buildings.png");
 ASSET_MANAGER.queueDownload("./sprites/crops.png");
 ASSET_MANAGER.queueDownload("./sprites/commandCenter.png");

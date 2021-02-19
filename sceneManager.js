@@ -95,24 +95,14 @@ class SceneManager {
         }
 
         // checking if there are enough resources to construct builidngs.
-        if (this.game.workers >= this.game.requiredResources["Tent"].workers &&
-            this.game.food >= this.game.requiredResources["Tent"].food &&
-            this.game.wood >= this.game.requiredResources["Tent"].wood &&
-            this.game.stone >= this.game.requiredResources["Tent"].stone &&
-            this.game.iron >= this.game.requiredResources["Tent"].iron) {
-            this.game.requiredResources["Tent"].enoughResource = true;
+        if (this.game.workers >= this.game.requiredResources["WoodHouse"].workers &&
+            this.game.food >= this.game.requiredResources["WoodHouse"].food &&
+            this.game.wood >= this.game.requiredResources["WoodHouse"].wood &&
+            this.game.stone >= this.game.requiredResources["WoodHouse"].stone &&
+            this.game.iron >= this.game.requiredResources["WoodHouse"].iron) {
+            this.game.requiredResources["WoodHouse"].enoughResource = true;
         } else {
-            this.game.requiredResources["Tent"].enoughResource = false;
-        }
-
-        if (this.game.workers >= this.game.requiredResources["Cottage"].workers &&
-            this.game.food >= this.game.requiredResources["Cottage"].food &&
-            this.game.wood >= this.game.requiredResources["Cottage"].wood &&
-            this.game.stone >= this.game.requiredResources["Cottage"].stone &&
-            this.game.iron >= this.game.requiredResources["Cottage"].iron) {
-            this.game.requiredResources["Cottage"].enoughResource = true;
-        } else {
-            this.game.requiredResources["Cottage"].enoughResource = false;
+            this.game.requiredResources["WoodHouse"].enoughResource = false;
         }
 
         if (this.game.workers >= this.game.requiredResources["StoneHouse"].workers &&
@@ -123,6 +113,16 @@ class SceneManager {
             this.game.requiredResources["StoneHouse"].enoughResource = true;
         } else {
             this.game.requiredResources["StoneHouse"].enoughResource = false;
+        }
+
+        if (this.game.workers >= this.game.requiredResources["ApartmentComplex"].workers &&
+            this.game.food >= this.game.requiredResources["ApartmentComplex"].food &&
+            this.game.wood >= this.game.requiredResources["ApartmentComplex"].wood &&
+            this.game.stone >= this.game.requiredResources["ApartmentComplex"].stone &&
+            this.game.iron >= this.game.requiredResources["ApartmentComplex"].iron) {
+            this.game.requiredResources["ApartmentComplex"].enoughResource = true;
+        } else {
+            this.game.requiredResources["ApartmentComplex"].enoughResource = false;
         }
 
         if (this.game.workers >= this.game.requiredResources["FishermansCottage"].workers &&
@@ -270,23 +270,23 @@ class SceneManager {
                     this.display = 0;
                 }
             } else if (this.display == 1) { // display 1
-                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Tent"].enoughResource) {
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodHouse"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
-                    this.selected = new Tent(this.game);
+                    this.selected = new WoodHouse(this.game);
                     this.game.addEntity(this.selected);
-                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Cottage"].enoughResource) {
-                    if (this.selected) {
-                        this.selected.removeFromWorld = true;
-                    }
-                    this.selected = new Cottage(this.game);
-                    this.game.addEntity(this.selected);
-                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["StoneHouse"].enoughResource) {
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["StoneHouse"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new StoneHouse(this.game);
+                    this.game.addEntity(this.selected);
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["ApartmentComplex"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.selected = new ApartmentComplex(this.game);
                     this.game.addEntity(this.selected);
                 }
             } else if (this.display == 2) { // display 2
@@ -485,23 +485,23 @@ class SceneManager {
                 ctx.fillText("Defensive and surveillance structures for the colony.", 500, 812);
             }
         } else if (this.display == 1) {
-            // tent icon
+            // Wood House icon
             ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
-            if (this.game.requiredResources["Tent"].enoughResource) {
+            if (this.game.requiredResources["WoodHouse"].enoughResource) {
                 ctx.drawImage(this.buildingsImg, 96, 395, 32, 39, 1042, 744, 35, 35);
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 96, 395, 32, 39, 1042, 744, 35, 35);
             }
-            // cottage icon
+            // Stone House icon
             ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
-            if (this.game.requiredResources["Cottage"].enoughResource) {
+            if (this.game.requiredResources["StoneHouse"].enoughResource) {
                 ctx.drawImage(this.buildingsImg, 56, 387, 32, 47, 1092, 744, 35, 35);
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 56, 387, 32, 47, 1092, 744, 35, 35);
             }
-            // stone house icon
+            // Apartment Complex icon
             ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
-            if (this.game.requiredResources["StoneHouse"].enoughResource) {
+            if (this.game.requiredResources["ApartmentComplex"].enoughResource) {
                 ctx.drawImage(this.buildingsImg, 0, 393, 48, 41, 1139, 744, 35, 35);
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 0, 393, 48, 41, 1139, 744, 35, 35);
@@ -516,7 +516,7 @@ class SceneManager {
                 ctx.font = "25px SpaceMono-Regular";
                 ctx.fillStyle = "lightgreen";
                 ctx.textBaseline = "bottom";
-                ctx.fillText("TENT", 500, 782);
+                ctx.fillText("WOOD HOUSE", 500, 782);
 
                 ctx.font = "15px SpaceMono-Regular";
                 ctx.fillStyle = "green";
@@ -534,7 +534,7 @@ class SceneManager {
                 ctx.font = "25px SpaceMono-Regular";
                 ctx.fillStyle = "lightgreen";
                 ctx.textBaseline = "bottom";
-                ctx.fillText("COTTAGE", 500, 782);
+                ctx.fillText("STONE HOUSE", 500, 782);
 
                 ctx.font = "15px SpaceMono-Regular";
                 ctx.fillStyle = "green";
@@ -552,7 +552,7 @@ class SceneManager {
                 ctx.font = "25px SpaceMono-Regular";
                 ctx.fillStyle = "lightgreen";
                 ctx.textBaseline = "bottom";
-                ctx.fillText("STONE HOUSE", 500, 782);
+                ctx.fillText("APARTMENT COMPLEX", 500, 782);
 
                 ctx.font = "15px SpaceMono-Regular";
                 ctx.fillStyle = "green";
@@ -1018,7 +1018,7 @@ class SceneManager {
         // Workers
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
         this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
-        ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
+        //ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);

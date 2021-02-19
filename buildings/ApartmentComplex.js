@@ -1,4 +1,4 @@
-class StoneHouse {
+class ApartmentComplex {
     constructor(game) {
         Object.assign(this, { game });
         this.x = null;
@@ -43,11 +43,11 @@ class StoneHouse {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers -= this.game.requiredResources["StoneHouse"].workers;
-                this.game.food -= this.game.requiredResources["StoneHouse"].food;
-                this.game.wood -= this.game.requiredResources["StoneHouse"].wood;
-                this.game.stone -= this.game.requiredResources["StoneHouse"].stone;
-                this.game.iron -= this.game.requiredResources["StoneHouse"].iron;
+                this.game.workers -= this.game.requiredResources["ApartmentComplex"].workers;
+                this.game.food -= this.game.requiredResources["ApartmentComplex"].food;
+                this.game.wood -= this.game.requiredResources["ApartmentComplex"].wood;
+                this.game.stone -= this.game.requiredResources["ApartmentComplex"].stone;
+                this.game.iron -= this.game.requiredResources["ApartmentComplex"].iron;
                 
                 this.game.workerRate += this.workerRate;
             }

@@ -48,9 +48,9 @@ class GameEngine {
         this.ready = false; // wait for game to load, before we let ui clickable.
 
         this.requiredResources = {};
-        this.requiredResources["Tent"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["Cottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["WoodHouse"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["ApartmentComplex"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
 
         this.requiredResources["FishermansCottage"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Farm"] = { workers: 0, food: 0, wood: 0, stone: 0, iron: 0, enoughResource: false };

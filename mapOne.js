@@ -9,7 +9,8 @@ class MapOne {
         for (var i = 0; i < 50; i++) {
             this.map.push([]);
             for (var j = 0; j < 50; j++) {
-                this.map[i].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "filled": false });
+                this.map[i].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "filled": false,
+                                    "fishermansCottage": false, "farm": false, "quarry": false, "sawmill": false});
                 if (TileMaps.map.layers[0].data[j + (i * 50)] != 0) {
                     this.map[i][j].collisions = true;
                 }
