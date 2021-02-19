@@ -45,13 +45,10 @@ class FishermansCottage {
         }
     }
 
-    collide(other) {
-        return distance(this, other) < this.radius + other.radius;
-    };
-
     update() {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.foodRate -= this.foodRate;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
         }
         

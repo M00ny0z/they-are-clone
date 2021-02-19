@@ -15,6 +15,7 @@ class Cottage {
     update() {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workerRate -= this.workerRate;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
         }
         
