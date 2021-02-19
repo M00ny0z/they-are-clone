@@ -55,7 +55,6 @@ class Ballista {
 
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
-            console.log()
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
                 && this.elapsedTime > this.fireRate) {
                 this.target = ent;

@@ -87,8 +87,8 @@ class SceneManager {
         if (this.cameraX < 0) {
             this.cameraX = 0;
         }
-        if (this.cameraY > 34) {
-            this.cameraY = 34;
+        if (this.cameraY > 31) {
+            this.cameraY = 31;
         }
         if (this.cameraY < 0) {
             this.cameraY = 0;

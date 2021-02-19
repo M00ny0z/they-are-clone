@@ -5,7 +5,7 @@ class CommandCenter {
       this.x = x * PARAMS.BLOCKWIDTH;
       this.y = y * PARAMS.BLOCKWIDTH;
       this.hitpoints = 100;
-      this.radius = 5;
+      this.radius = 100;
 
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
    };
@@ -27,6 +27,14 @@ class CommandCenter {
       const startX = 128;
 
       ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) , width * 2, height * 2);
+
+      // if (PARAMS.DEBUG && !this.followMouse) {
+      //    ctx.strokeStyle = "Red";
+      //    ctx.beginPath();
+      //    ctx.arc(this.x + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
+      //    ctx.closePath();
+      //    ctx.stroke();
+      // }
    };
 
    drawMinimap(ctx, mmX, mmY) {
