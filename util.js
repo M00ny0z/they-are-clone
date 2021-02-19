@@ -80,15 +80,15 @@ function buildingCheck(entity) {
     const buildingCheck = (
         entity instanceof Ballista ||
         entity instanceof Farm ||
-        entity instanceof Cottage ||
+        entity instanceof StoneHouse ||
         entity instanceof FishermansCottage ||
         entity instanceof Quarry ||
         entity instanceof Sawmill ||
         entity instanceof StoneWall ||
         entity instanceof StoneGateVertical ||
         entity instanceof StoneGateHorizontal ||
-        entity instanceof StoneHouse ||
-        entity instanceof Tent || 
+        entity instanceof ApartmentComplex ||
+        entity instanceof WoodHouse || 
         entity instanceof WoodGateVertical ||
         entity instanceof WoodGateHorizontal ||
         entity instanceof WoodWall ||

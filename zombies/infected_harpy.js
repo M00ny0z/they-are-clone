@@ -184,15 +184,15 @@ class InfectedHarpy {
                 ent instanceof Titan || 
                 ent instanceof Ballista ||
                 ent instanceof Farm ||
-                ent instanceof Cottage ||
+                ent instanceof StoneHouse ||
                 ent instanceof FishermansCottage ||
                 ent instanceof Quarry ||
                 ent instanceof Sawmill ||
                 ent instanceof StoneWall ||
                 ent instanceof StoneGateVertical ||
                 ent instanceof StoneGateHorizontal ||
-                ent instanceof StoneHouse ||
-                ent instanceof Tent || 
+                ent instanceof ApartmentComplex ||
+                ent instanceof WoodHouse || 
                 ent instanceof WoodGateVertical ||
                 ent instanceof WoodGateHorizontal ||
                 ent instanceof WoodWall ||
