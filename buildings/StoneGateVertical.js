@@ -8,7 +8,7 @@ class StoneGateVertical {
         this.followMouse = true;
         this.placeable = false;
 
-        this.radius = 50;
+        this.radius = 30;
         this.visualRadius = 75;
 
         this.hitpoints = 100;
@@ -22,7 +22,7 @@ class StoneGateVertical {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH].filled = false;
         }
 
         //detect if an ally unit is in range. if so, open gate.
@@ -53,9 +53,9 @@ class StoneGateVertical {
             if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
                 this.followMouse = false;
-                this.x = x * PARAMS.BLOCKWIDTH;
-                this.y = y * PARAMS.BLOCKWIDTH;
-                console.log(this.x + ", " + this.y);
+                this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
+                this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
+
                 this.game.workers -= this.game.requiredResources["StoneGate"].workers;
                 this.game.food -= this.game.requiredResources["StoneGate"].food;
                 this.game.wood -= this.game.requiredResources["StoneGate"].wood;
@@ -84,17 +84,25 @@ class StoneGateVertical {
   
         if (!this.followMouse) {
             if (this.state == 0) {
-                ctx.drawImage(this.spritesheet, 64, 0, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+                ctx.drawImage(this.spritesheet, 64, 0, width, height, (this.x - PARAMS.BLOCKWIDTH / 2)  - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2)  - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             } else if (this.state == 1) {
-                ctx.drawImage(this.spritesheet, 96, 0, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+                ctx.drawImage(this.spritesheet, 96, 0, width, height, (this.x - PARAMS.BLOCKWIDTH / 2)  - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
+        }
+
+        if (PARAMS.DEBUG && !this.followMouse) {
+            ctx.strokeStyle = "Red";
+            ctx.beginPath();
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.stroke();
         }
     };
     
     drawMinimap(ctx, mmX, mmY) {
-        if(this.x >= 0 && this.x <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
-          ctx.fillStyle = "Green";
-          ctx.fillRect(mmX + this.x * PARAMS.MINIMAPSCALE, mmY + this.y * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+        if ((this.x - PARAMS.BLOCKWIDTH / 2) >= 0 && (this.x - PARAMS.BLOCKWIDTH / 2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH / 2) >= 0 && (this.y - PARAMS.BLOCKWIDTH / 2) <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
+            ctx.fillStyle = "Green";
+            ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH / 2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH / 2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
         }
     }
  };

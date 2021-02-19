@@ -73,9 +73,15 @@ class FireBolt {
                 ent instanceof Quarry ||
                 ent instanceof Sawmill ||
                 ent instanceof StoneWall ||
+                ent instanceof StoneGateVertical ||
+                ent instanceof StoneGateHorizontal ||
+                ent instanceof StoneHouse ||
                 ent instanceof Tent || 
+                ent instanceof WoodGateVertical ||
+                ent instanceof WoodGateHorizontal ||
                 ent instanceof WoodWall ||
-                ent instanceof CommandCenter
+                ent instanceof CommandCenter ||
+                ent instanceof MachineGunTurret
             );
             if (enemyCheck && collide(this, ent)) {
                 ent.hitpoints -= 30;

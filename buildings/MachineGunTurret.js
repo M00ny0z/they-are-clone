@@ -61,7 +61,7 @@ class MachineGunTurret {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.mainMap.map[this.y/PARAMS.BLOCKWIDTH][this.x/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
         }
 
         for (var i = 0; i < this.game.entities.length; i++) {
@@ -70,7 +70,7 @@ class MachineGunTurret {
                 && this.elapsedTime > this.fireRate) {
                 this.target = ent;
                 this.elapsedTime = 0;
-                this.game.addEntity(new CannonBall(this.game, this.x + 24, this.y + 24, ent, true));
+                this.game.addEntity(new CannonBall(this.game, this.x, this.y, ent, true));
             }
         }
 
@@ -96,8 +96,8 @@ class MachineGunTurret {
             if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
                 this.followMouse = false;
-                this.x = x * PARAMS.BLOCKWIDTH;
-                this.y = y * PARAMS.BLOCKWIDTH;
+                this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
+                this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.food -= this.game.requiredResources["MachineGunTurret"].food;
@@ -123,13 +123,14 @@ class MachineGunTurret {
         }
 
         if (!this.followMouse) {
-            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.384);
+            this.animations[this.facing].drawFrame(this.game.clockTick, ctx, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.384);
         }
+
 
         if (PARAMS.DEBUG && !this.followMouse) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y + PARAMS.BLOCKWIDTH/2 - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
 
@@ -143,9 +144,9 @@ class MachineGunTurret {
     };
 
     drawMinimap(ctx, mmX, mmY) {
-        if(this.x >= 0 && this.x <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
+        if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2)<= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
           ctx.fillStyle = "Green";
-          ctx.fillRect(mmX + this.x * PARAMS.MINIMAPSCALE, mmY + this.y * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+          ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
         }
     }
 };

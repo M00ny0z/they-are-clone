@@ -54,7 +54,7 @@ class SceneManager {
         this.game.entities = [];
 
         this.game.addEntity(new MapOne(this.game));
-        this.game.addEntity(new CommandCenter(this.game, 27, 34));
+        this.game.addEntity(new CommandCenter(this.game, 28, 35));
         this.game.addEntity(this.game.enemyspawner);
     };
 

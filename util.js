@@ -76,11 +76,61 @@ function distance(A, B) {
     return Math.sqrt((B.x - A.x) * (B.x - A.x) + (B.y - A.y)*(B.y - A.y));
 };
 
+function buildingCheck(entity) {
+    const buildingCheck = (
+        entity instanceof Ballista ||
+        entity instanceof Farm ||
+        entity instanceof Cottage ||
+        entity instanceof FishermansCottage ||
+        entity instanceof Quarry ||
+        entity instanceof Sawmill ||
+        entity instanceof StoneWall ||
+        entity instanceof StoneGateVertical ||
+        entity instanceof StoneGateHorizontal ||
+        entity instanceof StoneHouse ||
+        entity instanceof Tent || 
+        entity instanceof WoodGateVertical ||
+        entity instanceof WoodGateHorizontal ||
+        entity instanceof WoodWall ||
+        entity instanceof CommandCenter ||
+        entity instanceof MachineGunTurret
+    );
+    if (buildingCheck) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function collide(A, B) {
+    // if(buildingCheck(A)) {
+    //     console.log(A.x);
+    //     console.log(A.y);
+    //     A.x = A.x + PARAMS.BLOCKWIDTH;
+    //     A.y = A.x + PARAMS.BLOCKWIDTH;
+    // }
+    // if(buildingCheck(B)) {
+    //     console.log(B.x);
+    //     console.log(B.y);
+    //     B.x = B.x + PARAMS.BLOCKWIDTH;
+    //     B.y = B.y + PARAMS.BLOCKWIDTH;
+    // }
     return (distance(A, B) < A.radius + B.radius);
 };
 
 function canSee(A, B) { // if A can see B
+    // if(buildingCheck(A)) {
+    //     console.log(A.x);
+    //     console.log(A.y);
+    //     A.x = A.x + PARAMS.BLOCKWIDTH;
+    //     A.y = A.x + PARAMS.BLOCKWIDTH;
+    // }
+    // if(buildingCheck(B)) {
+    //     console.log(B.x);
+    //     console.log(B.y);
+    //     B.x = B.x + PARAMS.BLOCKWIDTH;
+    //     B.y = B.y + PARAMS.BLOCKWIDTH;
+    // }
     return (distance(A, B) < A.visualRadius + B.radius);
 };
 
