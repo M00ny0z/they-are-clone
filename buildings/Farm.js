@@ -5,13 +5,30 @@ class Farm {
         this.y = null;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+        this.spritesheetCrops = ASSET_MANAGER.getAsset("./sprites/crops.png");
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 100;
         this.foodRate = 0;
         this.radius = 5;
         this.visualRadius = 5;
+
+        this.cropLocationsSpriteSheet = [];
+        //Crop locations on spritesheet are randomly determined at initialization
+        for(let i = 0; i < 5; i++) {
+            this.cropLocationsSpriteSheet.push([]);
+            for(let j = 0; j < 5; j++) {
+                this.cropLocationsSpriteSheet[i][j] = { x: this.getRandomInt(0, 31) * 32, y: (this.getRandomInt(2, 8) * 64 + 16) };
+            }
+        }
+        console.log(this.cropLocationsSpriteSheet);
     };
+
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
     calcResourceRate() {
         this.foodRate = 0;
@@ -115,8 +132,29 @@ class Farm {
 
         }
 
+        let cropStartX;
+        let cropsStartY;
+        const cropsWidth = 32;
+        const cropsHeight = 48;
         if (!this.followMouse) {
+            //Draw farm building in center
             ctx.drawImage(this.spritesheet, startX, startY, width, height, this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+            //Draw crops around building
+            for(let i = 0; i < 5; i++) {
+                for(let j = 0; j < 5; j++) {
+                    if(!(i == 2 && j == 2)) {
+                        ctx.drawImage(  this.spritesheetCrops, 
+                                        this.cropLocationsSpriteSheet[i][j].x, 
+                                        this.cropLocationsSpriteSheet[i][j].y, 
+                                        cropsWidth, 
+                                        cropsHeight, 
+                                        this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - (i - 2) * PARAMS.BLOCKWIDTH, 
+                                        this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - (j - 2) * PARAMS.BLOCKWIDTH, 
+                                        PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH
+                                    );
+                    }
+                }
+            }
         }
     };
 

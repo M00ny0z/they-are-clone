@@ -13,10 +13,6 @@ class StoneWall {
         this.radius = 1;
     };
 
-    collide(other) {
-        return distance(this, other) < this.radius + other.radius;
-    };
-
     update() {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;

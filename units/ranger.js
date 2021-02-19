@@ -11,7 +11,7 @@ class Ranger {
 
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ranger.png");
 
-    this.radius = 10;
+    this.radius = 15;
     this.visualRadius = 200;
 
     this.targetID = 0;
@@ -39,606 +39,125 @@ class Ranger {
     //0 = walk/run animations
     this.animations.push([]);
     spriteInfo = {
-      state: 0,
-      xStart: 743,
-      yStart: 1507,
-      width: 77,
-      height: 69,
-      frames: 10,
-      speed: 0.1,
-      padding: 1,
+      'state': 0,
+      'xStart': 743,
+      'width': 76,
+      'height': 68,
+      'frames': 10,
+      'speed': 0.1,
+      'padding': 2
     };
-
-    //2 = N
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-    //console.log(spriteInfo.yStart);
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
     //0 = E
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //7 = SE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //6 = S
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //5 = SW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //4 = W
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1647, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //1 = NE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1577, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //2 = N
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1507, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
     //3 = NW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1997, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //4 = W
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1927, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //5 = SW
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1857, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //6 = S
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1787, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //7 = SE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1717, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-    //-----------------------
     //1 = attack animations
     this.animations.push([]);
     spriteInfo = {
-      state: 1,
-      xStart: 1,
-      yStart: 15,
-      width: 69,
-      height: 90,
-      frames: 15,
-      speed: 0.1,
-      padding: 1,
+        'state': 1,
+        'xStart': 1,
+        'width': 68,
+        'height': 89,
+        'frames': 15,
+        'speed': .1,
+        'padding': 2
     };
-
-    //2 = N
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
     //0 = E
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //7 = SE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //6 = S
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //5 = SW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //4 = W
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 199, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //1 = NE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 108, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //2 = N
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 17, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
     //3 = NW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 654, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //4 = W
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 563, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //5 = SW
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 472, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //6 = S
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 381, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //7 = SE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 290, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-    //---------------------
     //2 = death animations
     this.animations.push([]);
     spriteInfo = {
-      state: 2,
-      xStart: 1,
-      yStart: 762,
-      width: 94,
-      height: 90,
-      frames: 17,
-      speed: 0.1,
-      padding: 1,
+        'state': 2,
+        'xStart': 1,
+        'width': 93,
+        'height': 89,
+        'frames': 17,
+        'speed': 0.1,
+        'padding': 2
     };
-
-    //2 = N
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
     //0 = E
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //7 = SE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //6 = S
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //5 = SW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //4 = W
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 944, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //1 = NE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 853, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //2 = N
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 762, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
     //3 = NW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1399, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //4 = W
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1308, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //5 = SW
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1217, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //6 = S
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1126, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //7 = SE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 1035, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
 
-
-    //--------------------------
     //3 = idle animations
     this.animations.push([]);
     spriteInfo = {
-      state: 3,
-      xStart: 1,
-      yStart: 2084,
-      width: 56,
-      height: 69,
-      frames: 24,
-      speed: 0.1,
-      padding: 1,
+        'state': 3,
+        'xStart': 1,
+        'width': 55,
+        'height': 68,
+        'frames': 25,
+        'speed': 0.1,
+        'padding': 2
     };
-
-    //2 = N
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //1 = NE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
     //0 = E
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //7 = SE
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //6 = S
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //5 = SW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
-    //4 = W
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
-    spriteInfo.yStart += spriteInfo.height + spriteInfo.padding;
-
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2224, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //1 = NE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2154, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //2 = N
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2084, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
     //3 = NW
-    this.animations[spriteInfo["state"]].push(
-      new Animator(
-        this.spritesheet,
-        spriteInfo["xStart"],
-        spriteInfo.yStart,
-        spriteInfo["width"],
-        spriteInfo["height"],
-        spriteInfo["frames"],
-        spriteInfo["speed"],
-        spriteInfo["padding"],
-        false,
-        true
-      )
-    );
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2574, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //4 = W
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2504, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //5 = SW
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2434, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //6 = S
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2364, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    //7 = SE
+    this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2294, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
   }
 
   update() {
     this.elapsedTime += this.game.clockTick;
     var dist = distance(this, this.target);
     this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-       
+    
+    //For debugging, constantly rotates entity
+    // this.velocity = { x: Math.cos(this.elapsedTime), y: Math.sin(this.elapsedTime) };  
+
+
     if (this.hitpoints <= 0) this.removeFromWorld = true;
 
     if (this.target.removeFromWorld) {
@@ -682,14 +201,36 @@ class Ranger {
       // If reached to the target, new velocity will be calculated.
       this.x += this.velocity.x * this.game.clockTick;
       this.y += this.velocity.y * this.game.clockTick;
-  }
+    }
 
     this.facing = getFacing(this.velocity);
+
   }
 
   draw(ctx) {
-    var xOffset = 15;
-    var yOffset = 15;
+    var xOffset = 0;
+    var yOffset = 0;
+
+    //It is written like (xOffset = width / 2 / 2) because the first /2 represents that it only needs to be shifted
+    //half its width, and the second /2 is because the animator draws it at only 0.5 scale (see draw method below)
+    switch(this.state) {
+        case 0:
+            xOffset = Math.floor(76/2/2);
+            yOffset = Math.floor(68/2/2);
+            break;
+        case 1:
+            xOffset = Math.floor(68/2/2);
+            yOffset = Math.floor(89/2/2);
+            break;
+        case 2:
+            xOffset = Math.floor(93/2/2);
+            yOffset = Math.floor(89/2/2);
+            break;
+        case 3:
+            xOffset = Math.floor(55/2/2);
+            yOffset = Math.floor(68/2/2);
+            break;
+    }
 
     this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 

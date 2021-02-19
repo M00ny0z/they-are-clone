@@ -191,7 +191,8 @@ class InfectedVenom {
                 ent instanceof StoneWall ||
                 ent instanceof Tent || 
                 ent instanceof WoodWall ||
-                ent instanceof CommandCenter
+                ent instanceof CommandCenter ||
+                ent instanceof MachineGunTurret
             );
             if (enemyCheck && canSee(this, ent)) {
                 if (this.state === 0) {
@@ -239,7 +240,7 @@ class InfectedVenom {
     };
 
     drawMinimap(ctx, mmX, mmY) {
-        if(this.x >= 0 && this.x <= PARAMS.MAPWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT) {
+        if(this.x >= 0 && this.x <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
             ctx.fillStyle = "Red";
             ctx.fillRect(mmX + this.x * PARAMS.MINIMAPSCALE, mmY + this.y * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
         }

@@ -6,8 +6,6 @@ class EnemySpawner {
     constructor(game) {
         Object.assign(this, { game });
 
-        this.timeElapsed = 0;
-
         this.spawnFirstWave = false;
         this.spawnSecondtWave = false;
         this.spawnThirdWave = false;
@@ -102,10 +100,9 @@ class EnemySpawner {
     }
 
     update() {
-        this.timeElapsed += this.game.clockTick;
         switch(true) {
             //Wave 1
-            case this.timeElapsed > 0.5 && !this.spawnFirstWave:
+            case this.game.elapsedHour >= 12 && !this.spawnFirstWave:
                 //Path 1
                 for (var i = 0; i < 2; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));
@@ -119,7 +116,8 @@ class EnemySpawner {
                 break;
 
             //Wave 2
-            case this.timeElapsed > 10 && !this.spawnSecondWave:
+            case this.game.elapsedDay >= 1 && this.game.elapsedHour >= 12 && !this.spawnSecondWave:
+                console.log("got here");
                 //Path 1
                 for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));
@@ -136,7 +134,7 @@ class EnemySpawner {
                 break;
 
             //Wave 3
-            case this.timeElapsed > 25 && !this.spawnThirdWave:
+            case this.game.elapsedDay >= 3 && !this.spawnThirdWave:
                 //Path 1
                 for (var i = 0; i < 7; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));
@@ -162,7 +160,7 @@ class EnemySpawner {
                 break;
 
             //Wave 4   
-            case this.timeElapsed > 50 && !this.spawnFourthWave:
+            case this.game.elapsedDay >= 5 && this.game.elapsedHour >= 12 && !this.spawnFourthWave:
                 //Path 1
                 for (var i = 0; i < 11; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.path1.startX, this.path1.startY + (i * -1), this.copyPath(this.path1.path)));

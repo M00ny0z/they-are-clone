@@ -202,8 +202,27 @@ class Titan {
     };
 
     draw(ctx) {
-        var xOffset = 23;
-        var yOffset = 25;
+        var xOffset = 0;
+        var yOffset = 0;
+
+        switch(this.state) {
+            case 0:
+                xOffset = Math.floor(96/2/2);
+                yOffset = Math.floor(87/2/2);
+                break;
+            case 1:
+                xOffset = Math.floor(96/2/2);
+                yOffset = Math.floor(90/2/2);
+                break;
+            case 2:
+                xOffset = Math.floor(128/2/2);
+                yOffset = Math.floor(90/2/2);
+                break;
+            case 3:
+                xOffset = Math.floor(96/2/2);
+                yOffset = Math.floor(90/2/2);
+                break;
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 

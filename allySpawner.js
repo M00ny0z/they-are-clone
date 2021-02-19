@@ -8,7 +8,7 @@ class AllySpawner {
         this.timeElapsed = 0;
 
         this.path1 = { 
-            startX : 27, startY : 35, path : [
+            startX : 26, startY : 35, path : [
                 { x: 18, y: 35 },
                 { x: 18, y: 22 },
                 { x: 36, y: 22 }, 

@@ -17,6 +17,10 @@ class GameEngine {
         this.up = false;
         this.down = false;
 
+        //Boolean where true means that the game was won, false means that the game was lost
+        this.wonTheGameFlag;
+        this.gameOver = false;
+
         // // Time: 1 hour is 1 second, 1 day is 24 seconds
         // this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
         // this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
@@ -184,6 +188,12 @@ class GameEngine {
     };
 
     update() {
+        // Check if the game is over (when 10 days is reached. If it is, print some victory text)
+        if(this.elapsedDay >= 10 && (this.gameOver == false)) {
+            this.wonTheGameFlag = true;
+            this.gameOver = true;
+        }
+
         var entitiesCount = this.entities.length;
 
         for (var i = 0; i < entitiesCount; i++) {
@@ -197,6 +207,10 @@ class GameEngine {
         
         for (var i = this.entities.length - 1; i >= 0; --i) {
             if (this.entities[i].removeFromWorld) {
+                if(this.entities[i] instanceof CommandCenter && (this.gameOver == false)) {
+                    this.wonTheGameFlag = false;
+                    this.gameOver = true;
+                }
                 this.entities.splice(i, 1);
             }
         } 
@@ -207,30 +221,23 @@ class GameEngine {
             this.updateResourceCount();
         }
 
-        // Check if the game is over (when 10 days is reached. If it is, print some victory text)
-        if(this.elapsedDay >= 10) {
-            this.gameEnd(true);
+        if(this.gameOver) {
+            this.gameEnd(this.wonTheGameFlag);
         }
     };
 
-    gameEnd(winorloss) {
-        //Draw an opaque rectangle to fill the screen
-        if(this.elapsedDay > 11) {
-            this.ctx.globalAlpha = 0.1;
-        } else {
-            this.ctx.globalAlpha = 0.3;
-        }
+    gameEnd(wonTheGameFlag) {
+        //Draw an opaque rectangle to fill the screen=
+        this.ctx.globalAlpha = 0.3;
                
             
         this.ctx.fillRect(0, 0, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH, PARAMS.BLOCKWIDTH * PARAMS.MAPWIDTH);
-        if(!this.gameOver) {
-            if(winorloss) {
-                this.addEntity(new GameOverText(this, true)); // win
-            } else {
-                this.addEntity(new GameOverText(this, false)); // lose
-            }
-            this.gameOver = true;
+        if(wonTheGameFlag) {
+            this.addEntity(new GameOverText(this, true)); // win
+        } else {
+            this.addEntity(new GameOverText(this, false)); // lose
         }
+        this.gameOver = true;
     }
 
     // update inGame resources (Every 1 hour in game)
