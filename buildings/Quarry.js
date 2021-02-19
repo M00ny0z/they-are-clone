@@ -7,7 +7,7 @@ class Quarry {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 100;
+        this.hitpoints = 150;
         this.radius = 30;
         this.stoneRate = 0;
         this.ironRate = 0;

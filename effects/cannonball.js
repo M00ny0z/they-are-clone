@@ -28,7 +28,7 @@ class CannonBall {
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                ent.hitpoints -= 100;
+                ent.hitpoints -= 80;
                 this.removeFromWorld = true;
             }
         }

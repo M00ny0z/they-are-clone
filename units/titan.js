@@ -26,7 +26,7 @@ class Titan {
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 250;
 
         this.animations = [];
         this.loadAnimations();
@@ -183,7 +183,7 @@ class Titan {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 2.0) {
+                } else if (this.elapsedTime > 1.0) {
                     this.game.addEntity(new TitanArrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }

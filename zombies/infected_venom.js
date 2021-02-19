@@ -12,7 +12,7 @@ class InfectedVenom {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_venom.png");
 
         this.radius = 10;
-        this.visualRadius = 200;
+        this.visualRadius = 150;
 
         this.targetID = 0;
         if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
@@ -26,7 +26,7 @@ class InfectedVenom {
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 80;
 
         this.animations = [];
         this.loadAnimations();
@@ -204,7 +204,7 @@ class InfectedVenom {
                     this.target = ent;
                     this.state = 1;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 1.0) {
+                } else if (this.elapsedTime > 2.0) {
                     this.game.addEntity(new FireBolt(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }

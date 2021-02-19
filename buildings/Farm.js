@@ -8,7 +8,7 @@ class Farm {
         this.spritesheetCrops = ASSET_MANAGER.getAsset("./sprites/crops.png");
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 100;
+        this.hitpoints = 150;
         this.foodRate = 0;
         this.radius = 30;
 

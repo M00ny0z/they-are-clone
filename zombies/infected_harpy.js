@@ -19,14 +19,14 @@ class InfectedHarpy {
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 50; // pixels per second
+        this.maxSpeed = 65; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 50;
 
         this.animations = [];
         this.loadAnimations();
@@ -206,8 +206,8 @@ class InfectedHarpy {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 1.5) {
-                    ent.hitpoints -= 25;
+                } else if (this.elapsedTime > 0.5) {
+                    ent.hitpoints -= 12;
                     this.elapsedTime = 0;
                 }
             }

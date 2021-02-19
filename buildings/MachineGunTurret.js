@@ -7,15 +7,15 @@ class MachineGunTurret {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/machinegun_turret.png");
 
         this.radius = 30;
-        this.visualRadius = 600;
+        this.visualRadius = 250;
 
-        this.fireRate = 1;
+        this.fireRate = 2.5;
 
         this.facing = 2;
 
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 250;
 
         this.followMouse = true;
         this.placeable = false;

@@ -12,14 +12,14 @@ class Sniper {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sniper.png");
 
         this.radius = 10;
-        this.visualRadius = 200;
+        this.visualRadius = 300;
 
         this.targetID = 0;
         if(this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 25; // pixels per second
+        this.maxSpeed = 20; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
@@ -71,7 +71,7 @@ class Sniper {
             'width': 76,
             'height': 87,
             'frames': 20,
-            'speed': .1,
+            'speed': .15,
             'padding': 0
         };
         //0 = E
@@ -183,7 +183,7 @@ class Sniper {
                     this.target = ent;
                     this.state = 1;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 2) {
+                } else if (this.elapsedTime > 3) {
                     this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }

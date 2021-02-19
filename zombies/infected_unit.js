@@ -26,7 +26,7 @@ class InfectedUnit {
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 80;
 
         this.animations = [];
         this.loadAnimations();
@@ -206,8 +206,8 @@ class InfectedUnit {
                 if (this.state === 0) {
                     this.state = 1;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 1.5) {
-                    ent.hitpoints -= 15;
+                } else if (this.elapsedTime > 1.0) {
+                    ent.hitpoints -= 20;
                     this.elapsedTime = 0;
                 }
             }

@@ -62,7 +62,7 @@ class SoldierBolt {
         for (var i = 0; i < this.game.entities.length; i++) {
             var ent = this.game.entities[i];
             if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                ent.hitpoints -= 20;
+                ent.hitpoints -= 10;
                 this.removeFromWorld = true;
             }
         }

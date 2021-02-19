@@ -7,7 +7,7 @@ class Ballista {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ballista.png");
 
         this.radius = 30;
-        this.visualRadius = 600;
+        this.visualRadius = 250;
 
         this.fireRate = 1;
 
@@ -15,7 +15,7 @@ class Ballista {
 
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 200;
 
         this.followMouse = true;
         this.placeable = false;

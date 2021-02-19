@@ -12,7 +12,7 @@ class Soldier {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier.png");
 
         this.radius = 10;
-        this.visualRadius = 200;
+        this.visualRadius = 100;
 
         this.targetID = 0;
         if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
@@ -26,7 +26,7 @@ class Soldier {
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.hitpoints = 120;
 
         this.animations = [];
         this.loadAnimations();
@@ -183,7 +183,7 @@ class Soldier {
                     this.state = 1;
                     this.target = ent;
                     this.elapsedTime = 0;
-                } else if (this.elapsedTime > 1.0) {
+                } else if (this.elapsedTime > 0.75) {
                     this.game.addEntity(new SoldierBolt(this.game, this.x, this.y, ent, true));
                     this.elapsedTime = 0;
                 }

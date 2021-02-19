@@ -11,7 +11,7 @@ class StoneGateHorizontal {
         this.radius = 30;
         this.visualRadius = 75;
 
-        this.hitpoints = 100;
+        this.hitpoints = 200;
 
         //Gate is closed by default
         this.state = 0;
