@@ -10,6 +10,7 @@ class Sniper {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sniper.png");
+        this.priority = ALLYUNITPRIORITY;
 
         this.radius = 10;
         this.visualRadius = 300;

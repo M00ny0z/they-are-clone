@@ -5,6 +5,7 @@ class Ballista {
         this.y = null;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ballista.png");
+        this.priority = BUILDINGPRIORITY;
 
         this.radius = 30;
         this.visualRadius = 250;

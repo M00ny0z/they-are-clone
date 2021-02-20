@@ -5,6 +5,7 @@ class MachineGunTurret {
         this.y = null;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/machinegun_turret.png");
+        this.priority = BUILDINGPRIORITY;
 
         this.radius = 30;
         this.visualRadius = 250;

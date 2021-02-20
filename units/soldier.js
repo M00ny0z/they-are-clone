@@ -10,6 +10,7 @@ class Soldier {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier.png");
+        this.priority = ALLYUNITPRIORITY;
 
         this.radius = 10;
         this.visualRadius = 100;

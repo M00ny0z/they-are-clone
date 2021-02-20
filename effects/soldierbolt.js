@@ -6,6 +6,7 @@ class SoldierBolt {
         this.smooth = false;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier_bolt.png");
+        this.priority = EFFECTPRIORITY;
 
         var dist = distance(this, this.target);
         this.maxSpeed = 300; // pixels per second

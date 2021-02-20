@@ -10,6 +10,7 @@ class InfectedChubby {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_chubby.png");
+        this.priority = ENEMYUNITPRIORITY;
 
         this.radius = 20;
         this.visualRadius = 200;

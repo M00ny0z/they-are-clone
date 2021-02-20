@@ -10,6 +10,7 @@ class InfectedUnit {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_unit.png");
+        this.priority = ENEMYUNITPRIORITY;
 
         this.radius = 10;
         this.visualRadius = 200;

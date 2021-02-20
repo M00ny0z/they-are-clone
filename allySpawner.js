@@ -4,6 +4,7 @@ class AllySpawner {
      */
     constructor(game) {
         Object.assign(this, { game });
+        this.priority = MAPPRIORITY;
 
         this.timeElapsed = 0;
 

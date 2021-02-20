@@ -10,6 +10,7 @@ class InfectedVenom {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_venom.png");
+        this.priority = ENEMYUNITPRIORITY;
 
         this.radius = 10;
         this.visualRadius = 150;

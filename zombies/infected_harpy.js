@@ -10,6 +10,7 @@ class InfectedHarpy {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/infected_harpy.png");
+        this.priority = ENEMYUNITPRIORITY;
 
         this.radius = 10;
         this.visualRadius = 300;

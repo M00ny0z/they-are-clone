@@ -5,6 +5,7 @@ class StoneGateHorizontal {
         this.y = null;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+        this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
 

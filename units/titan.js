@@ -10,6 +10,7 @@ class Titan {
         }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/titan.png");
+        this.priority = ALLYUNITPRIORITY;
 
         this.radius = 10;
         this.visualRadius = 200;

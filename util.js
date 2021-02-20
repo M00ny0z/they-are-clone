@@ -23,6 +23,13 @@ const INFECTEDUNIT = "InfectedUnit";
 const INFECTEDVENOM = "InfectedVenom";
 const INFECTEDHARPY = "InfectedHarpy";
 const INFECTEDCHUBBY = "InfectedChubby";
+//Priorities
+const MAPPRIORITY = 0;
+const BUILDINGPRIORITY = 1;
+const ALLYUNITPRIORITY = 2;
+const ENEMYUNITPRIORITY = 3;
+const EFFECTPRIORITY = 4;
+const MISCELLANEOUSPRIORITY = 5;
 
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;

@@ -10,6 +10,7 @@ class Ranger {
     }
 
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ranger.png");
+    this.priority = ALLYUNITPRIORITY;
 
     this.radius = 15;
     this.visualRadius = 200;

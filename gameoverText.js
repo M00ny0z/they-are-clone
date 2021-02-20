@@ -1,6 +1,7 @@
 class GameOverText {
     constructor(game, win) {
         Object.assign(this, { game, win });
+        this.priority = MISCELLANEOUSPRIORITY;
 
         if(win) {
             this.txt = "You survived.";

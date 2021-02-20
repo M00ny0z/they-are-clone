@@ -5,6 +5,7 @@ class EnemySpawner {
      */
     constructor(game) {
         Object.assign(this, { game });
+        this.priority = MISCELLANEOUSPRIORITY;
 
         this.spawnFirstWave = false;
         this.spawnSecondtWave = false;

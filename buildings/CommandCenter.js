@@ -13,6 +13,7 @@ class CommandCenter {
          }
       }
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+      this.priority = BUILDINGPRIORITY;
    };
 
    update() {

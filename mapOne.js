@@ -4,6 +4,7 @@ class MapOne {
         this.game.mainMap = this;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
+        this.priority = MAPPRIORITY;
 
         this.map = [];
         for (var i = 0; i < 50; i++) {
