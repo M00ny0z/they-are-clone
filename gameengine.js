@@ -176,13 +176,15 @@ class GameEngine {
     };
 
     addEntity(entity) {
-        this.entities.push(entity);
+        this.entities[entity.priority].push(entity);
     };
 
     draw() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        for (var i = 0; i < this.entities.length; i++) {
-            this.entities[i].draw(this.ctx);
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.entities[i].length; j++) {
+                this.entities[i][j].draw(this.ctx);
+            }
         }
         this.camera.draw(this.ctx);
     };
@@ -194,24 +196,37 @@ class GameEngine {
             this.gameOver = true;
         }
 
-        var entitiesCount = this.entities.length;
+        //Delete below code when priorities are working properly
+        // var entitiesCount = this.entities.length;
 
-        for (var i = 0; i < entitiesCount; i++) {
-            var entity = this.entities[i];
+        // for (var i = 0; i < entitiesCount; i++) {
+        //     var entity = this.entities[i];
 
-            if (!entity.removeFromWorld) {
-                entity.update();
+        //     if (!entity.removeFromWorld) {
+        //         entity.update();
+        //     }
+        // }
+
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.entities[i].length; j++) {
+                var entity = this.entities[i][j];
+
+                if (!entity.removeFromWorld) {
+                    entity.update();
+                }
             }
         }
         this.camera.update();
         
-        for (var i = this.entities.length - 1; i >= 0; --i) {
-            if (this.entities[i].removeFromWorld) {
-                if(this.entities[i] instanceof CommandCenter && (this.gameOver == false)) {
-                    this.wonTheGameFlag = false;
-                    this.gameOver = true;
+        for (var i = NUMBEROFPRIORITYLEVELS - 1; i >= 0; --i) {
+            for (var j = this.entities[i].length - 1; j >= 0; --j) {
+                if (this.entities[i][j].removeFromWorld) {
+                    if(this.entities[i][j] instanceof CommandCenter && (this.gameOver == false)) {
+                        this.wonTheGameFlag = false;
+                        this.gameOver = true;
+                    }
+                    this.entities[i].splice(j, 1);
                 }
-                this.entities.splice(i, 1);
             }
         } 
         // update the ingame resources every 1 hour
