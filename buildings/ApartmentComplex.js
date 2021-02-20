@@ -10,7 +10,7 @@ class ApartmentComplex {
         this.placeable = false;
         this.hitpoints = 150;
         this.radius = 30;
-        this.workerRate = 2;
+        this.workerRate = 5;
     };
     
     update() {

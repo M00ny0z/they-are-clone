@@ -10,7 +10,7 @@ class StoneHouse {
         this.placeable = false;
         this.hitpoints = 125;
         this.radius = 30;
-        this.workerRate = 1;
+        this.workerRate = 2;
     };
     
     update() {
