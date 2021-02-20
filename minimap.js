@@ -21,9 +21,11 @@ class Minimap {
         }
 
         //this.game.entities[1].drawMinimap(ctx, this.x, this.y);
-        for (var i = 0; i < this.game.entities.length; i++) {
-            // console.log(this.game.entities[i]);
-            this.game.entities[i].drawMinimap(ctx, this.x, this.y);
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.game.entities[i].length; j++) {
+                // console.log(this.game.entities[i]);
+                this.game.entities[i][j].drawMinimap(ctx, this.x, this.y);
+            }
         }
 
         //Draw a rectangle on minimap to show where player is currently looking

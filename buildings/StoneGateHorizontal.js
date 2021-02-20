@@ -27,11 +27,13 @@ class StoneGateHorizontal {
         }
 
         //detect if an ally unit is in range. if so, open gate.
-        for (var i = 0; i < this.game.entities.length; i++) {
-            var ent = this.game.entities[i];
-            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
-                this.gateOpenThisFrame = true;
-                break;
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.game.entities[i].length; j++) {
+                var ent = this.game.entities[i][j];
+                if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && canSee(this, ent)) {
+                    this.gateOpenThisFrame = true;
+                    break;
+                }
             }
         }
 

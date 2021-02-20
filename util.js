@@ -24,6 +24,7 @@ const INFECTEDVENOM = "InfectedVenom";
 const INFECTEDHARPY = "InfectedHarpy";
 const INFECTEDCHUBBY = "InfectedChubby";
 //Priorities
+const NUMBEROFPRIORITYLEVELS = 6;
 const MAPPRIORITY = 0;
 const BUILDINGPRIORITY = 1;
 const ALLYUNITPRIORITY = 2;

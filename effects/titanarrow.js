@@ -60,11 +60,13 @@ class TitanArrow {
         this.x += this.velocity.x * this.game.clockTick;
         this.y += this.velocity.y * this.game.clockTick;
 
-        for (var i = 0; i < this.game.entities.length; i++) {
-            var ent = this.game.entities[i];
-            if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                ent.hitpoints -= 40;
-                this.removeFromWorld = true;
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.game.entities[i].length; j++) {
+                var ent = this.game.entities[i][j];
+                if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
+                    ent.hitpoints -= 40;
+                    this.removeFromWorld = true;
+                }
             }
         }
 

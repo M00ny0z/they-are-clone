@@ -177,39 +177,42 @@ class InfectedChubby {
         }
 
         // collision detection
-        for (const ent of this.game.entities) {
-            const enemyCheck = (
-                ent instanceof Ranger ||  
-                ent instanceof Soldier || 
-                ent instanceof Sniper || 
-                ent instanceof Titan || 
-                ent instanceof Ballista ||
-                ent instanceof Farm ||
-                ent instanceof StoneHouse ||
-                ent instanceof FishermansCottage ||
-                ent instanceof Quarry ||
-                ent instanceof Sawmill ||
-                ent instanceof StoneWall ||
-                ent instanceof StoneGateVertical ||
-                ent instanceof StoneGateHorizontal ||
-                ent instanceof ApartmentComplex ||
-                ent instanceof WoodHouse || 
-                ent instanceof WoodGateVertical ||
-                ent instanceof WoodGateHorizontal ||
-                ent instanceof WoodWall ||
-                ent instanceof CommandCenter ||
-                ent instanceof MachineGunTurret
-            );
-            if (enemyCheck && canSee(this, ent)) {
-                this.target = ent;
-            }
-            if (enemyCheck && collide(this, ent)) {
-                if (this.state === 0) {
-                    this.state = 1;
-                    this.elapsedTime = 0;
-                } else if (this.elapsedTime > 2.0) {
-                    ent.hitpoints -= 40;
-                    this.elapsedTime = 0;
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.game.entities[i].length; j++) {
+                var ent = this.game.entities[i][j];
+                const enemyCheck = (
+                    ent instanceof Ranger ||  
+                    ent instanceof Soldier || 
+                    ent instanceof Sniper || 
+                    ent instanceof Titan || 
+                    ent instanceof Ballista ||
+                    ent instanceof Farm ||
+                    ent instanceof StoneHouse ||
+                    ent instanceof FishermansCottage ||
+                    ent instanceof Quarry ||
+                    ent instanceof Sawmill ||
+                    ent instanceof StoneWall ||
+                    ent instanceof StoneGateVertical ||
+                    ent instanceof StoneGateHorizontal ||
+                    ent instanceof ApartmentComplex ||
+                    ent instanceof WoodHouse || 
+                    ent instanceof WoodGateVertical ||
+                    ent instanceof WoodGateHorizontal ||
+                    ent instanceof WoodWall ||
+                    ent instanceof CommandCenter ||
+                    ent instanceof MachineGunTurret
+                );
+                if (enemyCheck && canSee(this, ent)) {
+                    this.target = ent;
+                }
+                if (enemyCheck && collide(this, ent)) {
+                    if (this.state === 0) {
+                        this.state = 1;
+                        this.elapsedTime = 0;
+                    } else if (this.elapsedTime > 2.0) {
+                        ent.hitpoints -= 40;
+                        this.elapsedTime = 0;
+                    }
                 }
             }
         }
