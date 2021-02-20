@@ -65,13 +65,15 @@ class MachineGunTurret {
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
         }
 
-        for (var i = 0; i < this.game.entities.length; i++) {
-            var ent = this.game.entities[i];
-            if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
-                && this.elapsedTime > this.fireRate) {
-                this.target = ent;
-                this.elapsedTime = 0;
-                this.game.addEntity(new CannonBall(this.game, this.x, this.y, ent, true));
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.game.entities[i].length; j++) {
+                var ent = this.game.entities[i][j];
+                if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
+                    && this.elapsedTime > this.fireRate) {
+                    this.target = ent;
+                    this.elapsedTime = 0;
+                    this.game.addEntity(new CannonBall(this.game, this.x, this.y, ent, true));
+                }
             }
         }
 

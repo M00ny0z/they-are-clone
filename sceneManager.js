@@ -52,6 +52,9 @@ class SceneManager {
 
     loadEntities() {
         this.game.entities = [];
+        for(let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            this.game.entities.push([]);
+        }
 
         this.game.addEntity(new MapOne(this.game));
         this.game.addEntity(new CommandCenter(this.game, 28, 35));

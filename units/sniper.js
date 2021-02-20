@@ -177,16 +177,18 @@ class Sniper {
         }
 
         // collision detection
-        for (var i = 0; i < this.game.entities.length; i++) {
-            var ent = this.game.entities[i];
-            if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this,ent)) {
-                if (this.state === 0) {
-                    this.target = ent;
-                    this.state = 1;
-                    this.elapsedTime = 0;
-                } else if (this.elapsedTime > 3) {
-                    this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
-                    this.elapsedTime = 0;
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.game.entities[i].length; j++) {
+                var ent = this.game.entities[i][j];
+                if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this,ent)) {
+                    if (this.state === 0) {
+                        this.target = ent;
+                        this.state = 1;
+                        this.elapsedTime = 0;
+                    } else if (this.elapsedTime > 3) {
+                        this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
+                        this.elapsedTime = 0;
+                    }
                 }
             }
         }
