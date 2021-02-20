@@ -1,4 +1,3 @@
-
 class ApartmentComplex {
     constructor(game) {
         Object.assign(this, { game });
@@ -8,9 +7,10 @@ class ApartmentComplex {
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = 200;
         this.radius = 30;
-        this.workerRate = 2;
+        
+        this.workerRate = 3;
     };
     
     update() {
@@ -18,14 +18,14 @@ class ApartmentComplex {
             this.removeFromWorld = true;
             this.game.workerRate -= this.workerRate;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1].filled = false;
         }
         
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
             if ((!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) &&
-                (!this.game.mainMap.map[y+1][x].collisions && !this.game.mainMap.map[y+1][x].filled)) {
+                (!this.game.mainMap.map[y][x + 1].collisions && !this.game.mainMap.map[y][x + 1].filled)) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -38,7 +38,7 @@ class ApartmentComplex {
             var y = this.game.click.y + this.game.camera.cameraY;
             if (this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
-                this.game.mainMap.map[y+1][x].filled = true;
+                this.game.mainMap.map[y][x + 1].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
@@ -56,30 +56,31 @@ class ApartmentComplex {
     };
 
     draw(ctx) {
-        const width = 32;
-        const height = 64;
-        const startY = 96;
-        const startX = 160;
+        const width = 48;
+        const height = 41;
+        const startY = 393;
+        const startX = 0;
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
                 ctx.strokeStyle = 'Green';
-                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             } else {
                 ctx.strokeStyle = 'Red';
-                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
+                ctx.strokeRect(mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             }
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
             ctx.strokeStyle = 'Purple';
-            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH);
+            ctx.strokeRect((mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-2) * PARAMS.BLOCKWIDTH, 6 * PARAMS.BLOCKWIDTH, 5 * PARAMS.BLOCKWIDTH);
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Place to recruit workers.", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
             ctx.fillText(this.workerRate + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
+
         }
 
         if(!this.followMouse){
-            ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
+            ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 2 * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {
@@ -95,7 +96,7 @@ class ApartmentComplex {
         if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2)<= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
             ctx.fillStyle = "Green";
             ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
-            ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE + 1, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+            ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE + 1, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
           }
     }
 };

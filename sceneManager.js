@@ -282,7 +282,7 @@ class SceneManager {
                     }
                     this.selected = new StoneHouse(this.game);
                     this.game.addEntity(this.selected);
-                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["ApartmentComplex"].enoughResource) {
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["ApartmentComplex"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
@@ -302,13 +302,13 @@ class SceneManager {
                     }
                     this.selected = new Farm(this.game);
                     this.game.addEntity(this.selected);
-                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Quarry"].enoughResource) {
+                } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["Quarry"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new Quarry(this.game);
                     this.game.addEntity(this.selected);
-                } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sawmill"].enoughResource) {
+                } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["Sawmill"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
@@ -488,21 +488,26 @@ class SceneManager {
             // Wood House icon
             ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
             if (this.game.requiredResources["WoodHouse"].enoughResource) {
-                ctx.drawImage(this.buildingsImg, 96, 395, 32, 39, 1042, 744, 35, 35);
+                //ctx.drawImage(this.buildingsImg, 96, 395, 32, 39, 1042, 744, 35, 35);
+                ctx.drawImage(this.buildingsImg, 192, 128, 32, 32, 1042, 744, 35, 35);
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 96, 395, 32, 39, 1042, 744, 35, 35);
             }
             // Stone House icon
             ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
             if (this.game.requiredResources["StoneHouse"].enoughResource) {
-                ctx.drawImage(this.buildingsImg, 56, 387, 32, 47, 1092, 744, 35, 35);
+                //ctx.drawImage(this.buildingsImg, 56, 387, 32, 47, 1092, 744, 35, 35);
+                ctx.drawImage(this.buildingsImg, 224, 128, 32, 32, 1092, 744, 35, 35);
+
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 56, 387, 32, 47, 1092, 744, 35, 35);
             }
             // Apartment Complex icon
-            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
+            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 95);
+            //ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
             if (this.game.requiredResources["ApartmentComplex"].enoughResource) {
-                ctx.drawImage(this.buildingsImg, 0, 393, 48, 41, 1139, 744, 35, 35);
+                // ctx.drawImage(this.buildingsImg, 0, 393, 48, 41, 1139, 744, 35, 35);
+                ctx.drawImage(this.buildingsImg, 160, 96, 32, 64, 1139, 744, 35, 80);
             } else {
                 ctx.drawImage(this.buildingsGreyImg, 0, 393, 48, 41, 1139, 744, 35, 35);
             }
@@ -543,7 +548,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Medium level dwelling for the colonists.", 500, 842);
                 ctx.fillText("Colonists provide workers for the colony.", 500, 862);
-            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -578,18 +583,18 @@ class SceneManager {
                 ctx.drawImage(this.buildingsGreyImg, 64, 4 * 32, 32, 32, 1092, 744, 35, 35);
             }
             // quarry icon
-            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
+            ctx.drawImage(this.emptyIcon, 1134, 739, 45, 95);
             if (this.game.requiredResources["Quarry"].enoughResource) {
-                ctx.drawImage(this.buildingsImg, 0, 3 * 32, 32, 64, 1139, 744, 35, 35);
+                ctx.drawImage(this.buildingsImg, 0, 3 * 32, 32, 64, 1139, 744, 35, 80);
             } else {
-                ctx.drawImage(this.buildingsGreyImg, 0, 3 * 32, 32, 64, 1139, 744, 35, 35);
+                ctx.drawImage(this.buildingsGreyImg, 0, 3 * 32, 32, 64, 1139, 744, 35, 80);
             }
             // sawmill icon
-            ctx.drawImage(this.emptyIcon, 1184, 739, 45, 45);
+            ctx.drawImage(this.emptyIcon, 1184, 739, 45, 95);
             if (this.game.requiredResources["Sawmill"].enoughResource) {
-                ctx.drawImage(this.buildingsImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 35);
+                ctx.drawImage(this.buildingsImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 80);
             } else {
-                ctx.drawImage(this.buildingsGreyImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 35);
+                ctx.drawImage(this.buildingsGreyImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 80);
             }
 
             // descriptions
@@ -629,7 +634,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Produces food by harvesting grass field", 500, 842);
                 ctx.fillText("from the surroundings.", 500, 862);
-            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
+            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);
@@ -648,7 +653,7 @@ class SceneManager {
                 ctx.fillStyle = "white";
                 ctx.fillText("Collects minerals like stone, and iron", 500, 848);
                 ctx.fillText("from surrounding mineral seams.", 500, 868);
-            } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
+            } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 95)) {
                 ctx.strokeStyle = "grey";
                 ctx.moveTo(500, 782);
                 ctx.lineTo(985, 782);

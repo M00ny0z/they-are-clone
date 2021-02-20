@@ -1,5 +1,4 @@
-
-class ApartmentComplex {
+class StoneHouse {
     constructor(game) {
         Object.assign(this, { game });
         this.x = null;
@@ -43,11 +42,11 @@ class ApartmentComplex {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers -= this.game.requiredResources["ApartmentComplex"].workers;
-                this.game.food -= this.game.requiredResources["ApartmentComplex"].food;
-                this.game.wood -= this.game.requiredResources["ApartmentComplex"].wood;
-                this.game.stone -= this.game.requiredResources["ApartmentComplex"].stone;
-                this.game.iron -= this.game.requiredResources["ApartmentComplex"].iron;
+                this.game.workers -= this.game.requiredResources["StoneHouse"].workers;
+                this.game.food -= this.game.requiredResources["StoneHouse"].food;
+                this.game.wood -= this.game.requiredResources["StoneHouse"].wood;
+                this.game.stone -= this.game.requiredResources["StoneHouse"].stone;
+                this.game.iron -= this.game.requiredResources["StoneHouse"].iron;
                 
                 this.game.workerRate += this.workerRate;
             }
@@ -57,9 +56,9 @@ class ApartmentComplex {
 
     draw(ctx) {
         const width = 32;
-        const height = 64;
-        const startY = 96;
-        const startX = 160;
+        const height = 47;
+        const startY = 387;
+        const startX = 56;
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
