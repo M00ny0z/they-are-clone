@@ -127,12 +127,11 @@ class MachineGunTurret {
             ctx.drawImage(this.spritesheet, -8, 0, 128, 128, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_MACHINEGUN_HEALTH);
-
         if (!this.followMouse) {
             this.animations[this.facing].drawFrame(this.game.clockTick, ctx, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.384);
         }
 
+        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_MACHINEGUN_HEALTH);
 
         if (PARAMS.DEBUG && !this.followMouse) {
             ctx.strokeStyle = "Red";

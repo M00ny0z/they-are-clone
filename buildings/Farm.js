@@ -178,8 +178,6 @@ class Farm {
 
         }
 
-        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FARM_HEALTH);
-
         let cropStartX;
         let cropsStartY;
         const cropsWidth = 32;
@@ -204,6 +202,8 @@ class Farm {
                 }
             }
         }
+
+        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FARM_HEALTH);
 
         if (PARAMS.DEBUG && !this.followMouse) {
             ctx.strokeStyle = "Red";
