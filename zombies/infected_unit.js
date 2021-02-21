@@ -233,25 +233,7 @@ class InfectedUnit {
 
         this.facing = getFacing(this.velocity);
     };
-
-    drawHealthbar(ctx) {
-        const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
-        const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
-
-        ctx.save();
-
-        ctx.strokeStyle = 'gray';
-        ctx.strokeRect(posX, posY, 70, 8);
-        
-        ctx.fillStyle = 'white';
-        ctx.fillRect(posX + 1, posY + 1, 68, 6);
-
-        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
-        
-        ctx.restore();
-    };
-
+    
     draw(ctx) {
         this.xOffset = 32;
         this.yOffset = 20;
