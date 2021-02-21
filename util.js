@@ -51,6 +51,8 @@ const MAX_SOLDIER_HEALTH = 120;
 const MAX_TITAN_HEALTH = 250;
 const MAX_HARPY_HEALTH = 50;
 const MAX_VENOM_HEALTH = 80;
+const MAX_STONEGATE_HEALTH = 200;
+const MAX_WOODGATE_HEALTH = 100;
 
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;
@@ -75,13 +77,13 @@ const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
     ctx.save();
 
     ctx.strokeStyle = 'gray';
-    ctx.strokeRect(posX, posY, 70, 8);
+    ctx.strokeRect(posX, posY, 35, 8);
     
     ctx.fillStyle = 'black';
-    ctx.fillRect(posX + 1, posY + 1, 68, 6);
+    ctx.fillRect(posX + 1, posY + 1, 34, 6);
 
     ctx.fillStyle = currentHealth >= 50 ? 'green' : 'red';
-    ctx.fillRect(posX + 2, posY + 2, 66 * (currentHealth / maxHealth), 3);
+    ctx.fillRect(posX + 2, posY + 2, 33 * (currentHealth / maxHealth), 3);
     
     ctx.restore();
 };
