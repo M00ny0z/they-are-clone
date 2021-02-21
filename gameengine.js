@@ -280,17 +280,29 @@ class GameEngine {
         if (this.food > this.maxFood) {
             this.food = this.maxFood;
         }
+        if(this.food < 0) {
+            this.food = 0;
+        }
         this.wood += this.woodRate;
         if (this.wood > this.maxWood) {
             this.wood = this.maxWood;
+        }
+        if(this.wood < 0) {
+            this.wood = 0;
         }
         this.stone += this.stoneRate;
         if (this.stone > this.maxStone) {
             this.stone = this.maxStone;
         }
+        if(this.stone < 0) {
+            this.stone = 0;
+        }
         this.iron += this.ironRate;
         if (this.iron > this.maxIron) {
             this.iron = this.maxIron;
+        }
+        if(this.iron < 0) {
+            this.iron = 0;
         }
     }
 
