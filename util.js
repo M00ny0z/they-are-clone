@@ -33,6 +33,7 @@ const EFFECTPRIORITY = 4;
 const MISCELLANEOUSPRIORITY = 5;
 // MAX HEALTHS
 const MAX_UNIT_HEALTH = 80;
+const MAX_FARM_HEALTH = 150;
 const MAX_COMMANDCENTER_HEALTH = 1000;
 const MAX_BALLISTA_HEALTH = 200;
 const MAX_APARTMENT_HEATLH = 150;
@@ -76,7 +77,7 @@ const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
     ctx.strokeStyle = 'gray';
     ctx.strokeRect(posX, posY, 70, 8);
     
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'black';
     ctx.fillRect(posX + 1, posY + 1, 68, 6);
 
     ctx.fillStyle = currentHealth >= 50 ? 'green' : 'red';
