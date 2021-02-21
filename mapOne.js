@@ -7,7 +7,7 @@ class MapOne {
         this.priority = MAPPRIORITY;
 
         this.map = [];
-        for (var i = 0; i < 50; i++) {
+        /*for (var i = 0; i < 50; i++) {
             this.map.push([]);
             for (var j = 0; j < 50; j++) {
                 this.map[i].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "filled": false,
@@ -31,10 +31,65 @@ class MapOne {
                     this.map[i][j].iron = true;
                 }
             }
+        }*/
+        for (var x = 0; x < 50; x++) {
+            this.map.push([]);
+            for (var y = 0; y < 50; y++) {
+                this.map[x].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "filled": false,
+                "FishermansCottage": false, "Farm": false, "Quarry": false, "Sawmill": false});
+            }
         }
+        for (var i = 0; i < 2500; i++) {
+            let x = i % 50; // column
+            let y =  Math.floor(i / 50); // row
+            
+            //console.log(TileMaps.map.layers[0].data[i]);
+            if (TileMaps.map.layers[0].data[i] != 0) {
+                //console.log("true");
+                this.map[x][y].collisions = true;
+            }
+            if (TileMaps.map.layers[1].data[i] != 0) {
+                this.map[x][y].green = true;
+            }
+            if (TileMaps.map.layers[2].data[i] != 0) {
+                this.map[x][y].water = true;
+            }
+            if (TileMaps.map.layers[3].data[i] == 116) { // 116 is dirt
+                this.map[x][y].dirt = true;
+            }
+            if (TileMaps.map.layers[6].data[i] == 1374) { // 1374 is stone
+                this.map[x][y].stone = true;
+            }
+            if (TileMaps.map.layers[6].data[i] == 1372) { // 1372 is iron
+                this.map[x][y].iron = true;
+            }
+        }
+
+        // commandcenter
+        for (var x = 27; x < 30; x++) {
+            for (var y = 34; y < 37; y++) {
+                this.map[x][y].collisions = true;
+                this.map[x][y].filled = true;
+            }
+        }
+
         console.log("map done:");
         console.log(this.map);
+        //this.game.mainMap = this.map;
+        //this.outputMapToText();
 
+    }
+
+    outputMapToText() {
+        for (var x = 0; x < 50; x++) {
+            this.map.push([]);
+            for (var y = 0; y < 50; y++) {
+                console.log("(" + x + ", " + y + "): " + "collisions: " + this.map[x][y].collisions + ", green: " + this.map[x][y].green + 
+                            ", water: " + this.map[x][y].water + ", dirt: " + this.map[x][y].dirt + ", stone: " + this.map[x][y].stone + ", iron: " + this.map[x][y].iron +
+                            ", filled: " + this.map[x][y].filled + ", fishermansCottage: " + this.map[x][y].fishermansCottage + ", farm: " + this.map[x][y].farm + 
+                            ", quarry: " + this.map[x][y].quarry + ", sawmill: " + this.map[x][y].sawmill);
+            }
+        }
     }
 
     update() {

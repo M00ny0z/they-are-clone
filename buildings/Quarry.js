@@ -95,7 +95,7 @@ class Quarry {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.numWorkers -= this.game.requiredResources["Quarry"].workers;
+                this.game.workerRate -= this.game.requiredResources["Quarry"].workers;
                 this.game.food -= this.game.requiredResources["Quarry"].food;
                 this.game.wood -= this.game.requiredResources["Quarry"].wood;
                 this.game.stone -= this.game.requiredResources["Quarry"].stone;

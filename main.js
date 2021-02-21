@@ -10,7 +10,7 @@ ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 
 // ui
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_empty.png");
-ASSET_MANAGER.queueDownload("./sprites/buildings_grey.png");
+ASSET_MANAGER.queueDownload("./sprites/buildings_grayscale.png");
 // Resources (Bottom Left) Panel
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_food.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_iron.png");

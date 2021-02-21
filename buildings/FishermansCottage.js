@@ -95,7 +95,8 @@ class FishermansCottage {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 console.log("x: " + x + ", " + y);
-                this.game.numWorkers -= this.game.requiredResources["FishermansCottage"].workers;
+                this.game.workers -= this.game.requiredResources["FishermansCottage"].workers;
+                this.game.workeRate -= this.game.requiredResources["FishermansCottage"].workers;
                 this.game.food -= this.game.requiredResources["FishermansCottage"].food;
                 this.game.wood -= this.game.requiredResources["FishermansCottage"].wood;
                 this.game.stone -= this.game.requiredResources["FishermansCottage"].stone;

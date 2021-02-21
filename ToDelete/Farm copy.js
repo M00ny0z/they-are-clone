@@ -88,9 +88,9 @@ class Farm {
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
                     //if (!this.game.mainMap.map[y + i - 2][x + j - 2].collisions && !this.game.mainMap.map[y + i - 2][x + j - 2].filled) {
-                    if (!this.game.mainMap.map[x + i - 2][y + j - 2].collisions && !this.game.mainMap.map[x + i - 2][y + j - 2].filled) {
-                        this.placeable = true;
-                    } else {
+                        if (!this.game.mainMap.map[x + i - 2][y + j - 2].collisions && !this.game.mainMap.map[x + i - 2][y + j - 2].filled) {
+                            this.placeable = true;                    
+                        } else {
                         stop = true;
                     }
                 }
@@ -113,7 +113,6 @@ class Farm {
                     for (var j = 0; j < 5; j++) {
                         //this.game.mainMap.map[y + i - 2][x + j - 2].filled = true;
                         this.game.mainMap.map[x + i - 2][y + j - 2].filled = true;
-
                     }
                 }
                 this.followMouse = false;

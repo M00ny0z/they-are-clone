@@ -48,6 +48,20 @@ ENTITIES[WOODGATEHORI] = WoodGateHorizontal;
 ENTITIES[WOODWALL] = WoodWall;
 //
 
+// takes an x or y coordinate, and returns a value such that it is between [0,49]
+function sanitizeCord(cord) {
+    if (cord < 0) {
+        cord = 0;
+    }
+    if (cord > 49) {
+        cord = 49;
+    }
+    return cord;
+}
+
+function capitalizeString (string) {
+    return string[0].toUpperCase() + string.slice(1);
+}
 
 // returns a random integer between 0 and n-1
 function randomInt(n) {
@@ -182,6 +196,78 @@ window.requestAnimFrame = (function () {
             window.setTimeout(callback, 1000 / 60);
         };
 })();
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+/////// Grid Functions
+
+    // for 1 block buildings, increment=4, decrement = 2 (grid size)
+    // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
+    // returns a boolean true if none of same building type are within grid
+    function checkSameBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
+        //console.log("unitType: " + unitType);
+        let mapStartX = sanitizeCord(gridX - decrement);
+        let mapStartY = sanitizeCord(gridY - decrement);
+        let mapEndX = sanitizeCord(mapStartX + increment);
+        let mapEndY = sanitizeCord(mapStartY + increment);
+        //console.log(this.gameEngine.mainMap.map[0][0]["FishermansCottage"]);
+        //console.log(this.gameEngine.mainMap.map[0][0][unitType]);
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
+                if (this.gameEngine.mainMap.map[i][j][unitType]) { // does unit resource grid already exist there?
+                    return false; // if so, we can't place. return false
+                }
+            }
+        }
+        return true; // no overlap. We are free to place.
+    }
+
+
+    // for 1 block buildings, increment=4, decrement = 2 (grid size)
+    // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
+    // labels gridpoints on map with tha building type existing there.
+    function fillBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
+        let mapStartX = sanitizeCord(gridX - decrement);
+        let mapStartY = sanitizeCord(gridY - decrement);
+        let mapEndX = sanitizeCord(mapStartX + increment);
+        let mapEndY = sanitizeCord(mapStartY + increment);
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
+                // we want to toggle everything from false -> true.
+                if (this.gameEngine.mainMap.map[i][j][unitType]) { // if already true
+                    console.log("This should not occur (fillBuildingTypeInMapGrid, building is in map but it shouldn't be there)!!!!");
+                }
+                this.gameEngine.mainMap.map[i][j][unitType] = true; // set it to occupied.
+            }
+        }
+    }
+
+    // for 1 block buildings, increment=4, decrement = 2 (grid size)
+    // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
+    // labels gridpoints on map with tha building type doesn't exist there.
+    function removeBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
+        let mapStartX = sanitizeCord(gridX - decrement);
+        let mapStartY = sanitizeCord(gridY - decrement);
+        let mapEndX = sanitizeCord(mapStartX + increment);
+        let mapEndY = sanitizeCord(mapStartY + increment);
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
+                // we want to toggle everything from false -> true.
+                if (!this.gameEngine.mainMap.map[i][j][unitType]) { // if already false
+                    console.log("This should not occur (removeBuildingTypeInMapGrid, building is not in map but it should be there)!!!!");
+                }
+                this.gameEngine.mainMap.map[i][j][unitType] = false; // set it to occupied.
+            }
+        }
+    }
+
+
+
+
+
 
 // add global parameters here
 var PARAMS = {
