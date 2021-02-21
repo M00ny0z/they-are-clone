@@ -767,7 +767,7 @@ class SceneManager {
         // Workers
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
         this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
-        console.log("workerRate is ")
+        //console.log("workerRate is ")
         var workerRate = "";
         /*if (workerRate >= 0) {
             ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
