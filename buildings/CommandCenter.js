@@ -36,7 +36,7 @@ class CommandCenter {
       ctx.fillRect(posX + 1, posY + 1, 68, 6);
 
       ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-      ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
+      ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_COMMAND_HEALTH), 3);
       
       ctx.restore();
    };
@@ -47,7 +47,7 @@ class CommandCenter {
       const startY = 161;
       const startX = 128;
 
-      this.drawHealthbar(ctx);
+      drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_COMMANDCENTER_HEALTH);
       
       ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH / 2 - PARAMS.BLOCKWIDTH) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2 - PARAMS.BLOCKWIDTH) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 3);
 
