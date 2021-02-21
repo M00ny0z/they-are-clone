@@ -32,7 +32,7 @@ class Farm {
     calcResourceRate() {
         this.foodRate = 0;
         // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
-        let mapStartX = this.game.mouse.x + this.game.camera.cameraX - 2;
+        /*let mapStartX = this.game.mouse.x + this.game.camera.cameraX - 2;
         let mapStartY = this.game.mouse.y + this.game.camera.cameraY - 2;
         let mapEndX = mapStartX + 4;
         let mapEndY = mapStartY + 4;
@@ -47,9 +47,15 @@ class Farm {
         }
         if (mapEndY > 49) {
             mapEndY = 49;
-        }
-        for (var i = mapStartY; i <= mapEndY; i++) {
-            for (var j = mapStartX; j <= mapEndX; j++) {
+        }*/
+        let mapStartX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX - 2);
+        let mapStartY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY - 2);
+        let mapEndX = sanitizeCord(mapStartX + 4);
+        let mapEndY = sanitizeCord(mapStartY + 4);
+        //for (var i = mapStartY; i <= mapEndY; i++) {
+            //for (var j = mapStartX; j <= mapEndX; j++) {
+        for (var i = mapStartX; i <= mapEndX; i++) {
+                for (var j = mapStartY; j <= mapEndY; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
                     this.foodRate += 1;
                 }
@@ -66,18 +72,23 @@ class Farm {
             this.game.foodRate -= this.foodRate;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].filled = false;
+                    //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].filled = false;
+                    this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].filled = false;
+
                 }
             }
         }
 
         if (this.game.mouse && this.followMouse) {
-            var x = this.game.mouse.x + this.game.camera.cameraX;
-            var y = this.game.mouse.y + this.game.camera.cameraY;
+            //ar x = this.game.mouse.x + this.game.camera.cameraX;
+            //var y = this.game.mouse.y + this.game.camera.cameraY;
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             var stop = false;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    if (!this.game.mainMap.map[y + i - 2][x + j - 2].collisions && !this.game.mainMap.map[y + i - 2][x + j - 2].filled) {
+                    //if (!this.game.mainMap.map[y + i - 2][x + j - 2].collisions && !this.game.mainMap.map[y + i - 2][x + j - 2].filled) {
+                    if (!this.game.mainMap.map[x + i - 2][y + j - 2].collisions && !this.game.mainMap.map[x + i - 2][y + j - 2].filled) {
                         this.placeable = true;
                     } else {
                         stop = true;
@@ -93,19 +104,24 @@ class Farm {
 
         //placing selected entity
         if (this.game.click && this.followMouse) {
-            var x = this.game.click.x + this.game.camera.cameraX;
-            var y = this.game.click.y + this.game.camera.cameraY;
+            //var x = this.game.click.x + this.game.camera.cameraX;
+            //var y = this.game.click.y + this.game.camera.cameraY;
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
-                        this.game.mainMap.map[y + i - 2][x + j - 2].filled = true;
+                        //this.game.mainMap.map[y + i - 2][x + j - 2].filled = true;
+                        this.game.mainMap.map[x + i - 2][y + j - 2].filled = true;
+
                     }
                 }
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
 
-                this.game.numWorkers -= this.game.requiredResources["Farm"].workers;
+                this.game.workerRate -= this.game.requiredResources["Farm"].workers;
+                this.game.workers -= this.game.requiredResources["Farm"].workers;
                 this.game.food -= this.game.requiredResources["Farm"].food;
                 this.game.wood -= this.game.requiredResources["Farm"].wood;
                 this.game.stone -= this.game.requiredResources["Farm"].stone;

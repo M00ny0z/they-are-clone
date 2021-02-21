@@ -10,7 +10,7 @@ class SceneManager {
 
         this.emptyIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_empty.png");
         this.buildingsImg = ASSET_MANAGER.getAsset("./sprites/buildings.png");
-        this.buildingsGreyImg = ASSET_MANAGER.getAsset("./sprites/buildings_grey.png");
+        this.buildingsGreyImg = ASSET_MANAGER.getAsset("./sprites/buildings_grayscale.png");
 
         // Resources (Bottom Left) Panel
         this.foodIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_food.png");
@@ -332,38 +332,61 @@ class SceneManager {
                     this.game.addEntity(this.selected);
                 }
             } else if (this.display == 3) { // display 3
-                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
-                    if (this.selected) {
-                        this.selected.removeFromWorld = true;
-                    }
-                    this.game.allyspawner.spawnAllyRandomPath(RANGER);
-                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Soldier"].enoughResource) {
+                if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Soldier"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
+                    this.game.workers -= this.game.requiredResources["Soldier"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Soldier"].workers;
+                    this.game.food -= this.game.requiredResources["Soldier"].food;
+                } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
+                    if (this.selected) {
+                        this.selected.removeFromWorld = true;
+                    }
+                    this.game.allyspawner.spawnAllyRandomPath(RANGER);
+                    this.game.workers -= this.game.requiredResources["Ranger"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Ranger"].workers;
+                    this.game.food -= this.game.requiredResources["Ranger"].food;
+                    this.game.wood -= this.game.requiredResources["Ranger"].wood;
+                    this.game.iron -= this.game.requiredResources["Ranger"].iron;
                 } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sniper"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.game.allyspawner.spawnAllyRandomPath(SNIPER);
+                    this.game.workers -= this.game.requiredResources["Sniper"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Sniper"].workers;
+                    this.game.food -= this.game.requiredResources["Sniper"].food;
+                    this.game.iron -= this.game.requiredResources["Sniper"].iron;
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.game.allyspawner.spawnAllyRandomPath(TITAN);
+                    this.game.workers -= this.game.requiredResources["Titan"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Titan"].workers;
+                    this.game.food -= this.game.requiredResources["Titan"].food;
+                    this.game.iron -= this.game.requiredResources["Titan"].iron;
                 } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new Ballista(this.game);
                     this.game.addEntity(this.selected);
+                    this.game.workers -= this.game.requiredResources["Ballista"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
+                    this.game.iron -= this.game.requiredResources["Ballista"].iron;
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new MachineGunTurret(this.game);
                     this.game.addEntity(this.selected);
+                    this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
+                    this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
+                    this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
+                    this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;
                 }
             } else if (this.display == 4) { // display 4
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodWall"].enoughResource) {
@@ -481,7 +504,6 @@ class SceneManager {
                 ctx.fillText("MILITARY", 500, 782);
 
                 ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
                 ctx.fillStyle = "white";
                 ctx.fillText("Military structures for attacking and units training.", 500, 812);
             } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) { // DEFENSE
@@ -496,7 +518,6 @@ class SceneManager {
                 ctx.fillText("DEFENSE", 500, 782);
 
                 ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
                 ctx.fillStyle = "white";
                 ctx.fillText("Defensive and surveillance structures for the colony.", 500, 812);
             }
@@ -525,63 +546,19 @@ class SceneManager {
                 // ctx.drawImage(this.buildingsImg, 0, 393, 48, 41, 1139, 744, 35, 35);
                 ctx.drawImage(this.buildingsImg, 160, 96, 32, 64, 1139, 744, 35, 80);
             } else {
-                ctx.drawImage(this.buildingsGreyImg, 0, 393, 48, 41, 1139, 744, 35, 35);
+                ctx.drawImage(this.buildingsGreyImg, 160, 96, 32, 64, 1139, 744, 35, 80);
+                //ctx.drawImage(this.buildingsGreyImg, 0, 393, 48, 41, 1139, 744, 35, 35);
             }
             // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("WOOD HOUSE", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Basic dwelling for the colonists.", 500, 842);
-                ctx.fillText("Colonists provide workers for the colony.", 500, 862);
+                this.addDescription(ctx, "WoodHouse", "WOOD HOUSE", ["wood"], 
+                ["Basic dwelling for the colonists.", "Colonists provide workers for the colony."]);
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("STONE HOUSE", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Medium level dwelling for the colonists.", 500, 842);
-                ctx.fillText("Colonists provide workers for the colony.", 500, 862);
+                this.addDescription(ctx, "StoneHouse", "STONE HOUSE", ["stone"], 
+                ["Medium level dwelling for the colonists.", "Colonists provide workers for the colony."]);
             } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("APARTMENT COMPLEX", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Highest dwelling for the colonists.", 500, 842);
-                ctx.fillText("Colonists provide workers for the colony.", 500, 862);
+                this.addDescription(ctx, "ApartmentComplex", "APARTMENT COMPLEX", ["wood", "stone", "iron"], 
+                ["Highest dwelling for the colonists.", "Colonists provide workers for the colony."]);
             }
         } else if (this.display == 2) {
             // fishermanCottage icon
@@ -615,92 +592,32 @@ class SceneManager {
 
             // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("FISHERMAN COTTAGE", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Produces food from surrounding sea cells.", 500, 842);
-                ctx.fillText("It must be placed near a water source.", 500, 862);
+                this.addDescription(ctx, "FishermansCottage", "FISHERMAN COTTAGE", ["workers", "wood", "iron"], 
+                ["Produces food from surrounding sea cells.", "It must be placed near a water source."]);
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("FARM", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 80", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Produces food by harvesting grass field", 500, 842);
-                ctx.fillText("from the surroundings.", 500, 862);
+                this.addDescription(ctx, "Farm", "FARM", ["workers", "wood", "stone", "iron"], 
+                ["Produces food by harvesting grass field", "from the surroundings."]);
             } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("QUARRY", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Wood: 30", 500, 812);
-                ctx.fillText("Workers: 4", 500, 827);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Collects minerals like stone, and iron", 500, 848);
-                ctx.fillText("from surrounding mineral seams.", 500, 868);
+                this.addDescription(ctx, "Quarry", "QUARRY", ["workers", "wood", "stone", "iron"], 
+                ["Collects metals like stone, and iron", "from stone and iron rocks."]);
             } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 95)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("SAWMILL", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Workers: 4", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Produces wood from surrounding trees.", 500, 842);
+                this.addDescription(ctx, "Sawmill", "SAWMILL", ["workers", "wood", "stone", "iron"], 
+                ["Produces wood from surrounding trees."]);
             }
         } else if (this.display == 3) {
-            // ranger icon
-            ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
-            if (this.game.requiredResources["Ranger"].enoughResource) {
-                ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1046, 743, 35, 35);
-            } else {
-                ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1046, 743, 35, 35);
-            }
             // soldier icon
-            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
             if (this.game.requiredResources["Soldier"].enoughResource) {
-                ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1096, 744, 28, 33);
+                ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1046, 744, 28, 33);
             } else {
-                ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1096, 744, 28, 33);
+                ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1046, 744, 28, 33);
+            }
+            // ranger icon
+            ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
+            if (this.game.requiredResources["Ranger"].enoughResource) {
+                ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1096, 743, 35, 35);
+            } else {
+                ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1096, 743, 35, 35);
             }
             // sniper icon
             ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
@@ -733,111 +650,24 @@ class SceneManager {
 
             // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("RANGER", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("They run extremely fast and can shoot their", 500, 842);
-                ctx.fillText("arrows with their silent bow.", 500, 862);
+                this.addDescription(ctx, "Soldier", "SOLDIER", ["workers", "food"], 
+                ["This versatile unit can serve any purpose."]);
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("SOLDIER", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 80", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("This versatile unit can serve any purpose.", 500, 842);
+                this.addDescription(ctx, "Ranger", "RANGER", ["workers", "food", "wood", "iron"], 
+                ["They run extremely fast and can shoot their", "arrows with their silent bow."]);
             } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("SNIPER", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 80", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Snipers walk very slowly.", 500, 842);
-                ctx.fillText("However, Snipers have a very high attack range.", 500, 862);
+                this.addDescription(ctx, "Sniper", "SNIPER", ["workers", "food", "iron"], 
+                ["Snipers walk very slowly", "However, Snipers have a very high attack range."]);
             } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("TITAN", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 80", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Titans has an ultra fast burst shot and a wide", 500, 842);
+                this.addDescription(ctx, "Titan", "TITAN", ["workers", "food", "iron"], 
+                ["Titans has an ultra fast burst shot and a wide"]);
                 ctx.fillText("area of effect.", 500, 862);
             } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("BALLISTA", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Attacks nearby enemies by shooting large arrows.", 500, 842);
+                this.addDescription(ctx, "Ballista", "BALLISTA", ["workers", "wood", "iron"], 
+                ["Attacks nearby enemies by shooting large arrows."]);
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("MACHINE GUN TURRET", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 80", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Attacks nearby enemies inflicting massive damage within", 500, 842);
-                ctx.fillText("an effect area of 0.6 cells radius.", 500, 862);
+                this.addDescription(ctx, "MachineGunTurret", "MACHINE GUN TURRET", ["workers", "stone", "iron"], 
+                ["Attacks nearby enemies inflicting massive damage within", "an effect area of 0.6 cells radius."]);
             }
         } else if (this.display == 4) {
             // wood wall icon
@@ -885,112 +715,23 @@ class SceneManager {
 
             // descriptions
             if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("WOOD WALL", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Walls keep the colony defended from nearby enemies.", 500, 842);
+                this.addDescription(ctx, "WoodWall", "WOOD WALL", ["wood"], 
+                ["Walls keep the colony defended from nearby enemies."]);
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("WOOD GATE (horizontal)", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Gates automatically allow friendly units to", 500, 842);
-                ctx.fillText("pass through the walls.", 500, 862);
+                this.addDescription(ctx, "WoodGate", "WOOD GATE (horizontal)", ["wood"], 
+                ["Gates automatically allow friendly units to", "pass through the walls."]);
             } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("WOOD GATE (vertical)", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Gates automatically allow friendly units to", 500, 842);
-                ctx.fillText("pass through the walls.", 500, 862);
+                this.addDescription(ctx, "WoodGate", "WOOD GATE (vertical)", ["wood"], 
+                ["Gates automatically allow friendly units to", "pass through the walls."]);
             } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("STONE WALL", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Strong walls that keep the colony defended", 500, 842);
-                ctx.fillText("from nearby enemies.", 500, 862);
+                this.addDescription(ctx, "StoneWall", "STONE WALL", ["stone"], 
+                ["Strong walls that keep the colony defended", "from nearby enemies."]);
             } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("STONE GATE (horizontal)", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Stronger quality. Gates open and close automatically", 500, 842);
-                ctx.fillText("to allow friendly units to pass through the walls.", 500, 862);
+                this.addDescription(ctx, "StoneGate", "STONE GATE (horizontal)", ["stone"], 
+                ["Stronger quality. Gates open and close automatically", "to allow friendly units to pass through the walls."]);
             } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45)) {
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "lightgreen";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("STONE GATE (vertical)", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "green";
-                ctx.fillText("Gold: 300", 500, 812);
-
-                ctx.fillStyle = "white";
-                ctx.fillText("Stronger quality. Gates open and close automatically", 500, 842);
-                ctx.fillText("to allow friendly units to pass through the walls.", 500, 862);
+                this.addDescription(ctx, "StoneGate", "STONE GATE (vertical)", ["stone"], 
+                ["Stronger quality. Gates open and close automatically", "to allow friendly units to pass through the walls."]);
             }
         }
 
@@ -1039,7 +780,14 @@ class SceneManager {
         // Workers
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
         this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
-        //ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
+        //console.log("workerRate is ")
+        var workerRate = "";
+        /*if (workerRate >= 0) {
+            ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
+        } else {
+            ctx.fillText(this.game.workerRate.toString(), 1510, 796);
+        }*/
+        ctx.fillText(this.game.workerRate.toString(), 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
@@ -1069,6 +817,51 @@ class SceneManager {
         this.minimap.draw(ctx);
     };
 
+    // creates the descriptions for a given UI element
+    addDescription(ctx, unitType, headerText, resourcesStringArray, descriptionStringArray) {
+
+        ctx.strokeStyle = "grey";
+        ctx.moveTo(500, 782);
+        ctx.lineTo(985, 782);
+        ctx.stroke();
+
+        ctx.font = "25px SpaceMono-Regular";
+        ctx.fillStyle = "lightgreen";
+        ctx.textBaseline = "bottom";
+        ctx.fillText(headerText, 500, 782);
+
+        ctx.font = "15px SpaceMono-Regular";
+
+        // traverse each resource
+        let resourceStringX = 500;
+        //console.log(unitType);
+        //console.log(this.game.requiredResources);
+        let requiredResources = this.game.requiredResources[unitType];
+        resourcesStringArray.forEach(resourceStr => {
+            let availableResourceAmount = this.game[resourceStr];
+            let resourceStrUpperCase = resourceStr[0].toUpperCase() + resourceStr.slice(1);
+            let requiredResourceAmount = requiredResources[resourceStr];
+            //console.log("resourceStr: " + resourceStr);
+            //console.log("availableResourceAmount: " + availableResourceAmount);
+            //console.log("requiredResourceAmount: " + requiredResourceAmount);
+            if (requiredResourceAmount > availableResourceAmount) { // a required resource
+                ctx.fillStyle = "#fc8583";
+            } else {
+                ctx.fillStyle = "lightgreen";
+            }
+            ctx.fillText(resourceStrUpperCase + ": " + requiredResourceAmount, resourceStringX, 812);
+            resourceStringX += 100;
+
+        });
+        let descriptionTextY = 842;
+        ctx.font = "15px SpaceMono-Regular";
+        ctx.fillStyle = "white";
+
+        descriptionStringArray.forEach(description => {
+            ctx.fillText(description, 500, descriptionTextY);
+            descriptionTextY += 20;
+        })
+    }
 
     drawHealthbar(ctx, x, y, width, height, val, maxVal) {
         const posX = x;

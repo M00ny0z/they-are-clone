@@ -17,24 +17,12 @@ class FishermansCottage {
     calcResourceRate() {
         this.foodRate = 0;
         // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
-        let mapStartX = this.game.mouse.x + this.game.camera.cameraX - 2;
-        let mapStartY = this.game.mouse.y + this.game.camera.cameraY - 2;
-        let mapEndX = mapStartX + 4;
-        let mapEndY = mapStartY + 4;
-        if (mapStartX < 0) {
-            mapStartX = 0;
-        }
-        if (mapStartY < 0) {
-            mapStartY = 0;
-        }
-        if (mapEndX > 49) {
-            mapEndX = 49;
-        }
-        if (mapEndY > 49) {
-            mapEndY = 49;
-        }
-        for (var i = mapStartY; i <= mapEndY; i++) {
-            for (var j = mapStartX; j <= mapEndX; j++) {
+        let mapStartX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX - 2);
+        let mapStartY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY - 2);
+        let mapEndX = sanitizeCord(mapStartX + 4);
+        let mapEndY = sanitizeCord(mapStartY + 4);
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
                 //console.log("x:" + j + " y:" + i + this.game.mainMap.map[i][j].water);
                 if (this.game.mainMap.map[i][j].water) {
                     this.foodRate += 1;
@@ -42,7 +30,9 @@ class FishermansCottage {
             }
         }
         if (PARAMS.RESOURCEXY){ 
-            console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            console.log("mouseX: " + x + ", mouseY: " + y + ", mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
     }
 
@@ -50,32 +40,63 @@ class FishermansCottage {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.foodRate -= this.foodRate;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].FishermansCottage = false;
         }
         
         if (this.game.mouse && this.followMouse) {
-            var x = this.game.mouse.x + this.game.camera.cameraX;
-            var y = this.game.mouse.y + this.game.camera.cameraY;
-            if (((this.game.mainMap.map[y + 1][x].water == true) || (this.game.mainMap.map[y - 1][x].water == true) ||
+            /*var x = this.game.mouse.x + this.game.camera.cameraX;
+            var y = this.game.mouse.y + this.game.camera.cameraY;*/
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            let adjacentSquares = { right: {x: sanitizeCord(x+1), y: sanitizeCord(y)}, 
+                                    below: {x: sanitizeCord(x),   y: sanitizeCord(y+1)},
+                                    left:  {x: sanitizeCord(x-1), y: sanitizeCord(y)}, 
+                                    above: {x: sanitizeCord(x),   y: sanitizeCord(y-1)},
+                                  };
+
+            /*console.log("waterRight?: " + (this.game.mainMap.map[adjacentSquares.right.x][adjacentSquares.right.y].water == true) + ", " +
+                        "waterBelow?: " + (this.game.mainMap.map[adjacentSquares.below.x][adjacentSquares.below.y].water == true) + ", " + 
+                        "waterLeft?: " + (this.game.mainMap.map[adjacentSquares.left.x][adjacentSquares.left.y].water == true) + ", " + 
+                        "waterAbove?: " + (this.game.mainMap.map[adjacentSquares.above.x][adjacentSquares.above.y].water == true));*/
+
+            if (((this.game.mainMap.map[adjacentSquares.right.x][adjacentSquares.right.y].water == true) || 
+                (this.game.mainMap.map[adjacentSquares.below.x][adjacentSquares.below.y].water == true) ||
+                (this.game.mainMap.map[adjacentSquares.left.x][adjacentSquares.left.y].water == true) ||
+                (this.game.mainMap.map[adjacentSquares.above.x][adjacentSquares.above.y].water == true)) &&
+                !this.game.mainMap.map[x][y].collisions && !this.game.mainMap.map[x][y].filled) {
+                    this.placeable = true;
+            } else {
+                this.placeable = false;
+            }
+            this.calcResourceRate();
+            /*if (((this.game.mainMap.map[y + 1][x].water == true) || (this.game.mainMap.map[y - 1][x].water == true) ||
                 (this.game.mainMap.map[y][x + 1].water == true) || (this.game.mainMap.map[y][x - 1].water == true)) &&
                 !this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
             }
-            this.calcResourceRate();
+            this.calcResourceRate();*/
         }
 
         //placing selected entity
         if (this.game.click && this.followMouse) {
-            var x = this.game.click.x + this.game.camera.cameraX;
-            var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[y][x].filled = true;
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            console.log("gridX: " + x + ", " + "gridY: " + y);
+            if (!this.game.mainMap.map[x][y].filled && !this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable 
+                && checkSameBuildingTypeInMapResourceGrid("FishermansCottage", x, y, 4, 2)) {
+
+                this.game.mainMap.map[x][y].filled = true;
+                this.game.mainMap.map[x][y]["FishermansCottage"] = true;
+                //fillBuildingTypeInMapResourceGrid("FishermansCottage", x, y, 4, 2); // fill in grid as occupied by fishermans cottage (resources) 
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
-                this.game.numWorkers -= this.game.requiredResources["FishermansCottage"].workers;
+                console.log("x: " + x + ", " + y);
+                this.game.workers -= this.game.requiredResources["FishermansCottage"].workers;
+                this.game.workeRate -= this.game.requiredResources["FishermansCottage"].workers;
                 this.game.food -= this.game.requiredResources["FishermansCottage"].food;
                 this.game.wood -= this.game.requiredResources["FishermansCottage"].wood;
                 this.game.stone -= this.game.requiredResources["FishermansCottage"].stone;
@@ -86,6 +107,7 @@ class FishermansCottage {
             this.game.click = null;
         }
     };
+
 
 
     draw(ctx) {
