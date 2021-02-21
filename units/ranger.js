@@ -183,15 +183,21 @@ class Ranger {
 
     // collision detection
     for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-      for (var j = 0; j < this.game.entities[i].length; j++) {
-          var ent = this.game.entities[i][j];
+      let closestEnt;
+      for (const ent of this.game.entities[i]) {
         if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)) {
+          if (!closestEnt) {
+            closestEnt = ent;
+          }
+          if (distance(this, closestEnt) > distance(this, ent)) {
+            closestEnt = ent;
+          }
           if (this.state === 0) {
             this.state = 1;
-            this.target = ent;
+            this.target = closestEnt;
             this.elapsedTime = 0;
           } else if (this.elapsedTime > 1.5) {
-            this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, true));
+            this.game.addEntity(new Arrow(this.game, this.x, this.y, closestEnt, true));
             this.elapsedTime = 0;
           }
         }
