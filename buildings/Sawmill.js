@@ -18,24 +18,12 @@ class Sawmill {
     calcResourceRate() {
         this.woodRate = 0;
         // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
-        let mapStartX = this.game.mouse.x + this.game.camera.cameraX - 2;
-        let mapStartY = this.game.mouse.y + this.game.camera.cameraY - 2;
-        let mapEndX = mapStartX + 4;
-        let mapEndY = mapStartY + 5;
-        if (mapStartX < 0) {
-            mapStartX = 0;
-        }
-        if (mapStartY < 0) {
-            mapStartY = 0;
-        }
-        if (mapEndX > 49) {
-            mapEndX = 49;
-        }
-        if (mapEndY > 49) {
-            mapEndY = 49;
-        }
-        for (var i = mapStartY; i <= mapEndY; i++) {
-            for (var j = mapStartX; j <= mapEndX; j++) {
+        let mapStartX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX - 2);
+        let mapStartY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY - 2);
+        let mapEndX = sanitizeCord(mapStartX + 4);
+        let mapEndY = sanitizeCord(mapStartY + 5);
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
                 if (this.game.mainMap.map[i][j].green) {
                     this.woodRate += 1;
                 }
@@ -50,16 +38,19 @@ class Sawmill {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.woodRate -= this.woodRate;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1].filled = false;
         }
         
         if (this.game.mouse && this.followMouse) {
-            var x = this.game.mouse.x + this.game.camera.cameraX;
-            var y = this.game.mouse.y + this.game.camera.cameraY;
-            if ((!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) &&
-                (!this.game.mainMap.map[y+1][x].collisions && !this.game.mainMap.map[y+1][x].filled)) {
-                this.placeable = true;
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
+                (!this.game.mainMap.map[x][y].collisions && !this.game.mainMap.map[x][y].filled) &&
+                (!this.game.mainMap.map[x][y+1].collisions && !this.game.mainMap.map[x][y+1].filled)) {
+                    this.placeable = true;
             } else {
                 this.placeable = false;
             }
@@ -68,11 +59,11 @@ class Sawmill {
 
         //placing selected entity
         if (this.game.click && this.followMouse) {
-            var x = this.game.click.x + this.game.camera.cameraX;
-            var y = this.game.click.y + this.game.camera.cameraY;
+            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if (this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[y][x].filled = true;
-                this.game.mainMap.map[y+1][x].filled = true;
+                this.game.mainMap.map[x][y].filled = true;
+                this.game.mainMap.map[x][y+1].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
