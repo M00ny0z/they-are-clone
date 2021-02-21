@@ -31,6 +31,19 @@ const ALLYUNITPRIORITY = 2;
 const ENEMYUNITPRIORITY = 3;
 const EFFECTPRIORITY = 4;
 const MISCELLANEOUSPRIORITY = 5;
+// MAX HEALTHS
+const MAX_UNIT_HEALTH = 80;
+const MAX_COMMAND_CENTER_HEALTH = 1000;
+const MAX_BALISTSA_HEALTH = 200;
+const MAX_APARTMENT_HEATLH = 150;
+const MAX_FISHERMANS_HEALTH = 150;
+const MAX_MACHINEGUN_HEALTH = 250;
+const MAX_QUARRY_HEALTH = 150;
+const MAX_SAWMILL_HEALTH = 150;
+const MAX_STONEHOUSE_HEALTH = 125;
+const MAX_STONEWALL_HEALTH = 200;
+const MAX_WOODHOUSE_HEALTH = 125;
+const MAX_WOODWALL_HEALTH = 100;
 
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;
@@ -47,6 +60,24 @@ ENTITIES[WOODGATEVERT] = WoodGateVertical;
 ENTITIES[WOODGATEHORI] = WoodGateHorizontal;
 ENTITIES[WOODWALL] = WoodWall;
 //
+
+const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
+    const posX = x - (game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
+    const posY = y - (game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
+
+    ctx.save();
+
+    ctx.strokeStyle = 'gray';
+    ctx.strokeRect(posX, posY, 70, 8);
+    
+    ctx.fillStyle = 'white';
+    ctx.fillRect(posX + 1, posY + 1, 68, 6);
+
+    ctx.fillStyle = currentHealth >= 50 ? 'green' : 'red';
+    ctx.fillRect(posX + 2, posY + 2, 66 * (currentHealth / maxHealth), 3);
+    
+    ctx.restore();
+};
 
 // takes an x or y coordinate, and returns a value such that it is between [0,49]
 function sanitizeCord(cord) {
