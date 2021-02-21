@@ -21,20 +21,8 @@ class FishermansCottage {
         let mapStartY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY - 2);
         let mapEndX = sanitizeCord(mapStartX + 4);
         let mapEndY = sanitizeCord(mapStartY + 4);
-        if (mapStartX < 0) {
-            mapStartX = 0;
-        }
-        if (mapStartY < 0) {
-            mapStartY = 0;
-        }
-        if (mapEndX > 49) {
-            mapEndX = 49;
-        }
-        if (mapEndY > 49) {
-            mapEndY = 49;
-        }
-        for (var i = mapStartY; i <= mapEndY; i++) {
-            for (var j = mapStartX; j <= mapEndX; j++) {
+        for (var i = mapStartX; i <= mapEndX; i++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
                 //console.log("x:" + j + " y:" + i + this.game.mainMap.map[i][j].water);
                 if (this.game.mainMap.map[i][j].water) {
                     this.foodRate += 1;
