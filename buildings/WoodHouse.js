@@ -80,6 +80,8 @@ class WoodHouse {
 
         }
 
+        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODHOUSE_HEALTH);
+
         if(!this.followMouse){
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }

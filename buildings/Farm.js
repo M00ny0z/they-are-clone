@@ -23,6 +23,24 @@ class Farm {
         }
     };
 
+    drawHealthbar(ctx) {
+        const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
+        const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
+
+        ctx.save();
+
+        ctx.strokeStyle = 'gray';
+        ctx.strokeRect(posX, posY, 70, 8);
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(posX + 1, posY + 1, 68, 6);
+
+        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
+        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
+        
+        ctx.restore();
+    };
+
     getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -55,7 +73,7 @@ class Farm {
         //for (var i = mapStartY; i <= mapEndY; i++) {
             //for (var j = mapStartX; j <= mapEndX; j++) {
         for (var i = mapStartX; i <= mapEndX; i++) {
-                for (var j = mapStartY; j <= mapEndY; j++) {
+            for (var j = mapStartY; j <= mapEndY; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
                     this.foodRate += 1;
                 }
@@ -159,6 +177,8 @@ class Farm {
             ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y + 3) * PARAMS.BLOCKWIDTH);
 
         }
+
+        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FARM_HEALTH);
 
         let cropStartX;
         let cropsStartY;

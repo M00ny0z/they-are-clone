@@ -46,6 +46,24 @@ class Ballista {
         this.animations.push(new Animator(this.spritesheet, 265, spriteInfo['yStart'], spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
     }
 
+    drawHealthbar(ctx) {
+        const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
+        const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
+
+        ctx.save();
+
+        ctx.strokeStyle = 'gray';
+        ctx.strokeRect(posX, posY, 70, 8);
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(posX + 1, posY + 1, 68, 6);
+
+        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
+        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
+        
+        ctx.restore();
+    };
+
     update() {
         this.elapsedTime += this.game.clockTick;
 
@@ -143,6 +161,8 @@ class Ballista {
             }
             ctx.drawImage(this.spritesheet, 0, 0, 64, 64, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
+
+        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_BALLISTA_HEALTH);
 
         if (!this.followMouse) {
             if (this.facing < 5) {
