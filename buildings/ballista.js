@@ -92,6 +92,7 @@ class Ballista {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["Ballista"].workers;
+                this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
                 this.game.food -= this.game.requiredResources["Ballista"].food;
                 this.game.wood -= this.game.requiredResources["Ballista"].wood;
                 this.game.stone -= this.game.requiredResources["Ballista"].stone;

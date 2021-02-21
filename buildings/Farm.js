@@ -121,6 +121,7 @@ class Farm {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
 
                 this.game.workerRate -= this.game.requiredResources["Farm"].workers;
+                this.game.workers -= this.game.requiredResources["Farm"].workers;
                 this.game.food -= this.game.requiredResources["Farm"].food;
                 this.game.wood -= this.game.requiredResources["Farm"].wood;
                 this.game.stone -= this.game.requiredResources["Farm"].stone;

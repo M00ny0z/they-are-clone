@@ -332,28 +332,48 @@ class SceneManager {
                         this.selected.removeFromWorld = true;
                     }
                     this.game.allyspawner.spawnAllyRandomPath(RANGER);
+                    this.game.workers -= this.game.requiredResources["Ranger"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Ranger"].workers;
+                    this.game.food -= this.game.requiredResources["Ranger"].food;
+                    this.game.wood -= this.game.requiredResources["Ranger"].wood;
+                    this.game.iron -= this.game.requiredResources["Ranger"].iron;
                 } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sniper"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.game.allyspawner.spawnAllyRandomPath(SNIPER);
+                    this.game.workers -= this.game.requiredResources["Sniper"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Sniper"].workers;
+                    this.game.food -= this.game.requiredResources["Sniper"].food;
+                    this.game.iron -= this.game.requiredResources["Sniper"].iron;
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.game.allyspawner.spawnAllyRandomPath(TITAN);
+                    this.game.workers -= this.game.requiredResources["Titan"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Titan"].workers;
+                    this.game.food -= this.game.requiredResources["Titan"].food;
+                    this.game.iron -= this.game.requiredResources["Titan"].iron;
                 } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new Ballista(this.game);
                     this.game.addEntity(this.selected);
+                    this.game.workers -= this.game.requiredResources["Ballista"].workers;
+                    this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
+                    this.game.iron -= this.game.requiredResources["Ballista"].iron;
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
                     if (this.selected) {
                         this.selected.removeFromWorld = true;
                     }
                     this.selected = new MachineGunTurret(this.game);
                     this.game.addEntity(this.selected);
+                    this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
+                    this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
+                    this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
+                    this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;
                 }
             } else if (this.display == 4) { // display 4
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodWall"].enoughResource) {
@@ -747,7 +767,14 @@ class SceneManager {
         // Workers
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
         this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
-        ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
+        console.log("workerRate is ")
+        var workerRate = "";
+        /*if (workerRate >= 0) {
+            ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
+        } else {
+            ctx.fillText(this.game.workerRate.toString(), 1510, 796);
+        }*/
+        ctx.fillText(this.game.workerRate.toString(), 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);

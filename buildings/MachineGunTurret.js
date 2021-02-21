@@ -104,6 +104,7 @@ class MachineGunTurret {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
+                this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.food -= this.game.requiredResources["MachineGunTurret"].food;
                 this.game.wood -= this.game.requiredResources["MachineGunTurret"].wood;
                 this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
