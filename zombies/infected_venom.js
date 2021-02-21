@@ -236,7 +236,9 @@ class InfectedVenom {
         var xOffset = 22;
         var yOffset = 45;
 
-        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_VENOM_HEALTH);
+        if (this.hitpoints < MAX_VENOM_HEALTH) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_VENOM_HEALTH);
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 

@@ -238,7 +238,9 @@ class InfectedHarpy {
         var xOffset = 33;
         var yOffset = 33;
 
-        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_HARPY_HEALTH);
+        if (this.hitpoints < MAX_HARPY_HEALTH) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_HARPY_HEALTH);
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 

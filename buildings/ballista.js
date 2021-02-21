@@ -161,8 +161,10 @@ class Ballista {
             }
             ctx.drawImage(this.spritesheet, 0, 0, 64, 64, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
-
-        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_BALLISTA_HEALTH);
+        
+        if (this.hitpoints < MAX_BALLISTA_HEALTH) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_BALLISTA_HEALTH);
+        }
 
         if (!this.followMouse) {
             if (this.facing < 5) {

@@ -233,7 +233,7 @@ class InfectedUnit {
 
         this.facing = getFacing(this.velocity);
     };
-    
+
     draw(ctx) {
         this.xOffset = 32;
         this.yOffset = 20;
@@ -242,7 +242,9 @@ class InfectedUnit {
             this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
             this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
-        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_UNIT_HEALTH);
+        if (this.hitpoints < MAX_UNIT_HEALTH) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_UNIT_HEALTH);
+        }
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
