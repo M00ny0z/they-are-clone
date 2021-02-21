@@ -51,6 +51,9 @@ class SceneManager {
     };
 
     loadEntities() {
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./music/backgroundMusic.mp3");
+        
         this.game.entities = [];
         for(let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
@@ -61,10 +64,20 @@ class SceneManager {
         this.game.addEntity(this.game.enemyspawner);
     };
 
+    updateAudio() {
+        var mute = document.getElementById("mute").checked;
+        var volume = document.getElementById("volume").value;
+
+        ASSET_MANAGER.muteAudio(mute);
+        ASSET_MANAGER.adjustVolume(volume);
+    };
+
     update() {
         PARAMS.DEBUG = document.getElementById("debug").checked;
         PARAMS.CORD = document.getElementById("cord").checked;
         PARAMS.RESOURCEXY = document.getElementById("resourceXY").checked;
+
+        this.updateAudio();
 
         this.game.elapsedHour += this.game.clockTick;
 

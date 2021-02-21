@@ -57,7 +57,6 @@ ASSET_MANAGER.queueDownload("./sprites/infected_chubby.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ballista.png");
 ASSET_MANAGER.queueDownload("./sprites/machinegun_turret.png");
-//ASSET_MANAGER.queueDownload("./sprites/tent.png");
 ASSET_MANAGER.queueDownload("./sprites/buildings.png");
 ASSET_MANAGER.queueDownload("./sprites/crops.png");
 ASSET_MANAGER.queueDownload("./sprites/commandCenter.png");
@@ -69,9 +68,10 @@ ASSET_MANAGER.queueDownload("./sprites/soldier_bolt.png");
 ASSET_MANAGER.queueDownload("./sprites/titan_arrow.png");
 ASSET_MANAGER.queueDownload("./sprites/cannonball.png");
 
+//music
+ASSET_MANAGER.queueDownload("./music/backgroundMusic.mp3");
 
 ASSET_MANAGER.downloadAll(function () {
-	//console.log(PARAMS);
 	var canvas = document.getElementById('gameWorld');
 	var ctx = canvas.getContext('2d');
 
