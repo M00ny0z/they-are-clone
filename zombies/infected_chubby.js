@@ -178,8 +178,9 @@ class InfectedChubby {
 
         // collision detection
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-            for (var j = 0; j < this.game.entities[i].length; j++) {
-                var ent = this.game.entities[i][j];
+            let closestEnt = this.game.entities[0][0];
+            for (const ent of this.game.entities[i]) {
+                let closestEnt;
                 const enemyCheck = (
                     ent instanceof Ranger ||  
                     ent instanceof Soldier || 
@@ -203,14 +204,20 @@ class InfectedChubby {
                     ent instanceof MachineGunTurret
                 );
                 if (enemyCheck && canSee(this, ent)) {
-                    this.target = ent;
+                    if (!closestEnt) {
+                        closestEnt = ent;
+                    }
+                    if (distance(this, closestEnt) > distance(this, ent)) {
+                        closestEnt = ent;
+                    }
+                    this.target = closestEnt;
                 }
-                if (enemyCheck && collide(this, ent)) {
+                if (enemyCheck && closestEnt && collide(this, closestEnt)) {
                     if (this.state === 0) {
                         this.state = 1;
                         this.elapsedTime = 0;
                     } else if (this.elapsedTime > 2.0) {
-                        ent.hitpoints -= 40;
+                        closestEnt.hitpoints -= 40;
                         this.elapsedTime = 0;
                     }
                 }

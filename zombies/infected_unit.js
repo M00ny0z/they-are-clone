@@ -178,8 +178,8 @@ class InfectedUnit {
 
         // collision detection
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-            for (var j = 0; j < this.game.entities[i].length; j++) {
-                var ent = this.game.entities[i][j];
+            let closestEnt;
+            for (const ent of this.game.entities[i]) {
                 const enemyCheck = (
                     ent instanceof Ranger ||  
                     ent instanceof Soldier || 
@@ -203,14 +203,20 @@ class InfectedUnit {
                     ent instanceof MachineGunTurret
                 );
                 if (enemyCheck && canSee(this, ent)) {
-                    this.target = ent;
+                    if (!closestEnt) {
+                        closestEnt = ent;
+                    }
+                    if (distance(this, closestEnt) > distance(this, ent)) {
+                        closestEnt = ent;
+                    }
+                    this.target = closestEnt;
                 }
-                if (enemyCheck && collide(this, ent)) {
+                if (enemyCheck && closestEnt && collide(this, closestEnt)) {
                     if (this.state === 0) {
                         this.state = 1;
                         this.elapsedTime = 0;
                     } else if (this.elapsedTime > 1.0) {
-                        ent.hitpoints -= 20;
+                        closestEnt.hitpoints -= 20;
                         this.elapsedTime = 0;
                     }
                 }
@@ -229,23 +235,21 @@ class InfectedUnit {
     };
 
     drawHealthbar(ctx) {
-        // 45
-        // 40
-        // const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
-        // const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
+        const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
+        const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
 
-        // ctx.save();
+        ctx.save();
 
-        // ctx.strokeStyle = 'gray';
-        // ctx.strokeRect(posX, posY, 100, 15);
+        ctx.strokeStyle = 'gray';
+        ctx.strokeRect(posX, posY, 70, 8);
         
-        // ctx.fillStyle = 'white';
-        // ctx.fillRect(posX + 1, posY + 1, 98, 13);
+        ctx.fillStyle = 'white';
+        ctx.fillRect(posX + 1, posY + 1, 68, 6);
 
-        // ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        // ctx.fillRect(posX + 2, posY + 2, 96 * (this.hitpoints / 100), 11);
+        ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
+        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
         
-        // ctx.restore();
+        ctx.restore();
     };
 
     draw(ctx) {
@@ -256,7 +260,7 @@ class InfectedUnit {
             this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
             this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
-        this.drawHealthbar(ctx);
+        drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_UNIT_HEALTH);
 
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
