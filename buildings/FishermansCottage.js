@@ -40,7 +40,7 @@ class FishermansCottage {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.foodRate -= this.foodRate;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
             this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].FishermansCottage = false;
         }
         
@@ -64,7 +64,7 @@ class FishermansCottage {
                 (this.game.mainMap.map[adjacentSquares.below.x][adjacentSquares.below.y].water == true) ||
                 (this.game.mainMap.map[adjacentSquares.left.x][adjacentSquares.left.y].water == true) ||
                 (this.game.mainMap.map[adjacentSquares.above.x][adjacentSquares.above.y].water == true)) &&
-                !this.game.mainMap.map[x][y].collisions && !this.game.mainMap.map[x][y].filled) {
+                !this.game.mainMap.map[x][y].collisions) {
                     this.placeable = true;
             } else {
                 this.placeable = false;
@@ -72,7 +72,7 @@ class FishermansCottage {
             this.calcResourceRate();
             /*if (((this.game.mainMap.map[y + 1][x].water == true) || (this.game.mainMap.map[y - 1][x].water == true) ||
                 (this.game.mainMap.map[y][x + 1].water == true) || (this.game.mainMap.map[y][x - 1].water == true)) &&
-                !this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
+                !this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].collisions) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -85,10 +85,10 @@ class FishermansCottage {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             console.log("gridX: " + x + ", " + "gridY: " + y);
-            if (!this.game.mainMap.map[x][y].filled && !this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable 
+            if (!this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable 
                 && checkSameBuildingTypeInMapResourceGrid("FishermansCottage", x, y, 4, 2)) {
 
-                this.game.mainMap.map[x][y].filled = true;
+                this.game.mainMap.map[x][y].collisions = true;
                 this.game.mainMap.map[x][y]["FishermansCottage"] = true;
                 //fillBuildingTypeInMapResourceGrid("FishermansCottage", x, y, 4, 2); // fill in grid as occupied by fishermans cottage (resources) 
                 this.followMouse = false;

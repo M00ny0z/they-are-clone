@@ -69,7 +69,7 @@ class Ballista {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
 
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
@@ -92,7 +92,7 @@ class Ballista {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[x][y].collisions && !this.game.mainMap.map[x][y].filled) {
+            if (!this.game.mainMap.map[x][y].collisions) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -103,8 +103,8 @@ class Ballista {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[x][y].filled && !this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[x][y].filled = true;
+            if (!this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable) {
+                this.game.mainMap.map[x][y].collisions = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;

@@ -10,7 +10,7 @@ class MapOne {
         /*for (var i = 0; i < 50; i++) {
             this.map.push([]);
             for (var j = 0; j < 50; j++) {
-                this.map[i].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "filled": false,
+                this.map[i].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "collisions": false,
                                     "fishermansCottage": false, "farm": false, "quarry": false, "sawmill": false});
                 if (TileMaps.map.layers[0].data[j + (i * 50)] != 0) {
                     this.map[i][j].collisions = true;
@@ -35,7 +35,7 @@ class MapOne {
         for (var x = 0; x < 50; x++) {
             this.map.push([]);
             for (var y = 0; y < 50; y++) {
-                this.map[x].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "filled": false,
+                this.map[x].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false,
                 "FishermansCottage": false, "Farm": false, "Quarry": false, "Sawmill": false});
             }
         }
@@ -69,7 +69,7 @@ class MapOne {
         for (var x = 27; x < 30; x++) {
             for (var y = 34; y < 37; y++) {
                 this.map[x][y].collisions = true;
-                this.map[x][y].filled = true;
+                //this.map[x][y].collisions = true;
             }
         }
 
@@ -86,7 +86,7 @@ class MapOne {
             for (var y = 0; y < 50; y++) {
                 console.log("(" + x + ", " + y + "): " + "collisions: " + this.map[x][y].collisions + ", green: " + this.map[x][y].green + 
                             ", water: " + this.map[x][y].water + ", dirt: " + this.map[x][y].dirt + ", stone: " + this.map[x][y].stone + ", iron: " + this.map[x][y].iron +
-                            ", filled: " + this.map[x][y].filled + ", fishermansCottage: " + this.map[x][y].fishermansCottage + ", farm: " + this.map[x][y].farm + 
+                            ", fishermansCottage: " + this.map[x][y].fishermansCottage + ", farm: " + this.map[x][y].farm + 
                             ", quarry: " + this.map[x][y].quarry + ", sawmill: " + this.map[x][y].sawmill);
             }
         }
