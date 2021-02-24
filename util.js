@@ -251,7 +251,13 @@ window.requestAnimFrame = (function () {
         //console.log("unitType: " + unitType);
         let mapStartX = sanitizeCord(gridX - decrement);
         let mapStartY = sanitizeCord(gridY - decrement);
-        let mapEndX = sanitizeCord(mapStartX + increment);
+        let mapEndX;
+        if (increment === 5) { // sawmill, quarry
+            mapEndX = sanitizeCord(mapStartX + increment-1);
+        } else { //fishermans cottage, farm
+            mapEndX = sanitizeCord(mapStartX + increment);
+        }
+        //let mapEndX = sanitizeCord(mapStartX + increment);
         let mapEndY = sanitizeCord(mapStartY + increment);
         //console.log(this.gameEngine.mainMap.map[0][0]["FishermansCottage"]);
         //console.log(this.gameEngine.mainMap.map[0][0][unitType]);

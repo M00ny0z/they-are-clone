@@ -51,7 +51,8 @@ class Sawmill {
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
                 (!this.game.mainMap.map[x][y].collisions) &&
-                (!this.game.mainMap.map[x][y+1].collisions)) {
+                (!this.game.mainMap.map[x][y+1].collisions) &&
+                checkSameBuildingTypeInMapResourceGrid("Sawmill", x, y, 5, 2)) {
                     this.placeable = true;
             } else {
                 this.placeable = false;
@@ -64,8 +65,7 @@ class Sawmill {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             //if (this.game.click.y < 15 && this.placeable) {
-            if (!this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable 
-                && checkSameBuildingTypeInMapResourceGrid("Sawmill", x, y, 5, 2)) {
+            if (!this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable) {
 
                 this.game.mainMap.map[x][y].collisions = true;
                 this.game.mainMap.map[x][y+1].collisions = true;

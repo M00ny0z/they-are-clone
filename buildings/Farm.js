@@ -106,7 +106,7 @@ class Farm {
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
                     //if (!this.game.mainMap.map[y + i - 2][x + j - 2].collisions && !this.game.mainMap.map[y + i - 2][x + j - 2].collisions) {
-                    if (!this.game.mainMap.map[x + i - 2][y + j - 2].collisions) {
+                    if (!this.game.mainMap.map[sanitizeCord(x + i - 2)][sanitizeCord(y + j - 2)].collisions) {
                         this.placeable = true;
                     } else {
                         stop = true;
@@ -130,7 +130,7 @@ class Farm {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
                         //this.game.mainMap.map[y + i - 2][x + j - 2].collisions = true;
-                        this.game.mainMap.map[x + i - 2][y + j - 2].collisions = true;
+                        this.game.mainMap.map[sanitizeCord(x + i - 2)][sanitizeCord(y + j - 2)].collisions = true;
 
                     }
                 }
