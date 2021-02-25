@@ -39,8 +39,8 @@ class Quarry {
         let mapStartY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY - 2);
         let mapEndX = sanitizeCord(mapStartX + 4);
         let mapEndY = sanitizeCord(mapStartY + 5);
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
+        for (var i = mapStartY; i <= mapEndY; i++) {
+            for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].stone) {
                     this.stoneRate += 1;
                 }
@@ -59,20 +59,18 @@ class Quarry {
             this.removeFromWorld = true;
             this.game.stoneRate -= this.stoneRate;
             this.game.ironRate -= this.ironRate;
-            //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
-            //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1].collisions = false;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Quarry = false;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1].Quarry = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Quarry = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Quarry = false;
         }
         
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
-                (!this.game.mainMap.map[x][y].collisions) &&
-                (!this.game.mainMap.map[x][y+1].collisions) &&
+                (!this.game.mainMap.map[y][x].collisions) &&
+                (!this.game.mainMap.map[y+1][x].collisions) &&
                 checkSameBuildingTypeInMapResourceGrid("Quarry", x, y, 5, 2)) {
                     this.placeable = true;
             } else {
@@ -85,12 +83,12 @@ class Quarry {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            //if (this.game.click.y < 15 && this.placeable) {
-            if (!this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[x][y].collisions = true;
-                this.game.mainMap.map[x][y+1].collisions = true;
-                this.game.mainMap.map[x][y].Quarry = true;
-                this.game.mainMap.map[x][y+1].Quarry = true;
+            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
+                this.game.mainMap.map[y][x].collisions = true;
+                this.game.mainMap.map[y+1][x].collisions = true;
+                this.game.mainMap.map[y][x].Quarry = true;
+                this.game.mainMap.map[y+1][x].Quarry = true;
+                
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;

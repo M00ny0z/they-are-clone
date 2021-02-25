@@ -50,30 +50,12 @@ class Farm {
     calcResourceRate() {
         this.foodRate = 0;
         // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
-        /*let mapStartX = this.game.mouse.x + this.game.camera.cameraX - 2;
-        let mapStartY = this.game.mouse.y + this.game.camera.cameraY - 2;
-        let mapEndX = mapStartX + 4;
-        let mapEndY = mapStartY + 4;
-        if (mapStartX < 0) {
-            mapStartX = 0;
-        }
-        if (mapStartY < 0) {
-            mapStartY = 0;
-        }
-        if (mapEndX > 49) {
-            mapEndX = 49;
-        }
-        if (mapEndY > 49) {
-            mapEndY = 49;
-        }*/
         let mapStartX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX - 2);
         let mapStartY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY - 2);
         let mapEndX = sanitizeCord(mapStartX + 4);
         let mapEndY = sanitizeCord(mapStartY + 4);
-        //for (var i = mapStartY; i <= mapEndY; i++) {
-            //for (var j = mapStartX; j <= mapEndX; j++) {
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
+        for (var i = mapStartY; i <= mapEndY; i++) {
+            for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
                     this.foodRate += 1;
                 }
@@ -90,23 +72,18 @@ class Farm {
             this.game.foodRate -= this.foodRate;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].collisions = false;
-                    this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].collisions = false;
-
+                    this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].collisions = false;
                 }
             }
         }
 
         if (this.game.mouse && this.followMouse) {
-            //ar x = this.game.mouse.x + this.game.camera.cameraX;
-            //var y = this.game.mouse.y + this.game.camera.cameraY;
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             var stop = false;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    //if (!this.game.mainMap.map[y + i - 2][x + j - 2].collisions && !this.game.mainMap.map[y + i - 2][x + j - 2].collisions) {
-                    if (!this.game.mainMap.map[sanitizeCord(x + i - 2)][sanitizeCord(y + j - 2)].collisions) {
+                    if (!this.game.mainMap.map[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)].collisions) { 
                         this.placeable = true;
                     } else {
                         stop = true;
@@ -122,16 +99,12 @@ class Farm {
 
         //placing selected entity
         if (this.game.click && this.followMouse) {
-            //var x = this.game.click.x + this.game.camera.cameraX;
-            //var y = this.game.click.y + this.game.camera.cameraY;
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
-                        //this.game.mainMap.map[y + i - 2][x + j - 2].collisions = true;
-                        this.game.mainMap.map[sanitizeCord(x + i - 2)][sanitizeCord(y + j - 2)].collisions = true;
-
+                        this.game.mainMap.map[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)].collisions = true;
                     }
                 }
                 this.followMouse = false;
