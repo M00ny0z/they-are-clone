@@ -234,29 +234,13 @@ class MapOne {
         //console.log("calculatePath(15, 0, 42, 1)");
         //let transposedGrid = this.transpose(this.game.collisionMap);
         //this.calculatePath(transposedGrid, 15, 0, 42, 1);
-        this.calculatePath(0, 15, 1, 42);
+        calculatePath(0, 15, 1, 42);
 
 }
   transpose(matrix) {
     return matrix[0].map((col, i) => matrix.map(row => row[i]));
   }
 
-    // collisionMap has gridX and gridY swapped
-    calculatePath(startY, startX, endY, endX) {
-        var easystar = new EasyStar.js();
-        easystar.setGrid(this.game.collisionMap);
-        easystar.setAcceptableTiles([0]);
-        easystar.findPath(startX, startY, endX, endY, function( path ) {
-            if (path === null) {
-                console.log("A* Path was not found.");
-            } else {
-                console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
-                console.log(path);
-            }
-        });
-        easystar.setIterationsPerCalculation(1000);
-        easystar.calculate();
-    } 
 
     addPathAsFilled(pathArray) {
         pathArray.forEach(path => {

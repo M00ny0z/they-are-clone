@@ -54,6 +54,7 @@ const MAX_VENOM_HEALTH = 80;
 const MAX_STONEGATE_HEALTH = 200;
 const MAX_WOODGATE_HEALTH = 100;
 
+
 const ENTITIES = {};
 ENTITIES[FARM]= Farm;
 ENTITIES[QUARRY]= Quarry;
@@ -117,6 +118,25 @@ const nullCheck = (todo) => {
     console.log(todo);
     return ((todo == undefined || todo == null) ? false : todo);
 };
+
+ // collisionMap has gridX and gridY swapped
+ function calculatePath(startY, startX, endY, endX) {
+    var easystar = new EasyStar.js();
+    easystar.setGrid(this.gameEngine.collisionMap);
+    easystar.setAcceptableTiles([0]);
+    easystar.findPath(startX, startY, endX, endY, function( path ) {
+        if (path === null) {
+            console.log("A* Path was not found.");
+        } else {
+            console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
+            console.log(path);
+        }
+    });
+    easystar.setIterationsPerCalculation(1000);
+    easystar.calculate();
+} 
+
+
 
 // const drawHealthbar = (ctx, percent) => {
 //     ctx.save();
