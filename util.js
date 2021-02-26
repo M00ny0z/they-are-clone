@@ -119,7 +119,6 @@ const nullCheck = (todo) => {
     return ((todo == undefined || todo == null) ? false : todo);
 };
 
- // collisionMap has gridX and gridY swapped
  function calculatePath(startY, startX, endY, endX) {
     var easystar = new EasyStar.js();
     easystar.setGrid(this.gameEngine.collisionMap);
