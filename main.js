@@ -11,21 +11,23 @@ ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 // ui
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_empty.png");
 ASSET_MANAGER.queueDownload("./sprites/buildings_grayscale.png");
+ASSET_MANAGER.queueDownload("./sprites/machinegun_turret_grayscale.png");
+ASSET_MANAGER.queueDownload("./sprites/ballista_grayscale.png");
+ASSET_MANAGER.queueDownload("./sprites/ranger_grayscale.png");
+ASSET_MANAGER.queueDownload("./sprites/soldier_grayscale.png");
+ASSET_MANAGER.queueDownload("./sprites/sniper_grayscale.png");
+ASSET_MANAGER.queueDownload("./sprites/titan_grayscale.png");
 // Resources (Bottom Left) Panel
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_food.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_iron.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_stone.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_units.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_wood.png");
-// display 0
+
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_colonist.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_resources.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_military.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_defense.png");
-// display 1
-// display 2
-// display 3
-// display 4
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_woodWall.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ui/icon_cancel.png");
@@ -42,7 +44,6 @@ ASSET_MANAGER.queueDownload("./sprites/ui/8.png");
 ASSET_MANAGER.queueDownload("./sprites/ui/9.png");
 
 ASSET_MANAGER.queueDownload("./sprites/tile.png");
-ASSET_MANAGER.queueDownload("./sprites/black.png");
 
 ASSET_MANAGER.queueDownload("./sprites/ranger.png");
 ASSET_MANAGER.queueDownload("./sprites/soldier.png");

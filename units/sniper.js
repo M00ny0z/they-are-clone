@@ -1,13 +1,9 @@
 class Sniper {
-    constructor(game, x, y, path) {
-        Object.assign(this, { game, x, y, path });
+    constructor(game, x, y) {
+        Object.assign(this, { game, x, y });
 
         this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
         this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
-
-        for (var i = 0; i < this.path.length; i++) {
-            this.path[i] = { x: this.path[i].x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2, y: this.path[i].y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2 };
-        }
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sniper.png");
         this.priority = ALLYUNITPRIORITY;
@@ -16,19 +12,19 @@ class Sniper {
         this.visualRadius = 300;
 
         this.targetID = 0;
-        if(this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
+        this.target = null;         // if path is defined, set it as the target point
 
         // Calculating the velocity
-        var dist = distance(this, this.target);
-        this.maxSpeed = 20; // pixels per second
-        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+        this.maxSpeed = 25; // pixels per second
+        this.velocity = 0;
 
-        this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
+        this.state = 3; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 100;
+        this.selected = false;
 
+        this.hitpoints = 100;
         this.animations = [];
         this.loadAnimations();
     };
@@ -150,58 +146,49 @@ class Sniper {
     }
 
     update() {
-        this.elapsedTime += this.game.clockTick;
-        var dist = distance(this, this.target);
-        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-         
-        if (this.hitpoints <= 0) this.removeFromWorld = true;
+        if(this.target != null) {
+            this.elapsedTime += this.game.clockTick;
+            var dist = distance(this, this.target);
+            this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+            
+            if (this.hitpoints <= 0) this.removeFromWorld = true;
 
-        if (this.target.removeFromWorld) {
-            this.state = 0;
-            this.target = this.path[this.targetID];
-        }
+            if (this.target.removeFromWorld) {
+                this.state = 0;
+            }
 
-        // If the entity arrived at the target, change to the next target.
-        if (dist < 5) {
-            // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
-            var incrementedTargetID = this.targetID + 1;
-            if (this.path[incrementedTargetID] === undefined && this.target === this.path[this.targetID]) {
+            // If the entity arrived at the target, change to the next target.
+            if (dist < 5) {
                 this.state = 3;
             }
-            // Check if there is another target in the list of path - If not, just stay on the last target. &&
-            // Check if the target is not the last point in the path (meaning it was a building) then don't advance to the next point of the path
-            if (this.targetID < this.path.length - 1 && this.target === this.path[this.targetID]) {
-                this.targetID++;
-                this.target = this.path[this.targetID];
-            }
-        }
 
-        // collision detection
-        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-            for (var j = 0; j < this.game.entities[i].length; j++) {
-                var ent = this.game.entities[i][j];
-                if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this,ent)) {
-                    if (this.state === 0) {
-                        this.target = ent;
-                        this.state = 1;
-                        this.elapsedTime = 0;
-                    } else if (this.elapsedTime > 3) {
-                        this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
-                        this.elapsedTime = 0;
+            // collision detection
+            for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+                for (var j = 0; j < this.game.entities[i].length; j++) {
+                    var ent = this.game.entities[i][j];
+                    if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this,ent)) {
+                        if (this.state === 0) {
+                            this.target = ent;
+                            this.state = 1;
+                            this.elapsedTime = 0;
+                        } else if (this.elapsedTime > 3) {
+                            this.game.addEntity(new SniperArrow(this.game, this.x, this.y, ent, true));
+                            this.elapsedTime = 0;
+                        }
                     }
                 }
             }
-        }
 
-        if (this.state == 0) {   // only moves when it is in walking state
-            dist = distance(this, this.target);
-            // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
-            // If reached to the target, new velocity will be calculated.
-            this.x += this.velocity.x * this.game.clockTick;
-            this.y += this.velocity.y * this.game.clockTick;
-        }
+            if (this.state == 0) {   // only moves when it is in walking state
+                dist = distance(this, this.target);
+                // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
+                // If reached to the target, new velocity will be calculated.
+                this.x += this.velocity.x * this.game.clockTick;
+                this.y += this.velocity.y * this.game.clockTick;
+            }
 
-        this.facing = getFacing(this.velocity);
+            this.facing = getFacing(this.velocity);
+        }
     };
 
     draw(ctx) {
@@ -231,6 +218,26 @@ class Sniper {
 
         if (this.hitpoints < MAX_SNIPER_HEALTH) {
             drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SNIPER_HEALTH);
+        }
+
+        if(this.target) {
+            ctx.strokeStyle = "Black";
+            ctx.beginPath();
+            ctx.setLineDash([5, 15]);
+            ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+            ctx.lineTo(this.target.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.target.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+
+        if(this.selected) {
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = 'rgba(255,215,0,0.2)';
+            ctx.beginPath();
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 15, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.stroke();
         }
 
         if (PARAMS.DEBUG) {

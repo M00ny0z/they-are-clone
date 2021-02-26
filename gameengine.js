@@ -8,14 +8,19 @@ class GameEngine {
         this.surfaceHeight = null;
 
         this.click = null;
-        this.clickCanvas = null;
         this.mouse = null;
-        this.mouseCanvas = null;
 
         this.left = false;
         this.right = false;
         this.up = false;
         this.down = false;
+
+        this.isDrawingRectangle = false;
+        this.isDoneDrawing = false;
+        this.rectangleStartX = undefined;
+        this.rectangleStartY = undefined;
+        this.rectangleEndX = undefined;
+        this.rectangleEndY = undefined;
 
         //Boolean where true means that the game was won, false means that the game was lost
         this.wonTheGameFlag;
@@ -108,27 +113,44 @@ class GameEngine {
         var that = this;
 
         var getXandY = function (e) {
-            var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
-            var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
+            var offsetX = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
+            var offsetY = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
 
-            x = Math.floor(x / PARAMS.BLOCKWIDTH);
-            y = Math.floor(y / PARAMS.BLOCKWIDTH);
+            var x = Math.floor(offsetX / PARAMS.BLOCKWIDTH);
+            var y = Math.floor(offsetY / PARAMS.BLOCKWIDTH);
 
             if (x < 0 || x > PARAMS.MAPWIDTH || y < 0 || y > PARAMS.MAPWIDTH) return null;
 
-            return { x: x, y: y };
+            return { x, y, offsetX, offsetY };
         }
 
-        this.ctx.canvas.addEventListener("mousemove", function (e) {
-            //console.log(getXandY(e));
-            that.mouse = getXandY(e);
-            that.mouseCanvas = e;
+        this.ctx.canvas.addEventListener("mousedown", function(e) {
+            that.isDrawingRectangle = true;
+            that.rectangleStartX = e.offsetX;
+            that.rectangleStartY = e.offsetY;
+            that.rectangleEndX = undefined;
+            that.rectangleEndY = undefined;
         }, false);
 
+        this.ctx.canvas.addEventListener("mousemove", function (e) {
+            that.mouse = getXandY(e);
+            if(that.isDrawingRectangle === true) {
+                that.rectangleEndX = e.offsetX;
+                that.rectangleEndY = e.offsetY;
+            }
+        }, false);
+
+        this.ctx.canvas.addEventListener("mouseup", function(e) {
+            if(that.isDrawingRectangle === true) {
+                that.rectangleEndX = e.offsetX;
+                that.rectangleEndY = e.offsetY;
+                that.isDrawingRectangle = false;
+                that.isDoneDrawing = true;
+            }
+        });
+
         this.ctx.canvas.addEventListener("click", function (e) {
-            //console.log(getXandY(e));
             that.click = getXandY(e);
-            that.clickCanvas = e;
         }, false);
 
         this.ctx.canvas.addEventListener("keydown", function (e) {
