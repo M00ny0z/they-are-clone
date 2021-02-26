@@ -69,7 +69,8 @@ class Ballista {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+
         }
 
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
@@ -92,7 +93,7 @@ class Ballista {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[x][y].collisions && !this.game.mainMap.map[x][y].filled) {
+            if (!this.game.mainMap.map[y][x].collisions) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -103,8 +104,8 @@ class Ballista {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[x][y].filled && !this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[x][y].filled = true;
+            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
+                this.game.mainMap.map[y][x].collisions = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
@@ -162,9 +163,6 @@ class Ballista {
             ctx.drawImage(this.spritesheet, 0, 0, 64, 64, mouse.x * PARAMS.BLOCKWIDTH, mouse.y * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
         
-        if (this.hitpoints < MAX_BALLISTA_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_BALLISTA_HEALTH);
-        }
 
         if (!this.followMouse) {
             if (this.facing < 5) {
@@ -175,6 +173,10 @@ class Ballista {
                 this.animations[this.facing - (2 * (this.facing - 4))].drawFrame(this.game.clockTick, ctx, -(this.x - PARAMS.BLOCKWIDTH/2) - 48  + (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.75);
                 ctx.restore();
             }
+        }
+
+        if (this.hitpoints < MAX_BALLISTA_HEALTH) {
+            drawHealthbar(ctx, this.hitpoints, this.x + 10, this.y - 15, this.game, MAX_BALLISTA_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

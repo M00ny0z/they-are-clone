@@ -94,3 +94,8 @@ same size*/
     font-family: SFDistantGalaxy;
     src: url(../fonts/SF\ Distant\ Galaxy.ttf);
 }*/
+
+
+body {
+    background: gray;
+}

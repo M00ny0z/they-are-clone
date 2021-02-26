@@ -17,15 +17,13 @@ class WoodHouse {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.workerRate -= this.workerRate;
-            //this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
-            this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].filled = false;
-
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
         
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[x][y].collisions && !this.game.mainMap.map[x][y].filled) {
+            if (!this.game.mainMap.map[y][x].collisions) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -36,8 +34,8 @@ class WoodHouse {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.click.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.click.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[x][y].filled && !this.game.mainMap.map[x][y].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[x][y].filled = true;
+            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
+                this.game.mainMap.map[y][x].collisions = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;

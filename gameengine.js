@@ -33,7 +33,7 @@ class GameEngine {
         // this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
         this.elapsedHour = 0;
         this.elapsedDay = 0;
-        this.workers = 10;
+        this.workers = 50;
         this.workerRate = 0; 
         this.maxWorkers = 50;
         this.food = 500;

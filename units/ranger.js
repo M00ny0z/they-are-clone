@@ -166,30 +166,36 @@ class Ranger {
 
       // collision detection
       for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-        for (var j = 0; j < this.game.entities[i].length; j++) {
-          var ent = this.game.entities[i][j];
+        let closestEnt;
+        for (const ent of this.game.entities[i]) {
           if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)) {
+            if (!closestEnt) {
+              closestEnt = ent;
+            }
+            if (distance(this, closestEnt) > distance(this, ent)) {
+              closestEnt = ent;
+            }
             if (this.state === 0) {
               this.state = 1;
-              this.target = ent;
+              this.target = closestEnt;
               this.elapsedTime = 0;
             } else if (this.elapsedTime > 1.5) {
-              this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, true));
+              this.game.addEntity(new Arrow(this.game, this.x, this.y, closestEnt, true));
               this.elapsedTime = 0;
             }
           }
         }
-      }
 
-      if (this.state == 0) {   // only moves when it is in walking state
-        dist = distance(this, this.target);
-        // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
-        // If reached to the target, new velocity will be calculated.
-        this.x += this.velocity.x * this.game.clockTick;
-        this.y += this.velocity.y * this.game.clockTick;
-      }
+        if (this.state == 0) {   // only moves when it is in walking state
+          dist = distance(this, this.target);
+          // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
+          // If reached to the target, new velocity will be calculated.
+          this.x += this.velocity.x * this.game.clockTick;
+          this.y += this.velocity.y * this.game.clockTick;
+        }
 
-      this.facing = getFacing(this.velocity);
+        this.facing = getFacing(this.velocity);
+      }
     }
   }
 
@@ -224,7 +230,7 @@ class Ranger {
 
     this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
-    if(this.target) {
+    if (this.target) {
       ctx.strokeStyle = "Black";
       ctx.beginPath();
       ctx.setLineDash([5, 15]);
@@ -232,7 +238,7 @@ class Ranger {
       ctx.lineTo(this.target.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.target.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
       ctx.stroke();
       ctx.setLineDash([]);
-  }
+    }
 
 
     if (this.selected) {

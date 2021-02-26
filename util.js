@@ -244,6 +244,67 @@ window.requestAnimFrame = (function () {
 ////////////////////////////////////////////////////////////////////////////////////
 /////// Grid Functions
 
+    function returnIndividualPathCoordinates(pathArray, x, y) {
+        let outputPath = [];
+        pathArray.forEach(path => {
+            if(x != path.x) {
+                if (x < path.x) {
+                    for (x=x; x < path.x; x++) {
+                        outputPath.push({x, y});
+                    }
+                } else { // x > path.x
+                    for (x=x; x > path.x; x--) {
+                        outputPath.push({x, y});
+                    }
+                }
+            } else { // y != path.y
+                if (y < path.y) {
+                    for (y=y; y < path.y; y++) {
+                        outputPath.push({x, y});
+                    }
+                } else { // x > path.x
+                    for (y=y; y > path.y; y--) {
+                        outputPath.push({x, y});
+                    }
+                }
+            }
+        });
+        outputPath.push(pathArray[pathArray.length-1]);
+        return outputPath;
+    }
+
+    function setColMapXYVal(gridX, gridY, val) {
+        this.gameEngine.collisionMap[gridY][gridX] = val;
+    }
+
+    function printCollisionMap() {
+        console.log("collision map: (0 = no collision, 1 = collision)")
+        for (var y = 0; y < 50; y++) {
+            var outputLine = leftPad(y, 2) + ": [";
+            for (var x = 0; x <= 48; x++) {
+                outputLine += this.gameEngine.collisionMap[y][x] + ", ";
+            }
+            outputLine += this.gameEngine.collisionMap[y][x] + "]";
+            console.log(outputLine);
+        }
+    }
+
+    function showCollisions() {
+        this.gameEngine.ctx.font = "10px SpaceMono-Regular";
+        this.gameEngine.ctx.fillStyle = "pink";
+        for (var i = 0; i < 50; i++) {
+            for (var j = 0; j < 50; j++) {
+                var x = (j - this.gameEngine.camera.cameraX) * PARAMS.BLOCKWIDTH;
+                var y = (i - this.gameEngine.camera.cameraY + 1) * PARAMS.BLOCKWIDTH;
+                console.log("x: " + x + ", y: " + y);
+                this.gameEngine.ctx.fillText("" + this.gameEngine.collisionMap[i][j], x, y);
+
+                //this.gameEngine.ctx.fillText("" + this.gameEngine.collisionMap[y][x], x, y);
+            }
+        }
+    }
+
+
     // for 1 block buildings, increment=4, decrement = 2 (grid size)
     // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
     // returns a boolean true if none of same building type are within grid
@@ -251,12 +312,18 @@ window.requestAnimFrame = (function () {
         //console.log("unitType: " + unitType);
         let mapStartX = sanitizeCord(gridX - decrement);
         let mapStartY = sanitizeCord(gridY - decrement);
-        let mapEndX = sanitizeCord(mapStartX + increment);
+        let mapEndX;
+        if (increment === 5) { // sawmill, quarry
+            mapEndX = sanitizeCord(mapStartX + increment-1);
+        } else { //fishermans cottage, farm
+            mapEndX = sanitizeCord(mapStartX + increment);
+        }
+        //let mapEndX = sanitizeCord(mapStartX + increment);
         let mapEndY = sanitizeCord(mapStartY + increment);
         //console.log(this.gameEngine.mainMap.map[0][0]["FishermansCottage"]);
         //console.log(this.gameEngine.mainMap.map[0][0][unitType]);
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
+        for (var i = mapStartY; i <= mapEndY; i++) {
+            for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.gameEngine.mainMap.map[i][j][unitType]) { // does unit resource grid already exist there?
                     return false; // if so, we can't place. return false
                 }

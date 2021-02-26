@@ -7,11 +7,11 @@ class CommandCenter {
       this.hitpoints = 1000;
       this.radius = 80;
 
-      for (var i = 34; i <= 36; i++) {
+      /*for (var i = 34; i <= 36; i++) {
          for(var j = 27; j <= 29; j++) {
-            this.game.mainMap.map[i][j].filled = true;
+            this.game.mainMap.map[i][j].collisions = true;
          }
-      }
+      }*/
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
       this.priority = BUILDINGPRIORITY;
    };
@@ -19,7 +19,7 @@ class CommandCenter {
    update() {
       if (this.hitpoints <= 0) {
          this.removeFromWorld = true;
-         this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH].filled = false;
+         this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH].collisions = false;
       }
    };
 
