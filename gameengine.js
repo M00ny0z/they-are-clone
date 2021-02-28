@@ -7,6 +7,9 @@ class GameEngine {
         this.surfaceWidth = null;
         this.surfaceHeight = null;
 
+        this.startDate = new Date();
+        this.hasPrintedReport = false;
+
         this.click = null;
         this.mouse = null;
 
@@ -34,7 +37,6 @@ class GameEngine {
         this.elapsedHour = 0;
         this.elapsedDay = 0;
         this.workers = 50;
-        this.workerRate = 0; 
         this.maxWorkers = 50;
         this.food = 500;
         this.foodRate = 0;
@@ -254,6 +256,19 @@ class GameEngine {
             }
         }
         this.camera.update();
+
+        //Print performance report. Currently only takes a snapshot of all existing entities. For future,
+        //maybe keep track of all entities that have existed
+        if(PARAMS.PERFORMANCE_MEASURE && !this.hasPrintedReport) {
+            //If it's time to print the report, update and report
+            if((new Date().getTime() - this.startDate.getTime()) / 1000 >= PARAMS.PERFORMANCE_TIME_WINDOW) {
+                    this.updatePerformanceInfo(true);
+                    this.printPerformanceReport();
+                    this.hasPrintedReport = true;
+            } else {
+                this.updatePerformanceInfo(false);
+            }
+        }
         
         for (var i = NUMBEROFPRIORITYLEVELS - 1; i >= 0; --i) {
             for (var j = this.entities[i].length - 1; j >= 0; --j) {
@@ -294,13 +309,6 @@ class GameEngine {
 
     // update inGame resources (Every 1 hour in game)
     updateResourceCount() {
-        this.workers += this.workerRate;
-        if (this.workers > this.maxWorkers) {
-            this.workers = this.maxWorkers;
-        }
-        if(this.workers < 0) {
-            this.workers = 0;
-        }
 
         this.food += this.foodRate;
         if (this.food > this.maxFood) {
@@ -356,6 +364,78 @@ class GameEngine {
           this.refreshLoop();
         });
       }
+
+    updatePerformanceInfo(timeToReport) {
+        if(this.performanceInfo == null) {
+            this.performanceInfo = [];
+            for(let i = 0; i < 4; i++) {
+                this.performanceInfo.push({});
+            }
+        }
+        //Iterate through all entities and report
+        for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
+            for (var j = 0; j < this.entities[i].length; j++) {
+                var entity = this.entities[i][j];
+                //If it's not time to report, only update an entity if it is dead
+                if(!timeToReport && !entity.removeFromWorld) {
+                    continue;
+                }
+                if(entity.priority >= 1 && entity.priority <= 4) {
+                    let nameOfClass = entity.__proto__.constructor.name;
+                    //Summarize runtime info for a few individual methods of this entity
+                    for(let funcName of Object.keys(entity.performanceMeasuresStruct)) {
+                        //Initialize if necessary
+                        if(this.performanceInfo[entity.priority - 1][funcName] == null) {
+                            this.performanceInfo[entity.priority - 1][funcName] = {};
+                            this.performanceInfo[entity.priority - 1][funcName]["totalRuntime"] = 0;
+                            this.performanceInfo[entity.priority - 1][funcName]["totalRuns"] = 0;
+                        }
+
+                        let totalRuntime = entity.performanceMeasuresStruct[funcName]["totalRuntime"];
+                        let totalRuns = entity.performanceMeasuresStruct[funcName]["totalRuns"];
+                        //Update this.performanceInfo
+                        this.performanceInfo[entity.priority - 1][funcName]["totalRuntime"] += totalRuntime;
+                        this.performanceInfo[entity.priority - 1][funcName]["totalRuns"] += totalRuns;
+                    }
+                }
+            }
+        }
+    }
+
+    printPerformanceReport() {
+        console.log("--PERFORMANCE REPORT--");
+        for (var i = 0; i < 4; i++) {
+            var category;
+            switch(i) {
+                case 0:
+                    category = "BUILDINGS";
+                    break;
+                case 1:
+                    category = "ALLY UNITS";
+                    break;
+                case 2:
+                    category = "ENEMY UNITS";
+                    break;
+                case 3:
+                    category = "EFFECTS (PROJECTILES)";
+                    break;
+            }
+            console.log("   " + category);
+            for(let funcName of Object.keys(this.performanceInfo[i])) {                
+                console.log("       Function: " + funcName)
+                console.log("           Total Runtime (seconds): " + Math.round(this.performanceInfo[i][funcName]["totalRuntime"] / 1000 * 10000000) / 100000000);
+                console.log("           Total Runs: " + this.performanceInfo[i][funcName]["totalRuns"]);
+                console.log("           Average Runtime per Call (seconds): " 
+                    + Math.round((this.performanceInfo[i][funcName]["totalRuntime"] / this.performanceInfo[i][funcName]["totalRuns"]) / 1000 * 10000000) / 100000000);
+            }
+            console.log();
+            //Build a report
+                // console.log("     method name: " + f);
+                // console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+                // console.log("         total # of runs: " + totalRuns);
+                // console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
+        }
+    }
       
 };
 

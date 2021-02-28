@@ -12,10 +12,29 @@ class Quarry {
         this.radius = 50;
         this.stoneRate = 0;
         this.ironRate = 0;
+
+        //Performance Measuring Variables
+        //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct = {};
+            this.totalLoadAnimationsRuntime = 0;
+            this.totalLoadAnimationsRuns = 0;
+        }
     };
 
      // takes gameEngines map object which is a 2D array of tiles
      calcResourceRate() {
+        let nameOfThisFunction = "calcResourceRate";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         this.stoneRate = 0;
         this.ironRate = 0;
         // traverse from (-2,-2) to (+2,+2) from current (x,y) location (calculate a 5x5 grid of resources)
@@ -52,11 +71,29 @@ class Quarry {
         if (PARAMS.RESOURCEXY){ 
             console.log("mapStartX:" + mapStartX + ", mapStartY:" +  mapStartY + ", mapEndX:" + mapEndX + ", mapEndY: " + mapEndY);
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     }
 
     update() {
+        let nameOfThisFunction = "update";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["Quarry"].workers;
             this.game.stoneRate -= this.stoneRate;
             this.game.ironRate -= this.ironRate;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
@@ -94,7 +131,6 @@ class Quarry {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["Quarry"].workers;
-                this.game.workerRate -= this.game.requiredResources["Quarry"].workers;
                 this.game.food -= this.game.requiredResources["Quarry"].food;
                 this.game.wood -= this.game.requiredResources["Quarry"].wood;
                 this.game.stone -= this.game.requiredResources["Quarry"].stone;
@@ -110,6 +146,7 @@ class Quarry {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
+<<<<<<< HEAD
             if ((doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) === this.x &&
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
@@ -126,10 +163,39 @@ class Quarry {
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
+=======
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY][doubleX].Quarry = false;
+            this.game.mainMap.map[doubleY + 1][doubleX].Quarry = false;
+
+            this.game.stoneRate -= this.stoneRate;
+            this.game.ironRate -= this.ironRate;
+            this.game.workers += this.game.requiredResources["Quarry"].workers;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
+>>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
         }
     };
 
     draw(ctx) {
+        let nameOfThisFunction = "draw";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         const width = 32;
         const height = 64;
         const startY = 3 * 32;
@@ -175,13 +241,49 @@ class Quarry {
             ctx.closePath();
             ctx.stroke();
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     drawMinimap(ctx, mmX, mmY) {
+        let nameOfThisFunction = "drawMinimap";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
           ctx.fillStyle = "Green";
           ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
           ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE + 1, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
+    }
+
+    printPerformanceReport() {
+        console.log(this.__proto__.constructor.name + ":");
+        for(const f of Object.keys(this.performanceMeasuresStruct)) {
+          let totalRuntime = this.performanceMeasuresStruct[f]["totalRuntime"];
+          let totalRuns = this.performanceMeasuresStruct[f]["totalRuns"];
+          let averageTimePerCall = totalRuntime / totalRuns;
+          console.log("     method name: " + f);
+          console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+          console.log("         total # of runs: " + totalRuns);
+          console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
         }
     }
 };

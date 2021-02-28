@@ -14,16 +14,52 @@ class CommandCenter {
       }*/
       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
       this.priority = BUILDINGPRIORITY;
+
+      //Performance Measuring Variables
+      //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          this.performanceMeasuresStruct = {};
+          this.totalLoadAnimationsRuntime = 0;
+          this.totalLoadAnimationsRuns = 0;
+      }
    };
 
    update() {
+      let nameOfThisFunction = "update";
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+              //initialize
+              this.performanceMeasuresStruct[nameOfThisFunction] = {};
+              this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+              this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+          }
+          this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+      }
+
       if (this.hitpoints <= 0) {
          this.removeFromWorld = true;
          this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH].collisions = false;
       }
+
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+            new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+          this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+      }
    };
 
    draw(ctx) {
+      let nameOfThisFunction = "draw";
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+              //initialize
+              this.performanceMeasuresStruct[nameOfThisFunction] = {};
+              this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+              this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+          }
+          this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+      }
+
       const width = 64;
       const height = 64;
       const startY = 161;
@@ -44,9 +80,26 @@ class CommandCenter {
          ctx.stroke();
       }
 
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+            new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+          this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+      }
+
    };
 
    drawMinimap(ctx, mmX, mmY) {
+      let nameOfThisFunction = "drawMinimap";
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+              //initialize
+              this.performanceMeasuresStruct[nameOfThisFunction] = {};
+              this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+              this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+          }
+          this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+      }
+
       if ((this.x - PARAMS.BLOCKWIDTH / 2) >= 0 && (this.x - PARAMS.BLOCKWIDTH / 2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH / 2) >= 0 && (this.y - PARAMS.BLOCKWIDTH / 2) <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
          ctx.fillStyle = "Green";
          for (var i = 0; i < 3; i++) {
@@ -55,5 +108,24 @@ class CommandCenter {
             }
         }
       }
+
+      if(PARAMS.PERFORMANCE_MEASURE) {
+          this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+            new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+          this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+      }
+   }
+
+   printPerformanceReport() {
+       console.log(this.__proto__.constructor.name + ":");
+       for(const f of Object.keys(this.performanceMeasuresStruct)) {
+         let totalRuntime = this.performanceMeasuresStruct[f]["totalRuntime"];
+         let totalRuns = this.performanceMeasuresStruct[f]["totalRuns"];
+         let averageTimePerCall = totalRuntime / totalRuns;
+         console.log("     method name: " + f);
+         console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+         console.log("         total # of runs: " + totalRuns);
+         console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
+       }
    }
 };

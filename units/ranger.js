@@ -26,11 +26,30 @@ class Ranger {
 
     this.hitpoints = 80;
 
+    //Performance Measuring Variables
+    //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      this.performanceMeasuresStruct = {};
+      this.totalLoadAnimationsRuntime = 0;
+      this.totalLoadAnimationsRuns = 0;
+    }
+
     this.animations = [];
     this.loadAnimations();
   }
 
   loadAnimations() {
+    let nameOfThisFunction = "loadAnimations";
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+        //initialize
+        this.performanceMeasuresStruct[nameOfThisFunction] = {};
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+      }
+      this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+    }
+
     var spriteInfo = {};
 
     //-----------------------------
@@ -145,16 +164,35 @@ class Ranger {
     this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2364, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
     //7 = SE
     this.animations[spriteInfo['state']].push(new Animator(this.spritesheet, spriteInfo['xStart'], 2294, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+        new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+    }
   }
 
   update() {
+    let nameOfThisFunction = "update";
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+        //initialize
+        this.performanceMeasuresStruct[nameOfThisFunction] = {};
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+      }
+      this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+    }
+
     if (this.target != null) {
       this.elapsedTime += this.game.clockTick;
       var dist = distance(this, this.target);
       this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
-      if (this.hitpoints <= 0) this.removeFromWorld = true;
-
+      if (this.hitpoints <= 0) { 
+        this.removeFromWorld = true;
+        this.game.workers += this.game.requiredResources["Ranger"].workers;
+    }
       if (this.target.removeFromWorld) {
         this.state = 0;
       };
@@ -197,9 +235,26 @@ class Ranger {
         this.facing = getFacing(this.velocity);
       }
     }
+
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+        new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+    }
   }
 
   draw(ctx) {
+    let nameOfThisFunction = "draw";
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+        //initialize
+        this.performanceMeasuresStruct[nameOfThisFunction] = {};
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+      }
+      this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+    }
+
     var xOffset = 0;
     var yOffset = 0;
 
@@ -265,12 +320,48 @@ class Ranger {
       ctx.stroke();
       ctx.setLineDash([]);
     }
+
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      this.performanceMeasuresStruct[nameOfThisFunction]["draw"] += 
+        new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+    }
   }
 
   drawMinimap(ctx, mmX, mmY) {
+    let nameOfThisFunction = "drawMinimap";
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+        //initialize
+        this.performanceMeasuresStruct[nameOfThisFunction] = {};
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+      }
+      this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+    }
+
     if (this.x >= 0 && this.x <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && this.y >= 0 && this.y <= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
       ctx.fillStyle = "Green";
       ctx.fillRect(mmX + this.x * PARAMS.MINIMAPSCALE, mmY + this.y * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+    }
+
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      this.performanceMeasuresStruct[nameOfThisFunction]["draw"] += 
+        new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+    }
+  }
+
+  printPerformanceReport() {
+    console.log(this.__proto__.constructor.name + ":");
+    for(const f of Object.keys(this.performanceMeasuresStruct)) {
+      let totalRuntime = this.performanceMeasuresStruct[f]["totalRuntime"];
+      let totalRuns = this.performanceMeasuresStruct[f]["totalRuns"];
+      let averageTimePerCall = totalRuntime / totalRuns;
+      console.log("     method name: " + f);
+      console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+      console.log("         total # of runs: " + totalRuns);
+      console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
     }
   }
 }

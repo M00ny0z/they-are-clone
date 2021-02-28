@@ -21,6 +21,14 @@ class MachineGunTurret {
         this.followMouse = true;
         this.placeable = false;
 
+        //Performance Measuring Variables
+        //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct = {};
+            this.totalLoadAnimationsRuntime = 0;
+            this.totalLoadAnimationsRuns = 0;
+        }
+
         this.animations = [];
         this.loadAnimations();
     };
@@ -30,6 +38,17 @@ class MachineGunTurret {
     };
 
     loadAnimations() {
+        let nameOfThisFunction = "loadAnimations";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+        
         var spriteInfo = {};
         spriteInfo = {
             'xStart': -8,
@@ -55,13 +74,31 @@ class MachineGunTurret {
         this.animations.push(new Animator(this.spritesheet, spriteInfo['xStart'], 512, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
         //7 = SE
         this.animations.push(new Animator(this.spritesheet, spriteInfo['xStart'], 384, spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     }
 
     update() {
+        let nameOfThisFunction = "update";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+        
         this.elapsedTime += this.game.clockTick;
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
 
@@ -103,7 +140,6 @@ class MachineGunTurret {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
-                this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.food -= this.game.requiredResources["MachineGunTurret"].food;
                 this.game.wood -= this.game.requiredResources["MachineGunTurret"].wood;
                 this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
@@ -121,15 +157,38 @@ class MachineGunTurret {
 
                 this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
+<<<<<<< HEAD
                 this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.workerRate += this.game.requiredResources["MachineGunTurret"].workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
+=======
+            this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
+>>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
         }
     };
 
     draw(ctx) {
+        let nameOfThisFunction = "draw";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+        
         if (this.game.mouse && this.followMouse) {
             var mouse = this.game.mouse;
             if (this.placeable) {
@@ -164,12 +223,48 @@ class MachineGunTurret {
             ctx.stroke();
             ctx.setLineDash([]);
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     drawMinimap(ctx, mmX, mmY) {
+        let nameOfThisFunction = "drawMinimap";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+        
         if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2)<= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
           ctx.fillStyle = "Green";
           ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     }
+
+    printPerformanceReport() {
+        console.log(this.__proto__.constructor.name + ":");
+        for(const f of Object.keys(this.performanceMeasuresStruct)) {
+          let totalRuntime = this.performanceMeasuresStruct[f]["totalRuntime"];
+          let totalRuns = this.performanceMeasuresStruct[f]["totalRuns"];
+          let averageTimePerCall = totalRuntime / totalRuns;
+          console.log("     method name: " + f);
+          console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+          console.log("         total # of runs: " + totalRuns);
+          console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
+        }
+    }    
 };

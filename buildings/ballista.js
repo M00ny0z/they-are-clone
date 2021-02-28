@@ -21,11 +21,30 @@ class Ballista {
         this.followMouse = true;
         this.placeable = false;
 
+        //Performance Measuring Variables
+        //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct = {};
+            this.totalLoadAnimationsRuntime = 0;
+            this.totalLoadAnimationsRuns = 0;
+        }
+
         this.animations = [];
         this.loadAnimations();
     };
 
     loadAnimations() {
+        let nameOfThisFunction = "loadAnimations";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         var spriteInfo = {
             'yStart': 0,
             'width': 64,
@@ -44,9 +63,26 @@ class Ballista {
         this.animations.push(new Animator(this.spritesheet, 198, spriteInfo['yStart'], spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
         //4 = S
         this.animations.push(new Animator(this.spritesheet, 265, spriteInfo['yStart'], spriteInfo['width'], spriteInfo['height'], spriteInfo['frames'], spriteInfo['speed'], spriteInfo['padding'], false, true));
+    
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     }
 
     drawHealthbar(ctx) {
+        let nameOfThisFunction = "drawHealthbar";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+        
         const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
         const posY = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
 
@@ -62,15 +98,33 @@ class Ballista {
         ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
         
         ctx.restore();
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     update() {
+        let nameOfThisFunction = "update";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+        
         this.elapsedTime += this.game.clockTick;
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["Ballista"].workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
-
+            
         }
 
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
@@ -111,7 +165,6 @@ class Ballista {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["Ballista"].workers;
-                this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
                 this.game.food -= this.game.requiredResources["Ballista"].food;
                 this.game.wood -= this.game.requiredResources["Ballista"].wood;
                 this.game.stone -= this.game.requiredResources["Ballista"].stone;
@@ -124,6 +177,7 @@ class Ballista {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
+<<<<<<< HEAD
             if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
                 this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
             {
@@ -134,10 +188,34 @@ class Ballista {
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
+=======
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+
+            this.game.workers += this.game.requiredResources["Ballista"].workers;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
+>>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
         }
     };
 
     draw(ctx) {
+        let nameOfThisFunction = "draw";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if (this.target != null) {
             switch (this.facing) {
                 case 0:
@@ -210,12 +288,47 @@ class Ballista {
             ctx.setLineDash([]);
         }
 
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     drawMinimap(ctx, mmX, mmY) {
+        let nameOfThisFunction = "drawMinimap";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if((this.x - PARAMS.BLOCKWIDTH/2) >= 0 && (this.x - PARAMS.BLOCKWIDTH/2) <= PARAMS.MAPWIDTH * PARAMS.BLOCKWIDTH && (this.y - PARAMS.BLOCKWIDTH/2) >= 0 && (this.y - PARAMS.BLOCKWIDTH/2)<= PARAMS.MAPHEIGHT * PARAMS.BLOCKWIDTH) {
           ctx.fillStyle = "Green";
           ctx.fillRect(mmX + (this.x - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, mmY + (this.y - PARAMS.BLOCKWIDTH/2) * PARAMS.MINIMAPSCALE, PARAMS.MINIMAPUNITSIZE, PARAMS.MINIMAPUNITSIZE);
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
+    }
+
+    printPerformanceReport() {
+        console.log(this.__proto__.constructor.name + ":");
+        for(const f of Object.keys(this.performanceMeasuresStruct)) {
+          let totalRuntime = this.performanceMeasuresStruct[f]["totalRuntime"];
+          let totalRuns = this.performanceMeasuresStruct[f]["totalRuns"];
+          let averageTimePerCall = totalRuntime / totalRuns;
+          console.log("     method name: " + f);
+          console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+          console.log("         total # of runs: " + totalRuns);
+          console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
         }
     }
 };
