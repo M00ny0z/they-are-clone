@@ -13,15 +13,31 @@ class Farm {
         this.foodRate = 0;
         this.radius = 30;
 
-        this.cropLocationsSpriteSheet = [];
-        //Crop locations on spritesheet are randomly determined at initialization
+        this.initializeCropSprites();
+    };
+
+    initializeCropSprites() {
+        let rowsOfCrops = 2;
+        let numOfCropsInEachRow = 32;
+        let numOfGrowthStages = 5;
+        this.cropLocationsOnSpriteSheet = [];
+        //Add a random crop (crops start at stage 0) to a 2d array that represents all the crops for this farm
         for (let i = 0; i < 5; i++) {
-            this.cropLocationsSpriteSheet.push([]);
+            this.cropLocationsOnSpriteSheet.push([]);
             for (let j = 0; j < 5; j++) {
-                this.cropLocationsSpriteSheet[i][j] = { x: this.getRandomInt(0, 31) * 32, y: (this.getRandomInt(2, 8) * 64 + 16) };
+                let r = this.getRandomInt(0, rowsOfCrops - 1);
+                //Randomly select a crop
+                //rows are 1-based
+                this.cropLocationsOnSpriteSheet[i][j] = { 
+                    row: r,
+                    x: this.getRandomInt(0, 31) * 32, 
+                    y: (r * 320 + 16),
+                    growthRate: this.getRandomInt(8, 24),
+                    gameHourMade: (this.game.elapsedDay * 24) + this.game.elapsedHour
+                };
             }
         }
-    };
+    }
 
     drawHealthbar(ctx) {
         const posX = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
@@ -41,6 +57,11 @@ class Farm {
         ctx.restore();
     };
 
+    /**
+     * 
+     * @param {int} min Lower bound inclusive
+     * @param {int} max Upper bound inclusive
+     */
     getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -67,6 +88,21 @@ class Farm {
     }
 
     update() {
+        let currentGameHour = (this.game.elapsedDay * 24) + this.game.elapsedHour;
+
+        //update crop growth stages
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                let currentCrop = this.cropLocationsOnSpriteSheet[i][j];
+                let hoursPerGrowthStage = currentCrop.growthRate;
+                //Current growth stage = hours passed % (# of stages * # of hours per stage) / hours per stage
+                let currentGrowthStage = 
+                    Math.floor((currentGameHour - currentCrop.gameHourMade) % (5 * hoursPerGrowthStage) / hoursPerGrowthStage);
+                //320 is the y value that would be after the last growth stage, so cycle to the earliest growth stage
+                currentCrop.y = (currentGrowthStage * 64) + (currentCrop.row * 320) + 16;
+            }
+        }
+
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.foodRate -= this.foodRate;
@@ -181,8 +217,8 @@ class Farm {
                 for (let j = 0; j < 5; j++) {
                     if (!(i == 2 && j == 2)) {
                         ctx.drawImage(this.spritesheetCrops,
-                            this.cropLocationsSpriteSheet[i][j].x,
-                            this.cropLocationsSpriteSheet[i][j].y,
+                            this.cropLocationsOnSpriteSheet[i][j].x,
+                            this.cropLocationsOnSpriteSheet[i][j].y,
                             cropsWidth,
                             cropsHeight,
                             (this.x - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH) - (j - 2) * PARAMS.BLOCKWIDTH,

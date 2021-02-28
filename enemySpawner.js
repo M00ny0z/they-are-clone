@@ -7,6 +7,7 @@ class EnemySpawner {
         Object.assign(this, { game });
         this.priority = MISCELLANEOUSPRIORITY;
 
+        this.spawnedWanderingZombies = false;
         this.spawnFirstWave = false;
         this.spawnSecondtWave = false;
         this.spawnThirdWave = false;
@@ -33,6 +34,37 @@ class EnemySpawner {
             { x: 28, y: 42 },
             { x: 28, y: 35 }
             ]};
+    }
+
+    spawnWanderingZombies() {
+        //Open space upper left corner
+        this.spawnEnemy(INFECTEDUNIT, 12, 5, [{ x: 12, y: 6 }])
+        this.spawnEnemy(INFECTEDUNIT, 15, 4, [{ x: 16, y: 4 }])
+
+        //Spawn zombies near upper left mine
+        this.spawnEnemy(INFECTEDUNIT, 10, 16, [{ x: 10, y: 17 }])
+        this.spawnEnemy(INFECTEDUNIT, 9, 14, [{ x: 9, y: 15 }])
+        this.spawnEnemy(INFECTEDUNIT, 6, 16, [{ x: 6, y: 17 }])
+
+        //Spawn zombies near upper middle part of map
+        this.spawnEnemy(INFECTEDUNIT, 25, 14, [{ x: 25, y: 15 }])
+
+        //Spawn zombies near upper right part of map
+        this.spawnEnemy(INFECTEDUNIT, 42, 11, [{ x: 43, y: 11 }])
+
+        //Spawn zombies near middle right mine
+        this.spawnEnemy(INFECTEDUNIT, 40, 19, [{ x: 40, y: 20 }])
+        this.spawnEnemy(INFECTEDUNIT, 43, 21, [{ x: 43, y: 22 }])
+        this.spawnEnemy(INFECTEDUNIT, 43, 21, [{ x: 43, y: 22 }])
+
+        //Spawn zombies near bottom left mine
+        this.spawnEnemy(INFECTEDUNIT, 10, 40, [{ x: 10, y: 41 }])
+        this.spawnEnemy(INFECTEDUNIT, 9, 39, [{ x: 8, y: 38 }])
+        this.spawnEnemy(INFECTEDHARPY, 4, 44, [{ x: 5, y: 44 }])
+        this.spawnEnemy(INFECTEDHARPY, 4, 42, [{ x: 5, y: 42 }])
+        this.spawnEnemy(INFECTEDVENOM, 4, 43, [{ x: 5, y: 43 }])
+        this.spawnEnemy(INFECTEDUNIT, 10, 32, [{ x: 11, y: 32 }])
+        this.spawnEnemy(INFECTEDUNIT, 12, 29, [{ x: 12, y: 28 }])
     }
 
     /**
@@ -102,6 +134,11 @@ class EnemySpawner {
 
     update() {
         switch(true) {
+            //Initial zombies wandering the map
+            case this.game.elapsedHour >= 0 && !this.spawnedWanderingZombies:
+                this.spawnWanderingZombies();
+                this.spawnedWanderingZombies = true;
+                break;
             //Wave 1
             case this.game.elapsedHour >= 12 && !this.spawnFirstWave:
                 //Path 1
