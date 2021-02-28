@@ -75,6 +75,7 @@ class FishermansCottage {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
             this.game.foodRate -= this.foodRate;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].FishermansCottage = false;
@@ -139,7 +140,6 @@ class FishermansCottage {
             this.game.mainMap.map[doubleY][doubleX]["FishermansCottage"] = false;
 
             this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
-            this.game.workerRate += this.game.requiredResources["FishermansCottage"].workers;
             this.game.foodRate -= this.foodRate;
             this.removeFromWorld = true;
             this.game.doubleClick = null;

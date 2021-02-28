@@ -119,20 +119,30 @@ const nullCheck = (todo) => {
     return ((todo == undefined || todo == null) ? false : todo);
 };
 
- function calculatePath(startY, startX, endY, endX) {
+function calculatePath(startY, startX, endY, endX) {
     var easystar = new EasyStar.js();
     easystar.setGrid(this.gameEngine.collisionMap);
-    easystar.setAcceptableTiles([0]);
-    easystar.findPath(startX, startY, endX, endY, function( path ) {
+    easystar.setAcceptableTiles([1]);
+    let calcPath = null;
+    this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function( path ) {
+        this.gameEngine.path = path;
+        calcPath = path;
+        console.log("calcPath is: ")
+        console.log(calcPath);
+        
         if (path === null) {
             console.log("A* Path was not found.");
         } else {
             console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
             console.log(path);
+            
         }
-    });
+    });    
     easystar.setIterationsPerCalculation(1000);
     easystar.calculate();
+    console.log("calcPath after calculate: ")
+    console.log(calcPath);
+    //return calcPath;
 } 
 
 // returns a string that can be used as a hsl web color

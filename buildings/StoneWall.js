@@ -35,6 +35,7 @@ class StoneWall {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["StoneWall"].workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
 
         }

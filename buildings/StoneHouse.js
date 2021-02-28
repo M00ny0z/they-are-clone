@@ -10,7 +10,7 @@ class StoneHouse {
         this.placeable = false;
         this.hitpoints = 125;
         this.radius = 30;
-        this.workerRate = 2;
+        this.workers = 2;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -35,7 +35,8 @@ class StoneHouse {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workerRate -= this.workerRate;
+            this.game.workers -= this.workers;
+            this.game.maxWorkers -= this.workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
         
@@ -59,13 +60,14 @@ class StoneHouse {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers -= this.game.requiredResources["StoneHouse"].workers;
+                //this.game.workers -= this.game.requiredResources["StoneHouse"].workers;
+                this.game.workers += this.workers;
+                this.game.maxWorkers += this.workers;
                 this.game.food -= this.game.requiredResources["StoneHouse"].food;
                 this.game.wood -= this.game.requiredResources["StoneHouse"].wood;
                 this.game.stone -= this.game.requiredResources["StoneHouse"].stone;
                 this.game.iron -= this.game.requiredResources["StoneHouse"].iron;
                 
-                this.game.workerRate += this.workerRate;
                 this.game.click = null;
             }
         }
@@ -76,8 +78,9 @@ class StoneHouse {
 
             this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
-            this.game.workers += this.game.requiredResources["StoneHouse"].workers;
-            this.game.workerRate -= this.workerRate;
+            //this.game.workers += this.game.requiredResources["StoneHouse"].workers;
+            this.game.workers -= this.workers;
+            this.game.maxWorkers -= this.workers;
 
             this.removeFromWorld = true;
             this.game.doubleClick = null;
@@ -123,7 +126,7 @@ class StoneHouse {
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Place to recruit workers.", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
-            ctx.fillText(this.workerRate + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.workers + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
 
         }
 

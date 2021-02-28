@@ -188,8 +188,10 @@ class Soldier {
             var dist = distance(this, this.target);
             this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
-            if (this.hitpoints <= 0) this.removeFromWorld = true;
-
+            if (this.hitpoints <= 0) { 
+                this.removeFromWorld = true;
+                this.game.workers += this.game.requiredResources["Soldier"].workers;
+            }
             if (this.target.removeFromWorld) {
                 this.state = 0;
             }

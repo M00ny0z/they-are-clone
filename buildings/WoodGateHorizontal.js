@@ -42,6 +42,7 @@ class WoodGateHorizontal {
 
       if (this.hitpoints <= 0) {
          this.removeFromWorld = true;
+         this.game.workers += this.game.requiredResources["WoodGate"].workers;
          this.game.mainMap.map[(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
       }
 

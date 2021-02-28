@@ -421,7 +421,6 @@ class SceneManager {
                     }
                     this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
                     this.game.workers -= this.game.requiredResources["Soldier"].workers;
-                    this.game.workerRate -= this.game.requiredResources["Soldier"].workers;
                     this.game.food -= this.game.requiredResources["Soldier"].food;
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
                     if (this.selectedBuilding) {
@@ -429,7 +428,6 @@ class SceneManager {
                     }
                     this.game.allyspawner.spawnAllyRandomPath(RANGER);
                     this.game.workers -= this.game.requiredResources["Ranger"].workers;
-                    this.game.workerRate -= this.game.requiredResources["Ranger"].workers;
                     this.game.food -= this.game.requiredResources["Ranger"].food;
                     this.game.wood -= this.game.requiredResources["Ranger"].wood;
                     this.game.iron -= this.game.requiredResources["Ranger"].iron;
@@ -439,7 +437,6 @@ class SceneManager {
                     }
                     this.game.allyspawner.spawnAllyRandomPath(SNIPER);
                     this.game.workers -= this.game.requiredResources["Sniper"].workers;
-                    this.game.workerRate -= this.game.requiredResources["Sniper"].workers;
                     this.game.food -= this.game.requiredResources["Sniper"].food;
                     this.game.iron -= this.game.requiredResources["Sniper"].iron;
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
@@ -448,7 +445,6 @@ class SceneManager {
                     }
                     this.game.allyspawner.spawnAllyRandomPath(TITAN);
                     this.game.workers -= this.game.requiredResources["Titan"].workers;
-                    this.game.workerRate -= this.game.requiredResources["Titan"].workers;
                     this.game.food -= this.game.requiredResources["Titan"].food;
                     this.game.iron -= this.game.requiredResources["Titan"].iron;
                 } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
@@ -458,7 +454,6 @@ class SceneManager {
                     this.selectedBuilding = new Ballista(this.game);
                     this.game.addEntity(this.selectedBuilding);
                     this.game.workers -= this.game.requiredResources["Ballista"].workers;
-                    this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
                     this.game.iron -= this.game.requiredResources["Ballista"].iron;
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
                     if (this.selectedBuilding) {
@@ -467,7 +462,6 @@ class SceneManager {
                     this.selectedBuilding = new MachineGunTurret(this.game);
                     this.game.addEntity(this.selectedBuilding);
                     this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
-                    this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
                     this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
                     this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;
                 }
@@ -767,8 +761,7 @@ class SceneManager {
                     ["Snipers walk very slowly", "However, Snipers have a very high attack range."]);
             } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
                 this.addDescription(ctx, "Titan", "TITAN", ["workers", "food", "iron"],
-                    ["Titans has an ultra fast burst shot and a wide"]);
-                ctx.fillText("area of effect.", 500, 862);
+                    ["Titans has an ultra fast burst shot and a wide", "area of effect."]);
             } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
                 this.addDescription(ctx, "Ballista", "BALLISTA", ["workers", "wood", "iron"],
                     ["Attacks nearby enemies by shooting large arrows."]);
@@ -886,13 +879,13 @@ class SceneManager {
         ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
         this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
         //console.log("workerRate is ")
-        var workerRate = "";
+        //var workerRate = "";
         /*if (workerRate >= 0) {
             ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
         } else {
             ctx.fillText(this.game.workerRate.toString(), 1510, 796);
         }*/
-        ctx.fillText(this.game.workerRate.toString(), 1510, 796);
+        //ctx.fillText(this.game.workerRate.toString(), 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
@@ -938,7 +931,10 @@ class SceneManager {
         ctx.font = "15px SpaceMono-Regular";
 
         // traverse each resource
+        ctx.fillStyle = "orange";
         let resourceStringX = 500;
+        ctx.fillText("Requires: ", resourceStringX, 812);
+        resourceStringX += 100;
         //console.log(unitType);
         //console.log(this.game.requiredResources);
         let requiredResources = this.game.requiredResources[unitType];
@@ -958,7 +954,36 @@ class SceneManager {
             resourceStringX += 100;
 
         });
-        let descriptionTextY = 842;
+        ctx.fillStyle = "orange";
+        resourceStringX = 500;
+        ctx.fillText("Provides: ", resourceStringX, 832);
+        ctx.fillStyle = "lightgreen";
+        resourceStringX += 100;
+        //if (unitType === "WoodHouse" || unitType === "StoneHouse || unitType === "ApartmentComplex") {
+        switch(unitType) {
+            case "WoodHouse":
+                ctx.fillText("Workers: 1", resourceStringX, 832);
+                break;
+            case "StoneHouse":
+                ctx.fillText("Workers: 2", resourceStringX, 832);
+                break;
+            case "ApartmentComplex":
+                ctx.fillText("Workers: 5", resourceStringX, 832);
+                break;
+            default:
+                break;
+                // code block
+        } 
+        /*if (unitType === "WoodHouse") {
+            ctx.fillText("Workers: 1", resourceStringX, 832);
+        }
+        if (unitType === "StoneHouse") {
+            ctx.fillText("Workers: 2", resourceStringX, 832);
+        }
+        if (unitType === "ApartmentComplex") {
+            ctx.fillText("Workers: 5", resourceStringX, 832);
+        }*/
+        let descriptionTextY = 852;
         ctx.font = "15px SpaceMono-Regular";
         ctx.fillStyle = "white";
 
@@ -982,8 +1007,11 @@ class SceneManager {
 
         //ctx.fillStyle = val >= (maxVal / 2) ? 'green' : 'red';
         ctx.fillStyle = 'green';
-        ctx.fillRect(posX + 2, posY + 2, (width - 4) * (val / maxVal), (height - 5));
-
+        if(val < 0) { // fills in green bar zero amount if less than 0 (can't do a negative fill).
+            ctx.fillRect(posX + 2, posY + 2, (width - 4) * (0 / maxVal), (height - 5));
+        } else {
+            ctx.fillRect(posX + 2, posY + 2, (width - 4) * (val / maxVal), (height - 5));
+        }
         ctx.font = "10px SpaceMono-Regular";
         ctx.fillStyle = "white";
         ctx.fillText(val + "/" + maxVal, x + 30, y + 12);
