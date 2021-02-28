@@ -46,8 +46,21 @@ class Tent {
                 this.game.iron -= this.game.requiredResources["Tent"].iron;
                 
                 this.game.workerRate += this.workerRate;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+
+            this.game.workers += this.game.requiredResources["StoneHouse"].workers;
+            this.game.workerRate -= this.workerRate;
+
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 

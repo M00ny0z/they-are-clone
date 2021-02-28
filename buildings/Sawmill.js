@@ -79,8 +79,24 @@ class Sawmill {
                 this.game.iron -= this.game.requiredResources["Sawmill"].iron;
 
                 this.game.woodRate += this.woodRate;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY][doubleX].Sawmill = false;
+            this.game.mainMap.map[doubleY + 1][doubleX].Sawmill = false;
+
+            this.game.woodRate -= this.woodRate;
+            this.game.workers += this.game.requiredResources["Sawmill"].workers;
+            this.game.workerRate += this.game.requiredResources["Sawmill"].workers;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 

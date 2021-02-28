@@ -119,8 +119,26 @@ class Farm {
                 this.game.iron -= this.game.requiredResources["Farm"].iron;
 
                 this.game.foodRate += this.foodRate;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    this.game.mainMap.map[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)].collisions = false;
+                }
+            }
+
+            this.game.foodRate -= this.foodRate;
+            this.game.workers += this.game.requiredResources["Farm"].workers;
+            this.game.workerRate += this.game.requiredResources["Farm"].workers;
+            this.removeFromWorld = true;
+
+            this.game.doubleClick = null;
         }
     };
 

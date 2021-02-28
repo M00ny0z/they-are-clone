@@ -102,8 +102,25 @@ class Quarry {
 
                 this.game.stoneRate += this.stoneRate;
                 this.game.ironRate += this.ironRate;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY][doubleX].Quarry = false;
+            this.game.mainMap.map[doubleY + 1][doubleX].Quarry = false;
+
+            this.game.stoneRate -= this.stoneRate;
+            this.game.ironRate -= this.ironRate;
+            this.game.workers += this.game.requiredResources["Quarry"].workers;
+            this.game.workerRate += this.game.requiredResources["Quarry"].workers;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 

@@ -44,8 +44,20 @@ class WoodWall {
                 this.game.wood -= this.game.requiredResources["WoodWall"].wood;
                 this.game.stone -= this.game.requiredResources["WoodWall"].stone;
                 this.game.iron -= this.game.requiredResources["WoodWall"].iron;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+
+            this.game.workers += this.game.requiredResources["WoodWall"].workers;
+
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 

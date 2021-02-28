@@ -65,8 +65,20 @@ class StoneGateVertical {
                 this.game.wood -= this.game.requiredResources["StoneGate"].wood;
                 this.game.stone -= this.game.requiredResources["StoneGate"].stone;
                 this.game.iron -= this.game.requiredResources["StoneGate"].iron;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+
+            this.game.workers += this.game.requiredResources["StoneGate"].workers;
+
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 

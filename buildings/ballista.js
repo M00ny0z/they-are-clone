@@ -116,8 +116,20 @@ class Ballista {
                 this.game.wood -= this.game.requiredResources["Ballista"].wood;
                 this.game.stone -= this.game.requiredResources["Ballista"].stone;
                 this.game.iron -= this.game.requiredResources["Ballista"].iron;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+
+            this.game.workers += this.game.requiredResources["Ballista"].workers;
+            this.game.workerRate += this.game.requiredResources["Ballista"].workers;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 

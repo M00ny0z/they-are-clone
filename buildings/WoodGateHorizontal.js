@@ -64,8 +64,20 @@ class WoodGateHorizontal {
             this.game.wood -= this.game.requiredResources["WoodGate"].wood;
             this.game.stone -= this.game.requiredResources["WoodGate"].stone;
             this.game.iron -= this.game.requiredResources["WoodGate"].iron;
+            this.game.click = null;
          }
-         this.game.click = null;
+      }
+
+      if (this.game.doubleClick) {
+         const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+         const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+         this.game.mainMap.map[doubleY][doubleX].collisions = false;
+
+         this.game.workers += this.game.requiredResources["WoodGate"].workers;
+
+         this.removeFromWorld = true;
+         this.game.doubleClick = null;
       }
    };
 

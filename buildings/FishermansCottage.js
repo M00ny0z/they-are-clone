@@ -91,8 +91,22 @@ class FishermansCottage {
                 this.game.iron -= this.game.requiredResources["FishermansCottage"].iron;
                 
                 this.game.foodRate += this.foodRate;
+                this.game.click = null;
             }
-            this.game.click = null;
+        }
+
+        if (this.game.doubleClick) {
+            const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+
+            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+            this.game.mainMap.map[doubleY][doubleX]["FishermansCottage"] = false;
+
+            this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
+            this.game.workerRate += this.game.requiredResources["FishermansCottage"].workers;
+            this.game.foodRate -= this.foodRate;
+            this.removeFromWorld = true;
+            this.game.doubleClick = null;
         }
     };
 
