@@ -157,17 +157,11 @@ class MachineGunTurret {
 
                 this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
-<<<<<<< HEAD
                 this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.workerRate += this.game.requiredResources["MachineGunTurret"].workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
-=======
-            this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
->>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {

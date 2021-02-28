@@ -242,18 +242,12 @@ class Farm {
                     }
                 }
 
-<<<<<<< HEAD
                 this.game.foodRate -= this.foodRate;
                 this.game.workers += this.game.requiredResources["Farm"].workers;
                 this.game.workerRate += this.game.requiredResources["Farm"].workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
-=======
-            this.game.foodRate -= this.foodRate;
-            this.game.workers += this.game.requiredResources["Farm"].workers;
-            this.removeFromWorld = true;
->>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
 
         }
 

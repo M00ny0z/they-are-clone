@@ -75,7 +75,6 @@ class StoneHouse {
         if (this.game.doubleClick) {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-<<<<<<< HEAD
             
             console.log("tracking double click");
             if ((doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) === this.x &&
@@ -87,17 +86,6 @@ class StoneHouse {
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
-=======
-
-            this.game.mainMap.map[doubleY][doubleX].collisions = false;
-
-            //this.game.workers += this.game.requiredResources["StoneHouse"].workers;
-            this.game.workers -= this.workers;
-            this.game.maxWorkers -= this.workers;
-
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
->>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {

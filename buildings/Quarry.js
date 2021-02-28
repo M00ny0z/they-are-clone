@@ -146,7 +146,6 @@ class Quarry {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
-<<<<<<< HEAD
             if ((doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) === this.x &&
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
@@ -163,18 +162,6 @@ class Quarry {
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
-=======
-            this.game.mainMap.map[doubleY][doubleX].collisions = false;
-            this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
-            this.game.mainMap.map[doubleY][doubleX].Quarry = false;
-            this.game.mainMap.map[doubleY + 1][doubleX].Quarry = false;
-
-            this.game.stoneRate -= this.stoneRate;
-            this.game.ironRate -= this.ironRate;
-            this.game.workers += this.game.requiredResources["Quarry"].workers;
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
->>>>>>> 3384ef8933a50878a9cb1621b50dde48c55faf0b
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {
