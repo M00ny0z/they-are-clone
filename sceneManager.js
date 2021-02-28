@@ -169,8 +169,7 @@ class SceneManager {
         }
 
         if (this.game.click  && (this.game.click.offsetY <= 739)) {
-            console.log("hi");
-            console.log(this.game.click);
+            //console.log(this.game.click);
             var clickedPoint = { x: this.game.click.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.click.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
             for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
                 for (var j = 0; j < this.game.entities[i].length; j++) {
@@ -353,7 +352,7 @@ class SceneManager {
 
         // checking if UI is clicked
         if (this.game.click  && (this.game.click.offsetY >= 739)) {
-            console.log("hi");
+            console.log("clicked ui");
             var x = this.game.click.offsetX;
             var y = this.game.click.offsetY;
 
@@ -511,19 +510,38 @@ class SceneManager {
                     this.game.addEntity(this.selectedBuilding);
                 }
             }
+            // REMOVE LATER
+            if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
+                if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) { // cancel button
+                    if (this.selectedBuilding) {
+                        this.selectedBuilding.removeFromWorld = true;
+                        this.selectedBuilding = null;
+                    }
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
+                    this.display = 0;
+                    if (this.selectedBuilding) {
+                        this.selectedBuilding.removeFromWorld = true;
+                        this.selectedBuilding = null;
+                    }
+                }
+            }
             this.game.click = null;
         }
 
-        if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
-            if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) { // cancel button
-                if (this.selectedBuilding) {
-                    this.selectedBuilding.removeFromWorld = true;
-                    this.selectedBuilding = null;
-                }
-            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
-                this.display = 0;
-            }
-        }
+        // if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
+        //     //const newX = this.game.click.offsetX;
+        //     //const newY = this.game.click.offsetY;
+        //     //console.log(`display: ${this.display}, x: ${newX}, y: ${newY}, click: ${this.game.click}`)
+        //     if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) { // cancel button
+        //         //console.log("cancel button clickced");
+        //         if (this.selectedBuilding) {
+        //             this.selectedBuilding.removeFromWorld = true;
+        //             this.selectedBuilding = null;
+        //         }
+        //     } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
+        //         //this.display = 0;
+        //     }
+        // }
         if (this.selectedBuilding) {
             if (!this.selectedBuilding.followMouse) {
                 this.selectedBuilding = null;
