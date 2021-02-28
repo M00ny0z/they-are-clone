@@ -16,9 +16,28 @@ class TitanArrow {
         this.cache = [];
 
         this.elapsedTime = 0;
+
+        //Performance Measuring Variables
+        //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct = {};
+            this.totalLoadAnimationsRuntime = 0;
+            this.totalLoadAnimationsRuns = 0;
+        }
     };
 
     drawAngle(ctx, angle) {
+        let nameOfThisFunction = "drawAngle";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if (angle < 0 || angle > 359) return;
 
 
@@ -47,9 +66,26 @@ class TitanArrow {
             ctx.strokeStyle = 'Green';
             ctx.strokeRect(this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 32, 32);
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     update() {
+        let nameOfThisFunction = "update";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         this.elapsedTime += this.game.clockTick;
 
         if (this.heatSeeking) {
@@ -73,9 +109,26 @@ class TitanArrow {
         if(this.target.removeFromWorld == true){
             this.removeFromWorld = true;
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     draw(ctx) {
+        let nameOfThisFunction = "draw";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
 
         let angle = Math.atan2(this.velocity.y, this.velocity.x);
         if (angle < 0) angle += Math.PI * 2;
@@ -90,9 +143,28 @@ class TitanArrow {
             ctx.closePath();
             ctx.stroke();
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     drawMinimap(ctx, mmX, mmY) {
         
+    }
+
+    printPerformanceReport() {
+        console.log(this.__proto__.constructor.name + ":");
+        for(const f of Object.keys(this.performanceMeasuresStruct)) {
+          let totalRuntime = this.performanceMeasuresStruct[f]["totalRuntime"];
+          let totalRuns = this.performanceMeasuresStruct[f]["totalRuns"];
+          let averageTimePerCall = totalRuntime / totalRuns;
+          console.log("     method name: " + f);
+          console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
+          console.log("         total # of runs: " + totalRuns);
+          console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
+        }
     }
 };

@@ -1,0 +1,30 @@
+HOW TO USE:
+-simply go to util.js, and under PARAMS, set PERFORMANCE_MEASURE to boolean "true" and PERFORMANCE_TIME_WINDOW to number of seconds
+you would like the test to take (if set to 60, the game engine will print out the performance report to console after 60 seconds).
+
+
+SUMMARY
+-game engine has a start time
+-each class tracks number of times each operation is called and how long each operation took
+-after a certain amount of time passes, the game engine will traverse all the classes to determine performance time
+-this is a basic benchmarking implementation. i can add more sophisticated/detailed performance reports in the future
+
+LIMITATIONS
+-the game engine has possession of all "entities" and a few other objects. however, anything that isn't already accessible
+in the game engine won't be accessible in this iteration
+	-if you want to test other things in the future, make them accessible to the game engine and add them using the code from
+	other classes as a template. or bring it up to gary at a meeting.
+-javascript is known to have some interesting runtimes that simple benchmarking may be limited to measuring well. we may know
+how long an operation took, but the reason for that amount of time could be a hard to see reason.
+
+
+HOW TO IMPLEMENT INTO A FILE:
+find a file that has this performance measuring implemented and:
+
+if it's a new file:
+-Copy the declarations in the constructor
+-Copy the method (should be near bottom of a file) "printPerformanceReport" to your file
+
+do for each function:
+-Copy the beginning of a function (surrounded in if (PARAMS.PERFORMANCE_MEASURE)) to the beginning of your function
+-Copy the end of a function (surrounded in if (PARAMS.PERFORMANCE_MEASURE)) to the end of your function
