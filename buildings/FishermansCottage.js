@@ -99,14 +99,18 @@ class FishermansCottage {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
-            this.game.mainMap.map[doubleY][doubleX].collisions = false;
-            this.game.mainMap.map[doubleY][doubleX]["FishermansCottage"] = false;
+            if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
+                this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
+            {
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
+                this.game.mainMap.map[doubleY][doubleX]["FishermansCottage"] = false;
 
-            this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
-            this.game.workerRate += this.game.requiredResources["FishermansCottage"].workers;
-            this.game.foodRate -= this.foodRate;
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
+                this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
+                this.game.workerRate += this.game.requiredResources["FishermansCottage"].workers;
+                this.game.foodRate -= this.foodRate;
+                this.removeFromWorld = true;
+                this.game.doubleClick = null;
+            }
         }
     };
 

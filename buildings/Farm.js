@@ -163,18 +163,22 @@ class Farm {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
-            for (let i = 0; i < 5; i++) {
-                for (let j = 0; j < 5; j++) {
-                    this.game.mainMap.map[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)].collisions = false;
+            if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
+                this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
+            {
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 5; j++) {
+                        this.game.mainMap.map[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)].collisions = false;
+                    }
                 }
+
+                this.game.foodRate -= this.foodRate;
+                this.game.workers += this.game.requiredResources["Farm"].workers;
+                this.game.workerRate += this.game.requiredResources["Farm"].workers;
+                this.removeFromWorld = true;
+                this.game.doubleClick = null;
             }
 
-            this.game.foodRate -= this.foodRate;
-            this.game.workers += this.game.requiredResources["Farm"].workers;
-            this.game.workerRate += this.game.requiredResources["Farm"].workers;
-            this.removeFromWorld = true;
-
-            this.game.doubleClick = null;
         }
     };
 
