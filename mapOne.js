@@ -68,7 +68,7 @@ class MapOne {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
         ];
-       // this.calculatePath(15, 0, 42, 0)
+        // this.calculatePath(15, 0, 42, 0)
 
 
         //this.collisionMap[0][1] = 1; 
@@ -104,14 +104,16 @@ class MapOne {
         for (var x = 0; x < 50; x++) {
             this.map.push([]);
             for (var y = 0; y < 50; y++) {
-                this.map[x].push({ "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "railroad": false,
-                "FishermansCottage": false, "Farm": false, "Quarry": false, "Sawmill": false});
+                this.map[x].push({
+                    "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "railroad": false,
+                    "FishermansCottage": false, "Farm": false, "Quarry": false, "Sawmill": false
+                });
             }
         }
         for (var i = 0; i < 2500; i++) {
             let x = i % 50; // column
-            let y =  Math.floor(i / 50); // row
-            
+            let y = Math.floor(i / 50); // row
+
             //console.log(TileMaps.map.layers[0].data[i]);
             if (TileMaps.map.layers[0].data[i] != 0) {
                 //console.log("true");
@@ -147,22 +149,22 @@ class MapOne {
         // railroad tracks
 
         var path1 = [//{ x: 39, y: 0},
-                    { x: 39, y: 7 }, 
-                    { x: 33, y: 7 }, 
-                    { x: 33, y: 16 },
-                    { x: 36, y: 16 }, 
-                    { x: 36, y: 22 }, 
-                    { x: 18, y: 22 },
-                    { x: 18, y: 35 },
-                    { x: 28, y: 35 }];
+            { x: 39, y: 7 },
+            { x: 33, y: 7 },
+            { x: 33, y: 16 },
+            { x: 36, y: 16 },
+            { x: 36, y: 22 },
+            { x: 18, y: 22 },
+            { x: 18, y: 35 },
+            { x: 28, y: 35 }];
 
         var path2 = [//{ x: 25, y :51},
-                     { x: 25, y: 48 },
-                     { x: 22, y: 48 },
-                     { x: 22, y: 42 },
-                     { x: 28, y: 42 },
-                     { x: 28, y: 35 }
-                    ];
+            { x: 25, y: 48 },
+            { x: 22, y: 48 },
+            { x: 22, y: 42 },
+            { x: 28, y: 42 },
+            { x: 28, y: 35 }
+        ];
 
 
         //this.game.mainMap = this.map;
@@ -236,10 +238,11 @@ class MapOne {
         //this.calculatePath(transposedGrid, 15, 0, 42, 1);
         calculatePath(0, 15, 1, 42);
 
-}
-  transpose(matrix) {
-    return matrix[0].map((col, i) => matrix.map(row => row[i]));
-  }
+    }
+    
+    transpose(matrix) {
+        return matrix[0].map((col, i) => matrix.map(row => row[i]));
+    }
 
 
     addPathAsFilled(pathArray) {
@@ -256,10 +259,10 @@ class MapOne {
         for (var x = 0; x < 50; x++) {
             this.map.push([]);
             for (var y = 0; y < 50; y++) {
-                console.log("(" + x + ", " + y + "): " + "collisions: " + this.map[y][x].collisions + ", green: " + this.map[y][x].green + 
-                            ", water: " + this.map[y][x].water + ", dirt: " + this.map[y][x].dirt + ", stone: " + this.map[y][x].stone + ", iron: " + this.map[y][x].iron +
-                            ", fishermansCottage: " + this.map[y][x].fishermansCottage + ", farm: " + this.map[y][x].farm + 
-                            ", quarry: " + this.map[y][x].quarry + ", sawmill: " + this.map[y][x].sawmill);
+                console.log("(" + x + ", " + y + "): " + "collisions: " + this.map[y][x].collisions + ", green: " + this.map[y][x].green +
+                    ", water: " + this.map[y][x].water + ", dirt: " + this.map[y][x].dirt + ", stone: " + this.map[y][x].stone + ", iron: " + this.map[y][x].iron +
+                    ", fishermansCottage: " + this.map[y][x].fishermansCottage + ", farm: " + this.map[y][x].farm +
+                    ", quarry: " + this.map[y][x].quarry + ", sawmill: " + this.map[y][x].sawmill);
             }
         }
     }
