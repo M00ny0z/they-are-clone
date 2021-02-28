@@ -10,7 +10,7 @@ class ApartmentComplex {
         this.followMouse = true;
         this.placeable = false;
         this.hitpoints = 150;
-        this.radius = 30;
+        this.radius = 50;
         this.workerRate = 5;
     };
     
@@ -108,7 +108,7 @@ class ApartmentComplex {
         if (PARAMS.DEBUG && !this.followMouse) {
             ctx.strokeStyle = "Red";
             ctx.beginPath();
-            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
+            ctx.arc(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y + PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), this.radius, 0, 2 * Math.PI);
             ctx.closePath();
             ctx.stroke();
         }

@@ -154,7 +154,11 @@ function hsl(h, s, l) {
 };
 
 function distance(A, B) {
-    return Math.sqrt((B.x - A.x) * (B.x - A.x) + (B.y - A.y)*(B.y - A.y));
+    if (B instanceof Quarry || B instanceof Sawmill || B instanceof ApartmentComplex) {
+        return Math.sqrt((B.x - A.x) * (B.x - A.x) + ((B.y + PARAMS.BLOCKWIDTH / 2) - A.y)*((B.y + PARAMS.BLOCKWIDTH / 2) - A.y));
+    } else {
+        return Math.sqrt((B.x - A.x) * (B.x - A.x) + (B.y - A.y)*(B.y - A.y));
+    }
 };
 
 function buildingCheck(entity) {
