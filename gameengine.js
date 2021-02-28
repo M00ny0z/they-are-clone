@@ -153,6 +153,10 @@ class GameEngine {
             that.click = getXandY(e);
         }, false);
 
+        this.ctx.canvas.addEventListener("dblclick", function (e) {
+            that.doubleClick = getXandY(e);
+        }, false);
+
         this.ctx.canvas.addEventListener("keydown", function (e) {
             switch (e.code) {
                 case "ArrowLeft":
