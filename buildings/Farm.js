@@ -3,6 +3,8 @@ class Farm {
         Object.assign(this, { game });
         this.x = null;
         this.y = null;
+        this.placementX = null;
+        this.placementY = null;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.spritesheetCrops = ASSET_MANAGER.getAsset("./sprites/crops.png");
@@ -206,8 +208,8 @@ class Farm {
 
         //placing selected entity
         if (this.game.click && this.followMouse) {
-            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
-            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            const x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
@@ -225,7 +227,6 @@ class Farm {
                 this.game.iron -= this.game.requiredResources["Farm"].iron;
 
                 this.game.foodRate += this.foodRate;
-                this.game.click = null;
             }
         }
 
@@ -248,7 +249,6 @@ class Farm {
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
-
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {
