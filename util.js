@@ -152,14 +152,19 @@ function hsl(h, s, l) {
 
 function distance(A, B) {
     if (B instanceof Quarry || B instanceof Sawmill || B instanceof ApartmentComplex) {
-        return Math.sqrt((B.x - A.x) * (B.x - A.x) + ((B.y + PARAMS.BLOCKWIDTH / 2) - A.y)*((B.y + PARAMS.BLOCKWIDTH / 2) - A.y));
+        const circleOne = Math.sqrt((((B.x - A.x) ** 2) + ((B.y - A.y) ** 2)));
+        const circleTwo = Math.sqrt((
+            ((B.x - A.x) ** 2) + 
+            ((B.y - A.y) ** 2)
+        ));
+        return Math.min(circleOne, circleTwo);
     } else {
-        return Math.sqrt((B.x - A.x) * (B.x - A.x) + (B.y - A.y)*(B.y - A.y));
+        return Math.sqrt(((B.x - A.x) ** 2) + ((B.y - A.y) ** 2));
     }
 };
 
 function buildingCheck(entity) {
-    const buildingCheck = (
+    return (
         entity instanceof Ballista ||
         entity instanceof Farm ||
         entity instanceof StoneHouse ||
@@ -177,11 +182,6 @@ function buildingCheck(entity) {
         entity instanceof CommandCenter ||
         entity instanceof MachineGunTurret
     );
-    if (buildingCheck) {
-        return true;
-    } else {
-        return false;
-    }
 }
 
 function collide(A, B) {
