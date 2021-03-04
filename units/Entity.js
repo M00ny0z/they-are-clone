@@ -11,6 +11,8 @@ class Entity {
          };
          return pathObj;
       });
+      console.log("path is: ")
+      console.log(this.path);
       this.once = false;
  
       this.targetID = 0;

@@ -137,11 +137,13 @@ class SceneManager {
                             (((rectangleStartX <= ent.x) && (rectangleEndX >= ent.x)) && ((rectangleStartY >= ent.y) && (rectangleEndY <= ent.y))) ||
                             (((rectangleStartX >= ent.x) && (rectangleEndX <= ent.x)) && ((rectangleStartY >= ent.y) && (rectangleEndY <= ent.y))))) {
                         this.containUnits = true;
+                        console.log("this.containsUnits: " + this.containUnits);
                     }
                 }
             }
             if (this.containUnits) {
-                this.clearSelectedUnitsArray();
+                this.clearSelectedUnitsArray(); // clear previous selected units
+                // add units in rectangleSelection to selected Units
                 for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
                     for (var j = 0; j < this.game.entities[i].length; j++) {
                         var ent = this.game.entities[i][j];
@@ -168,11 +170,32 @@ class SceneManager {
             }
             this.game.isDoneDrawing = false;
         }
+        // click to move selected units
         if (this.game.click  && (this.game.click.offsetY <= 739)) {
+            //console.log("this.game.click");
+            //console.log(this.game.click);
+            //console.log("x?: " + this.game.click.x  + this.game.cameraX * PARAMS.BLOCKWIDTH)
+
             var clickedPoint = { x: this.game.click.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.click.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
+            //console.log("clickedPoint is: ");
+            //console.log(clickedPoint);
+            //console.log("clickedPoint.x: " + clickedPoint.x + ", clickedPoint.y: " + clickedPoint.y);
+            console.log("clicked coordinate: ");
+            console.log("(y: " + convertPixelCordToGridCord(clickedPoint.y) + ", x: " + convertPixelCordToGridCord(clickedPoint.x) + ")");
+            //console.log("(y: " + Math.floor(clickedPoint.y/PARAMS.BLOCKWIDTH) + ", x: " + Math.floor(clickedPoint.x/PARAMS.BLOCKWIDTH) + ")");
+            var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
             for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
                 for (var j = 0; j < this.game.entities[i].length; j++) {
                     var ent = this.game.entities[i][j];
+                    //console.log("selected entity cords are: (y:" + ent.y + ", x: " + ent.x + ")");
+                    //console.log("selected entity GRID cords are: (y:" + (ent.y/ PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH/2) + ", x: " + (ent.x /PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH/2) + ")");
+                    //var start = graph.grid[ent.y][ent.x];
+                    //console.log("selected entity GRID cords are: (y:" + convertPixelCordToGridCord(ent.y) + ", x: " + convertPixelCordToGridCord(ent.x) + ")");
+
+                    //var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(ent.y)][convertPixelCordToGridCord(ent.x)];
+                    //var path = astar.search(this.game.collisonMapGrid, start, end);
+                    //console.log("path is: ");
+                    //console.log(path);
                     if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(clickedPoint, ent)) {
                         this.clearSelectedUnitsArray();
                         this.selecting = true;
@@ -189,6 +212,25 @@ class SceneManager {
                 this.selectedUnits[i].state = 0;
                 this.selectedUnits[i].movingToSelectedPoint = true;
                 this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
+                /*calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y), 
+                convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y), 
+                convertPixelCordToGridCord(clickedPoint.x));*/
+                var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(this.selectedUnits[i].y)][convertPixelCordToGridCord(this.selectedUnits[i].x)]
+                var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
+                var astarPath = astar.search(this.game.collisionMapGrid, start, end);
+                console.log()
+                //this.selectedUnits[i].path = astarPath;
+                //this.selectedUnits[i].state = 0; // set unit state to moving
+                //this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y }; // move unit to coordinate 
+                //this.selectedUnits[i].target = { x: 0, y: 0 }; // move unit to coordinate 
+                //this.selectedUnits[i].entityTestFunction();
+                //console.log("selected entity cords are: (y:" + ent.y + ", x: " + ent.x + ")");
+                //console.log("selected entity GRID cords are: (y:" + (ent.y/ PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH/2) + ", x: " + (ent.x /PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH/2) + ")");
+                //var start = graph.grid[ent.y][ent.x];
+                //console.log("selected entity GRID cords are: (y:" + convertPixelCordToGridCord(ent.y) + ", x: " + convertPixelCordToGridCord(ent.x) + ")");
+
+                //var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(ent.y)][convertPixelCordToGridCord(ent.x)];
+                //var path = astar.search(this.game.collisonMapGrid, start, end);
             }
             this.game.rightClick = null;
         }
@@ -354,6 +396,7 @@ class SceneManager {
 
         // checking if UI is clicked
         if (this.game.click  && (this.game.click.offsetY >= 739)) {
+            console.log("clicked ui");
             var x = this.game.click.offsetX;
             var y = this.game.click.offsetY;
 
@@ -748,8 +791,7 @@ class SceneManager {
                     ["Snipers walk very slowly", "However, Snipers have a very high attack range."]);
             } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
                 this.addDescription(ctx, "Titan", "TITAN", ["workers", "food", "iron"],
-                    ["Titans has an ultra fast burst shot and a wide"]);
-                ctx.fillText("area of effect.", 500, 862);
+                    ["Titans has an ultra fast burst shot and a wide", "area of effect."]);
             } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
                 this.addDescription(ctx, "Ballista", "BALLISTA", ["workers", "wood", "iron"],
                     ["Attacks nearby enemies by shooting large arrows."]);
@@ -919,7 +961,10 @@ class SceneManager {
         ctx.font = "15px SpaceMono-Regular";
 
         // traverse each resource
+        ctx.fillStyle = "orange";
         let resourceStringX = 500;
+        ctx.fillText("Requires: ", resourceStringX, 812);
+        resourceStringX += 100;
         //console.log(unitType);
         //console.log(this.game.requiredResources);
         let requiredResources = this.game.requiredResources[unitType];
@@ -939,7 +984,48 @@ class SceneManager {
             resourceStringX += 100;
 
         });
-        let descriptionTextY = 842;
+        ctx.fillStyle = "orange";
+        resourceStringX = 500;
+        ctx.fillText("Provides: ", resourceStringX, 832);
+        ctx.fillStyle = "lightgreen";
+        resourceStringX += 100;
+        //if (unitType === "WoodHouse" || unitType === "StoneHouse || unitType === "ApartmentComplex") {
+        switch(unitType) {
+            case "WoodHouse":
+                ctx.fillText("Workers: 1", resourceStringX, 832);
+                break;
+            case "StoneHouse":
+                ctx.fillText("Workers: 2", resourceStringX, 832);
+                break;
+            case "ApartmentComplex":
+                ctx.fillText("Workers: 5", resourceStringX, 832);
+                break;
+            case "FishermansCottage":
+                ctx.fillText("0 to 24 Food", resourceStringX, 832);
+                break;
+            case "Farm":
+                ctx.fillText("0 to 25 Food", resourceStringX, 832);
+                break;
+            case "Quarry":
+                ctx.fillText("Stone, Iron", resourceStringX, 832);
+                break;
+            case "Sawmill":
+                ctx.fillText("0 to 28 Wood", resourceStringX, 832);
+                break;
+            default:
+                break;
+                // code block
+        } 
+        /*if (unitType === "WoodHouse") {
+            ctx.fillText("Workers: 1", resourceStringX, 832);
+        }
+        if (unitType === "StoneHouse") {
+            ctx.fillText("Workers: 2", resourceStringX, 832);
+        }
+        if (unitType === "ApartmentComplex") {
+            ctx.fillText("Workers: 5", resourceStringX, 832);
+        }*/
+        let descriptionTextY = 852;
         ctx.font = "15px SpaceMono-Regular";
         ctx.fillStyle = "white";
 
@@ -963,8 +1049,11 @@ class SceneManager {
 
         //ctx.fillStyle = val >= (maxVal / 2) ? 'green' : 'red';
         ctx.fillStyle = 'green';
-        ctx.fillRect(posX + 2, posY + 2, (width - 4) * (val / maxVal), (height - 5));
-
+        if(val < 0) { // fills in green bar zero amount if less than 0 (can't do a negative fill).
+            ctx.fillRect(posX + 2, posY + 2, (width - 4) * (0 / maxVal), (height - 5));
+        } else {
+            ctx.fillRect(posX + 2, posY + 2, (width - 4) * (val / maxVal), (height - 5));
+        }
         ctx.font = "10px SpaceMono-Regular";
         ctx.fillStyle = "white";
         ctx.fillText(val + "/" + maxVal, x + 30, y + 12);

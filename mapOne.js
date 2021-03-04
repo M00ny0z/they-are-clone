@@ -228,6 +228,27 @@ class MapOne {
         easystar.calculate();*/
         //console.log(path);
 
+        // used for astar.js
+        this.game.collisionMapGrid = new Graph(this.game.collisionMap);
+
+        console.log("collisionMapGrid is: ");
+        console.log(this.game.collisionMapGrid);
+        var start = this.game.collisionMapGrid.grid[0][15];
+        var end = this.game.collisionMapGrid.grid[1][42];
+        var result = astar.search(this.game.collisionMapGrid, start, end);
+        console.log("javascript-astar path: ");
+        console.log(result);
+
+        /*var graph = new Graph([
+            [1,1,1,1],
+            [0,1,1,0],
+            [0,0,1,1]
+        ]);
+        var start = graph.grid[0][0];
+        var end = graph.grid[1][2];
+        var result = astar.search(graph, start, end);
+        console.log("javascript-astar default output");
+        console.log(result);*/
 
 
 
@@ -267,7 +288,7 @@ class MapOne {
             //let x = path.x
             //let y = path.y
             //console.log("x: " + x + ", y: " + y);
-            this.map[path.x][path.y].railroad = true;
+            this.map[path.y][path.x].railroad = true;
             //setColMapXYVal(x, y, 1);
         });
     }
