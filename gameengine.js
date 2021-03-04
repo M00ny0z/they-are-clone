@@ -11,6 +11,7 @@ class GameEngine {
         this.hasPrintedReport = false;
 
         this.click = null;
+        this.doubleClick = null;
         this.mouse = null;
 
         this.left = false;
@@ -291,6 +292,8 @@ class GameEngine {
         if(this.gameOver) {
             this.gameEnd(this.wonTheGameFlag);
         }
+
+        this.doubleClick = null;
     };
 
     gameEnd(wonTheGameFlag) {

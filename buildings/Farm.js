@@ -3,6 +3,8 @@ class Farm {
         Object.assign(this, { game });
         this.x = null;
         this.y = null;
+        this.placementX = null;
+        this.placementY = null;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.spritesheetCrops = ASSET_MANAGER.getAsset("./sprites/crops.png");
@@ -40,17 +42,18 @@ class Farm {
         let numOfCropsInEachRow = 32;
         let numOfGrowthStages = 5;
         this.cropLocationsOnSpriteSheet = [];
-        //Add a random crop (crops start at stage 0) to a 2d array that represents all the crops for this farm
+        //Select a random crop
+        let r = this.getRandomInt(0, rowsOfCrops - 1);
+        let xLocationOnSpriteSheet = this.getRandomInt(0, 31) * 32;
+        let yLocationOnSpriteSheet = r * 320 + 16;
+        //Fill the farm with the crop (starting at stage 0)
         for (let i = 0; i < 5; i++) {
             this.cropLocationsOnSpriteSheet.push([]);
             for (let j = 0; j < 5; j++) {
-                let r = this.getRandomInt(0, rowsOfCrops - 1);
-                //Randomly select a crop
-                //rows are 1-based
                 this.cropLocationsOnSpriteSheet[i][j] = { 
                     row: r,
-                    x: this.getRandomInt(0, 31) * 32, 
-                    y: (r * 320 + 16),
+                    x: xLocationOnSpriteSheet, 
+                    y: yLocationOnSpriteSheet,
                     growthRate: this.getRandomInt(8, 24),
                     gameHourMade: (this.game.elapsedDay * 24) + this.game.elapsedHour
                 };
@@ -206,8 +209,8 @@ class Farm {
 
         //placing selected entity
         if (this.game.click && this.followMouse) {
-            var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
-            var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            const x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
+            const y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
@@ -225,7 +228,6 @@ class Farm {
                 this.game.iron -= this.game.requiredResources["Farm"].iron;
 
                 this.game.foodRate += this.foodRate;
-                this.game.click = null;
             }
         }
 
@@ -248,7 +250,6 @@ class Farm {
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
-
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {
