@@ -98,6 +98,7 @@ class MachineGunTurret {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
 
@@ -139,7 +140,6 @@ class MachineGunTurret {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
-                this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.food -= this.game.requiredResources["MachineGunTurret"].food;
                 this.game.wood -= this.game.requiredResources["MachineGunTurret"].wood;
                 this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
@@ -151,13 +151,17 @@ class MachineGunTurret {
         if (this.game.doubleClick) {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
+                this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
+            {
 
-            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
-            this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
-            this.game.workerRate += this.game.requiredResources["MachineGunTurret"].workers;
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
+                this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
+                this.game.workerRate += this.game.requiredResources["MachineGunTurret"].workers;
+                this.removeFromWorld = true;
+                this.game.doubleClick = null;
+            }
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {

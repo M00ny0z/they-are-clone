@@ -42,6 +42,7 @@ class StoneGateHorizontal {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
+            this.game.workers += this.game.requiredResources["StoneGate"].workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
 
         }
@@ -91,13 +92,14 @@ class StoneGateHorizontal {
         if (this.game.doubleClick) {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-
-            this.game.mainMap.map[doubleY][doubleX].collisions = false;
-
-            this.game.workers += this.game.requiredResources["StoneGate"].workers;
-
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
+            if ((doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) === this.x &&
+                this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
+            {
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
+                this.game.workers += this.game.requiredResources["StoneGate"].workers;
+                this.removeFromWorld = true;
+                this.game.doubleClick = null;
+            }
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {

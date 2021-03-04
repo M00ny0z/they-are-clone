@@ -37,7 +37,6 @@ class GameEngine {
         this.elapsedHour = 0;
         this.elapsedDay = 0;
         this.workers = 50;
-        this.workerRate = 0; 
         this.maxWorkers = 50;
         this.food = 500;
         this.foodRate = 0;
@@ -310,13 +309,6 @@ class GameEngine {
 
     // update inGame resources (Every 1 hour in game)
     updateResourceCount() {
-        this.workers += this.workerRate;
-        if (this.workers > this.maxWorkers) {
-            this.workers = this.maxWorkers;
-        }
-        if(this.workers < 0) {
-            this.workers = 0;
-        }
 
         this.food += this.foodRate;
         if (this.food > this.maxFood) {

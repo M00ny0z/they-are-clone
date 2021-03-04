@@ -10,7 +10,7 @@ class WoodHouse {
         this.placeable = false;
         this.hitpoints = 125;
         this.radius = 30;
-        this.workerRate = 1;
+        this.workers = 1;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -35,7 +35,8 @@ class WoodHouse {
         
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workerRate -= this.workerRate;
+            this.game.workers -= this.workers;
+            this.game.maxWorkers -= this.workers;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
         
@@ -59,13 +60,14 @@ class WoodHouse {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers -= this.game.requiredResources["WoodHouse"].workers;
+                //this.game.workers -= this.game.requiredResources["WoodHouse"].workers;
+                this.game.workers += this.workers;
+                this.game.maxWorkers += this.workers;
                 this.game.food -= this.game.requiredResources["WoodHouse"].food;
                 this.game.wood -= this.game.requiredResources["WoodHouse"].wood;
                 this.game.stone -= this.game.requiredResources["WoodHouse"].stone;
                 this.game.iron -= this.game.requiredResources["WoodHouse"].iron;
                 
-                this.game.workerRate += this.workerRate;
                 this.game.click = null;
             }
         }
@@ -74,13 +76,17 @@ class WoodHouse {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
-            this.game.mainMap.map[doubleY][doubleX].collisions = false;
+            if ((doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) === this.x &&
+                this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
+            {
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
-            this.game.workers += this.game.requiredResources["WoodHouse"].workers;
-            this.game.workerRate -= this.workerRate;
+                this.game.workers += this.game.requiredResources["WoodHouse"].workers;
+                this.game.workerRate -= this.workerRate;
 
-            this.removeFromWorld = true;
-            this.game.doubleClick = null;
+                this.removeFromWorld = true;
+                this.game.doubleClick = null;
+            }
         }
 
         if(PARAMS.PERFORMANCE_MEASURE) {
@@ -123,7 +129,7 @@ class WoodHouse {
             ctx.font = "15px SpaceMono-Regular";
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Place to recruit workers.", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
-            ctx.fillText(this.workerRate + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.workers + " workers", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
 
         }
 
