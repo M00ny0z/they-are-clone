@@ -137,7 +137,6 @@ class SceneManager {
                             (((rectangleStartX <= ent.x) && (rectangleEndX >= ent.x)) && ((rectangleStartY >= ent.y) && (rectangleEndY <= ent.y))) ||
                             (((rectangleStartX >= ent.x) && (rectangleEndX <= ent.x)) && ((rectangleStartY >= ent.y) && (rectangleEndY <= ent.y))))) {
                         this.containUnits = true;
-                        console.log(this.containUnits);
                     }
                 }
             }
@@ -161,6 +160,8 @@ class SceneManager {
                     }
                 }
                 this.containUnits = false;
+            } else {
+                this.clearSelectedUnitsArray();
             }
             if ((Math.abs(this.game.rectangleEndX - this.game.rectangleStartX) > 0) && (Math.abs(this.game.rectangleEndY - this.game.rectangleStartY) > 0)) {
                 this.selecting = true;
@@ -180,13 +181,16 @@ class SceneManager {
                     }
                 }
             }
-            if (!this.selecting && !this.selectedBuilding) {
-                for (var i = 0; i < this.selectedUnits.length; i++) {
-                    this.selectedUnits[i].state = 0;
-                    this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
-                }
-            }
             this.game.click = null;
+        }
+        if (this.game.rightClick && !this.selecting && !this.selectedBuilding  && (this.game.rightClick.offsetY <= 739)) {
+            var clickedPoint = { x: this.game.rightClick.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.rightClick.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
+            for (var i = 0; i < this.selectedUnits.length; i++) {
+                this.selectedUnits[i].state = 0;
+                this.selectedUnits[i].movingToSelectedPoint = true;
+                this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
+            }
+            this.game.rightClick = null;
         }
         this.selecting = false;
 
@@ -350,7 +354,6 @@ class SceneManager {
 
         // checking if UI is clicked
         if (this.game.click  && (this.game.click.offsetY >= 739)) {
-            console.log("hi");
             var x = this.game.click.offsetX;
             var y = this.game.click.offsetY;
 
@@ -532,7 +535,6 @@ class SceneManager {
         ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
 
         this.drawTimer(ctx);
-
         if (this.game.isDrawingRectangle === true) {
             ctx.strokeStyle = 'Red';
             ctx.strokeRect(this.game.rectangleStartX, this.game.rectangleStartY, this.game.rectangleEndX - this.game.rectangleStartX, this.game.rectangleEndY - this.game.rectangleStartY);
@@ -871,31 +873,31 @@ class SceneManager {
         } else {
             ctx.fillText(this.game.workerRate.toString(), 1510, 796);
         }*/
-        ctx.fillText(this.game.workerRate.toString(), 1510, 796);
+        ctx.fillText(this.game.workerRate, 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
         this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food, this.game.maxFood);
-        ctx.fillText("+" + this.game.foodRate.toString(), 1510, 816);
+        ctx.fillText("+" + this.game.foodRate, 1510, 816);
 
 
         // Wood
         ctx.drawImage(this.woodIcon, 1365, 820, 20, 18);
         this.drawHealthbar(ctx, 1400, 820, 100, 15, this.game.wood, this.game.maxWood);
-        ctx.fillText("+" + this.game.woodRate.toString(), 1510, 836);
+        ctx.fillText("+" + this.game.woodRate, 1510, 836);
 
         // Stone
         ctx.drawImage(this.stoneIcon, 1365, 840, 20, 18);
         this.drawHealthbar(ctx, 1400, 840, 100, 15, this.game.stone, this.game.maxStone);
-        ctx.fillText("+" + this.game.stoneRate.toString(), 1510, 856);
+        ctx.fillText("+" + this.game.stoneRate, 1510, 856);
 
         // Iron               
         ctx.drawImage(this.ironIcon, 1365, 860, 20, 18);
         this.drawHealthbar(ctx, 1400, 860, 100, 15, this.game.iron, this.game.maxIron);
-        ctx.fillText("+" + this.game.ironRate.toString(), 1510, 876);
+        ctx.fillText("+" + this.game.ironRate, 1510, 876);
 
         // FPS               
-        ctx.fillText(this.game.fps.toString() + " fps", 1510, 776);
+        ctx.fillText(this.game.fps + " fps", 1510, 776);
 
         // Minimap
         this.minimap.draw(ctx);

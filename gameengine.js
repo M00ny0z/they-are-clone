@@ -13,6 +13,7 @@ class GameEngine {
         this.click = null;
         this.doubleClick = null;
         this.mouse = null;
+        this.rightClick = null;
 
         this.left = false;
         this.right = false;
@@ -124,11 +125,11 @@ class GameEngine {
 
             if (x < 0 || x > PARAMS.MAPWIDTH || y < 0 || y > PARAMS.MAPWIDTH) return null;
 
-            return { x, y, offsetX, offsetY };
+            return { x, y, offsetX, offsetY};
         }
 
         this.ctx.canvas.addEventListener("mousedown", function(e) {
-            that.isDrawingRectangle = true;
+            if(e.which === 1) that.isDrawingRectangle = true;
             that.rectangleStartX = e.offsetX;
             that.rectangleStartY = e.offsetY;
             that.rectangleEndX = undefined;
@@ -152,8 +153,13 @@ class GameEngine {
             }
         });
 
+        this.ctx.canvas.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+            that.rightClick = getXandY(e);
+        });
+
         this.ctx.canvas.addEventListener("click", function (e) {
-            that.click = getXandY(e);
+            that.click = getXandY(e); 
         }, false);
 
         this.ctx.canvas.addEventListener("dblclick", function (e) {
