@@ -873,7 +873,7 @@ class SceneManager {
         } else {
             ctx.fillText(this.game.workerRate.toString(), 1510, 796);
         }*/
-        ctx.fillText(this.game.workerRate, 1510, 796);
+        //ctx.fillText(this.game.workerRate, 1510, 796);
 
         // Food
         ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
