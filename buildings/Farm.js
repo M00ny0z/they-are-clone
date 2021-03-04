@@ -42,17 +42,18 @@ class Farm {
         let numOfCropsInEachRow = 32;
         let numOfGrowthStages = 5;
         this.cropLocationsOnSpriteSheet = [];
-        //Add a random crop (crops start at stage 0) to a 2d array that represents all the crops for this farm
+        //Select a random crop
+        let r = this.getRandomInt(0, rowsOfCrops - 1);
+        let xLocationOnSpriteSheet = this.getRandomInt(0, 31) * 32;
+        let yLocationOnSpriteSheet = r * 320 + 16;
+        //Fill the farm with the crop (starting at stage 0)
         for (let i = 0; i < 5; i++) {
             this.cropLocationsOnSpriteSheet.push([]);
             for (let j = 0; j < 5; j++) {
-                let r = this.getRandomInt(0, rowsOfCrops - 1);
-                //Randomly select a crop
-                //rows are 1-based
                 this.cropLocationsOnSpriteSheet[i][j] = { 
                     row: r,
-                    x: this.getRandomInt(0, 31) * 32, 
-                    y: (r * 320 + 16),
+                    x: xLocationOnSpriteSheet, 
+                    y: yLocationOnSpriteSheet,
                     growthRate: this.getRandomInt(8, 24),
                     gameHourMade: (this.game.elapsedDay * 24) + this.game.elapsedHour
                 };
