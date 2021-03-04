@@ -99,3 +99,8 @@ same size*/
 body {
     background: gray;
 }
+
+iframe {
+    height: 100vh;
+    width: 100%;
+}
