@@ -72,8 +72,8 @@ ENTITIES[WOODWALL] = WoodWall;
 //
 
 const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
-    const posX = x - (game.camera.cameraX * PARAMS.BLOCKWIDTH) - 30;
-    const posY = y - (game.camera.cameraY * PARAMS.BLOCKWIDTH) - 20;
+    const posX = (x - PARAMS.BLOCKWIDTH / 2) - (game.camera.cameraX * PARAMS.BLOCKWIDTH) + 7;
+    const posY = y - (game.camera.cameraY * PARAMS.BLOCKWIDTH) - 15;
 
     ctx.save();
 
