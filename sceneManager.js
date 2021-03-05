@@ -567,6 +567,10 @@ class SceneManager {
                 }
             } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
                 this.display = 0;
+                if (this.selectedBuilding) {
+                    this.selectedBuilding.removeFromWorld = true;
+                    this.selectedBuilding = null;
+                }
             }
         }
         if (this.selectedBuilding) {
