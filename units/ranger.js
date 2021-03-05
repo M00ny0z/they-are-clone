@@ -25,6 +25,9 @@ class Ranger {
     this.movingToSelectedPoint = false;
     this.selected = false;
 
+    this.calculatingPath = false; // calculating A* path (EasyStar)
+    this.path = []; // A* path
+
     this.hitpoints = 80;
 
     //Performance Measuring Variables
@@ -174,6 +177,9 @@ class Ranger {
   }
 
   update() {
+    //console.log("ranger (y,x) coords: (" + this.y + ", " + this.x + ")")
+    //console.log("ranger (y,x) GRID coords: (" + convertPixelCordToGridCord(this.y) + ", " + convertPixelCordToGridCord(this.x) + ")")
+
     let nameOfThisFunction = "update";
     if(PARAMS.PERFORMANCE_MEASURE) {
       if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
@@ -186,6 +192,8 @@ class Ranger {
     }
 
     if (this.target != null) {
+      //console.log("target is: ")
+      //console.log(this.target);
       this.elapsedTime += this.game.clockTick;
       var dist = distance(this, this.target);
       this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
@@ -369,5 +377,13 @@ class Ranger {
       console.log("         total # of runs: " + totalRuns);
       console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
     }
+  }
+
+  entityTestFunction() {
+    console.log("You have called the entityTestFunction!");
+    console.log("this.calculatingPath: " + this.calculatingPath); // calculating A* path (EasyStar)
+    console.log("this.path: ");
+    console.log(this.path)
+    console.log("------------------");
   }
 }

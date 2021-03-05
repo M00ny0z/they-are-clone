@@ -119,6 +119,38 @@ const nullCheck = (todo) => {
     return ((todo == undefined || todo == null) ? false : todo);
 };
 
+function calculatePathForEntity(entity, startY, startX, endY, endX) {
+    //entity.
+    var easystar = new EasyStar.js();
+    easystar.setGrid(this.gameEngine.collisionMap);
+    easystar.setAcceptableTiles([1]);
+    easystar.enableDiagonals();
+    let calcPath = null;
+    this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function( path ) {
+        this.gameEngine.path = path;
+        entity.calculatingPath = false; // calculating A* path (EasyStar)
+        entity.path = path; // A* path
+        //console.log("entityTestFunction CallBack!!!");
+        //entity.entityTestFunction();
+        calcPath = path;
+        console.log("calcPath is: ")
+        console.log(calcPath);
+        
+        if (path === null) {
+            console.log("A* Path was not found.");
+        } else {
+            console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
+            console.log(path);
+            
+        }
+    });    
+    easystar.setIterationsPerCalculation(1000);
+    easystar.calculate();
+    console.log("calcPath after calculate: ")
+    console.log(calcPath);
+    //return calcPath;
+} 
+
 function calculatePath(startY, startX, endY, endX) {
     var easystar = new EasyStar.js();
     easystar.setGrid(this.gameEngine.collisionMap);
@@ -264,6 +296,10 @@ window.requestAnimFrame = (function () {
 ////////////////////////////////////////////////////////////////////////////////////
 /////// Grid Functions
 
+    function convertPixelCordToGridCord(pixelCord) {
+        return Math.floor(pixelCord/PARAMS.BLOCKWIDTH);
+    }
+
     function returnIndividualPathCoordinates(pathArray, x, y) {
         let outputPath = [];
         pathArray.forEach(path => {
@@ -399,7 +435,7 @@ window.requestAnimFrame = (function () {
 // add global parameters here
 var PARAMS = {
     DEBUG: true,
-    CORD: false,
+    CORD: true,
     RESOURCEXY: false,
     BLOCKWIDTH: 48,
     MAPWIDTH: 50,

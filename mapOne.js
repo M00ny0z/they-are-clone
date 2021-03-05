@@ -104,8 +104,7 @@ class MapOne {
         for (var x = 0; x < 50; x++) {
             this.map.push([]);
             for (var y = 0; y < 50; y++) {
-                this.map[x].push({
-                    "collisions": false, "green": false, "water": false, "dirt": false, "stone": false, "iron": false, "railroad": false,
+                this.map[x].push({"green": false, "water": false, "dirt": false, "stone": false, "iron": false, "railroad": false,
                     "FishermansCottage": false, "Farm": false, "Quarry": false, "Sawmill": false
                 });
             }
@@ -117,7 +116,6 @@ class MapOne {
             //console.log(TileMaps.map.layers[0].data[i]);
             if (TileMaps.map.layers[0].data[i] != 0) {
                 //console.log("true");
-                this.map[y][x].collisions = true;
                 this.game.collisionMap[y][x] = 0;
             }
             if (TileMaps.map.layers[1].data[i] != 0) {
@@ -140,7 +138,6 @@ class MapOne {
         // commandcenter
         for (var x = 27; x < 30; x++) {
             for (var y = 34; y < 37; y++) {
-                this.map[y][x].collisions = true;
                 this.game.collisionMap[y][x] = 0;
                 //this.map[y][x].collisions = true;
             }
@@ -228,6 +225,27 @@ class MapOne {
         easystar.calculate();*/
         //console.log(path);
 
+        // used for astar.js
+        /*this.game.collisionMapGrid = new Graph(this.game.collisionMap);
+
+        console.log("collisionMapGrid is: ");
+        console.log(this.game.collisionMapGrid);
+        var start = this.game.collisionMapGrid.grid[0][15];
+        var end = this.game.collisionMapGrid.grid[1][42];
+        var result = astar.search(this.game.collisionMapGrid, start, end);
+        console.log("javascript-astar path: ");
+        console.log(result);*/
+
+        /*var graph = new Graph([
+            [1,1,1,1],
+            [0,1,1,0],
+            [0,0,1,1]
+        ]);
+        var start = graph.grid[0][0];
+        var end = graph.grid[1][2];
+        var result = astar.search(graph, start, end);
+        console.log("javascript-astar default output");
+        console.log(result);*/
 
 
 
@@ -267,7 +285,7 @@ class MapOne {
             //let x = path.x
             //let y = path.y
             //console.log("x: " + x + ", y: " + y);
-            this.map[path.x][path.y].railroad = true;
+            this.map[path.y][path.x].railroad = true;
             //setColMapXYVal(x, y, 1);
         });
     }
@@ -275,7 +293,7 @@ class MapOne {
         for (var x = 0; x < 50; x++) {
             this.map.push([]);
             for (var y = 0; y < 50; y++) {
-                console.log("(" + x + ", " + y + "): " + "collisions: " + this.map[y][x].collisions + ", green: " + this.map[y][x].green +
+                console.log("(" + x + ", " + y + "): " + ", green: " + this.map[y][x].green +
                     ", water: " + this.map[y][x].water + ", dirt: " + this.map[y][x].dirt + ", stone: " + this.map[y][x].stone + ", iron: " + this.map[y][x].iron +
                     ", fishermansCottage: " + this.map[y][x].fishermansCottage + ", farm: " + this.map[y][x].farm +
                     ", quarry: " + this.map[y][x].quarry + ", sawmill: " + this.map[y][x].sawmill);

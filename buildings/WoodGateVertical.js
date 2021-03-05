@@ -43,7 +43,8 @@ class WoodGateVertical {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.workers += this.game.requiredResources["WoodGate"].workers;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
+
 
          }
 
@@ -63,7 +64,7 @@ class WoodGateVertical {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[y][x].collisions) {
+            if (this.game.collisionMap[y][x] === 1) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -74,8 +75,8 @@ class WoodGateVertical {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.click.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.click.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[y][x].collisions = true;
+            if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
+                this.game.collisionMap[y][x] = 0;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
@@ -98,7 +99,7 @@ class WoodGateVertical {
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
 
-                this.game.mainMap.map[doubleY][doubleX].collisions = false;
+                this.game.collisionMap[doubleY][doubleX] = 1;
 
                 this.game.workers += this.game.requiredResources["WoodGate"].workers;
 

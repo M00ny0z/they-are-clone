@@ -27,7 +27,7 @@ class Building {
         if (this.game.mouse && this.followMouse) {
             const x = this.game.mouse.x + this.game.camera.cameraX;
             const y = this.game.mouse.y + this.game.camera.cameraY;
-            logic = !this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled;
+            logic = this.game.collisionMap[y][x] === 1 && !this.game.mainMap.map[y][x].filled;
             if (logic && this.updateLogic(x, y)) {
                 this.placeable = true;
             } else {
