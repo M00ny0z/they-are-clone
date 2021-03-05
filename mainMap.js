@@ -1,4 +1,4 @@
-/*class MapOne {
+class MapOne {
     constructor(game) {
         Object.assign(this, { game });
         this.game.camera = this;
@@ -76,4 +76,4 @@
         mapImg.src = './sprites/mapOneWithGrid.png';
         ctx.drawImage(mapImg, 0, 0)
     }
-}*/
+}

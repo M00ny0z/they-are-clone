@@ -99,8 +99,7 @@ class MachineGunTurret {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
-            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
-
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
 
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
@@ -123,7 +122,7 @@ class MachineGunTurret {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1) {
+            if (!this.game.mainMap.map[y][x].collisions) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -134,8 +133,8 @@ class MachineGunTurret {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
-                this.game.collisionMap[y][x] = 0;
+            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
+                this.game.mainMap.map[y][x].collisions = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
@@ -156,7 +155,7 @@ class MachineGunTurret {
                 this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
             {
 
-                this.game.collisionMap[doubleY][doubleX] = 1;
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
                 this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
                 this.game.workerRate += this.game.requiredResources["MachineGunTurret"].workers;

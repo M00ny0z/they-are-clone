@@ -124,14 +124,13 @@ function calculatePathForEntity(entity, startY, startX, endY, endX) {
     var easystar = new EasyStar.js();
     easystar.setGrid(this.gameEngine.collisionMap);
     easystar.setAcceptableTiles([1]);
-    easystar.enableDiagonals();
     let calcPath = null;
     this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function( path ) {
         this.gameEngine.path = path;
         entity.calculatingPath = false; // calculating A* path (EasyStar)
         entity.path = path; // A* path
-        //console.log("entityTestFunction CallBack!!!");
-        //entity.entityTestFunction();
+        console.log("entityTestFunction CallBack!!!");
+        entity.entityTestFunction();
         calcPath = path;
         console.log("calcPath is: ")
         console.log(calcPath);

@@ -22,7 +22,7 @@ class Tent {
         if (this.game.mouse && this.followMouse) {
             var x = this.game.mouse.x + this.game.camera.cameraX;
             var y = this.game.mouse.y + this.game.camera.cameraY;
-            if (this.game.collisionMap[y][x] === 1 && !this.game.mainMap.map[y][x].filled) {
+            if (!this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y][x].filled) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -33,7 +33,7 @@ class Tent {
         if (this.game.click && this.followMouse) {
             var x = this.game.click.x + this.game.camera.cameraX;
             var y = this.game.click.y + this.game.camera.cameraY;
-            if (!this.game.mainMap.map[y][x].filled && this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
+            if (!this.game.mainMap.map[y][x].filled && !this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
                 this.game.mainMap.map[y][x].filled = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
@@ -57,7 +57,7 @@ class Tent {
             if ((doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) === this.x &&
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
-                this.game.collisionMap[doubleY][doubleX] = 1;
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
 
                 this.game.workers += this.game.requiredResources["StoneHouse"].workers;
                 this.game.workerRate -= this.workerRate;

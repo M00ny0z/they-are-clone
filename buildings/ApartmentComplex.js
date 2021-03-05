@@ -38,15 +38,15 @@ class ApartmentComplex {
             this.removeFromWorld = true;
             this.game.workers -= this.workers;
             this.game.maxWorkers -= this.workers;
-            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
-            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
         }
         
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of apartment)
-                this.game.collisionMap[y][x] === 1 && this.game.collisionMap[y+1][x] === 1) { // (no collision)
+                !this.game.mainMap.map[y][x].collisions && !this.game.mainMap.map[y+1][x].collisions) {
                     this.placeable = true;
             } else {
                 this.placeable = false;
@@ -58,8 +58,8 @@ class ApartmentComplex {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if (this.game.click.y < 15 && this.placeable) {
-                this.game.collisionMap[y][x] = 0; // collision
-                this.game.collisionMap[y+1][x] = 0; // collision
+                this.game.mainMap.map[y][x].collisions = true;
+                this.game.mainMap.map[y+1][x].collisions = true;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
@@ -83,8 +83,8 @@ class ApartmentComplex {
             if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
                 this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
             {
-                this.game.collisionMap[doubleY][doubleX] = 1;
-                this.game.collisionMap[doubleY + 1][doubleX] = 1;
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
+                this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
 
                 this.game.workers += this.game.requiredResources["ApartmentComplex"].workers;
                 this.game.workerRate += this.game.requiredResources["ApartmentComplex"].workers;

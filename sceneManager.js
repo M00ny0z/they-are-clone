@@ -277,114 +277,6 @@ class SceneManager {
                 }
                 this.game.rightClick = null;
             }
-            this.game.click = null;
-        }
-
-        if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
-            if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) { // cancel button
-                if (this.selectedBuilding) {
-                    this.selectedBuilding.removeFromWorld = true;
-                    this.selectedBuilding = null;
-                }
-            } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
-                this.display = 0;
-                if (this.selectedBuilding) {
-                    this.selectedBuilding.removeFromWorld = true;
-                    this.selectedBuilding = null;
-                }
-            }
-        }
-        if (this.selectedBuilding) {
-            if (!this.selectedBuilding.followMouse) {
-                this.selectedBuilding = null;
-            }
-        }
-    };
-
-    draw(ctx) {
-        ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
-
-        this.drawTimer(ctx);
-        if (this.game.isDrawingRectangle === true) {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.game.rectangleStartX, this.game.rectangleStartY, this.game.rectangleEndX - this.game.rectangleStartX, this.game.rectangleEndY - this.game.rectangleStartY);
-        }
-
-        if (this.game.mouse != null) {
-            var x = this.game.mouse.offsetX;
-            var y = this.game.mouse.offsetY;
-        }
-
-        if (this.display == 0) {
-            ctx.drawImage(this.colonistIcon, 1037, 739, 45, 45);
-            ctx.drawImage(this.resourcesIcon, 1087, 739, 45, 45);
-            ctx.drawImage(this.militaryIcon, 1136, 739, 45, 45);
-            ctx.drawImage(this.defenseIcon, 1185, 739, 45, 45);
-
-            // descriptions
-            if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) { // COLONISTS
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "AliceBlue";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("COLONISTS", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "white";
-                ctx.fillText("Dwellings for the colonists.", 500, 812);
-            } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) { // RESOURCES
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "AliceBlue";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("RESOURCES", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "white";
-                ctx.fillText("Structures dedicated to the resources prodcution.", 500, 812);
-            } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {  // MILITARY
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "AliceBlue";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("MILITARY", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "white";
-                ctx.fillText("Military structures for attacking and units training.", 500, 812);
-            } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) { // DEFENSE
-                ctx.strokeStyle = "grey";
-                ctx.moveTo(500, 782);
-                ctx.lineTo(985, 782);
-                ctx.stroke();
-
-                ctx.font = "25px SpaceMono-Regular";
-                ctx.fillStyle = "AliceBlue";
-                ctx.textBaseline = "bottom";
-                ctx.fillText("DEFENSE", 500, 782);
-
-                ctx.font = "15px SpaceMono-Regular";
-                ctx.fillStyle = "white";
-                ctx.fillText("Defensive and surveillance structures for the colony.", 500, 812);
-            }
-        } else if (this.display == 1) {
-            // Wood House icon
-            ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
-            if (this.game.requiredResources["WoodHouse"].enoughResource) {
-                //ctx.drawImage(this.buildingsImg, 96, 395, 32, 39, 1042, 744, 35, 35);
-                ctx.drawImage(this.buildingsImg, 192, 128, 32, 32, 1042, 744, 35, 35);
             this.selecting = false;
 
             // checking if there are enough resources to construct builidngs.
@@ -943,11 +835,11 @@ class SceneManager {
                         }
                     } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
                         this.display = 0;
-                        if (this.selectedBuilding) {
-                            if (!this.selectedBuilding.followMouse) {
-                                this.selectedBuilding = null;
-                            }
-                        }
+                    }
+                }
+                if (this.selectedBuilding) {
+                    if (!this.selectedBuilding.followMouse) {
+                        this.selectedBuilding = null;
                     }
                 }
             }

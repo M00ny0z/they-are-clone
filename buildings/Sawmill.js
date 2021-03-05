@@ -75,8 +75,8 @@ class Sawmill {
             this.removeFromWorld = true;
             this.game.workers += this.game.requiredResources["Sawmill"].workers;
             this.game.woodRate -= this.woodRate;
-  this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
-            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Sawmill = false;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Sawmill = false;
         }
@@ -85,8 +85,8 @@ class Sawmill {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
-                (this.game.collisionMap[y][x] === 1) &&
-                (this.game.collisionMap[y+1][x] === 1) &&
+                (!this.game.mainMap.map[y][x].collisions) &&
+                (!this.game.mainMap.map[y+1][x].collisions) &&
                 checkSameBuildingTypeInMapResourceGrid("Sawmill", x, y, 5, 2)) {
                     this.placeable = true;
             } else {
@@ -99,9 +99,9 @@ class Sawmill {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
-                this.game.collisionMap[y][x] = 0;
-                this.game.collisionMap[y+1][x] = 0;
+            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
+                this.game.mainMap.map[y][x].collisions = true;
+                this.game.mainMap.map[y+1][x].collisions = true;
                 this.game.mainMap.map[y][x].Sawmill = true;
                 this.game.mainMap.map[y+1][x].Sawmill = true;
                 this.followMouse = false;
@@ -127,8 +127,8 @@ class Sawmill {
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
 
-                this.game.collisionMap[doubleY][doubleX] = 1;
-                this.game.collisionMap[doubleY + 1][doubleX] = 1;
+                this.game.mainMap.map[doubleY][doubleX].collisions = false;
+                this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
                 this.game.mainMap.map[doubleY][doubleX].Sawmill = false;
                 this.game.mainMap.map[doubleY + 1][doubleX].Sawmill = false;
 
