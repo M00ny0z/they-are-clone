@@ -182,7 +182,7 @@ class Farm {
             this.game.foodRate -= this.foodRate;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].collisions = false;
+                    this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
                 }
             }
         }
@@ -193,7 +193,7 @@ class Farm {
             var stop = false;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    if (!this.game.mainMap.map[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)].collisions) { 
+                    if (this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] === 1) { 
                         this.placeable = true;
                     } else {
                         stop = true;
@@ -214,7 +214,7 @@ class Farm {
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
-                        this.game.mainMap.map[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)].collisions = true;
+                        this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] = 0;
                     }
                 }
                 this.followMouse = false;
@@ -240,7 +240,7 @@ class Farm {
             {
                 for (let i = 0; i < 5; i++) {
                     for (let j = 0; j < 5; j++) {
-                        this.game.mainMap.map[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)].collisions = false;
+                        this.game.collisionMap[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)] = 1;
                     }
                 }
 

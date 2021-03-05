@@ -183,7 +183,8 @@ class SceneManager {
             console.log("clicked coordinate: ");
             console.log("(y: " + convertPixelCordToGridCord(clickedPoint.y) + ", x: " + convertPixelCordToGridCord(clickedPoint.x) + ")");
             //console.log("(y: " + Math.floor(clickedPoint.y/PARAMS.BLOCKWIDTH) + ", x: " + Math.floor(clickedPoint.x/PARAMS.BLOCKWIDTH) + ")");
-            var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
+            //var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
+            var end = this.game.collisionMap[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
             for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
                 for (var j = 0; j < this.game.entities[i].length; j++) {
                     var ent = this.game.entities[i][j];
@@ -212,13 +213,14 @@ class SceneManager {
                 this.selectedUnits[i].state = 0;
                 this.selectedUnits[i].movingToSelectedPoint = true;
                 this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
-                /*calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y), 
-                convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y), 
-                convertPixelCordToGridCord(clickedPoint.x));*/
-                var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(this.selectedUnits[i].y)][convertPixelCordToGridCord(this.selectedUnits[i].x)]
+                calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y), 
+                    convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y), 
+                    convertPixelCordToGridCord(clickedPoint.x));
+                /*var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(this.selectedUnits[i].y)][convertPixelCordToGridCord(this.selectedUnits[i].x)]
                 var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
                 var astarPath = astar.search(this.game.collisionMapGrid, start, end);
-                console.log()
+                console.log("astarPath is: ")
+                console.log(astarPath);*/
                 //this.selectedUnits[i].path = astarPath;
                 //this.selectedUnits[i].state = 0; // set unit state to moving
                 //this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y }; // move unit to coordinate 
