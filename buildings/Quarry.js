@@ -96,8 +96,8 @@ class Quarry {
             this.game.workers += this.game.requiredResources["Quarry"].workers;
             this.game.stoneRate -= this.stoneRate;
             this.game.ironRate -= this.ironRate;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
-            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].collisions = false;
+            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
+            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Quarry = false;
             this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].Quarry = false;
         }
@@ -106,8 +106,8 @@ class Quarry {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
-                (!this.game.mainMap.map[y][x].collisions) &&
-                (!this.game.mainMap.map[y+1][x].collisions) &&
+                (this.game.collisionMap[y][x] === 1) &&
+                (this.game.collisionMap[y+1][x] === 1) &&
                 checkSameBuildingTypeInMapResourceGrid("Quarry", x, y, 5, 2)) {
                     this.placeable = true;
             } else {
@@ -120,9 +120,9 @@ class Quarry {
         if (this.game.click && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (!this.game.mainMap.map[y][x].collisions && this.game.click.y < 15 && this.placeable) {
-                this.game.mainMap.map[y][x].collisions = true;
-                this.game.mainMap.map[y+1][x].collisions = true;
+            if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
+                this.game.collisionMap[y][x] = 0;
+                this.game.collisionMap[y+1][x] = 0;
                 this.game.mainMap.map[y][x].Quarry = true;
                 this.game.mainMap.map[y+1][x].Quarry = true;
                 
@@ -150,8 +150,8 @@ class Quarry {
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
 
-                this.game.mainMap.map[doubleY][doubleX].collisions = false;
-                this.game.mainMap.map[doubleY + 1][doubleX].collisions = false;
+                this.game.collisionMap[doubleY][doubleX] = 1;
+                this.game.collisionMap[doubleY + 1][doubleX] = 1;
                 this.game.mainMap.map[doubleY][doubleX].Quarry = false;
                 this.game.mainMap.map[doubleY + 1][doubleX].Quarry = false;
 

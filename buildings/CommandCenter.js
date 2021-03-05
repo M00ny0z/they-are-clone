@@ -38,7 +38,7 @@ class CommandCenter {
 
       if (this.hitpoints <= 0) {
          this.removeFromWorld = true;
-         this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH].collisions = false;
+         this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH] = 1;
       }
 
       if(PARAMS.PERFORMANCE_MEASURE) {

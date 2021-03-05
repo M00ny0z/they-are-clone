@@ -72,21 +72,19 @@ class SceneManager {
             this.game.entities.push([]);
         }
         this.game.addEntity(new MapOne(this.game));
-        this.game.addEntity(new EnemySpawner(this.game));
+        this.game.addEntity(new EnemySpawner(this.game));   
         this.game.addEntity(new CommandCenter(this.game, 28, 35));
     };
 
     loadStartMenu() {
-        this.game.removeAll();
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
         }
         this.game.addEntity(new StartMenu(this.game));
-    }
+    };
 
     loadControlsMenu() {
-        this.game.removeAll();
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
@@ -95,7 +93,6 @@ class SceneManager {
     };
 
     loadGuideMenu() {
-        this.game.removeAll();
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
@@ -103,8 +100,7 @@ class SceneManager {
         this.game.addEntity(new GuideMenu(this.game));
     };
 
-    loadCreditsMenu() {
-        this.game.removeAll();
+    loadCreditsMenu() {       
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
@@ -128,7 +124,7 @@ class SceneManager {
     }
 
     update() {
-        if (!this.title) {
+        if(!this.title){
             PARAMS.DEBUG = document.getElementById("debug").checked;
             PARAMS.CORD = document.getElementById("cord").checked;
             PARAMS.RESOURCEXY = document.getElementById("resourceXY").checked;
@@ -212,7 +208,7 @@ class SceneManager {
                 this.game.isDoneDrawing = false;
             }
             // click to move selected units
-            if (this.game.click && (this.game.click.offsetY <= 739)) {
+            if (this.game.click  && (this.game.click.offsetY <= 739)) {
                 //console.log("this.game.click");
                 //console.log(this.game.click);
                 //console.log("x?: " + this.game.click.x  + this.game.cameraX * PARAMS.BLOCKWIDTH)
@@ -248,14 +244,14 @@ class SceneManager {
                 }
                 this.game.click = null;
             }
-            if (this.game.rightClick && !this.selecting && !this.selectedBuilding && (this.game.rightClick.offsetY <= 739)) {
+            if (this.game.rightClick && !this.selecting && !this.selectedBuilding  && (this.game.rightClick.offsetY <= 739)) {
                 var clickedPoint = { x: this.game.rightClick.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.rightClick.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
                 for (var i = 0; i < this.selectedUnits.length; i++) {
                     this.selectedUnits[i].state = 0;
                     this.selectedUnits[i].movingToSelectedPoint = true;
                     this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
-                    calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y),
-                        convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y),
+                    calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y), 
+                        convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y), 
                         convertPixelCordToGridCord(clickedPoint.x));
                     /*var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(this.selectedUnits[i].y)][convertPixelCordToGridCord(this.selectedUnits[i].x)]
                     var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
@@ -438,7 +434,7 @@ class SceneManager {
             }
 
             // checking if UI is clicked
-            if (this.game.click && (this.game.click.offsetY >= 739)) {
+            if (this.game.click  && (this.game.click.offsetY >= 739)) {
                 console.log("clicked ui");
                 var x = this.game.click.offsetX;
                 var y = this.game.click.offsetY;
@@ -472,386 +468,158 @@ class SceneManager {
                         if (this.selectedBuilding) {
                             this.selectedBuilding.removeFromWorld = true;
                         }
-                        this.containUnits = false;
-                    } else {
-                        this.clearSelectedUnitsArray();
+                        this.selectedBuilding = new ApartmentComplex(this.game);
+                        this.game.addEntity(this.selectedBuilding);
                     }
-                    if ((Math.abs(this.game.rectangleEndX - this.game.rectangleStartX) > 0) && (Math.abs(this.game.rectangleEndY - this.game.rectangleStartY) > 0)) {
-                        this.selecting = true;
-                    }
-                    this.game.isDoneDrawing = false;
-                }
-                if (this.game.click && (this.game.click.offsetY <= 739)) {
-                    var clickedPoint = { x: this.game.click.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.click.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
-                    for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-                        for (var j = 0; j < this.game.entities[i].length; j++) {
-                            var ent = this.game.entities[i][j];
-                            if ((ent instanceof Ranger || ent instanceof Soldier || ent instanceof Sniper || ent instanceof Titan) && collide(clickedPoint, ent)) {
-                                this.clearSelectedUnitsArray();
-                                this.selecting = true;
-                                this.selectedUnits.push(ent);
-                                ent.selected = true;
-                            }
-                        }
-                    }
-                    this.game.click = null;
-                }
-                if (this.game.rightClick && !this.selecting && !this.selectedBuilding && (this.game.rightClick.offsetY <= 739)) {
-                    var clickedPoint = { x: this.game.rightClick.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.rightClick.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
-                    for (var i = 0; i < this.selectedUnits.length; i++) {
-                        this.selectedUnits[i].state = 0;
-                        this.selectedUnits[i].movingToSelectedPoint = true;
-                        this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
-                    }
-                    this.game.rightClick = null;
-                }
-                this.selecting = false;
-
-                // checking if there are enough resources to construct builidngs.
-                if (this.game.workers >= this.game.requiredResources["WoodHouse"].workers &&
-                    this.game.food >= this.game.requiredResources["WoodHouse"].food &&
-                    this.game.wood >= this.game.requiredResources["WoodHouse"].wood &&
-                    this.game.stone >= this.game.requiredResources["WoodHouse"].stone &&
-                    this.game.iron >= this.game.requiredResources["WoodHouse"].iron) {
-                    this.game.requiredResources["WoodHouse"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["WoodHouse"].enoughResource = false;
-                }
-
-                if (this.game.workers >= this.game.requiredResources["StoneHouse"].workers &&
-                    this.game.food >= this.game.requiredResources["StoneHouse"].food &&
-                    this.game.wood >= this.game.requiredResources["StoneHouse"].wood &&
-                    this.game.stone >= this.game.requiredResources["StoneHouse"].stone &&
-                    this.game.iron >= this.game.requiredResources["StoneHouse"].iron) {
-                    this.game.requiredResources["StoneHouse"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["StoneHouse"].enoughResource = false;
-                }
-
-                if (this.game.workers >= this.game.requiredResources["ApartmentComplex"].workers &&
-                    this.game.food >= this.game.requiredResources["ApartmentComplex"].food &&
-                    this.game.wood >= this.game.requiredResources["ApartmentComplex"].wood &&
-                    this.game.stone >= this.game.requiredResources["ApartmentComplex"].stone &&
-                    this.game.iron >= this.game.requiredResources["ApartmentComplex"].iron) {
-                    this.game.requiredResources["ApartmentComplex"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["ApartmentComplex"].enoughResource = false;
-                }
-
-                if (this.game.workers >= this.game.requiredResources["FishermansCottage"].workers &&
-                    this.game.food >= this.game.requiredResources["FishermansCottage"].food &&
-                    this.game.wood >= this.game.requiredResources["FishermansCottage"].wood &&
-                    this.game.stone >= this.game.requiredResources["FishermansCottage"].stone &&
-                    this.game.iron >= this.game.requiredResources["FishermansCottage"].iron) {
-                    this.game.requiredResources["FishermansCottage"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["FishermansCottage"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Farm"].workers &&
-                    this.game.food >= this.game.requiredResources["Farm"].food &&
-                    this.game.wood >= this.game.requiredResources["Farm"].wood &&
-                    this.game.stone >= this.game.requiredResources["Farm"].stone &&
-                    this.game.iron >= this.game.requiredResources["Farm"].iron) {
-                    this.game.requiredResources["Farm"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Farm"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Quarry"].workers &&
-                    this.game.food >= this.game.requiredResources["Quarry"].food &&
-                    this.game.wood >= this.game.requiredResources["Quarry"].wood &&
-                    this.game.stone >= this.game.requiredResources["Quarry"].stone &&
-                    this.game.iron >= this.game.requiredResources["Quarry"].iron) {
-                    this.game.requiredResources["Quarry"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Quarry"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Sawmill"].workers &&
-                    this.game.food >= this.game.requiredResources["Sawmill"].food &&
-                    this.game.wood >= this.game.requiredResources["Sawmill"].wood &&
-                    this.game.stone >= this.game.requiredResources["Sawmill"].stone &&
-                    this.game.iron >= this.game.requiredResources["Sawmill"].iron) {
-                    this.game.requiredResources["Sawmill"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Sawmill"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Ranger"].workers &&
-                    this.game.food >= this.game.requiredResources["Ranger"].food &&
-                    this.game.wood >= this.game.requiredResources["Ranger"].wood &&
-                    this.game.stone >= this.game.requiredResources["Ranger"].stone &&
-                    this.game.iron >= this.game.requiredResources["Ranger"].iron) {
-                    this.game.requiredResources["Ranger"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Ranger"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Soldier"].workers &&
-                    this.game.food >= this.game.requiredResources["Soldier"].food &&
-                    this.game.wood >= this.game.requiredResources["Soldier"].wood &&
-                    this.game.stone >= this.game.requiredResources["Soldier"].stone &&
-                    this.game.iron >= this.game.requiredResources["Soldier"].iron) {
-                    this.game.requiredResources["Soldier"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Soldier"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Sniper"].workers &&
-                    this.game.food >= this.game.requiredResources["Sniper"].food &&
-                    this.game.wood >= this.game.requiredResources["Sniper"].wood &&
-                    this.game.stone >= this.game.requiredResources["Sniper"].stone &&
-                    this.game.iron >= this.game.requiredResources["Sniper"].iron) {
-                    this.game.requiredResources["Sniper"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Sniper"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Titan"].workers &&
-                    this.game.food >= this.game.requiredResources["Titan"].food &&
-                    this.game.wood >= this.game.requiredResources["Titan"].wood &&
-                    this.game.stone >= this.game.requiredResources["Titan"].stone &&
-                    this.game.iron >= this.game.requiredResources["Titan"].iron) {
-                    this.game.requiredResources["Titan"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Titan"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["Ballista"].workers &&
-                    this.game.food >= this.game.requiredResources["Ballista"].food &&
-                    this.game.wood >= this.game.requiredResources["Ballista"].wood &&
-                    this.game.stone >= this.game.requiredResources["Ballista"].stone &&
-                    this.game.iron >= this.game.requiredResources["Ballista"].iron) {
-                    this.game.requiredResources["Ballista"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["Ballista"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["MachineGunTurret"].workers &&
-                    this.game.food >= this.game.requiredResources["MachineGunTurret"].food &&
-                    this.game.wood >= this.game.requiredResources["MachineGunTurret"].wood &&
-                    this.game.stone >= this.game.requiredResources["MachineGunTurret"].stone &&
-                    this.game.iron >= this.game.requiredResources["MachineGunTurret"].iron) {
-                    this.game.requiredResources["MachineGunTurret"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["MachineGunTurret"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["WoodWall"].workers &&
-                    this.game.food >= this.game.requiredResources["WoodWall"].food &&
-                    this.game.wood >= this.game.requiredResources["WoodWall"].wood &&
-                    this.game.stone >= this.game.requiredResources["WoodWall"].stone &&
-                    this.game.iron >= this.game.requiredResources["WoodWall"].iron) {
-                    this.game.requiredResources["WoodWall"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["WoodWall"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["WoodGate"].workers &&
-                    this.game.food >= this.game.requiredResources["WoodGate"].food &&
-                    this.game.wood >= this.game.requiredResources["WoodGate"].wood &&
-                    this.game.stone >= this.game.requiredResources["WoodGate"].stone &&
-                    this.game.iron >= this.game.requiredResources["WoodGate"].iron) {
-                    this.game.requiredResources["WoodGate"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["WoodGate"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["StoneWall"].workers &&
-                    this.game.food >= this.game.requiredResources["StoneWall"].food &&
-                    this.game.wood >= this.game.requiredResources["StoneWall"].wood &&
-                    this.game.stone >= this.game.requiredResources["StoneWall"].stone &&
-                    this.game.iron >= this.game.requiredResources["StoneWall"].iron) {
-                    this.game.requiredResources["StoneWall"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["StoneWall"].enoughResource = false;
-                }
-                if (this.game.workers >= this.game.requiredResources["StoneGate"].workers &&
-                    this.game.food >= this.game.requiredResources["StoneGate"].food &&
-                    this.game.wood >= this.game.requiredResources["StoneGate"].wood &&
-                    this.game.stone >= this.game.requiredResources["StoneGate"].stone &&
-                    this.game.iron >= this.game.requiredResources["StoneGate"].iron) {
-                    this.game.requiredResources["StoneGate"].enoughResource = true;
-                } else {
-                    this.game.requiredResources["StoneGate"].enoughResource = false;
-                }
-
-                // checking if UI is clicked
-                if (this.game.click && (this.game.click.offsetY >= 739)) {
-                    var x = this.game.click.offsetX;
-                    var y = this.game.click.offsetY;
-
-                    if (this.display == 0) { // display 0
-                        if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) {
-                            this.display = 1;
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) {
-                            this.display = 2;
-                        } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {
-                            this.display = 3;
-                        } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
-                            this.display = 4;
-                        } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
-                            this.display = 0;
-                        }
-                    } else if (this.display == 1) { // display 1
-                        if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodHouse"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new WoodHouse(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["StoneHouse"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new StoneHouse(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["ApartmentComplex"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new ApartmentComplex(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        }
-                    } else if (this.display == 2) { // display 2
-                        if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["FishermansCottage"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new FishermansCottage(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Farm"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new Farm(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["Quarry"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new Quarry(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["Sawmill"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new Sawmill(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        }
-                    } else if (this.display == 3) { // display 3
-                        if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Soldier"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
-                            this.game.workers -= this.game.requiredResources["Soldier"].workers;
-                            this.game.workerRate -= this.game.requiredResources["Soldier"].workers;
-                            this.game.food -= this.game.requiredResources["Soldier"].food;
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.game.allyspawner.spawnAllyRandomPath(RANGER);
-                            this.game.workers -= this.game.requiredResources["Ranger"].workers;
-                            this.game.workerRate -= this.game.requiredResources["Ranger"].workers;
-                            this.game.food -= this.game.requiredResources["Ranger"].food;
-                            this.game.wood -= this.game.requiredResources["Ranger"].wood;
-                            this.game.iron -= this.game.requiredResources["Ranger"].iron;
-                        } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sniper"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.game.allyspawner.spawnAllyRandomPath(SNIPER);
-                            this.game.workers -= this.game.requiredResources["Sniper"].workers;
-                            this.game.workerRate -= this.game.requiredResources["Sniper"].workers;
-                            this.game.food -= this.game.requiredResources["Sniper"].food;
-                            this.game.iron -= this.game.requiredResources["Sniper"].iron;
-                        } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.game.allyspawner.spawnAllyRandomPath(TITAN);
-                            this.game.workers -= this.game.requiredResources["Titan"].workers;
-                            this.game.workerRate -= this.game.requiredResources["Titan"].workers;
-                            this.game.food -= this.game.requiredResources["Titan"].food;
-                            this.game.iron -= this.game.requiredResources["Titan"].iron;
-                        } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new Ballista(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                            this.game.workers -= this.game.requiredResources["Ballista"].workers;
-                            this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
-                            this.game.iron -= this.game.requiredResources["Ballista"].iron;
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new MachineGunTurret(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                            this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
-                            this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
-                            this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
-                            this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;
-                        }
-                    } else if (this.display == 4) { // display 4
-                        if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodWall"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new WoodWall(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodGate"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new WoodGateHorizontal(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodGate"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new WoodGateVertical(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneWall"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new StoneWall(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneGate"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new StoneGateHorizontal(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneGate"].enoughResource) {
-                            if (this.selectedBuilding) {
-                                this.selectedBuilding.removeFromWorld = true;
-                            }
-                            this.selectedBuilding = new StoneGateVertical(this.game);
-                            this.game.addEntity(this.selectedBuilding);
-                        }
-                    }
-                    this.game.click = null;
-                }
-
-                if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
-                    if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) { // cancel button
+                } else if (this.display == 2) { // display 2
+                    if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["FishermansCottage"].enoughResource) {
                         if (this.selectedBuilding) {
                             this.selectedBuilding.removeFromWorld = true;
-                            this.selectedBuilding = null;
                         }
-                    } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
-                        this.display = 0;
+                        this.selectedBuilding = new FishermansCottage(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Farm"].enoughResource) {
                         if (this.selectedBuilding) {
                             this.selectedBuilding.removeFromWorld = true;
-                            this.selectedBuilding = null;
                         }
+                        this.selectedBuilding = new Farm(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["Quarry"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new Quarry(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 95) && this.game.requiredResources["Sawmill"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new Sawmill(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    }
+                } else if (this.display == 3) { // display 3
+                    if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Soldier"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
+                        this.game.workers -= this.game.requiredResources["Soldier"].workers;
+                        this.game.workerRate -= this.game.requiredResources["Soldier"].workers;
+                        this.game.food -= this.game.requiredResources["Soldier"].food;
+                    } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.game.allyspawner.spawnAllyRandomPath(RANGER);
+                        this.game.workers -= this.game.requiredResources["Ranger"].workers;
+                        this.game.workerRate -= this.game.requiredResources["Ranger"].workers;
+                        this.game.food -= this.game.requiredResources["Ranger"].food;
+                        this.game.wood -= this.game.requiredResources["Ranger"].wood;
+                        this.game.iron -= this.game.requiredResources["Ranger"].iron;
+                    } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Sniper"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.game.allyspawner.spawnAllyRandomPath(SNIPER);
+                        this.game.workers -= this.game.requiredResources["Sniper"].workers;
+                        this.game.workerRate -= this.game.requiredResources["Sniper"].workers;
+                        this.game.food -= this.game.requiredResources["Sniper"].food;
+                        this.game.iron -= this.game.requiredResources["Sniper"].iron;
+                    } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.game.allyspawner.spawnAllyRandomPath(TITAN);
+                        this.game.workers -= this.game.requiredResources["Titan"].workers;
+                        this.game.workerRate -= this.game.requiredResources["Titan"].workers;
+                        this.game.food -= this.game.requiredResources["Titan"].food;
+                        this.game.iron -= this.game.requiredResources["Titan"].iron;
+                    } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new Ballista(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                        this.game.workers -= this.game.requiredResources["Ballista"].workers;
+                        this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
+                        this.game.iron -= this.game.requiredResources["Ballista"].iron;
+                    } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new MachineGunTurret(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                        this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
+                        this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
+                        this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
+                        this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;
+                    }
+                } else if (this.display == 4) { // display 4
+                    if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodWall"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new WoodWall(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodGate"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new WoodGateHorizontal(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodGate"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new WoodGateVertical(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneWall"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new StoneWall(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneGate"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new StoneGateHorizontal(this.game);
+                        this.game.addEntity(this.selectedBuilding);
+                    } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["StoneGate"].enoughResource) {
+                        if (this.selectedBuilding) {
+                            this.selectedBuilding.removeFromWorld = true;
+                        }
+                        this.selectedBuilding = new StoneGateVertical(this.game);
+                        this.game.addEntity(this.selectedBuilding);
                     }
                 }
-                if (this.selectedBuilding) {
-                    if (!this.selectedBuilding.followMouse) {
+                this.game.click = null;
+            }
+
+            if ((this.display == 1) || (this.display == 2) || (this.display == 3) || (this.display == 4)) {
+                if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) { // cancel button
+                    if (this.selectedBuilding) {
+                        this.selectedBuilding.removeFromWorld = true;
                         this.selectedBuilding = null;
                     }
+                } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) { // back button
+                    this.display = 0;
+                    if (this.selectedBuilding) {
+                        this.selectedBuilding.removeFromWorld = true;
+                        this.selectedBuilding = null;
+                    }
+                }
+            }
+            if (this.selectedBuilding) {
+                if (!this.selectedBuilding.followMouse) {
+                    this.selectedBuilding = null;
                 }
             }
         }
     };
 
     draw(ctx) {
-        if (!this.title) {
+        if(!this.title){
             ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
 
             this.drawTimer(ctx);
@@ -1068,8 +836,7 @@ class SceneManager {
                         ["Snipers walk very slowly", "However, Snipers have a very high attack range."]);
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) {
                     this.addDescription(ctx, "Titan", "TITAN", ["workers", "food", "iron"],
-                        ["Titans has an ultra fast burst shot and a wide"]);
-                    ctx.fillText("area of effect.", 500, 862);
+                        ["Titans has an ultra fast burst shot and a wide", "area of effect."]);
                 } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45)) {
                     this.addDescription(ctx, "Ballista", "BALLISTA", ["workers", "wood", "iron"],
                         ["Attacks nearby enemies by shooting large arrows."]);
@@ -1269,7 +1036,7 @@ class SceneManager {
         ctx.fillStyle = "lightgreen";
         resourceStringX += 100;
         //if (unitType === "WoodHouse" || unitType === "StoneHouse || unitType === "ApartmentComplex") {
-        switch (unitType) {
+        switch(unitType) {
             case "WoodHouse":
                 ctx.fillText("Workers: 1", resourceStringX, 832);
                 break;
@@ -1293,8 +1060,8 @@ class SceneManager {
                 break;
             default:
                 break;
-            // code block
-        }
+                // code block
+        } 
         /*if (unitType === "WoodHouse") {
             ctx.fillText("Workers: 1", resourceStringX, 832);
         }
@@ -1328,7 +1095,7 @@ class SceneManager {
 
         //ctx.fillStyle = val >= (maxVal / 2) ? 'green' : 'red';
         ctx.fillStyle = 'green';
-        if (val < 0) { // fills in green bar zero amount if less than 0 (can't do a negative fill).
+        if(val < 0) { // fills in green bar zero amount if less than 0 (can't do a negative fill).
             ctx.fillRect(posX + 2, posY + 2, (width - 4) * (0 / maxVal), (height - 5));
         } else {
             ctx.fillRect(posX + 2, posY + 2, (width - 4) * (val / maxVal), (height - 5));
@@ -1515,4 +1282,5 @@ class SceneManager {
                 break;
         }
     }
+
 };
