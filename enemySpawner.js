@@ -182,6 +182,9 @@ class EnemySpawner {
                 for (var i = 0; i < 5; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.path1.startX, this.path1.startY + (i * -1.5 - 0.2), this.copyPath(this.path1.path)));
                 }
+                for (var i = 0; i < 2; i++) {
+                    this.game.addEntity(new InfectedChubby(this.game, this.path1.startX, this.path1.startY + (i * -5), this.copyPath(this.path1.path)));
+                }
 
                 //Path 2
                 for (var i = 0; i < 9; i++) {
@@ -192,6 +195,9 @@ class EnemySpawner {
                 }
                 for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.path2.startX, this.path2.startY + (i * 1.5), this.copyPath(this.path2.path)));
+                }
+                for (var i = 0; i < 2; i++) {
+                    this.game.addEntity(new InfectedChubby(this.game, this.path2.startX, this.path2.startY + (i * 5), this.copyPath(this.path2.path)));
                 }
                 this.spawnThirdWave = true;
                 break;
