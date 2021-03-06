@@ -200,7 +200,7 @@ class Ranger {
 
       if (this.hitpoints <= 0) { 
         this.removeFromWorld = true;
-        this.game.workers += this.game.requiredResources["Ranger"].workers;
+        this.game.workers -= this.game.requiredResources["Ranger"].workers;
     }
       if (this.target.removeFromWorld) {
         this.state = 0;

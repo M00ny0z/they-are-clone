@@ -118,7 +118,7 @@ class StartMenu {
                 }
                 break;
         }
-        ctx.globalAlpha = 1.0;
+        ctx.globalAlpha = 1.0
     }
 
     drawControls(ctx) {

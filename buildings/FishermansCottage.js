@@ -75,7 +75,7 @@ class FishermansCottage {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
+            this.game.workers -= this.game.requiredResources["FishermansCottage"].workers;
             this.game.foodRate -= this.foodRate;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
 
@@ -121,7 +121,7 @@ class FishermansCottage {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 console.log("x: " + x + ", " + y);
-                this.game.workers -= this.game.requiredResources["FishermansCottage"].workers;
+                this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
                 this.game.workeRate -= this.game.requiredResources["FishermansCottage"].workers;
                 this.game.food -= this.game.requiredResources["FishermansCottage"].food;
                 this.game.wood -= this.game.requiredResources["FishermansCottage"].wood;
@@ -143,8 +143,7 @@ class FishermansCottage {
                 this.game.collisionMap[doubleY][doubleX] = 1;
                 this.game.mainMap.map[doubleY][doubleX]["FishermansCottage"] = false;
 
-                this.game.workers += this.game.requiredResources["FishermansCottage"].workers;
-                this.game.workerRate += this.game.requiredResources["FishermansCottage"].workers;
+                this.game.workers -= this.game.requiredResources["FishermansCottage"].workers;
                 this.game.foodRate -= this.foodRate;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;

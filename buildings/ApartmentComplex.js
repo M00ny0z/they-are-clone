@@ -36,7 +36,6 @@ class ApartmentComplex {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers -= this.workers;
             this.game.maxWorkers -= this.workers;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
@@ -64,7 +63,6 @@ class ApartmentComplex {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers += this.workers;
                 this.game.maxWorkers += this.workers;
                 //console.log("this.game.workers: " + this.game.workers);
                 this.game.food -= this.game.requiredResources["ApartmentComplex"].food;
@@ -86,8 +84,7 @@ class ApartmentComplex {
                 this.game.collisionMap[doubleY][doubleX] = 1;
                 this.game.collisionMap[doubleY + 1][doubleX] = 1;
 
-                this.game.workers += this.game.requiredResources["ApartmentComplex"].workers;
-                this.game.workerRate += this.game.requiredResources["ApartmentComplex"].workers;
+                this.game.maxWorkers -= this.workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }

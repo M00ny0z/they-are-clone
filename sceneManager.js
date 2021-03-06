@@ -293,8 +293,7 @@ class SceneManager {
             this.selecting = false;
 
             // checking if there are enough resources to construct builidngs.
-            if (this.game.workers >= this.game.requiredResources["WoodHouse"].workers &&
-                this.game.food >= this.game.requiredResources["WoodHouse"].food &&
+            if (this.game.food >= this.game.requiredResources["WoodHouse"].food &&
                 this.game.wood >= this.game.requiredResources["WoodHouse"].wood &&
                 this.game.stone >= this.game.requiredResources["WoodHouse"].stone &&
                 this.game.iron >= this.game.requiredResources["WoodHouse"].iron) {
@@ -303,8 +302,7 @@ class SceneManager {
                 this.game.requiredResources["WoodHouse"].enoughResource = false;
             }
 
-            if (this.game.workers >= this.game.requiredResources["StoneHouse"].workers &&
-                this.game.food >= this.game.requiredResources["StoneHouse"].food &&
+            if (this.game.food >= this.game.requiredResources["StoneHouse"].food &&
                 this.game.wood >= this.game.requiredResources["StoneHouse"].wood &&
                 this.game.stone >= this.game.requiredResources["StoneHouse"].stone &&
                 this.game.iron >= this.game.requiredResources["StoneHouse"].iron) {
@@ -313,8 +311,7 @@ class SceneManager {
                 this.game.requiredResources["StoneHouse"].enoughResource = false;
             }
 
-            if (this.game.workers >= this.game.requiredResources["ApartmentComplex"].workers &&
-                this.game.food >= this.game.requiredResources["ApartmentComplex"].food &&
+            if (this.game.food >= this.game.requiredResources["ApartmentComplex"].food &&
                 this.game.wood >= this.game.requiredResources["ApartmentComplex"].wood &&
                 this.game.stone >= this.game.requiredResources["ApartmentComplex"].stone &&
                 this.game.iron >= this.game.requiredResources["ApartmentComplex"].iron) {
@@ -323,7 +320,7 @@ class SceneManager {
                 this.game.requiredResources["ApartmentComplex"].enoughResource = false;
             }
 
-            if (this.game.workers >= this.game.requiredResources["FishermansCottage"].workers &&
+            if ((this.game.workers + this.game.requiredResources["FishermansCottage"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["FishermansCottage"].food &&
                 this.game.wood >= this.game.requiredResources["FishermansCottage"].wood &&
                 this.game.stone >= this.game.requiredResources["FishermansCottage"].stone &&
@@ -332,7 +329,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["FishermansCottage"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Farm"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Farm"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Farm"].food &&
                 this.game.wood >= this.game.requiredResources["Farm"].wood &&
                 this.game.stone >= this.game.requiredResources["Farm"].stone &&
@@ -341,7 +338,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Farm"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Quarry"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Quarry"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Quarry"].food &&
                 this.game.wood >= this.game.requiredResources["Quarry"].wood &&
                 this.game.stone >= this.game.requiredResources["Quarry"].stone &&
@@ -350,7 +347,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Quarry"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Sawmill"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Sawmill"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Sawmill"].food &&
                 this.game.wood >= this.game.requiredResources["Sawmill"].wood &&
                 this.game.stone >= this.game.requiredResources["Sawmill"].stone &&
@@ -359,7 +356,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Sawmill"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Ranger"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Ranger"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Ranger"].food &&
                 this.game.wood >= this.game.requiredResources["Ranger"].wood &&
                 this.game.stone >= this.game.requiredResources["Ranger"].stone &&
@@ -368,7 +365,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Ranger"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Soldier"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Soldier"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Soldier"].food &&
                 this.game.wood >= this.game.requiredResources["Soldier"].wood &&
                 this.game.stone >= this.game.requiredResources["Soldier"].stone &&
@@ -377,7 +374,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Soldier"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Sniper"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Sniper"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Sniper"].food &&
                 this.game.wood >= this.game.requiredResources["Sniper"].wood &&
                 this.game.stone >= this.game.requiredResources["Sniper"].stone &&
@@ -386,7 +383,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Sniper"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Titan"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Titan"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Titan"].food &&
                 this.game.wood >= this.game.requiredResources["Titan"].wood &&
                 this.game.stone >= this.game.requiredResources["Titan"].stone &&
@@ -395,7 +392,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Titan"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["Ballista"].workers &&
+            if ((this.game.workers + this.game.requiredResources["Ballista"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["Ballista"].food &&
                 this.game.wood >= this.game.requiredResources["Ballista"].wood &&
                 this.game.stone >= this.game.requiredResources["Ballista"].stone &&
@@ -404,7 +401,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["Ballista"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["MachineGunTurret"].workers &&
+            if ((this.game.workers + this.game.requiredResources["MachineGunTurret"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["MachineGunTurret"].food &&
                 this.game.wood >= this.game.requiredResources["MachineGunTurret"].wood &&
                 this.game.stone >= this.game.requiredResources["MachineGunTurret"].stone &&
@@ -413,7 +410,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["MachineGunTurret"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["WoodWall"].workers &&
+            if ((this.game.workers + this.game.requiredResources["WoodWall"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["WoodWall"].food &&
                 this.game.wood >= this.game.requiredResources["WoodWall"].wood &&
                 this.game.stone >= this.game.requiredResources["WoodWall"].stone &&
@@ -422,7 +419,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["WoodWall"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["WoodGate"].workers &&
+            if ((this.game.workers + this.game.requiredResources["WoodGate"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["WoodGate"].food &&
                 this.game.wood >= this.game.requiredResources["WoodGate"].wood &&
                 this.game.stone >= this.game.requiredResources["WoodGate"].stone &&
@@ -431,7 +428,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["WoodGate"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["StoneWall"].workers &&
+            if ((this.game.workers + this.game.requiredResources["StoneWall"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["StoneWall"].food &&
                 this.game.wood >= this.game.requiredResources["StoneWall"].wood &&
                 this.game.stone >= this.game.requiredResources["StoneWall"].stone &&
@@ -440,7 +437,7 @@ class SceneManager {
             } else {
                 this.game.requiredResources["StoneWall"].enoughResource = false;
             }
-            if (this.game.workers >= this.game.requiredResources["StoneGate"].workers &&
+            if ((this.game.workers + this.game.requiredResources["StoneGate"].workers <= this.game.maxWorkers) &&
                 this.game.food >= this.game.requiredResources["StoneGate"].food &&
                 this.game.wood >= this.game.requiredResources["StoneGate"].wood &&
                 this.game.stone >= this.game.requiredResources["StoneGate"].stone &&
@@ -520,16 +517,14 @@ class SceneManager {
                             this.selectedBuilding.removeFromWorld = true;
                         }
                         this.game.allyspawner.spawnAllyRandomPath(SOLDIER);
-                        this.game.workers -= this.game.requiredResources["Soldier"].workers;
-                        this.game.workerRate -= this.game.requiredResources["Soldier"].workers;
+                        this.game.workers += this.game.requiredResources["Soldier"].workers;
                         this.game.food -= this.game.requiredResources["Soldier"].food;
                     } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Ranger"].enoughResource) {
                         if (this.selectedBuilding) {
                             this.selectedBuilding.removeFromWorld = true;
                         }
                         this.game.allyspawner.spawnAllyRandomPath(RANGER);
-                        this.game.workers -= this.game.requiredResources["Ranger"].workers;
-                        this.game.workerRate -= this.game.requiredResources["Ranger"].workers;
+                        this.game.workers += this.game.requiredResources["Ranger"].workers;
                         this.game.food -= this.game.requiredResources["Ranger"].food;
                         this.game.wood -= this.game.requiredResources["Ranger"].wood;
                         this.game.iron -= this.game.requiredResources["Ranger"].iron;
@@ -538,8 +533,7 @@ class SceneManager {
                             this.selectedBuilding.removeFromWorld = true;
                         }
                         this.game.allyspawner.spawnAllyRandomPath(SNIPER);
-                        this.game.workers -= this.game.requiredResources["Sniper"].workers;
-                        this.game.workerRate -= this.game.requiredResources["Sniper"].workers;
+                        this.game.workers += this.game.requiredResources["Sniper"].workers;
                         this.game.food -= this.game.requiredResources["Sniper"].food;
                         this.game.iron -= this.game.requiredResources["Sniper"].iron;
                     } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["Titan"].enoughResource) {
@@ -547,8 +541,7 @@ class SceneManager {
                             this.selectedBuilding.removeFromWorld = true;
                         }
                         this.game.allyspawner.spawnAllyRandomPath(TITAN);
-                        this.game.workers -= this.game.requiredResources["Titan"].workers;
-                        this.game.workerRate -= this.game.requiredResources["Titan"].workers;
+                        this.game.workers += this.game.requiredResources["Titan"].workers;
                         this.game.food -= this.game.requiredResources["Titan"].food;
                         this.game.iron -= this.game.requiredResources["Titan"].iron;
                     } else if ((x >= 1037 && x <= 1037 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["Ballista"].enoughResource) {
@@ -557,19 +550,17 @@ class SceneManager {
                         }
                         this.selectedBuilding = new Ballista(this.game);
                         this.game.addEntity(this.selectedBuilding);
-                        this.game.workers -= this.game.requiredResources["Ballista"].workers;
-                        this.game.workerRate -= this.game.requiredResources["Ballista"].workers;
-                        this.game.iron -= this.game.requiredResources["Ballista"].iron;
+                        /*this.game.workers += this.game.requiredResources["Ballista"].workers;
+                        this.game.iron -= this.game.requiredResources["Ballista"].iron;*/
                     } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 789 && y <= 789 + 45) && this.game.requiredResources["MachineGunTurret"].enoughResource) {
                         if (this.selectedBuilding) {
                             this.selectedBuilding.removeFromWorld = true;
                         }
                         this.selectedBuilding = new MachineGunTurret(this.game);
                         this.game.addEntity(this.selectedBuilding);
-                        this.game.workers -= this.game.requiredResources["MachineGunTurret"].workers;
-                        this.game.workerRate -= this.game.requiredResources["MachineGunTurret"].workers;
+                        /*this.game.workers += this.game.requiredResources["MachineGunTurret"].workers;
                         this.game.stone -= this.game.requiredResources["MachineGunTurret"].stone;
-                        this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;
+                        this.game.iron -= this.game.requiredResources["MachineGunTurret"].iron;*/
                     }
                 } else if (this.display == 4) { // display 4
                     if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45) && this.game.requiredResources["WoodWall"].enoughResource) {
@@ -987,14 +978,6 @@ class SceneManager {
             // Workers
             ctx.drawImage(this.unitsIcon, 1365, 780, 20, 18);
             this.drawHealthbar(ctx, 1400, 780, 100, 15, this.game.workers, this.game.maxWorkers);
-            //console.log("workerRate is ")
-            var workerRate = "";
-            /*if (workerRate >= 0) {
-                ctx.fillText("+" + this.game.workerRate.toString(), 1510, 796);
-            } else {
-                ctx.fillText(this.game.workerRate.toString(), 1510, 796);
-            }*/
-            //ctx.fillText(this.game.workerRate, 1510, 796);
 
             // Food
             ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
@@ -1069,13 +1052,22 @@ class SceneManager {
             let availableResourceAmount = this.game[resourceStr];
             let resourceStrUpperCase = resourceStr[0].toUpperCase() + resourceStr.slice(1);
             let requiredResourceAmount = requiredResources[resourceStr];
-            //console.log("resourceStr: " + resourceStr);
+            console.log("resourceStr: " + resourceStr);
             //console.log("availableResourceAmount: " + availableResourceAmount);
             //console.log("requiredResourceAmount: " + requiredResourceAmount);
-            if (requiredResourceAmount > availableResourceAmount) { // a required resource
-                ctx.fillStyle = "#fc8583";
+            if (resourceStr === "workers") {
+                if (this.game.workers + requiredResourceAmount > this.game.maxWorkers) { // a required resource
+                    ctx.fillStyle = "#fc8583";
+                } else {
+                    ctx.fillStyle = "lightgreen";
+                }
+            
             } else {
-                ctx.fillStyle = "lightgreen";
+                if (requiredResourceAmount > availableResourceAmount) { // a required resource
+                    ctx.fillStyle = "#fc8583";
+                } else {
+                    ctx.fillStyle = "lightgreen";
+                }
             }
             ctx.fillText(resourceStrUpperCase + ": " + requiredResourceAmount, resourceStringX, 812);
             resourceStringX += 100;
