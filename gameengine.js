@@ -236,13 +236,13 @@ class GameEngine {
         this.camera.draw(this.ctx);
     };
 
-    removeAll() {
-        for (var i = this.entities.length - 1; i >= 0; --i) {
-            for(var j = this.entities[i].length - 1; j >= 0; --j) {
-                this.entities[i][j].removeFromWorld = true;
-            }
-        }
-    }
+    // removeAll() {
+    //     for (var i = this.entities.length - 1; i >= 0; --i) {
+    //         for(var j = this.entities[i].length - 1; j >= 0; --j) {
+    //             this.entities[i][j].removeFromWorld = true;
+    //         }
+    //     }
+    // }
 
     update() {
         // Check if the game is over (when 10 days is reached. If it is, print some victory text)
