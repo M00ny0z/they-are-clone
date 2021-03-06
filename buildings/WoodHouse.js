@@ -35,7 +35,6 @@ class WoodHouse {
         
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers -= this.workers;
             this.game.maxWorkers -= this.workers;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1;
         }
@@ -61,7 +60,6 @@ class WoodHouse {
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
                 //this.game.workers -= this.game.requiredResources["WoodHouse"].workers;
-                this.game.workers += this.workers;
                 this.game.maxWorkers += this.workers;
                 this.game.food -= this.game.requiredResources["WoodHouse"].food;
                 this.game.wood -= this.game.requiredResources["WoodHouse"].wood;
@@ -81,8 +79,7 @@ class WoodHouse {
             {
                 this.game.collisionMap[doubleY][doubleX] = 1;
 
-                this.game.workers += this.game.requiredResources["WoodHouse"].workers;
-                this.game.workerRate -= this.workerRate;
+                this.game.maxWorkers -= this.workers;
 
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;

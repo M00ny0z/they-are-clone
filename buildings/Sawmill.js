@@ -73,7 +73,7 @@ class Sawmill {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers += this.game.requiredResources["Sawmill"].workers;
+            this.game.workers -= this.game.requiredResources["Sawmill"].workers;
             this.game.woodRate -= this.woodRate;
   this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH + 1][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
@@ -108,7 +108,7 @@ class Sawmill {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers -= this.game.requiredResources["Sawmill"].workers;
+                this.game.workers += this.game.requiredResources["Sawmill"].workers;
                 this.game.food -= this.game.requiredResources["Sawmill"].food;
                 this.game.wood -= this.game.requiredResources["Sawmill"].wood;
                 this.game.stone -= this.game.requiredResources["Sawmill"].stone;
@@ -133,8 +133,7 @@ class Sawmill {
                 this.game.mainMap.map[doubleY + 1][doubleX].Sawmill = false;
 
                 this.game.woodRate -= this.woodRate;
-                this.game.workers += this.game.requiredResources["Sawmill"].workers;
-                this.game.workerRate += this.game.requiredResources["Sawmill"].workers;
+                this.game.workers -= this.game.requiredResources["Sawmill"].workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }

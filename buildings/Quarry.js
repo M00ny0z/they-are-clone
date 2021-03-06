@@ -93,7 +93,7 @@ class Quarry {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers += this.game.requiredResources["Quarry"].workers;
+            this.game.workers -= this.game.requiredResources["Quarry"].workers;
             this.game.stoneRate -= this.stoneRate;
             this.game.ironRate -= this.ironRate;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
@@ -130,7 +130,7 @@ class Quarry {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                this.game.workers -= this.game.requiredResources["Quarry"].workers;
+                this.game.workers += this.game.requiredResources["Quarry"].workers;
                 this.game.food -= this.game.requiredResources["Quarry"].food;
                 this.game.wood -= this.game.requiredResources["Quarry"].wood;
                 this.game.stone -= this.game.requiredResources["Quarry"].stone;
@@ -157,8 +157,7 @@ class Quarry {
 
                 this.game.stoneRate -= this.stoneRate;
                 this.game.ironRate -= this.ironRate;
-                this.game.workers += this.game.requiredResources["Quarry"].workers;
-                this.game.workerRate += this.game.requiredResources["Quarry"].workers;
+                this.game.workers -= this.game.requiredResources["Quarry"].workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }

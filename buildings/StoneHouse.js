@@ -35,7 +35,6 @@ class StoneHouse {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers -= this.workers;
             this.game.maxWorkers -= this.workers;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
 
@@ -61,8 +60,6 @@ class StoneHouse {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
-                //this.game.workers -= this.game.requiredResources["StoneHouse"].workers;
-                this.game.workers += this.workers;
                 this.game.maxWorkers += this.workers;
                 this.game.food -= this.game.requiredResources["StoneHouse"].food;
                 this.game.wood -= this.game.requiredResources["StoneHouse"].wood;
@@ -82,8 +79,7 @@ class StoneHouse {
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
                 this.game.collisionMap[doubleY][doubleX] = 1;
-                this.game.workers += this.game.requiredResources["StoneHouse"].workers;
-                this.game.workerRate -= this.workerRate;
+                this.game.maxWorkers -= this.workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }

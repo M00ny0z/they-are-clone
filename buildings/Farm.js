@@ -178,7 +178,7 @@ class Farm {
 
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
-            this.game.workers += this.game.requiredResources["Farm"].workers;
+            this.game.workers -= this.game.requiredResources["Farm"].workers;
             this.game.foodRate -= this.foodRate;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
@@ -221,7 +221,7 @@ class Farm {
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
 
-                this.game.workers -= this.game.requiredResources["Farm"].workers;
+                this.game.workers += this.game.requiredResources["Farm"].workers;
                 this.game.food -= this.game.requiredResources["Farm"].food;
                 this.game.wood -= this.game.requiredResources["Farm"].wood;
                 this.game.stone -= this.game.requiredResources["Farm"].stone;
@@ -245,8 +245,7 @@ class Farm {
                 }
 
                 this.game.foodRate -= this.foodRate;
-                this.game.workers += this.game.requiredResources["Farm"].workers;
-                this.game.workerRate += this.game.requiredResources["Farm"].workers;
+                this.game.workers -= this.game.requiredResources["Farm"].workers;
                 this.removeFromWorld = true;
                 this.game.doubleClick = null;
             }
