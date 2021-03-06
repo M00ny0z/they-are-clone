@@ -5,6 +5,8 @@ class SceneManager {
         this.cameraX = 10;
         this.cameraY = 27;
 
+        this.game.sceneManager = this;
+
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ui/frame.png");
         this.minimap = new Minimap(this.game, .15 * PARAMS.BLOCKWIDTH, 14.45 * PARAMS.BLOCKWIDTH);
         this.title = true;
@@ -59,6 +61,10 @@ class SceneManager {
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct = {};
         }
 
         this.loadStartMenu();
@@ -124,6 +130,17 @@ class SceneManager {
     }
 
     update() {
+        let nameOfThisFunction = "update";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if(!this.title){
             PARAMS.DEBUG = document.getElementById("debug").checked;
             PARAMS.CORD = document.getElementById("cord").checked;
@@ -616,9 +633,26 @@ class SceneManager {
                 }
             }
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     draw(ctx) {
+        let nameOfThisFunction = "draw";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         if(!this.title){
             ctx.drawImage(this.spritesheet, 0, 645, 1600, 250);
 
@@ -989,10 +1023,27 @@ class SceneManager {
             // Minimap
             this.minimap.draw(ctx);
         }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     // creates the descriptions for a given UI element
     addDescription(ctx, unitType, headerText, resourcesStringArray, descriptionStringArray) {
+        let nameOfThisFunction = "addDescription";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
 
         ctx.strokeStyle = "grey";
         ctx.moveTo(500, 782);
@@ -1079,9 +1130,26 @@ class SceneManager {
             ctx.fillText(description, 500, descriptionTextY);
             descriptionTextY += 20;
         })
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     }
 
     drawHealthbar(ctx, x, y, width, height, val, maxVal) {
+        let nameOfThisFunction = "startInput";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         const posX = x;
         const posY = y;
 
@@ -1106,10 +1174,27 @@ class SceneManager {
 
 
         ctx.restore();
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
 
     drawTimer(ctx) {
+        let nameOfThisFunction = "startInput";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         // Hour
         if (Math.floor(this.game.elapsedHour / 24) == 0) {
             switch (Math.floor(this.game.elapsedHour) % 10) {
@@ -1280,6 +1365,12 @@ class SceneManager {
             case 9:
                 ctx.drawImage(this.nineIcon, 214, 786, 17, 29);
                 break;
+        }
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
         }
     }
 };

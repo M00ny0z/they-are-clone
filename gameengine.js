@@ -92,6 +92,10 @@ class GameEngine {
     };
 
     init(ctx) {
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct = {};
+        }
+
         this.ctx = ctx;
         this.surfaceWidth = this.ctx.canvas.width;
         this.surfaceHeight = this.ctx.canvas.height;
@@ -115,6 +119,17 @@ class GameEngine {
     };
 
     startInput() {
+        let nameOfThisFunction = "startInput";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         var that = this;
 
         var getXandY = function (e) {
@@ -220,6 +235,12 @@ class GameEngine {
                     break;
             }
         }, false);
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     addEntity(entity) {
@@ -227,6 +248,17 @@ class GameEngine {
     };
 
     draw() {
+        let nameOfThisFunction = "draw";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             for (var j = 0; j < this.entities[i].length; j++) {
@@ -234,6 +266,12 @@ class GameEngine {
             }
         }
         this.camera.draw(this.ctx);
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     // removeAll() {
@@ -245,6 +283,17 @@ class GameEngine {
     // }
 
     update() {
+        let nameOfThisFunction = "update";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         // Check if the game is over (when 10 days is reached. If it is, print some victory text)
         if(this.elapsedDay >= 10 && (this.gameOver == false)) {
             this.wonTheGameFlag = true;
@@ -278,9 +327,7 @@ class GameEngine {
         if(PARAMS.PERFORMANCE_MEASURE && !this.hasPrintedReport) {
             //If it's time to print the report, update and report
             if((new Date().getTime() - this.startDate.getTime()) / 1000 >= PARAMS.PERFORMANCE_TIME_WINDOW) {
-                    this.updatePerformanceInfo(true);
                     this.printPerformanceReport();
-                    this.hasPrintedReport = true;
             } else {
                 this.updatePerformanceInfo(false);
             }
@@ -309,6 +356,12 @@ class GameEngine {
         }
 
         this.doubleClick = null;
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
     };
 
     gameEnd(wonTheGameFlag) {
@@ -369,6 +422,17 @@ class GameEngine {
 // FPS MONITOR
 // https://stackoverflow.com/questions/8279729/calculate-fps-in-canvas-using-requestanimationframe
     refreshLoop() {
+        let nameOfThisFunction = "refreshLoop";
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+                //initialize
+                this.performanceMeasuresStruct[nameOfThisFunction] = {};
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+            }
+            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+        }
+
         window.requestAnimationFrame(() => {
           const now = performance.now();
           //console.log("this.times is: ");
@@ -381,12 +445,18 @@ class GameEngine {
           //console.log(this.fps);
           this.refreshLoop();
         });
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        }
       }
 
     updatePerformanceInfo(timeToReport) {
         if(this.performanceInfo == null) {
             this.performanceInfo = [];
-            for(let i = 0; i < 4; i++) {
+            for(let i = 0; i < 6; i++) {
                 this.performanceInfo.push({});
             }
         }
@@ -394,6 +464,7 @@ class GameEngine {
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             for (var j = 0; j < this.entities[i].length; j++) {
                 var entity = this.entities[i][j];
+                var aliveEntity = false;
                 //If it's not time to report, only update an entity if it is dead
                 if(!timeToReport && !entity.removeFromWorld) {
                     continue;
@@ -418,9 +489,47 @@ class GameEngine {
                 }
             }
         }
+        //Report game engine performance
+        for(let funcName of Object.keys(this.performanceMeasuresStruct)) {
+            //Initialize if necessary
+            if(this.performanceInfo[4][funcName] == null) {
+                this.performanceInfo[4][funcName] = {};
+                this.performanceInfo[4][funcName]["totalRuntime"] = 0;
+                this.performanceInfo[4][funcName]["totalRuns"] = 0;
+            }
+
+            let totalRuntime = this.performanceMeasuresStruct[funcName]["totalRuntime"];
+            let totalRuns = this.performanceMeasuresStruct[funcName]["totalRuns"];
+            //Update this.performanceInfo
+            this.performanceInfo[4][funcName]["totalRuntime"] = totalRuntime;
+            this.performanceInfo[4][funcName]["totalRuns"] = totalRuns;
+        }
+
+        //Report scene manager performance
+        for(let funcName of Object.keys(this.sceneManager.performanceMeasuresStruct)) {
+            //Initialize if necessary
+            if(this.performanceInfo[5][funcName] == null) {
+                this.performanceInfo[5][funcName] = {};
+                this.performanceInfo[5][funcName]["totalRuntime"] = 0;
+                this.performanceInfo[5][funcName]["totalRuns"] = 0;
+            }
+
+            let totalRuntime = this.sceneManager.performanceMeasuresStruct[funcName]["totalRuntime"];
+            let totalRuns = this.sceneManager.performanceMeasuresStruct[funcName]["totalRuns"];
+            //Update this.performanceInfo
+            this.performanceInfo[5][funcName]["totalRuntime"] = totalRuntime;
+            this.performanceInfo[5][funcName]["totalRuns"] = totalRuns;
+        }
     }
 
+    //Only call this once per run
     printPerformanceReport() {
+        if(this.hasPrintedReport) {
+            return "Report can only be called once per run";
+        }
+
+        this.updatePerformanceInfo(true);
+
         console.log("--PERFORMANCE REPORT--");
         for (var i = 0; i < 4; i++) {
             var category;
@@ -441,19 +550,34 @@ class GameEngine {
             console.log("   " + category);
             for(let funcName of Object.keys(this.performanceInfo[i])) {                
                 console.log("       Function: " + funcName)
-                console.log("           Total Runtime (seconds): " + Math.round(this.performanceInfo[i][funcName]["totalRuntime"] / 1000 * 10000000) / 100000000);
+                console.log("           Total Runtime (seconds): " + Math.round(this.performanceInfo[i][funcName]["totalRuntime"] / 1000 * 10000000) / 10000000);
                 console.log("           Total Runs: " + this.performanceInfo[i][funcName]["totalRuns"]);
                 console.log("           Average Runtime per Call (seconds): " 
-                    + Math.round((this.performanceInfo[i][funcName]["totalRuntime"] / this.performanceInfo[i][funcName]["totalRuns"]) / 1000 * 10000000) / 100000000);
+                    + Math.round((this.performanceInfo[i][funcName]["totalRuntime"] / this.performanceInfo[i][funcName]["totalRuns"]) / 1000 * 10000000) / 10000000);
             }
             console.log();
-            //Build a report
-                // console.log("     method name: " + f);
-                // console.log("         total runtime (seconds): " + Math.round(totalRuntime / 1000 * 10000000) / 100000000);
-                // console.log("         total # of runs: " + totalRuns);
-                // console.log("         average runtime per call: " + Math.round(averageTimePerCall / 1000 * 10000000) / 10000000);
         }
+        console.log("   GAME ENGINE");
+        for(let funcName of Object.keys(this.performanceInfo[4])) {                
+            console.log("       Function: " + funcName)
+            console.log("           Total Runtime (seconds): " + Math.round(this.performanceInfo[4][funcName]["totalRuntime"] / 1000 * 10000000) / 10000000);
+            console.log("           Total Runs: " + this.performanceInfo[4][funcName]["totalRuns"]);
+            console.log("           Average Runtime per Call (seconds): " 
+                + Math.round((this.performanceInfo[4][funcName]["totalRuntime"] / this.performanceInfo[4][funcName]["totalRuns"]) / 1000 * 10000000) / 10000000);
+        }
+        console.log();
+
+        console.log("   Scene Manager");
+        for(let funcName of Object.keys(this.performanceInfo[5])) {                
+            console.log("       Function: " + funcName)
+            console.log("           Total Runtime (seconds): " + Math.round(this.performanceInfo[5][funcName]["totalRuntime"] / 1000 * 10000000) / 10000000);
+            console.log("           Total Runs: " + this.performanceInfo[5][funcName]["totalRuns"]);
+            console.log("           Average Runtime per Call (seconds): " 
+                + Math.round((this.performanceInfo[5][funcName]["totalRuntime"] / this.performanceInfo[5][funcName]["totalRuns"]) / 1000 * 10000000) / 10000000);
+        }
+        console.log();
+
+        this.hasPrintedReport = true;
     }
-      
 };
 
