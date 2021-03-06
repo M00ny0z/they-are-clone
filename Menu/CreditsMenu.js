@@ -9,7 +9,7 @@ class CreditsMenu {
     constructor(game) {
         Object.assign(this, {game});
 
-        this.priority = 1;
+        this.priority = MISCELLANEOUSPRIORITY;
     };
 
     update() {

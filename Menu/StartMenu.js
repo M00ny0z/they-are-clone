@@ -14,7 +14,7 @@ class StartMenu {
         Object.assign(this, { game });
         this.mapOneImg = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
 
-        this.priority = 1;
+        this.priority = MISCELLANEOUSPRIORITY;
     };
 
     update() {

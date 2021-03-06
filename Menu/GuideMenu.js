@@ -4,7 +4,7 @@ class GuideMenu {
     BACK_POS = { X: 10, Y: 65 };
     constructor(game) {
         Object.assign(this, {game});
-        this.priority = 1;
+        this.priority = MISCELLANEOUSPRIORITY;
     };
 
     update() {
