@@ -213,8 +213,8 @@ class InfectedHarpy {
         }
 
         //collision detection
+        let closestEnt;
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-            let closestEnt;
             for (const ent of this.game.entities[i]) {
                 const enemyCheck = (
                     ent instanceof Ranger ||  
@@ -245,18 +245,28 @@ class InfectedHarpy {
                     if (distance(this, closestEnt) > distance(this, ent)) {
                         closestEnt = ent;
                     }
-                    this.target = closestEnt;
-                }
-                if (enemyCheck && closestEnt && collide(this, closestEnt)) {
-                    if (this.state === 0) {
-                        this.state = 1;
-                        this.elapsedTime = 0;
-                    } else if (this.elapsedTime > 0.5) {
-                        closestEnt.hitpoints -= 12;
-                        this.elapsedTime = 0;
-                    }
                 }
             }
+        }
+
+        if(closestEnt) {
+            this.target = closestEnt;
+        } else {
+            this.target = this.path[this.targetID];
+        }
+
+        if (closestEnt && collide(this, closestEnt)) {
+            if (this.state === 0) {
+                this.state = 1;
+                this.elapsedTime = 0;
+            } else if (this.elapsedTime > 0.5) {
+                closestEnt.hitpoints -= 12;
+                this.elapsedTime = 0;
+            }
+        }
+        //If this unit was previously attacking something and is no longer in range of it, keep walking
+        else if (this.state == 1) {
+            this.state = 0;
         }
 
         if (this.state == 0) {   // only moves when it is in walking state

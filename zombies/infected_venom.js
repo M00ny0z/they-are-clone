@@ -213,8 +213,8 @@ class InfectedVenom {
         }
 
         // collision detection
+        let closestEnt;
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-            let closestEnt;
             for (const ent of this.game.entities[i]) {
                 const enemyCheck = (
                     ent instanceof Ranger ||  
@@ -245,16 +245,25 @@ class InfectedVenom {
                     if (distance(this, closestEnt) > distance(this, ent)) {
                         closestEnt = ent;
                     }
-                    if (this.state === 0) {
-                        this.target = closestEnt;
+                    if (this.state === 0 || this.state === 3) {
                         this.state = 1;
                         this.elapsedTime = 0;
                     } else if (this.elapsedTime > 2.0) {
                         this.game.addEntity(new FireBolt(this.game, this.x, this.y, closestEnt, true));
                         this.elapsedTime = 0;
                     }
+                    //If there is a target that you are not already attacking, move towards it.
+                    if(this.state != 1) {
+                        this.state = 0;
+                    }
                 }
             }
+        }
+
+        if(closestEnt) {
+            this.target = closestEnt;
+        } else {
+            this.target = this.path[this.targetID];
         }
 
         if (this.state == 0) {   // only moves when it is in walking state

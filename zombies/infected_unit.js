@@ -201,8 +201,10 @@ class InfectedUnit {
         if (dist < 5) {
             // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
             var incrementedTargetID = this.targetID + 1;
-            if (this.path[incrementedTargetID] === undefined && this.target === this.path[this.targetID]) {
-                this.state = 3;
+            if (this.path[incrementedTargetID] === undefined) {
+                if (this.target === this.path[this.targetID]) {
+                    this.state = 3;
+                }
             }
             // Check if there is another target in the list of path - If not, just stay on the last target. &&
             // Check if the target is not the last point in the path (meaning it was a building) then don't advance to the next point of the path
@@ -213,8 +215,8 @@ class InfectedUnit {
         }
 
         // collision detection
+        let closestEnt;
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-            let closestEnt;
             for (const ent of this.game.entities[i]) {
                 const enemyCheck = (
                     ent instanceof Ranger ||  
@@ -245,18 +247,31 @@ class InfectedUnit {
                     if (distance(this, closestEnt) > distance(this, ent)) {
                         closestEnt = ent;
                     }
-                    this.target = closestEnt;
-                }
-                if (enemyCheck && closestEnt && collide(this, closestEnt)) {
-                    if (this.state === 0) {
-                        this.state = 1;
-                        this.elapsedTime = 0;
-                    } else if (this.elapsedTime > 1.0) {
-                        closestEnt.hitpoints -= 20;
-                        this.elapsedTime = 0;
+                    //If there is a target that you are not already attacking, move towards it.
+                    if(this.state != 1) {
+                        this.state = 0;
                     }
                 }
             }
+        }
+        if(closestEnt) {
+            this.target = closestEnt;
+        } else {
+            this.target = this.path[this.targetID];
+        }
+
+        if (closestEnt && collide(this, closestEnt)) {
+            if (this.state === 0) {
+                this.state = 1;
+                this.elapsedTime = 0;
+            } else if (this.elapsedTime > 1.0) {
+                closestEnt.hitpoints -= 20;
+                this.elapsedTime = 0;
+            }
+        } 
+        //If this unit was previously attacking something and is no longer in range of it, keep walking
+        else if (this.state == 1) {
+            this.state = 0;
         }
 
         if (this.state == 0) {   // only moves when it is in walking state

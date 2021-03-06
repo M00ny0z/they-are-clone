@@ -445,5 +445,9 @@ var PARAMS = {
     MINIMAPSCALE: 0.08,
     MINIMAPUNITSIZE: 3,
     PERFORMANCE_MEASURE: true,
-    PERFORMANCE_TIME_WINDOW: 45
+    PERFORMANCE_TIME_WINDOW: 120
 };
+
+function print_hello() {
+    return "goodbye"
+}
