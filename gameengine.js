@@ -116,6 +116,11 @@ class GameEngine {
             that.loop();
             requestAnimFrame(gameLoop, that.ctx.canvas);
         })();
+
+        if(PARAMS.PERFORMANCE_MEASURE) {
+            console.log("Use gameEngine.printPerformanceReport() in console to get a performance report up to"
+             + " that point. Can only be called once per run.")
+        }
     };
 
     startInput() {
