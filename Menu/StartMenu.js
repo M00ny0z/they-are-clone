@@ -66,7 +66,7 @@ class StartMenu {
     draw(ctx) {
         ctx.fillStyle = "darkslategray";
         ctx.font = "120px Charcoal";
-        ctx.fillText("THERE ARE MILLIONS", this.TITLE_POS.X, this.TITLE_POS.Y);
+        ctx.fillText("THEY ARE MILLIONS", this.TITLE_POS.X, this.TITLE_POS.Y);
 
         this.drawMap(ctx, 1);
         this.drawMap(ctx, 2);
