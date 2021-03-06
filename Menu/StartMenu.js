@@ -13,6 +13,7 @@ class StartMenu {
     constructor(game) {
         Object.assign(this, { game });
         this.mapOneImg = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
+        this.mapThreeImg = ASSET_MANAGER.getAsset("./sprites/mapThree.png");
 
         this.priority = 1;
     };
@@ -109,11 +110,11 @@ class StartMenu {
             case 3:
                 if ((this.game.mouse != null) && (this.game.mouse.offsetX >= this.MAPTHREE_POS.X && this.game.mouse.offsetX <= this.MAPTHREE_POS.X + this.MAPTHREE_POS.width) && (this.game.mouse.offsetY >= this.MAPTHREE_POS.Y && this.game.mouse.offsetY <= this.MAPTHREE_POS.Y + this.MAPTHREE_POS.height)) {
                     ctx.globalAlpha = 1.0;
-                    ctx.drawImage(this.mapOneImg, this.MAPTHREE_POS.X, this.MAPTHREE_POS.Y, this.MAPTHREE_POS.width, this.MAPTHREE_POS.height);
+                    ctx.drawImage(this.mapThreeImg, this.MAPTHREE_POS.X, this.MAPTHREE_POS.Y, this.MAPTHREE_POS.width, this.MAPTHREE_POS.height);
                 }
                 else {
                     ctx.globalAlpha = 0.75;
-                    ctx.drawImage(this.mapOneImg, this.MAPTHREE_POS.X, this.MAPTHREE_POS.Y, this.MAPTHREE_POS.width, this.MAPTHREE_POS.height);
+                    ctx.drawImage(this.mapThreeImg, this.MAPTHREE_POS.X, this.MAPTHREE_POS.Y, this.MAPTHREE_POS.width, this.MAPTHREE_POS.height);
                 }
                 break;
         }
