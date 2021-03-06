@@ -245,6 +245,10 @@ class InfectedHarpy {
                     if (distance(this, closestEnt) > distance(this, ent)) {
                         closestEnt = ent;
                     }
+                    //If there is a target that you are not already attacking, move towards it.
+                    if(this.state != 1) {
+                        this.state = 0;
+                    }
                 }
             }
         }
