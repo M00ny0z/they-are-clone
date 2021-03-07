@@ -101,6 +101,7 @@ class SoldierBolt {
                 var ent = this.game.entities[i][j];
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
                     ent.hitpoints -= 10;
+                    this.game.addEntity(new Score(this.game, (ent.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)), (ent.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)), 10));
                     this.removeFromWorld = true;
                 }
             }

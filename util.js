@@ -57,8 +57,8 @@ const MAX_WOODGATE_HEALTH = 100;
 
 
 const ENTITIES = {};
-ENTITIES[FARM]= Farm;
-ENTITIES[QUARRY]= Quarry;
+ENTITIES[FARM] = Farm;
+ENTITIES[QUARRY] = Quarry;
 ENTITIES[COMMANDCENTER] = CommandCenter;
 ENTITIES[FISHERMANSCOTTAGE] = FishermansCottage;
 ENTITIES[MACHINEGUNTURRET] = MachineGunTurret;
@@ -84,13 +84,13 @@ const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
 
     ctx.strokeStyle = 'gray';
     ctx.strokeRect(posX, posY, 35, 8);
-    
+
     ctx.fillStyle = 'black';
     ctx.fillRect(posX + 1, posY + 1, 34, 6);
 
     ctx.fillStyle = currentHealth >= 50 ? 'green' : 'red';
     ctx.fillRect(posX + 2, posY + 2, 33 * (currentHealth / maxHealth), 3);
-    
+
     ctx.restore();
 };
 
@@ -105,7 +105,7 @@ function sanitizeCord(cord) {
     return cord;
 }
 
-function capitalizeString (string) {
+function capitalizeString(string) {
     return string[0].toUpperCase() + string.slice(1);
 }
 
@@ -138,31 +138,31 @@ function calculatePathForEntity(entity, startY, startX, endY, endX) {
     easystar.enableDiagonals();
     easystar.disableCornerCutting();
 
-    this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function( path ) {
+    this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function (path) {
         //this.gameEngine.path = path;
         //entity.path = path; // A* path
         //console.log("entityTestFunction CallBack!!!");
         //entity.entityTestFunction();
-        entity.calculatingPath = false;        
+        entity.calculatingPath = false;
         if (path === null) {
-            console.log("A* Path NOT FOUND for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
+            console.log("A* Path NOT FOUND for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}");
             console.log(path);
             entity.path = []; // A* path
         } else {
-            console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
+            console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}");
             console.log(path);
             path.shift(); // drop first coordinate (the coordinate that you are at).
             entity.path = path; // A* path
             //drawPath(path);
         }
-    });    
+    });
     easystar.setIterationsPerCalculation(1000);
     entity.calculatingPath = true; // calculating A* path (EasyStar)
     easystar.calculate();
     //console.log("calcPath after calculate: ")
     //console.log(calcPath);
     //return calcPath;
-} 
+}
 
 function drawPath(path) {
     /*this.gameEngine.ctx.strokeStyle = "grey";
@@ -171,8 +171,8 @@ function drawPath(path) {
     this.gameEngine.ctx.stroke();*/
     //console.log("path is: ")
     for (let i = 1; i < path.length; i++) {
-        let point1 = {x: convertGridCordToPixelCord(path[i-1].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(path[i-1].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
-        let point2 = {x: convertGridCordToPixelCord(path[i].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(path[i].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+        let point1 = { x: convertGridCordToPixelCord(path[i - 1].x) + PARAMS.BLOCKWIDTH / 2, y: convertGridCordToPixelCord(path[i - 1].y) + PARAMS.BLOCKWIDTH / 2 }; // convert grid coordinate to pixel.
+        let point2 = { x: convertGridCordToPixelCord(path[i].x) + PARAMS.BLOCKWIDTH / 2, y: convertGridCordToPixelCord(path[i].y) + PARAMS.BLOCKWIDTH / 2 }; // convert grid coordinate to pixel.
         //console.log(point);
         /*ctx.strokeStyle = "Black";
         ctx.beginPath();
@@ -205,26 +205,26 @@ function calculatePath(startY, startX, endY, endX) {
     easystar.setGrid(this.gameEngine.collisionMap);
     easystar.setAcceptableTiles([1]);
     let calcPath = null;
-    this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function( path ) {
+    this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function (path) {
         this.gameEngine.path = path;
         calcPath = path;
         console.log("calcPath is: ")
         console.log(calcPath);
-        
+
         if (path === null) {
             console.log("A* Path was not found.");
         } else {
-            console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
+            console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}");
             console.log(path);
-            
+
         }
-    });    
+    });
     easystar.setIterationsPerCalculation(1000);
     easystar.calculate();
     console.log("calcPath after calculate: ")
     console.log(calcPath);
     //return calcPath;
-} 
+}
 
 // returns a string that can be used as a hsl web color
 function hsl(h, s, l) {
@@ -235,7 +235,7 @@ function distance(A, B) {
     if (B instanceof Quarry || B instanceof Sawmill || B instanceof ApartmentComplex) {
         const circleOne = Math.sqrt((((B.x - A.x) ** 2) + ((B.y - A.y) ** 2)));
         const circleTwo = Math.sqrt((
-            ((B.x - A.x) ** 2) + 
+            ((B.x - A.x) ** 2) +
             ((B.y - A.y) ** 2)
         ));
         return Math.min(circleOne, circleTwo);
@@ -256,7 +256,7 @@ function buildingCheck(entity) {
         entity instanceof StoneGateVertical ||
         entity instanceof StoneGateHorizontal ||
         entity instanceof ApartmentComplex ||
-        entity instanceof WoodHouse || 
+        entity instanceof WoodHouse ||
         entity instanceof WoodGateVertical ||
         entity instanceof WoodGateHorizontal ||
         entity instanceof WoodWall ||
@@ -345,140 +345,169 @@ window.requestAnimFrame = (function () {
 ////////////////////////////////////////////////////////////////////////////////////
 /////// Grid Functions
 
-    function convertPixelCordToGridCord(pixelCord) {
-        return Math.floor(pixelCord/PARAMS.BLOCKWIDTH);
-    }
+function convertPixelCordToGridCord(pixelCord) {
+    return Math.floor(pixelCord / PARAMS.BLOCKWIDTH);
+}
 
-    function returnIndividualPathCoordinates(pathArray, x, y) {
-        let outputPath = [];
-        pathArray.forEach(path => {
-            if(x != path.x) {
-                if (x < path.x) {
-                    for (x=x; x < path.x; x++) {
-                        outputPath.push({x, y});
-                    }
-                } else { // x > path.x
-                    for (x=x; x > path.x; x--) {
-                        outputPath.push({x, y});
-                    }
+function returnIndividualPathCoordinates(pathArray, x, y) {
+    let outputPath = [];
+    pathArray.forEach(path => {
+        if (x != path.x) {
+            if (x < path.x) {
+                for (x = x; x < path.x; x++) {
+                    outputPath.push({ x, y });
                 }
-            } else { // y != path.y
-                if (y < path.y) {
-                    for (y=y; y < path.y; y++) {
-                        outputPath.push({x, y});
-                    }
-                } else { // x > path.x
-                    for (y=y; y > path.y; y--) {
-                        outputPath.push({x, y});
-                    }
+            } else { // x > path.x
+                for (x = x; x > path.x; x--) {
+                    outputPath.push({ x, y });
                 }
             }
-        });
-        outputPath.push(pathArray[pathArray.length-1]);
-        return outputPath;
-    }
-
-    function setColMapXYVal(gridX, gridY, val) {
-        this.gameEngine.collisionMap[gridY][gridX] = val;
-    }
-
-    function printCollisionMap() {
-        console.log("collision map: (0 = no collision, 1 = collision)")
-        for (var y = 0; y < 50; y++) {
-            var outputLine = leftPad(y, 2) + ": [";
-            for (var x = 0; x <= 48; x++) {
-                outputLine += this.gameEngine.collisionMap[y][x] + ", ";
-            }
-            outputLine += this.gameEngine.collisionMap[y][x] + "]";
-            console.log(outputLine);
-        }
-    }
-
-    function showCollisions() {
-        this.gameEngine.ctx.font = "10px SpaceMono-Regular";
-        this.gameEngine.ctx.fillStyle = "pink";
-        for (var i = 0; i < 50; i++) {
-            for (var j = 0; j < 50; j++) {
-                var x = (j - this.gameEngine.camera.cameraX) * PARAMS.BLOCKWIDTH;
-                var y = (i - this.gameEngine.camera.cameraY + 1) * PARAMS.BLOCKWIDTH;
-                console.log("x: " + x + ", y: " + y);
-                this.gameEngine.ctx.fillText("" + this.gameEngine.collisionMap[i][j], x, y);
-
-                //this.gameEngine.ctx.fillText("" + this.gameEngine.collisionMap[y][x], x, y);
-            }
-        }
-    }
-
-
-    // for 1 block buildings, increment=4, decrement = 2 (grid size)
-    // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
-    // returns a boolean true if none of same building type are within grid
-    function checkSameBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
-        //console.log("unitType: " + unitType);
-        let mapStartX = sanitizeCord(gridX - decrement);
-        let mapStartY = sanitizeCord(gridY - decrement);
-        let mapEndX;
-        if (increment === 5) { // sawmill, quarry
-            mapEndX = sanitizeCord(mapStartX + increment-1);
-        } else { //fishermans cottage, farm
-            mapEndX = sanitizeCord(mapStartX + increment);
-        }
-        //let mapEndX = sanitizeCord(mapStartX + increment);
-        let mapEndY = sanitizeCord(mapStartY + increment);
-        //console.log(this.gameEngine.mainMap.map[0][0]["FishermansCottage"]);
-        //console.log(this.gameEngine.mainMap.map[0][0][unitType]);
-        for (var i = mapStartY; i <= mapEndY; i++) {
-            for (var j = mapStartX; j <= mapEndX; j++) {
-                if (this.gameEngine.mainMap.map[i][j][unitType]) { // does unit resource grid already exist there?
-                    return false; // if so, we can't place. return false
+        } else { // y != path.y
+            if (y < path.y) {
+                for (y = y; y < path.y; y++) {
+                    outputPath.push({ x, y });
+                }
+            } else { // x > path.x
+                for (y = y; y > path.y; y--) {
+                    outputPath.push({ x, y });
                 }
             }
         }
-        return true; // no overlap. We are free to place.
+    });
+    outputPath.push(pathArray[pathArray.length - 1]);
+    return outputPath;
+}
+
+function setColMapXYVal(gridX, gridY, val) {
+    this.gameEngine.collisionMap[gridY][gridX] = val;
+}
+
+function printCollisionMap() {
+    console.log("collision map: (0 = no collision, 1 = collision)")
+    for (var y = 0; y < 50; y++) {
+        var outputLine = leftPad(y, 2) + ": [";
+        for (var x = 0; x <= 48; x++) {
+            outputLine += this.gameEngine.collisionMap[y][x] + ", ";
+        }
+        outputLine += this.gameEngine.collisionMap[y][x] + "]";
+        console.log(outputLine);
     }
+}
+
+function showCollisions() {
+    this.gameEngine.ctx.font = "10px SpaceMono-Regular";
+    this.gameEngine.ctx.fillStyle = "pink";
+    for (var i = 0; i < 50; i++) {
+        for (var j = 0; j < 50; j++) {
+            var x = (j - this.gameEngine.camera.cameraX) * PARAMS.BLOCKWIDTH;
+            var y = (i - this.gameEngine.camera.cameraY + 1) * PARAMS.BLOCKWIDTH;
+            console.log("x: " + x + ", y: " + y);
+            this.gameEngine.ctx.fillText("" + this.gameEngine.collisionMap[i][j], x, y);
+
+            //this.gameEngine.ctx.fillText("" + this.gameEngine.collisionMap[y][x], x, y);
+        }
+    }
+}
 
 
-    // for 1 block buildings, increment=4, decrement = 2 (grid size)
-    // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
-    // labels gridpoints on map with tha building type existing there.
-    function fillBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
-        let mapStartX = sanitizeCord(gridX - decrement);
-        let mapStartY = sanitizeCord(gridY - decrement);
-        let mapEndX = sanitizeCord(mapStartX + increment);
-        let mapEndY = sanitizeCord(mapStartY + increment);
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
-                // we want to toggle everything from false -> true.
-                if (this.gameEngine.mainMap.map[i][j][unitType]) { // if already true
-                    console.log("This should not occur (fillBuildingTypeInMapGrid, building is in map but it shouldn't be there)!!!!");
-                }
-                this.gameEngine.mainMap.map[i][j][unitType] = true; // set it to occupied.
+// for 1 block buildings, increment=4, decrement = 2 (grid size)
+// for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
+// returns a boolean true if none of same building type are within grid
+function checkSameBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
+    //console.log("unitType: " + unitType);
+    let mapStartX = sanitizeCord(gridX - decrement);
+    let mapStartY = sanitizeCord(gridY - decrement);
+    let mapEndX;
+    if (increment === 5) { // sawmill, quarry
+        mapEndX = sanitizeCord(mapStartX + increment - 1);
+    } else { //fishermans cottage, farm
+        mapEndX = sanitizeCord(mapStartX + increment);
+    }
+    //let mapEndX = sanitizeCord(mapStartX + increment);
+    let mapEndY = sanitizeCord(mapStartY + increment);
+    //console.log(this.gameEngine.mainMap.map[0][0]["FishermansCottage"]);
+    //console.log(this.gameEngine.mainMap.map[0][0][unitType]);
+    for (var i = mapStartY; i <= mapEndY; i++) {
+        for (var j = mapStartX; j <= mapEndX; j++) {
+            if (this.gameEngine.mainMap.map[i][j][unitType]) { // does unit resource grid already exist there?
+                return false; // if so, we can't place. return false
             }
         }
     }
+    return true; // no overlap. We are free to place.
+}
 
-    // for 1 block buildings, increment=4, decrement = 2 (grid size)
-    // for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
-    // labels gridpoints on map with tha building type doesn't exist there.
-    function removeBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
-        let mapStartX = sanitizeCord(gridX - decrement);
-        let mapStartY = sanitizeCord(gridY - decrement);
-        let mapEndX = sanitizeCord(mapStartX + increment);
-        let mapEndY = sanitizeCord(mapStartY + increment);
-        for (var i = mapStartX; i <= mapEndX; i++) {
-            for (var j = mapStartY; j <= mapEndY; j++) {
-                // we want to toggle everything from false -> true.
-                if (!this.gameEngine.mainMap.map[i][j][unitType]) { // if already false
-                    console.log("This should not occur (removeBuildingTypeInMapGrid, building is not in map but it should be there)!!!!");
-                }
-                this.gameEngine.mainMap.map[i][j][unitType] = false; // set it to occupied.
+
+// for 1 block buildings, increment=4, decrement = 2 (grid size)
+// for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
+// labels gridpoints on map with tha building type existing there.
+function fillBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
+    let mapStartX = sanitizeCord(gridX - decrement);
+    let mapStartY = sanitizeCord(gridY - decrement);
+    let mapEndX = sanitizeCord(mapStartX + increment);
+    let mapEndY = sanitizeCord(mapStartY + increment);
+    for (var i = mapStartX; i <= mapEndX; i++) {
+        for (var j = mapStartY; j <= mapEndY; j++) {
+            // we want to toggle everything from false -> true.
+            if (this.gameEngine.mainMap.map[i][j][unitType]) { // if already true
+                console.log("This should not occur (fillBuildingTypeInMapGrid, building is in map but it shouldn't be there)!!!!");
             }
+            this.gameEngine.mainMap.map[i][j][unitType] = true; // set it to occupied.
         }
     }
+}
+
+// for 1 block buildings, increment=4, decrement = 2 (grid size)
+// for 2 block vertical buildings, increment=5, decrement = 2 (grid size)
+// labels gridpoints on map with tha building type doesn't exist there.
+function removeBuildingTypeInMapResourceGrid(unitType, gridX, gridY, increment, decrement) {
+    let mapStartX = sanitizeCord(gridX - decrement);
+    let mapStartY = sanitizeCord(gridY - decrement);
+    let mapEndX = sanitizeCord(mapStartX + increment);
+    let mapEndY = sanitizeCord(mapStartY + increment);
+    for (var i = mapStartX; i <= mapEndX; i++) {
+        for (var j = mapStartY; j <= mapEndY; j++) {
+            // we want to toggle everything from false -> true.
+            if (!this.gameEngine.mainMap.map[i][j][unitType]) { // if already false
+                console.log("This should not occur (removeBuildingTypeInMapGrid, building is not in map but it should be there)!!!!");
+            }
+            this.gameEngine.mainMap.map[i][j][unitType] = false; // set it to occupied.
+        }
+    }
+}
 
 
 
 
+
+class Score {
+    constructor(game, x, y, score) {
+        Object.assign(this, { game, x, y, score });
+        this.priority = MISCELLANEOUSPRIORITY;
+        this.velocity = -32;
+        this.elapsed = 0;
+    };
+
+    update() {
+        this.elapsed += this.game.clockTick;
+        if (this.elapsed > 1) this.removeFromWorld = true;
+
+        this.y += this.game.clockTick * this.velocity;
+    };
+
+    draw(ctx) {
+        var offset = this.score < 10 ? 6 : 12;
+        ctx.font = '12px "Press Start 2P"';
+        ctx.fillStyle = "Black";
+        ctx.fillText(this.score, this.x - offset + 1, this.y + 1);
+        ctx.fillStyle = rgb(183, 3, 3);
+        ctx.fillText(this.score, this.x - offset, this.y);
+    };
+
+    drawMinimap(ctx, mmX, mmY) {
+
+    }
+};
 
 
 // add global parameters here

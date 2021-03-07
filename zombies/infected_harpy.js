@@ -265,6 +265,7 @@ class InfectedHarpy {
                 this.elapsedTime = 0;
             } else if (this.elapsedTime > 0.5) {
                 closestEnt.hitpoints -= 12;
+                this.game.addEntity(new Score(this.game, (closestEnt.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)), (closestEnt.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)), 12));
                 this.elapsedTime = 0;
             }
         }
