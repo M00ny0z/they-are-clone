@@ -149,7 +149,7 @@ class Ranger {
       'xStart': 1,
       'width': 55,
       'height': 68,
-      'frames': 25,
+      'frames': 24,
       'speed': 0.1,
       'padding': 2
     };
