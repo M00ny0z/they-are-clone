@@ -1,7 +1,7 @@
 class GuideMenu {
 
     TITLE_POS = { X: 547, Y: 150 };
-    BACK_POS = { X: 10, Y: 65 };
+    BACK_POS = { X: 10, Y: 85 };
     constructor(game) {
         Object.assign(this, {game});
         this.priority = MISCELLANEOUSPRIORITY;
@@ -9,7 +9,7 @@ class GuideMenu {
 
     update() {
         if (this.game.mouse != null) {
-            if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 225) && (this.game.mouse.offsetY >= 20 && this.game.mouse.offsetY <= 65)
+            if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 325) && (this.game.mouse.offsetY >= 0 && this.game.mouse.offsetY <= 95)
             && (this.game.click)) {
                 this.game.camera.loadStartMenu();
             }
@@ -40,7 +40,7 @@ class GuideMenu {
     drawGoBack(ctx) {
         var fontsize = 75;
         ctx.font = fontsize + 'px "Charcoal"';
-        if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 225) && (this.game.mouse.offsetY >= 20 && this.game.mouse.offsetY <= 65)) {
+        if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 325) && (this.game.mouse.offsetY >= 0 && this.game.mouse.offsetY <= 95)) {
             ctx.fillStyle = "White";
             ctx.fillText("Go Back", this.BACK_POS.X, this.BACK_POS.Y);
         }

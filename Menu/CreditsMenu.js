@@ -1,5 +1,5 @@
 const imgY = 250;
-const imgX = 100;
+const imgX = 90;
 const spacing = 400;
 const CRED1_POS ={ x: imgX, y: imgY, width: 210, height: 210 };
 const CRED2_POS ={ x: imgX + spacing * 1, y: imgY, width: 210, height: 210 };
@@ -48,7 +48,7 @@ class CreditsMenu {
     update() {
 
         if (this.game.mouse != null) {
-            if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 225) && (this.game.mouse.offsetY >= 20 && this.game.mouse.offsetY <= 65)
+            if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 325) && (this.game.mouse.offsetY >= 0 && this.game.mouse.offsetY <= 95)
             && (this.game.click)) {
                 this.game.camera.loadStartMenu();
             }
@@ -93,7 +93,7 @@ class CreditsMenu {
             ctx.drawImage(dev.img, pos.x, pos.y, pos.width, pos.height);
             ctx.font = "20px SpaceMono-Bold";
             ctx.fillStyle = "pink";
-            ctx.textBaseline = "bottom";
+            //ctx.textBaseline = "bottom";
             ctx.fillText(dev.name, pos.x, pos.y+250);
 
 
@@ -121,7 +121,7 @@ class CreditsMenu {
 
         var fontsize = 75;
         ctx.font = fontsize + 'px "Charcoal"';
-        if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 225) && (this.game.mouse.offsetY >= 20 && this.game.mouse.offsetY <= 65)) {
+        if ((this.game.mouse.offsetX >= 10 && this.game.mouse.offsetX <= 325) && (this.game.mouse.offsetY >= 0 && this.game.mouse.offsetY <= 95)) {
             ctx.fillStyle = "White";
             ctx.fillText("Go Back", this.BACK_POS.X, this.BACK_POS.Y);
         }
