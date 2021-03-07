@@ -5,6 +5,7 @@ class StartMenu {
     MAPONE_POS = { X: 100, Y: 250, width: 350, height: 350 };
     MAPTWO_POS = { X: 625, Y: 250, width: 350, height: 350 };
     MAPTHREE_POS = { X: 1150, Y: 250, width: 350, height: 350 };
+    STUDIO_POS = { X: 600, Y: 750, width: 350, height: 50 };
 
     CONTROLS_POS = { X: 1290, Y: 700, width: 240, height: 45 };
     GUIDE_POS = { X: 1340, Y: 780, width: 150, height: 45 };
@@ -14,6 +15,8 @@ class StartMenu {
         Object.assign(this, { game });
         this.mapOneImg = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
         this.mapThreeImg = ASSET_MANAGER.getAsset("./sprites/mapThree.png");
+        this.createdByImg = ASSET_MANAGER.getAsset("./sprites/createdBy.png");
+        this.red5StudiosImg = ASSET_MANAGER.getAsset("./sprites/red5Studios.png");
 
         this.priority = MISCELLANEOUSPRIORITY;
     };
@@ -76,6 +79,8 @@ class StartMenu {
         this.drawControls(ctx);
         this.drawGuide(ctx);
         this.drawCredits(ctx);
+        ctx.drawImage(this.red5StudiosImg, this.STUDIO_POS.X, this.STUDIO_POS.Y, this.STUDIO_POS.width, this.STUDIO_POS.height);
+
     };
 
     drawMap(ctx, num) {
