@@ -243,8 +243,8 @@ class Soldier {
                   this.state = 1; // set state to attacking
                   this.target = closestEnt; // target the closest entity for attack
                   this.elapsedTime = 0; // set elapsedTime to 0 at start of attack to sync attack animation and projectile.
-                } else if (this.elapsedTime > 1.5) { // attack the enemy (send out aa projectile) every 1.5 seconds.
-                  this.game.addEntity(new Arrow(this.game, this.x, this.y, closestEnt, true)); // attack.
+                } else if (this.elapsedTime > 0.75) { // attack the enemy (send out aa projectile) every 0.75 seconds.
+                  this.game.addEntity(new SoldierBolt(this.game, this.x, this.y, closestEnt, true)); // attack
                   this.elapsedTime = 0; // reset counter, so that you can attack again using given timer.
                 }
               }
