@@ -211,7 +211,6 @@ class Ranger {
         if (dist < 5) { // If you are walking and have arrived at the intended point
           if (this.path.length === 1) { // if the point you arrived at is the last part of path
             this.state = 3; // then idle (because you are done traversing path)
-            this.velocity = {x:0, y:0}; // set your velocity to 0
             this.target = null; // null your target
           }
           this.path.shift();
@@ -226,7 +225,6 @@ class Ranger {
         // user clicked on same square that unit is in
         if(this.state === 0) {  // if user is walking and they click on tile they are currently at.
             this.state = 3; // then idle (because you are done traversing path)
-            this.velocity = {x:0, y:0}; // set your velocity to 0
             this.target = null; // null your target
         }
       }
