@@ -34,6 +34,7 @@ class GuideMenu {
         if (this.game.mouse != null) {
             this.drawGoBack(ctx);
         }
+        this.loadInstructions(ctx);
 
     };
 
@@ -50,4 +51,41 @@ class GuideMenu {
         }
 
     };
+
+    loadInstructions(ctx) {
+        var url = 'instructions.pdf';
+        //
+        // Asynchronous download PDF
+        //
+        var loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function(pdf) {
+            //
+            // Fetch the first page
+            //
+            pdf.getPage(1).then(function(page) {
+            var scale = 1.5;
+            var viewport = page.getViewport({ scale: scale, });
+
+            //
+            // Prepare canvas using PDF page dimensions
+            //
+            var canvas = document.getElementById('gameWorld');
+           //const width = 250
+            //const height = viewport.height * (width / viewport.width)
+           //const canvas = new OffscreenCanvas(width, height)
+            var context = canvas.getContext('2d');
+            //canvas.height = viewport.height;
+            //canvas.width = viewport.width;
+
+            //
+            // Render PDF page into canvas context
+            //
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+            };
+            page.render(renderContext);
+            });
+        });
+    }
 }
