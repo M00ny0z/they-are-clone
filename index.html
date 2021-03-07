@@ -71,6 +71,11 @@
     <!--UI Day and Hours-->
     <link rel="stylesheet" href="css/index.css">
 
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
 </head>
 
 <body>
@@ -88,6 +93,48 @@
             <a href="instructions.html" target="_blank">They Are Millions Guide</a>
         </div>
     </div>
+    <script type="text/javascript"> 
+
+        let checkBrowser = async () => {
+            var w3Browser, w3UserAgent = navigator.userAgent;
+        
+            if (w3UserAgent.indexOf("Firefox") > -1) {
+            w3Browser = "Mozilla Firefox";
+            } 
+            else if (w3UserAgent.indexOf("SamsungBrowser") > -1) {
+            w3Browser = "Samsung Internet";
+            } 
+            else if (w3UserAgent.indexOf("Opera") > -1 || w3UserAgent.indexOf("OPR") > -1) {
+            w3Browser = "Opera";
+            } 
+            else if (w3UserAgent.indexOf("Trident") > -1) {
+            w3Browser = "Internet Explorer";
+            } 
+            else if (w3UserAgent.indexOf("Edge") > -1) {
+            w3Browser = "Microsoft Edge";
+            } 
+            else if (w3UserAgent.indexOf("Chrome") > -1) {
+            w3Browser = "Google Chrome or Chromium";
+            } 
+            else if (w3UserAgent.indexOf("Safari") > -1) {
+            w3Browser = "Safari";
+            } 
+            else {
+            w3Browser = "Unknown";
+            }
+
+            if(w3Browser != "Mozilla Firefox") {
+                alertify.set('notifier','position', 'top-center');
+                alertify.error("Please use Firefox. Chrome and others will lag 💔.", 0);
+            }
+
+            await new Promise(r => setTimeout(r, 5000));  // we won't let you forget.
+            checkBrowser(); // you must change browsers boy!!!!
+        }
+        checkBrowser();
+      
+        //console.log("The browser is: " + w3Browser);
+      </script>
 </body>
 
 </html>
