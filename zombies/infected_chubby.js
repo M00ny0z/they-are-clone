@@ -27,7 +27,7 @@ class InfectedChubby {
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 400;
+        this.hitpoints = 300;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -305,6 +305,10 @@ class InfectedChubby {
 
         var xOffset = 35;
         var yOffset = 35;
+
+        if (this.hitpoints < MAX_CHUBBY_HEALTH) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_CHUBBY_HEALTH);
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 

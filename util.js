@@ -49,6 +49,7 @@ const MAX_RANGER_HEALTH = 80;
 const MAX_SNIPER_HEALTH = 100;
 const MAX_SOLDIER_HEALTH = 120;
 const MAX_TITAN_HEALTH = 250;
+const MAX_CHUBBY_HEALTH = 300;
 const MAX_HARPY_HEALTH = 50;
 const MAX_VENOM_HEALTH = 80;
 const MAX_STONEGATE_HEALTH = 200;
@@ -74,6 +75,10 @@ ENTITIES[WOODWALL] = WoodWall;
 const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
     const posX = (x - PARAMS.BLOCKWIDTH / 2) - (game.camera.cameraX * PARAMS.BLOCKWIDTH) + 7;
     const posY = y - (game.camera.cameraY * PARAMS.BLOCKWIDTH) - 15;
+
+    if (currentHealth < 0) {
+        currentHealth = 0;
+    }
 
     ctx.save();
 
