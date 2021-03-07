@@ -7,7 +7,18 @@ ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 ASSET_MANAGER.queueDownload("./sprites/mapOne.png");
 ASSET_MANAGER.queueDownload("./sprites/mapThree.png");
 ASSET_MANAGER.queueDownload("./sprites/createdBy.png");
-ASSET_MANAGER.queueDownload("./sprites/red5Studios.png");
+
+// Intro Screen
+ASSET_MANAGER.queueDownload("./sprites/introScreen/red5Studios.png");
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/inca_back.png");
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/inca_back2.png");
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/inca_front.png");
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/gregsDog.jpg");
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/devBackground.png");
+
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/devs/npc.png");
+ASSET_MANAGER.queueDownload("./sprites/introScreen/credits/devs/gregHablutzel.png");
+
 
 ASSET_MANAGER.queueDownload("./sprites/ui/frame.png");
 

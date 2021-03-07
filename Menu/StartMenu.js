@@ -16,7 +16,7 @@ class StartMenu {
         this.mapOneImg = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
         this.mapThreeImg = ASSET_MANAGER.getAsset("./sprites/mapThree.png");
         this.createdByImg = ASSET_MANAGER.getAsset("./sprites/createdBy.png");
-        this.red5StudiosImg = ASSET_MANAGER.getAsset("./sprites/red5Studios.png");
+        this.red5StudiosImg = ASSET_MANAGER.getAsset("./sprites/introScreen/red5Studios.png");
 
         this.priority = MISCELLANEOUSPRIORITY;
     };
