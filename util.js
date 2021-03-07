@@ -119,37 +119,81 @@ const nullCheck = (todo) => {
     return ((todo == undefined || todo == null) ? false : todo);
 };
 
+function testDrawingToCanvasAtXY(x, y) {
+    this.gameEngine.ctx.font = "25px SpaceMono-Regular";
+    this.gameEngine.ctx.fillStyle = "AliceBlue";
+    this.gameEngine.ctx.textBaseline = "bottom";
+    this.gameEngine.ctx.fillText("TEST", x, y);
+}
 function calculatePathForEntity(entity, startY, startX, endY, endX) {
     //entity.
     var easystar = new EasyStar.js();
     easystar.setGrid(this.gameEngine.collisionMap);
     easystar.setAcceptableTiles([1]);
     easystar.enableDiagonals();
-    let calcPath = null;
+    easystar.disableCornerCutting();
+
     this.gameEngine.instanceID = easystar.findPath(startX, startY, endX, endY, function( path ) {
-        this.gameEngine.path = path;
-        entity.calculatingPath = false; // calculating A* path (EasyStar)
-        entity.path = path; // A* path
+        //this.gameEngine.path = path;
+        //entity.path = path; // A* path
         //console.log("entityTestFunction CallBack!!!");
         //entity.entityTestFunction();
-        calcPath = path;
-        console.log("calcPath is: ")
-        console.log(calcPath);
-        
+        entity.calculatingPath = false;        
         if (path === null) {
-            console.log("A* Path was not found.");
+            console.log("A* Path NOT FOUND for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
+            console.log(path);
+            entity.path = []; // A* path
         } else {
             console.log("A* Path was found for: {y: " + startY + ", x: " + startX + "} to {y: " + endY + ", x: " + endX + "}"  );
             console.log(path);
-            
+            path.shift(); // drop first coordinate (the coordinate that you are at).
+            entity.path = path; // A* path
+            //drawPath(path);
         }
     });    
     easystar.setIterationsPerCalculation(1000);
+    entity.calculatingPath = true; // calculating A* path (EasyStar)
     easystar.calculate();
-    console.log("calcPath after calculate: ")
-    console.log(calcPath);
+    //console.log("calcPath after calculate: ")
+    //console.log(calcPath);
     //return calcPath;
 } 
+
+function drawPath(path) {
+    /*this.gameEngine.ctx.strokeStyle = "grey";
+    this.gameEngine.ctx.moveTo(500, 782);
+    this.gameEngine.ctx.lineTo(985, 782);
+    this.gameEngine.ctx.stroke();*/
+    //console.log("path is: ")
+    for (let i = 1; i < path.length; i++) {
+        let point1 = {x: convertGridCordToPixelCord(path[i-1].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(path[i-1].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+        let point2 = {x: convertGridCordToPixelCord(path[i].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(path[i].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+        //console.log(point);
+        /*ctx.strokeStyle = "Black";
+        ctx.beginPath();
+        ctx.setLineDash([5, 15]);
+        ctx.moveTo(point1.x, point1.y);
+        ctx.lineTo(point2.x, point2.y);
+        ctx.fillText("P1", point1.x, point1.y);
+        ctx.fillText("P2", point2.x, point2.y);
+
+        ctx.stroke();
+        ctx.setLineDash([]);
+*/
+        this.gameEngine.ctx.strokeStyle = "red";
+        this.gameEngine.ctx.beginPath();
+        this.gameEngine.ctx.setLineDash([5, 15]);
+        this.gameEngine.ctx.moveTo(point1.x, point1.y);
+        this.gameEngine.ctx.lineTo(point2.x, point2.y)
+        this.gameEngine.ctx.stroke();
+        this.gameEngine.ctx.setLineDash([]);
+    }
+    /*path.forEach(point => {
+        console.log(point);
+    });
+    console.log("-----");*/
+
+}
 
 function calculatePath(startY, startX, endY, endX) {
     var easystar = new EasyStar.js();
@@ -447,3 +491,7 @@ var PARAMS = {
     PERFORMANCE_MEASURE: true,
     PERFORMANCE_TIME_WINDOW: 120
 };
+
+function print_hello() {
+    return "goodbye"
+}

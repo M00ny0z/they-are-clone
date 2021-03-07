@@ -263,6 +263,35 @@ class SceneManager {
             }
             if (this.game.rightClick && !this.selecting && !this.selectedBuilding  && (this.game.rightClick.offsetY <= 739)) {
                 var clickedPoint = { x: this.game.rightClick.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.rightClick.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
+                let clickedGridY = convertPixelCordToGridCord(clickedPoint.y); // path mouse click Y end grid coordinate
+                let clickedGridX = convertPixelCordToGridCord(clickedPoint.x); // path mouse click X end grid coordinate
+
+                if (this.game.collisionMap[clickedGridY][clickedGridX] == 1) { // if user clicks on a valid square to pathfind to, then pathfind. 
+                    for (var i = 0; i < this.selectedUnits.length; i++) {
+                        let unitGridY = convertPixelCordToGridCord(this.selectedUnits[i].y); // selected unit's Y grid coordinate
+                        let unitGridX =  convertPixelCordToGridCord(this.selectedUnits[i].x); // selected unit's X grid coordinate
+                        //this.selectedUnits[i].state = 0;
+                        //this.selectedUnits[i].movingToSelectedPoint = true;
+                        this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y };
+                        calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y), 
+                            convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y), 
+                            convertPixelCordToGridCord(clickedPoint.x));
+                        /*console.log("unitGridY: " + unitGridY + ", unitGridX: " + unitGridX + ", clickedGridY: " + clickedGridY + ", clickedGridX: " + clickedGridX);
+                        console.log("Y comp: " + unitGridY + " != " + clickedGridY +  " " + (unitGridY != clickedGridY) + ", X comp: " + 
+                        unitGridX + " != " + clickedGridX + " " + (unitGridX != clickedGridX))*/
+                        // if they don't click in the same grid as the unit is already in, then path find
+                        /*if (unitGridY != clickedGridY || unitGridX != clickedGridX) {
+                            console.log("if!!!");
+                            this.selectedUnits[i].state = 0; // set unit to walking
+                            this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y }; 
+                            calculatePathForEntity(this.selectedUnits[i], unitGridY, unitGridX, clickedGridY, clickedGridX);
+                        } else {
+                            console.log("else!!!");
+                        }*/
+                    }
+                }
+                this.game.rightClick = null;
+                /*var clickedPoint = { x: this.game.rightClick.offsetX + this.game.camera.cameraX * PARAMS.BLOCKWIDTH, y: this.game.rightClick.offsetY + this.game.camera.cameraY * PARAMS.BLOCKWIDTH, radius: 15 };
                 for (var i = 0; i < this.selectedUnits.length; i++) {
                     this.selectedUnits[i].state = 0;
                     this.selectedUnits[i].movingToSelectedPoint = true;
@@ -270,25 +299,8 @@ class SceneManager {
                     calculatePathForEntity(this.selectedUnits[i], convertPixelCordToGridCord(this.selectedUnits[i].y), 
                         convertPixelCordToGridCord(this.selectedUnits[i].x), convertPixelCordToGridCord(clickedPoint.y), 
                         convertPixelCordToGridCord(clickedPoint.x));
-                    /*var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(this.selectedUnits[i].y)][convertPixelCordToGridCord(this.selectedUnits[i].x)]
-                    var end = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(clickedPoint.y)][convertPixelCordToGridCord(clickedPoint.x)];
-                    var astarPath = astar.search(this.game.collisionMapGrid, start, end);
-                    console.log("astarPath is: ")
-                    console.log(astarPath);*/
-                    //this.selectedUnits[i].path = astarPath;
-                    //this.selectedUnits[i].state = 0; // set unit state to moving
-                    //this.selectedUnits[i].target = { x: clickedPoint.x, y: clickedPoint.y }; // move unit to coordinate 
-                    //this.selectedUnits[i].target = { x: 0, y: 0 }; // move unit to coordinate 
-                    //this.selectedUnits[i].entityTestFunction();
-                    //console.log("selected entity cords are: (y:" + ent.y + ", x: " + ent.x + ")");
-                    //console.log("selected entity GRID cords are: (y:" + (ent.y/ PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH/2) + ", x: " + (ent.x /PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH/2) + ")");
-                    //var start = graph.grid[ent.y][ent.x];
-                    //console.log("selected entity GRID cords are: (y:" + convertPixelCordToGridCord(ent.y) + ", x: " + convertPixelCordToGridCord(ent.x) + ")");
-
-                    //var start = this.game.collisionMapGrid.grid[convertPixelCordToGridCord(ent.y)][convertPixelCordToGridCord(ent.x)];
-                    //var path = astar.search(this.game.collisonMapGrid, start, end);
                 }
-                this.game.rightClick = null;
+                this.game.rightClick = null;*/
             }
             this.selecting = false;
 
@@ -1052,7 +1064,7 @@ class SceneManager {
             let availableResourceAmount = this.game[resourceStr];
             let resourceStrUpperCase = resourceStr[0].toUpperCase() + resourceStr.slice(1);
             let requiredResourceAmount = requiredResources[resourceStr];
-            console.log("resourceStr: " + resourceStr);
+            //console.log("resourceStr: " + resourceStr);
             //console.log("availableResourceAmount: " + availableResourceAmount);
             //console.log("requiredResourceAmount: " + requiredResourceAmount);
             if (resourceStr === "workers") {

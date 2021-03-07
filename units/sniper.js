@@ -15,15 +15,19 @@ class Sniper {
         this.target = null;         // if path is defined, set it as the target point
 
         // Calculating the velocity
-        this.maxSpeed = 25; // pixels per second
+        //this.maxSpeed = 25; // pixels per second
+        this.maxSpeed = 25*3; // pixels per second
         this.velocity = 0;
 
         this.state = 3; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.movingToSelectedPoint = false;
+        //this.movingToSelectedPoint = false;
         this.selected = false;
+        
+        this.calculatingPath = false; // calculating A* path (EasyStar)
+        this.path = []; // A* path
 
         this.hitpoints = 100;
 
@@ -172,83 +176,105 @@ class Sniper {
         }
     }
 
-    update() {
-        let nameOfThisFunction = "update";
-        if(PARAMS.PERFORMANCE_MEASURE) {
-            if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
-                //initialize
-                this.performanceMeasuresStruct[nameOfThisFunction] = {};
-                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
-                this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
-            }
-            this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+   update() {
+    this.elapsedTime += this.game.clockTick;
+
+    let nameOfThisFunction = "update";
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      if(this.performanceMeasuresStruct[nameOfThisFunction] == null) {
+        //initialize
+        this.performanceMeasuresStruct[nameOfThisFunction] = {};
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] = 0;
+        this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] = 0;
+      }
+      this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
+    }
+
+    if (!this.calculatingPath) { // if you are not calculating the A* path 
+      if (this.path.length !== 0) { // if path length is not 0 yet (then you must still be walking along a path!!!!)
+        this.state = 0;
+        //console.log("path is: ")
+        //console.log(this.path);
+
+        // grab the next point in the path, and get it's pixel coordinates (center of the grid that it points to)
+        let pathPoint = {x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+        var dist = distance(this, pathPoint); // find distance to next point in path
+        let x = ( (pathPoint.x - this.x) / dist ) * this.maxSpeed; // update x velocity
+        let y = ( (pathPoint.y - this.y) / dist ) * this.maxSpeed; // update y velocity
+        this.velocity = {x, y}; // update your velocity, so that you will move towards the next point in path.
+  
+        if (dist < 5) { // If you are walking and have arrived at the intended point
+          if (this.path.length === 1) { // if the point you arrived at is the last part of path
+            this.state = 3; // then idle (because you are done traversing path)
+            this.velocity = {x:0, y:0}; // set your velocity to 0
+            this.target = null; // null your target
+          }
+          this.path.shift();
         }
-        
-        if (this.target != null) {
-            this.elapsedTime += this.game.clockTick;
-            var dist = distance(this, this.target);
-            this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-
-            if (this.hitpoints <= 0) { 
-                this.removeFromWorld = true;
-                this.game.workers += this.game.requiredResources["Sniper"].workers;
-            }
-            if (this.target.removeFromWorld) {
-                this.state = 0;
-            }
-
-            // If the entity arrived at the target, change to the next target.
-            if (dist < 5) {
-                this.state = 3;
-                if(this.movingToSelectedPoint === true) {
-                    this.movingToSelectedPoint = false;
-                }
-            }
-
-            // collision detection
-            for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
-                let closestEnt;
-                for (const ent of this.game.entities[i]) {
-                    if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)) {
-                        if (!closestEnt) {
-                            closestEnt = ent;
-                        }
-
-                        if (distance(this, closestEnt) > distance(this, ent)) {
-                            closestEnt = ent;
-                        }
-
-                        if (!this.movingToSelectedPoint) {
-                            if (this.state != 1) {
-                                this.target = closestEnt;
-                                this.state = 1;
-                                this.elapsedTime = 0;
-                            } else if (this.elapsedTime > 3) {
-                                this.game.addEntity(new SniperArrow(this.game, this.x, this.y, closestEnt, true));
-                                this.elapsedTime = 0;
-                            }
-                        }
-                    }
-                }
-
-                if (this.state == 0) {   // only moves when it is in walking state
-                    dist = distance(this, this.target);
-                    // Continually updating velocity towards the target. As long as the entity haven't reached the target, it will just keep updating and having the same velocity.
-                    // If reached to the target, new velocity will be calculated.
-                    this.x += this.velocity.x * this.game.clockTick;
-                    this.y += this.velocity.y * this.game.clockTick;
-                }
-
-                this.facing = getFacing(this.velocity);
-            }
+  
+        if (this.state === 0) {   // if you are walking now (and haven't reached your point yet), then let's make you walk towards the point.          
+          this.x += this.velocity.x * this.game.clockTick; // move you closer to your target point
+          this.y += this.velocity.y * this.game.clockTick;
         }
-
-        if(PARAMS.PERFORMANCE_MEASURE) {
-            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
-              new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
-            this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+        this.facing = getFacing(this.velocity); //  update your sprite facing direction 
+      } else { // this.path.length == 0
+        // user clicked on same square that unit is in
+        if(this.state === 0) {  // if user is walking and they click on tile they are currently at.
+            this.state = 3; // then idle (because you are done traversing path)
+            this.velocity = {x:0, y:0}; // set your velocity to 0
+            this.target = null; // null your target
         }
-    };
+      }
+    }
+
+    if (this.state != 0) { // if not walking, then let's check to see if there is something that you should attack.
+      // collision detection
+      let closestEnt; // reset your "closet entity" tracker
+      for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) { // traverse through all entities
+        //let closestEnt; // reset your "closet entity" tracker
+        for (const ent of this.game.entities[i]) { 
+          // if enemy unit in view
+          if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)) {
+            if (!closestEnt) { // set enemy to closest if not already set
+              closestEnt = ent;
+            }
+            if (distance(this, closestEnt) > distance(this, ent)) { // otherwise, if closest is already set, check if the current entity is closer, and use it if needed.
+              closestEnt = ent;
+            }
+            if (this.state != 1) { // if you have spotted a (closest) enemy that you can see
+              this.state = 1; // set state to attacking
+              this.target = closestEnt; // target the closest entity for attack
+              this.elapsedTime = 0; // set elapsedTime to 0 at start of attack to sync attack animation and projectile.
+            } else if (this.elapsedTime > 1.5) { // attack the enemy (send out aa projectile) every 1.5 seconds.
+              this.game.addEntity(new Arrow(this.game, this.x, this.y, closestEnt, true)); // attack.
+              this.elapsedTime = 0; // reset counter, so that you can attack again using given timer.
+            }
+          }
+        }
+      }
+      if (closestEnt) { // if there is a closest entity, orientate the sprite towards them.
+        var dist = distance(this, closestEnt); // find distance to next point in path
+        let x = ( (closestEnt.x - this.x) / dist ) * this.maxSpeed; // update x velocity
+        let y = ( (closestEnt.y - this.y) / dist ) * this.maxSpeed; // update y velocity
+        this.velocity = {x, y}; // update your velocity, so that you will move towards the next point in path.
+        this.facing = getFacing(this.velocity); //  update your sprite facing direction 
+      } else { // if no closest enemy
+        this.state = 3; // set to idle.
+      }
+    }
+
+    if (this.hitpoints <= 0) { 
+      this.removeFromWorld = true;
+      this.game.workers -= this.game.requiredResources["Sniper"].workers;
+    }
+      
+
+    if(PARAMS.PERFORMANCE_MEASURE) {
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuntime"] += 
+        new Date().getTime() - this.performanceMeasuresStruct[nameOfThisFunction]["startTime"].getTime();
+      this.performanceMeasuresStruct[nameOfThisFunction]["totalRuns"] += 1;
+    }
+  }
 
     draw(ctx) {
         let nameOfThisFunction = "draw";

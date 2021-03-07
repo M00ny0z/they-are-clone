@@ -586,3 +586,7 @@ class GameEngine {
     }
 };
 
+
+function convertGridCordToPixelCord(gridCord) {
+    return gridCord * PARAMS.BLOCKWIDTH;
+}

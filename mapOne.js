@@ -308,6 +308,23 @@ class MapOne {
         } else {
             this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
         }
+
+        //let path = [{x: 0, y:0}, {x:0, y:1}]
+        /*let path = [{y:37, x: 27}, {y:37, x:28}]
+        for (let i = 1; i < path.length; i++) {
+            let point1 = {x: convertGridCordToPixelCord(path[i-1].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(path[i-1].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+            let point2 = {x: convertGridCordToPixelCord(path[i].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(path[i].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+
+            this.game.ctx.strokeStyle = "red";
+            this.game.ctx.beginPath();
+            this.game.ctx.setLineDash([5, 15]);
+            this.game.ctx.moveTo(point1.y, point1.x);
+            this.game.ctx.lineTo(point2.y, point2.x)
+            this.game.ctx.stroke();
+            this.game.ctx.setLineDash([]);
+        }*/
+
+
     }
 
     draw(ctx) {
@@ -321,7 +338,9 @@ class MapOne {
                 for (var j = 0; j < 50; j++) {
                     var x = (j - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH;
                     var y = (i - this.game.camera.cameraY + 1) * PARAMS.BLOCKWIDTH;
-                    ctx.fillText("(" + i + ", " + j + ")", x, y);
+                    //var x = j * PARAMS.BLOCKWIDTH;
+                    //var y = i * PARAMS.BLOCKWIDTH;
+                    ctx.fillText("(" + i + ", " + j + ")", x, (y-30));
                 }
             }
         }
