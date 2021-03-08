@@ -102,7 +102,7 @@ class Arrow {
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
                     ent.hitpoints -= 20;
                     this.removeFromWorld = true;
-                    this.game.addEntity(new Score(this.game, (ent.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)), (ent.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)), 20));
+                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), 20));
                 }
             }
         }

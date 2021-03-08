@@ -123,7 +123,7 @@ class FireBolt {
                 );
                 if (enemyCheck && collide(this, ent)) {
                     ent.hitpoints -= 30;
-                    this.game.addEntity(new Score(this.game, (ent.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)), (ent.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)), 30));
+                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), 30));
                     this.removeFromWorld = true;
                 }
             }

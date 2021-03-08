@@ -266,7 +266,7 @@ class InfectedUnit {
                 this.elapsedTime = 0;
             } else if (this.elapsedTime > 1.0) {
                 closestEnt.hitpoints -= 20;
-                this.game.addEntity(new Score(this.game, (closestEnt.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)), (closestEnt.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)), 20));
+                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 20));
                 this.elapsedTime = 0;
             }
         } 

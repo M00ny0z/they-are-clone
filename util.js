@@ -485,6 +485,8 @@ class Score {
         Object.assign(this, { game, x, y, score });
         this.priority = MISCELLANEOUSPRIORITY;
         this.velocity = -32;
+        // this.x = this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH);
+        // this.y = this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH);
         this.elapsed = 0;
     };
 
@@ -499,9 +501,9 @@ class Score {
         var offset = this.score < 10 ? 6 : 12;
         ctx.font = '12px "Press Start 2P"';
         ctx.fillStyle = "Black";
-        ctx.fillText(this.score, this.x - offset + 1, this.y + 1);
+        ctx.fillText(this.score, ((this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)) - offset + 1), ((this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)) + 1));
         ctx.fillStyle = rgb(183, 3, 3);
-        ctx.fillText(this.score, this.x - offset, this.y);
+        ctx.fillText(this.score, ((this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH)) - offset), (this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH)));
     };
 
     drawMinimap(ctx, mmX, mmY) {
