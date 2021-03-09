@@ -34,6 +34,7 @@ class StoneHouse {
         }
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(STONEDEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.maxWorkers -= this.workers;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
@@ -57,6 +58,8 @@ class StoneHouse {
             if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
                 this.game.collisionMap[y][x] = 0;
                 this.followMouse = false;
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 

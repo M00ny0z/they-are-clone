@@ -74,6 +74,7 @@ class FishermansCottage {
         }
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(FISHERMANDEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["FishermansCottage"].workers;
             this.game.foodRate -= this.foodRate;
@@ -118,6 +119,8 @@ class FishermansCottage {
                 this.game.collisionMap[y][x] = 0;
                 this.game.mainMap.map[y][x]["FishermansCottage"] = true;
                 this.followMouse = false;
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 console.log("x: " + x + ", " + y);

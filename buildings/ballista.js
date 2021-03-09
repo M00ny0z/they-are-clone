@@ -121,6 +121,7 @@ class Ballista {
         this.elapsedTime += this.game.clockTick;
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(BALLISTADEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["Ballista"].workers;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
@@ -162,6 +163,8 @@ class Ballista {
             if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
                 this.game.collisionMap[y][x] = 0; // collision
                 this.followMouse = false;
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 

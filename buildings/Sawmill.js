@@ -72,6 +72,7 @@ class Sawmill {
         }
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(SAWMILLDEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["Sawmill"].workers;
             this.game.woodRate -= this.woodRate;
@@ -105,6 +106,8 @@ class Sawmill {
                 this.game.mainMap.map[y][x].Sawmill = true;
                 this.game.mainMap.map[y+1][x].Sawmill = true;
                 this.followMouse = false;
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 

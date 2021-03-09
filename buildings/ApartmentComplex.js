@@ -35,6 +35,7 @@ class ApartmentComplex {
         }
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(APARTMENTDEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.maxWorkers -= this.workers;
             this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
@@ -59,6 +60,8 @@ class ApartmentComplex {
             if (this.game.click.y < 15 && this.placeable) {
                 this.game.collisionMap[y][x] = 0; // collision
                 this.game.collisionMap[y+1][x] = 0; // collision
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;

@@ -177,6 +177,7 @@ class Farm {
         }
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(FARMDEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["Farm"].workers;
             this.game.foodRate -= this.foodRate;
@@ -218,6 +219,8 @@ class Farm {
                     }
                 }
                 this.followMouse = false;
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
 

@@ -92,6 +92,7 @@ class Quarry {
         }
 
         if (this.hitpoints <= 0) {
+            this.game.lsystem.report(QUARRYDEATH, this.sanitizedX, this.sanitizedY);
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["Quarry"].workers;
             this.game.stoneRate -= this.stoneRate;
@@ -127,6 +128,8 @@ class Quarry {
                 this.game.mainMap.map[y+1][x].Quarry = true;
                 
                 this.followMouse = false;
+                this.sanitizedX = x;
+                this.sanitizedY = y;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH/2;
 
