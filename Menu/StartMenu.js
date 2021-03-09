@@ -14,6 +14,7 @@ class StartMenu {
     constructor(game) {
         Object.assign(this, { game });
         this.mapOneImg = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
+        this.mapTwoImg = ASSET_MANAGER.getAsset("./sprites/mapTwo.png");
         this.mapThreeImg = ASSET_MANAGER.getAsset("./sprites/mapThree.png");
         this.createdByImg = ASSET_MANAGER.getAsset("./sprites/createdBy.png");
         this.red5StudiosImg = ASSET_MANAGER.getAsset("./sprites/introScreen/red5Studios.png");
@@ -27,21 +28,21 @@ class StartMenu {
                 (this.game.click.offsetY >= this.MAPONE_POS.Y && this.game.click.offsetY <= this.MAPONE_POS.Y + this.MAPONE_POS.height)) {
                 console.log("map one clicked");
                 this.game.camera.title = false;
-                this.game.camera.startMapOne();
+                this.game.camera.startMap(1);
                 this.game.click = null;
             }
             else if ((this.game.click.offsetX >= this.MAPTWO_POS.X && this.game.click.offsetX <= this.MAPTWO_POS.X + this.MAPTWO_POS.width) &&
                 (this.game.click.offsetY >= this.MAPTWO_POS.Y && this.game.click.offsetY <= this.MAPTWO_POS.Y + this.MAPTWO_POS.height)) {
                 console.log("map two clicked");
                 this.game.camera.title = false;
-                this.game.camera.startMapOne();
+                this.game.camera.startMap(2);
                 this.game.click = null;
             }
             else if ((this.game.click.offsetX >= this.MAPTHREE_POS.X && this.game.click.offsetX <= this.MAPTHREE_POS.X + this.MAPTHREE_POS.width) &&
                 (this.game.click.offsetY >= this.MAPTHREE_POS.Y && this.game.click.offsetY <= this.MAPTHREE_POS.Y + this.MAPTHREE_POS.height)) {
                 console.log("map three clicked");
                 this.game.camera.title = false;
-                this.game.camera.startMapOne();
+                this.game.camera.startMap(3);
                 this.game.click = null;
             }
             else if ((this.game.click.offsetX >= this.CONTROLS_POS.X && this.game.click.offsetX <= this.CONTROLS_POS.X + this.CONTROLS_POS.width) &&
@@ -105,11 +106,11 @@ class StartMenu {
             case 2:
                 if ((this.game.mouse != null) && (this.game.mouse.offsetX >= this.MAPTWO_POS.X && this.game.mouse.offsetX <= this.MAPTWO_POS.X + this.MAPTWO_POS.width) && (this.game.mouse.offsetY >= this.MAPTWO_POS.Y && this.game.mouse.offsetY <= this.MAPTWO_POS.Y + this.MAPTWO_POS.height)) {
                     ctx.globalAlpha = 1.0;
-                    ctx.drawImage(this.mapOneImg, this.MAPTWO_POS.X, this.MAPTWO_POS.Y, this.MAPTWO_POS.width, this.MAPTWO_POS.height);
+                    ctx.drawImage(this.mapTwoImg, this.MAPTWO_POS.X, this.MAPTWO_POS.Y, this.MAPTWO_POS.width, this.MAPTWO_POS.height);
                 }
                 else {
                     ctx.globalAlpha = 0.75;
-                    ctx.drawImage(this.mapOneImg, this.MAPTWO_POS.X, this.MAPTWO_POS.Y, this.MAPTWO_POS.width, this.MAPTWO_POS.height);
+                    ctx.drawImage(this.mapTwoImg, this.MAPTWO_POS.X, this.MAPTWO_POS.Y, this.MAPTWO_POS.width, this.MAPTWO_POS.height);
                 }
                 break;
             case 3:

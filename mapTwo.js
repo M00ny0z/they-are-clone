@@ -1,11 +1,12 @@
-class MapOne {
+class MapTwo {
     constructor(game) {
         Object.assign(this, { game });
         this.game.mainMap = this;
 
-        this.mapNum = 1;
+        this.mapNum = 2;
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
+
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapTwoWithGrid.png");
         this.priority = MAPPRIORITY;
 
         this.game.collisionMap = [
@@ -306,9 +307,9 @@ class MapOne {
 
     update() {
         if (!PARAMS.DEBUG) {
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapTwo.png");
         } else {
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapTwoWithGrid.png");
         }
 
         //let path = [{x: 0, y:0}, {x:0, y:1}]
