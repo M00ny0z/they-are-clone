@@ -315,14 +315,7 @@ class Soldier {
             drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SOLDIER_HEALTH);
         }
 
-        if(this.state == 0) {
-
-          console.log(this.path);
-          for(var i = 0; i < this.path.length; i++) {
-           console.log(i + " x: " + (this.path[i].x) + " y: " + (this.path[i].y));
-          }
-        }
-        if (this.target) {
+        if (this.state == 0) {
             ctx.strokeStyle = "Black";
             ctx.beginPath();
             ctx.setLineDash([5, 15]);

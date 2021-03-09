@@ -314,7 +314,7 @@ class Sniper {
             drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SNIPER_HEALTH);
         }
 
-        if (this.target) {
+        if (this.state == 0) {
             ctx.strokeStyle = "Black";
             ctx.beginPath();
             ctx.setLineDash([5, 15]);

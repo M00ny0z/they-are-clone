@@ -315,18 +315,18 @@ class Titan {
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
-        if (this.target) {
-            ctx.strokeStyle = "Black";
-            ctx.beginPath();
-            ctx.setLineDash([5, 15]);
-            ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
-            for(var i =0; i < this.path.length; i++) {
-              ctx.lineTo((this.path[i].x - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2), 
-              (this.path[i].y - this.game.camera.cameraY) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2));
-            }
-            ctx.stroke();
-            ctx.setLineDash([]);
-        }
+        if (this.state == 0) {
+          ctx.strokeStyle = "Black";
+          ctx.beginPath();
+          ctx.setLineDash([5, 15]);
+          ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+          for(var i =0; i < this.path.length; i++) {
+            ctx.lineTo((this.path[i].x - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2), 
+            (this.path[i].y - this.game.camera.cameraY) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2));
+          }
+          ctx.stroke();
+          ctx.setLineDash([]);
+      }
 
         if (this.selected) {
             ctx.strokeStyle = "blue";

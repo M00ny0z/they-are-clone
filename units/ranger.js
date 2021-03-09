@@ -321,18 +321,8 @@ class Ranger {
 
     this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
-    /*if (this.target) {
+    if (this.state == 0) {
       ctx.strokeStyle = "Black";
-      ctx.beginPath();
-      ctx.setLineDash([5, 15]);
-      ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
-      ctx.lineTo(this.target.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.target.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }*/
-    if (this.state == 0) { // if walking
-      drawPath(this.path, ctx);
-      ctx.strokeStyle = "black";
       ctx.beginPath();
       ctx.setLineDash([5, 15]);
       ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
@@ -342,7 +332,7 @@ class Ranger {
       }
       ctx.stroke();
       ctx.setLineDash([]);
-    }
+  }
 
 
     if (this.selected) {
