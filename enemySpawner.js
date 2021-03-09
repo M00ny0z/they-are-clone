@@ -105,22 +105,23 @@ class EnemySpawner {
      * @param {array} path A manual path to travel. ex. [ { x: 28, y: 42 }, { x: 22, y: 42 } ]
      */
     spawnEnemy(id, pathStartX, pathStartY, path) {
-        switch(id) {
-            case INFECTEDUNIT:
-                this.game.addEntity(new InfectedUnit(this.game, pathStartX, pathStartY, path));
-                break;
-            case INFECTEDVENOM:
-                this.game.addEntity(new InfectedVenom(this.game, pathStartX, pathStartY, path));
-                break;
-            case INFECTEDHARPY:
-                this.game.addEntity(new InfectedHarpy(this.game, pathStartX, pathStartY, path));
-                break;
-            case INFECTEDCHUBBY:
-                this.game.addEntity(new InfectedChubby(this.game, pathStartX, pathStartY, path));
-                break;
-            default:
-                console.log("Id doesn't match any existing unit.");
-        }
+        this.game.addEntity(new ENTITIES[id](this.game, pathStartX, pathStartY, path));
+        // switch(id) {
+        //     case INFECTEDUNIT:
+        //         this.game.addEntity(new InfectedUnit(this.game, pathStartX, pathStartY, path));
+        //         break;
+        //     case INFECTEDVENOM:
+        //         this.game.addEntity(new InfectedVenom(this.game, pathStartX, pathStartY, path));
+        //         break;
+        //     case INFECTEDHARPY:
+        //         this.game.addEntity(new InfectedHarpy(this.game, pathStartX, pathStartY, path));
+        //         break;
+        //     case INFECTEDCHUBBY:
+        //         this.game.addEntity(new InfectedChubby(this.game, pathStartX, pathStartY, path));
+        //         break;
+        //     default:
+        //         console.log("Id doesn't match any existing unit.");
+        // }
     }
 
     //Nothing needs to be drawn for the spawner
