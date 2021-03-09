@@ -73,12 +73,15 @@ class SceneManager {
     startMapOne() {
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./music/backgroundMusic.mp3");
+        const enemySpawner = new EnemySpawner(this.game);
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
         }
         this.game.addEntity(new MapOne(this.game));
-        this.game.addEntity(new EnemySpawner(this.game));   
+        this.game.enemySpawner = enemySpawner;
+        this.game.lsystem = new LSystem(enemySpawner);
+        this.game.addEntity(enemySpawner);   
         this.game.addEntity(new CommandCenter(this.game, 28, 35));
     };
 
