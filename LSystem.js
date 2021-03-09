@@ -10,61 +10,60 @@ class LSystem {
       this.rules.get(event)(x, y);
    }
 
+   //NOTE CANNOT BE ANYTHING BESIDES INFECTEDUNIT FOR NOW
    generateRuleset() {
       const output = new Map();
       output.set(APARTMENTDEATH, (x, y) => {
-         console.log(`build death x: ${x}, y: ${y}`);
-         console.log("apartment died");
          for (let i = 0; i < 5; i++) {
             this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(BALLISTADEATH, (x, y) => {
-         for (let i = 0; i < 3; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(FARMDEATH, (x, y) => {
-         for (let i = 0; i < 3; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(FISHERMANDEATH, (x, y) => {
-         for (let i = 0; i < 3; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(MACHINEGUNDEATH, (x, y) => {
-         for (let i = 0; i < 3; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(QUARRYDEATH, (x, y) => {
-         for (let i = 0; i < 3; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(SAWMILLDEATH, (x, y) => {
-         for (let i = 0; i < 3; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(STONEDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
       output.set(WOODDEATH, (x, y) => {
-         for (let i = 0; i < 1; i++) {
-            //this.spawner.spawnEnemy(INFECTEDUNIT, x, y, )
+         for (let i = 0; i < 2; i++) {
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
          }
       });
 
