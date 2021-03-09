@@ -81,9 +81,15 @@ class ApartmentComplex {
             const doubleX = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const doubleY = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
 
-            if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
-                this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
-            {
+            const clickCheck = (
+                doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x 
+            ) && 
+            (
+                doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.y ||
+                doubleY * PARAMS.BLOCKWIDTH - PARAMS.BLOCKWIDTH / 2 === this.y
+            );
+
+            if (clickCheck) {
                 this.game.collisionMap[doubleY][doubleX] = 1;
                 this.game.collisionMap[doubleY + 1][doubleX] = 1;
 
