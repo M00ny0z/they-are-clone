@@ -136,7 +136,7 @@ class MapThree {
             if (TileMaps.map3.layers[this.indices.ore].data[i] == 1374) { // 1374 is stone
                 this.map[y][x].stone = true;
             }
-            if (TileMaps.map3.layers[6].data[i] == 1372) { // 1372 is iron
+            if (TileMaps.map3.layers[this.indices.ore].data[i] == 1372) { // 1372 is iron
                 this.map[y][x].iron = true;
             }
         }

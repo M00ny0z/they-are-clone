@@ -134,7 +134,7 @@ class MapTwo {
             if (TileMaps.map2.layers[this.indices.ore].data[i] == 1374) { // 1374 is stone
                 this.map[y][x].stone = true;
             }
-            if (TileMaps.map2.layers[6].data[i] == 1372) { // 1372 is iron
+            if (TileMaps.map2.layers[this.indices.ore].data[i] == 1372) { // 1372 is iron
                 this.map[y][x].iron = true;
             }
         }
