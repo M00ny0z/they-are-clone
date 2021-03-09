@@ -54,7 +54,16 @@ const MAX_HARPY_HEALTH = 50;
 const MAX_VENOM_HEALTH = 80;
 const MAX_STONEGATE_HEALTH = 200;
 const MAX_WOODGATE_HEALTH = 100;
-
+// EVENTS
+const APARTMENTDEATH = "APARTMENTDEATH";
+const BALLISTADEATH = "BALLISTADEATH";
+const FARMDEATH = "FARMDEATH";
+const FISHERMANDEATH = "FISHERMANDEATH";
+const MACHINEGUNDEATH = "MACHINEGUNDEATH";
+const QUARRYDEATH = "QUARRYDEATH";
+const SAWMILLDEATH = "SAWMILLDEATH";
+const STONEDEATH = "STONEDEATH";
+const WOODDEATH = "WOODDEATH";
 
 const ENTITIES = {};
 ENTITIES[FARM] = Farm;
@@ -70,11 +79,15 @@ ENTITIES[WOODHOUSE] = WoodHouse;
 ENTITIES[WOODGATEVERT] = WoodGateVertical;
 ENTITIES[WOODGATEHORI] = WoodGateHorizontal;
 ENTITIES[WOODWALL] = WoodWall;
+ENTITIES[INFECTEDUNIT] = InfectedUnit;
+ENTITIES[INFECTEDCHUBBY] = InfectedChubby;
+ENTITIES[INFECTEDHARPY] = InfectedHarpy;
+ENTITIES[INFECTEDVENOM] = InfectedVenom;
 //
 
 const drawHealthbar = (ctx, currentHealth, x, y, game, maxHealth) => {
     const posX = (x - PARAMS.BLOCKWIDTH / 2) - (game.camera.cameraX * PARAMS.BLOCKWIDTH) + 7;
-    const posY = y - (game.camera.cameraY * PARAMS.BLOCKWIDTH) - 15;
+    const posY = y - (game.camera.cameraY * PARAMS.BLOCKWIDTH) - 10;
 
     if (currentHealth < 0) {
         currentHealth = 0;
