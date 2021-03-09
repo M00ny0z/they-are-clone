@@ -314,12 +314,15 @@ class Sniper {
             drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SNIPER_HEALTH);
         }
 
-        if (this.target) {
+        if (this.state == 0) {
             ctx.strokeStyle = "Black";
             ctx.beginPath();
             ctx.setLineDash([5, 15]);
             ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
-            ctx.lineTo(this.target.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.target.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+            for(var i =0; i < this.path.length; i++) {
+              ctx.lineTo((this.path[i].x - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2), 
+              (this.path[i].y - this.game.camera.cameraY) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2));
+            }
             ctx.stroke();
             ctx.setLineDash([]);
         }
