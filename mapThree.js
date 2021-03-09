@@ -1,11 +1,14 @@
-class MapOne {
+class MapThree {
     constructor(game) {
         Object.assign(this, { game });
         this.game.mainMap = this;
 
-        this.mapNum = 1;
+        this.mapNum = 3;
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
+        // indices in TileMaps object
+        this.indices = {dirt: 0, collision: 12, tracks: 7, green: 11, water: 10, ore: 9};
+
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapThreeWithGrid.png");
         this.priority = MAPPRIORITY;
 
         this.game.collisionMap = [
@@ -116,30 +119,31 @@ class MapOne {
             let y = Math.floor(i / 50); // row
 
             //console.log(TileMaps.map.layers[0].data[i]);
-            if (TileMaps.map.layers[0].data[i] != 0) {
+            
+            if (TileMaps.map3.layers[this.indices.collision].data[i] != 0) { 
                 //console.log("true");
                 this.game.collisionMap[y][x] = 0;
             }
-            if (TileMaps.map.layers[1].data[i] != 0) {
+            if (TileMaps.map3.layers[this.indices.green].data[i] != 0) {
                 this.map[y][x].green = true;
             }
-            if (TileMaps.map.layers[2].data[i] != 0) {
+            if (TileMaps.map3.layers[this.indices.water].data[i] != 0) {
                 this.map[y][x].water = true;
             }
-            if (TileMaps.map.layers[3].data[i] == 116) { // 116 is dirt
+            if (TileMaps.map3.layers[this.indices.dirt].data[i] == 5427) { // 5427 is dirt
                 this.map[y][x].dirt = true;
             }
-            if (TileMaps.map.layers[6].data[i] == 1374) { // 1374 is stone
+            if (TileMaps.map3.layers[this.indices.ore].data[i] == 1374) { // 1374 is stone
                 this.map[y][x].stone = true;
             }
-            if (TileMaps.map.layers[6].data[i] == 1372) { // 1372 is iron
+            if (TileMaps.map3.layers[6].data[i] == 1372) { // 1372 is iron
                 this.map[y][x].iron = true;
             }
         }
 
         // commandcenter
-        for (var x = 27; x < 30; x++) {
-            for (var y = 34; y < 37; y++) {
+        for (var x = 23; x < 26; x++) {
+            for (var y = 20; y < 23; y++) {
                 this.game.collisionMap[y][x] = 0;
                 //this.map[y][x].collisions = true;
             }
@@ -306,9 +310,9 @@ class MapOne {
 
     update() {
         if (!PARAMS.DEBUG) {
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOne.png");
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapThree.png");
         } else {
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapThreeWithGrid.png");
         }
 
         //let path = [{x: 0, y:0}, {x:0, y:1}]

@@ -9,7 +9,7 @@ const MISCELLANEOUSPRIORITY = 5;
 
         this.timeElapsed = 0;
 
-        this.path1 = { 
+        /*this.path1 = { 
             startX : 26, startY : 35, path : [
                 { x: 18, y: 35 },
                 { x: 18, y: 22 },
@@ -29,8 +29,23 @@ const MISCELLANEOUSPRIORITY = 5;
                 { x: 22, y: 48 },
                 { x: 25, y: 48 },
                 { x: 25, y: 49 }
-            ]};
-    }
+            ]};*/
+
+        // 2 spawn locations for each map.
+        this.spawnLocationsForEachMap = [ 
+            [ 
+                {startX: 26,  startY: 35, path: []}, {startX: 28,  startY: 37, path: []} // map 1
+            ],
+            [
+                {startX: 19,  startY: 30, path: []}, {startX: 21,  startY: 32, path: []} // map 2
+            ],
+            [
+                {startX: 22,  startY: 21, path: []}, {startX: 24,  startY: 23, path: []} // map 3
+            ]
+        ]
+    };
+                                        
+                                    
 
     /**
      * Spawns an Ally on a random path along the railroads.
@@ -39,9 +54,9 @@ const MISCELLANEOUSPRIORITY = 5;
     spawnAllyRandomPath(id) {
         let roll = Math.random();
         if(roll <= 0.5) {
-            this.spawnAllyPrewrittenPath(id, 1);
+            this.spawnAllyPrewrittenPath(id, 0);
         } else {
-            this.spawnAllyPrewrittenPath(id, 2);
+            this.spawnAllyPrewrittenPath(id, 1);
         }
     }
 
@@ -50,7 +65,7 @@ const MISCELLANEOUSPRIORITY = 5;
      * @param {entity} id The type of you unit you want to spawn. ENTITIES.RANGER = Ranger, etc.
      * @param {integer} pathNum Path to travel on this map. 1 = Path goes up railroad, 2 = Path goes down railroad
      */
-    spawnAllyPrewrittenPath(id, pathNum) {
+    /*spawnAllyPrewrittenPath(id, pathNum) {
         if(pathNum < 1 || pathNum > 2) {
             console.log("Enter an integer pathNum between 1 and 2 for the unit to travel.")
         }
@@ -60,7 +75,18 @@ const MISCELLANEOUSPRIORITY = 5;
         } else if(pathNum == 2) {
             this.spawnAlly(id, this.path2.startX, this.path2.startY, this.copyPath(this.path2.path));
         }
+    }*/
+    spawnAllyPrewrittenPath(id, pathNum) {
+        if(pathNum < 0 || pathNum > 1) {
+            console.log("Enter an integer pathNum between 0 and 1 for the unit to travel.")
+        }
+
+        let mapNum = this.game.mainMap.mapNum;
+        let paths = this.spawnLocationsForEachMap[mapNum-1]; // mapNum is 1 to 3 (mapOne == 1, etc), our indices are 0 to 2
+
+        this.spawnAlly(id, paths[pathNum].startX, paths[pathNum].startY, this.copyPath(paths[pathNum].path));
     }
+
 
     /**
      * Spawns an ally that travels along a manual path provided.

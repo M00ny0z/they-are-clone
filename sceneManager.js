@@ -70,7 +70,7 @@ class SceneManager {
         this.loadStartMenu();
     };
 
-    startMapOne() {
+    startMap(mapNum) {
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./music/backgroundMusic.mp3");
         const enemySpawner = new EnemySpawner(this.game);
@@ -78,11 +78,31 @@ class SceneManager {
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
         }
-        this.game.addEntity(new MapOne(this.game));
-        this.game.enemySpawner = enemySpawner;
-        this.game.lsystem = new LSystem(enemySpawner);
-        this.game.addEntity(enemySpawner);   
-        this.game.addEntity(new CommandCenter(this.game, 28, 35));
+        switch (mapNum) {
+            case 1:
+                this.game.addEntity(new MapOne(this.game));
+                this.game.enemySpawner = enemySpawner;
+                this.game.lsystem = new LSystem(enemySpawner);
+                this.game.addEntity(new CommandCenter(this.game, 28, 35));              
+                break;
+            case 2:
+                this.game.addEntity(new MapTwo(this.game));
+                this.game.enemySpawner = enemySpawner;
+                this.game.lsystem = new LSystem(enemySpawner);
+                this.game.addEntity(new CommandCenter(this.game, 21, 30));              
+                break;
+            case 3:
+                this.game.addEntity(new MapThree(this.game));
+                this.game.enemySpawner = enemySpawner;
+                this.game.lsystem = new LSystem(enemySpawner);
+                this.game.addEntity(new CommandCenter(this.game, 24, 21));              
+                break;
+          }
+          
+        
+        /*this.game.addEntity(new MapOne(this.game));
+        this.game.addEntity(new EnemySpawner(this.game));   
+        this.game.addEntity(new CommandCenter(this.game, 28, 35));*/
     };
 
     loadStartMenu() {

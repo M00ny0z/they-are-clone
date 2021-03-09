@@ -10,7 +10,10 @@ function main() {
 
 	ASSET_MANAGER.queueDownload("./sprites/mapOneWithGrid.png");
 	ASSET_MANAGER.queueDownload("./sprites/mapOne.png");
+	ASSET_MANAGER.queueDownload("./sprites/mapTwo.png");
+	ASSET_MANAGER.queueDownload("./sprites/mapTwoWithGrid.png");
 	ASSET_MANAGER.queueDownload("./sprites/mapThree.png");
+	ASSET_MANAGER.queueDownload("./sprites/mapThreeWithGrid.png");
 	ASSET_MANAGER.queueDownload("./sprites/createdBy.png");
 
 	// Intro Screen

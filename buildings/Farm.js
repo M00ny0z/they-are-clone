@@ -194,7 +194,9 @@ class Farm {
             var stop = false;
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    if (this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] === 1) { 
+                    let yGrid = sanitizeCord(y + i - 2);
+                    let xGrid = sanitizeCord(x + j - 2);
+                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) { 
                         this.placeable = true;
                     } else {
                         stop = true;
