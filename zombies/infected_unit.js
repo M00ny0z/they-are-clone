@@ -19,9 +19,9 @@ class InfectedUnit {
         if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
 
         // Calculating the velocity
-        var dist = distance(this, this.target);
+        var dist = distance(this, this.target);  
         this.maxSpeed = 25; // pixels per second
-        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+        this.velocity = { x: ((this.target.x - this.x) / dist * this.maxSpeed), y: ((this.target.y - this.y) / dist * this.maxSpeed) };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
@@ -187,9 +187,9 @@ class InfectedUnit {
         }
         
         this.elapsedTime += this.game.clockTick;
-        var dist = distance(this, this.target);
-        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-        
+        var dist = Math.max(distance(this, this.target), 1);
+        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed};
+        //console.log(this.velocity);
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -306,7 +306,7 @@ class InfectedUnit {
 
         this.xOffset = 32;
         this.yOffset = 20;
-        
+        //console.log(`state: ${this.state}, facing: ${this.facing}`);
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 
             this.x - this.xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), 
             this.y - this.yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
