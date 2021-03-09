@@ -198,6 +198,7 @@ class Soldier {
     
             // grab the next point in the path, and get it's pixel coordinates (center of the grid that it points to)
             let pathPoint = {x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+            console.log({x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2});
             var dist = distance(this, pathPoint); // find distance to next point in path
             let x = ( (pathPoint.x - this.x) / dist ) * this.maxSpeed; // update x velocity
             let y = ( (pathPoint.y - this.y) / dist ) * this.maxSpeed; // update y velocity
@@ -314,12 +315,22 @@ class Soldier {
             drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SOLDIER_HEALTH);
         }
 
+        if(this.state == 0) {
+
+          console.log(this.path);
+          for(var i = 0; i < this.path.length; i++) {
+           console.log(i + " x: " + (this.path[i].x) + " y: " + (this.path[i].y));
+          }
+        }
         if (this.target) {
             ctx.strokeStyle = "Black";
             ctx.beginPath();
             ctx.setLineDash([5, 15]);
             ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
-            ctx.lineTo(this.target.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.target.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+            for(var i =0; i < this.path.length; i++) {
+              ctx.lineTo((this.path[i].x - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2), 
+              (this.path[i].y - this.game.camera.cameraY) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2));
+            }
             ctx.stroke();
             ctx.setLineDash([]);
         }

@@ -336,7 +336,10 @@ class Ranger {
       ctx.beginPath();
       ctx.setLineDash([5, 15]);
       ctx.moveTo(this.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
-      ctx.lineTo(this.target.x - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.target.y - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH));
+      for(var i =0; i < this.path.length; i++) {
+        ctx.lineTo((this.path[i].x - this.game.camera.cameraX) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2), 
+        (this.path[i].y - this.game.camera.cameraY) * PARAMS.BLOCKWIDTH + + (PARAMS.BLOCKWIDTH / 2));
+      }
       ctx.stroke();
       ctx.setLineDash([]);
     }
