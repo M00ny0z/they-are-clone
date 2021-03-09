@@ -198,7 +198,7 @@ class Soldier {
     
             // grab the next point in the path, and get it's pixel coordinates (center of the grid that it points to)
             let pathPoint = {x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
-            console.log({x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2});
+            //console.log({x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2});
             var dist = distance(this, pathPoint); // find distance to next point in path
             let x = ( (pathPoint.x - this.x) / dist ) * this.maxSpeed; // update x velocity
             let y = ( (pathPoint.y - this.y) / dist ) * this.maxSpeed; // update y velocity
