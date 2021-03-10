@@ -91,7 +91,7 @@ class InfectedVenom {
             'width': 90,
             'height': 145,
             'frames': 10,
-            'speed': .1,
+            'speed': .2,
             'padding': 6
         };
         //0 = E

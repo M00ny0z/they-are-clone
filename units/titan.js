@@ -94,7 +94,7 @@ class Titan {
             'width': 96,
             'height': 90,
             'frames': 20,
-            'speed': .1,
+            'speed': .05,
             'padding': 0
         };
         //0 = E

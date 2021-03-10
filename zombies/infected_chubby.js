@@ -91,7 +91,7 @@ class InfectedChubby {
             'width': 220,
             'height': 210,
             'frames': 15,
-            'speed': .1,
+            'speed': .155,
             'padding': 0
         };
         //0 = E
@@ -266,7 +266,7 @@ class InfectedChubby {
                 this.elapsedTime = 0;
             } else if (this.elapsedTime > 2.0) {
                 closestEnt.hitpoints -= 40;
-                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 20));
+                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 40));
                 this.elapsedTime = 0;
             }
         } 

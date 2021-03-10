@@ -94,7 +94,7 @@ class Ranger {
       'width': 68,
       'height': 89,
       'frames': 15,
-      'speed': .1,
+      'speed': .11,
       'padding': 2
     };
     //0 = E

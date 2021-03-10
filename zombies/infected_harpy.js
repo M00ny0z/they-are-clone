@@ -91,7 +91,7 @@ class InfectedHarpy {
             'width': 128,
             'height': 95,
             'frames': 12,
-            'speed': .1,
+            'speed': .05,
             'padding': 0
         };
         //0 = E

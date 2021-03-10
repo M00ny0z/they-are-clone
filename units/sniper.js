@@ -93,7 +93,7 @@ class Sniper {
             'width': 76,
             'height': 87,
             'frames': 20,
-            'speed': .15,
+            'speed': .165,
             'padding': 0
         };
         //0 = E
@@ -198,6 +198,7 @@ class Sniper {
 
         // grab the next point in the path, and get it's pixel coordinates (center of the grid that it points to)
         let pathPoint = {x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2}; // convert grid coordinate to pixel.
+        //console.log({x: convertGridCordToPixelCord(this.path[0].x) + PARAMS.BLOCKWIDTH/2, y: convertGridCordToPixelCord(this.path[0].y) + PARAMS.BLOCKWIDTH / 2});
         var dist = distance(this, pathPoint); // find distance to next point in path
         let x = ( (pathPoint.x - this.x) / dist ) * this.maxSpeed; // update x velocity
         let y = ( (pathPoint.y - this.y) / dist ) * this.maxSpeed; // update y velocity
@@ -243,8 +244,8 @@ class Sniper {
               this.state = 1; // set state to attacking
               this.target = closestEnt; // target the closest entity for attack
               this.elapsedTime = 0; // set elapsedTime to 0 at start of attack to sync attack animation and projectile.
-            } else if (this.elapsedTime > 3) { // attack the enemy (send out aa projectile) every 3 seconds.
-              this.game.addEntity(new SniperArrow(this.game, this.x, this.y, closestEnt, true));  // attack.
+            } else if (this.elapsedTime > 3) { // attack the enemy (send out aa projectile) every 0.75 seconds.
+              this.game.addEntity(new SniperArrow(this.game, this.x, this.y, closestEnt, true)); // attack
               this.elapsedTime = 0; // reset counter, so that you can attack again using given timer.
             }
           }
@@ -263,7 +264,7 @@ class Sniper {
 
     if (this.hitpoints <= 0) { 
       this.removeFromWorld = true;
-      this.game.workers -= this.game.requiredResources["Sniper"].workers;
+      this.game.workers -= this.game.requiredResources["Soldier"].workers;
     }
       
 

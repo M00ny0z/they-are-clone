@@ -93,7 +93,7 @@ class Soldier {
             'width': 125,
             'height': 80,
             'frames': 20,
-            'speed': .05,
+            'speed': .038,
             'padding': 0
         };
         //0 = E

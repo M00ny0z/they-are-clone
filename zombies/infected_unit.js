@@ -91,7 +91,7 @@ class InfectedUnit {
             'width': 128,
             'height': 80,
             'frames': 12,
-            'speed': .05,
+            'speed': .1,
             'padding': 0
         };
         //0 = EAST
