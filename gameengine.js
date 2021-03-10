@@ -50,7 +50,7 @@ class GameEngine {
         this.stone = 100;
         this.stoneRate = 0;
         this.maxStone = 200;
-        this.iron = 100;
+        this.iron = 0;
         this.ironRate = 0;
         this.maxIron = 200;
         this.elapsedHourPrev = 1;
@@ -73,22 +73,22 @@ class GameEngine {
         this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 20, iron: 0, enoughResource: false };
         this.requiredResources["ApartmentComplex"] = { workers: 0, food: 0, wood: 30, stone: 50, iron: 20, enoughResource: false };
 
-        this.requiredResources["FishermansCottage"] = { workers: 1, food: 0, wood: 30, stone: 0, iron: 5, enoughResource: false };
-        this.requiredResources["Farm"] = { workers: 5, food: 0, wood: 30, stone: 10, iron: 3, enoughResource: false };
-        this.requiredResources["Quarry"] = { workers: 6, food: 0, wood: 20, stone: 5, iron: 5, enoughResource: false };
-        this.requiredResources["Sawmill"] = { workers: 3, food: 0, wood: 20, stone: 10, iron: 5, enoughResource: false };
+        this.requiredResources["FishermansCottage"] = { workers: 1, food: 0, wood: 30, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Farm"] = { workers: 5, food: 0, wood: 30, stone: 10, iron: 0, enoughResource: false };
+        this.requiredResources["Quarry"] = { workers: 6, food: 0, wood: 20, stone: 10, iron: 0, enoughResource: false };
+        this.requiredResources["Sawmill"] = { workers: 3, food: 0, wood: 20, stone: 10, iron: 0, enoughResource: false };
         
-        this.requiredResources["Ranger"] = { workers: 1, food: 30, wood: 10, stone: 0, iron: 5, enoughResource: false };
-        this.requiredResources["Soldier"] = { workers: 1, food: 20, wood: 0, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["Sniper"] = { workers: 1, food: 40, wood: 0, stone: 0, iron: 10, enoughResource: false };
-        this.requiredResources["Titan"] = { workers: 1, food: 50, wood: 0, stone: 0, iron: 20, enoughResource: false };
-        this.requiredResources["Ballista"] = { workers: 1, food: 0, wood: 40, stone: 0, iron: 5, enoughResource: false };
-        this.requiredResources["MachineGunTurret"] = { workers: 1, food: 0, wood: 0, stone: 30, iron: 20, enoughResource: false };
+        this.requiredResources["Ranger"] = { workers: 1, food: 20, wood: 30, stone: 0, iron: 5, enoughResource: false };
+        this.requiredResources["Soldier"] = { workers: 1, food: 30, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Sniper"] = { workers: 1, food: 20, wood: 40, stone: 0, iron: 10, enoughResource: false };
+        this.requiredResources["Titan"] = { workers: 1, food: 75, wood: 50, stone: 0, iron: 100, enoughResource: false };
+        this.requiredResources["Ballista"] = { workers: 1, food: 0, wood: 100, stone: 40, iron: 0, enoughResource: false };
+        this.requiredResources["MachineGunTurret"] = { workers: 1, food: 0, wood: 0, stone: 100, iron: 50, enoughResource: false };
 
-        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 5, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 10, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 5, iron: 0, enoughResource: false };
-        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 10, iron: 0, enoughResource: false };
+        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 15, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 15, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 15, iron: 0, enoughResource: false };
+        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 15, iron: 0, enoughResource: false };
     };
 
     init(ctx) {
