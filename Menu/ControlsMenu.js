@@ -78,6 +78,11 @@ class ControlsMenu {
                             {header: "Other Mouse", text: [
                                 {control: "Double Click on Placed Building", description: "Removes Building (giving back some resources)"} 
                                 ]
+                            },
+
+                            {header: "Attacking", text: [
+                                {control: "Do Nothing", description: "If enemy is within range, your unit will attack it automatically."} 
+                                ]
                             }
                         ]
 
