@@ -187,9 +187,9 @@ class InfectedChubby {
         }
 
         this.elapsedTime += this.game.clockTick;
-        var dist = distance(this, this.target);
-        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-        
+        var dist = Math.max(distance(this, this.target), 1);
+        this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed};
+        //console.log(this.velocity);
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -201,8 +201,10 @@ class InfectedChubby {
         if (dist < 5) {
             // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
             var incrementedTargetID = this.targetID + 1;
-            if (this.path[incrementedTargetID] === undefined && this.target === this.path[this.targetID]) {
-                this.state = 3;
+            if (this.path[incrementedTargetID] === undefined) {
+                if (this.target === this.path[this.targetID]) {
+                    this.state = 3;
+                }
             }
             // Check if there is another target in the list of path - If not, just stay on the last target. &&
             // Check if the target is not the last point in the path (meaning it was a building) then don't advance to the next point of the path
@@ -216,7 +218,6 @@ class InfectedChubby {
         let closestEnt;
         for (var i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             for (const ent of this.game.entities[i]) {
-                let closestEnt;
                 const enemyCheck = (
                     ent instanceof Ranger ||  
                     ent instanceof Soldier || 
@@ -253,7 +254,6 @@ class InfectedChubby {
                 }
             }
         }
-
         if(closestEnt) {
             this.target = closestEnt;
         } else {
@@ -266,10 +266,10 @@ class InfectedChubby {
                 this.elapsedTime = 0;
             } else if (this.elapsedTime > 2.0) {
                 closestEnt.hitpoints -= 40;
-                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 40));
+                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 20));
                 this.elapsedTime = 0;
             }
-        }
+        } 
         //If this unit was previously attacking something and is no longer in range of it, keep walking
         else if (this.state == 1) {
             this.state = 0;
