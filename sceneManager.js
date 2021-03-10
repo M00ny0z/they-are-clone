@@ -73,7 +73,6 @@ class SceneManager {
     startMap(mapNum) {
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./music/backgroundMusic.mp3");
-        const enemySpawner = new EnemySpawner(this.game);
         this.game.entities = [];
         for (let i = 0; i < NUMBEROFPRIORITYLEVELS; i++) {
             this.game.entities.push([]);
@@ -81,27 +80,27 @@ class SceneManager {
         switch (mapNum) {
             case 1:
                 this.game.addEntity(new MapOne(this.game));
-                this.game.enemySpawner = enemySpawner;
-                this.game.lsystem = new LSystem(enemySpawner);
+                this.game.enemySpawner = new EnemySpawner(this.game, mapNum);
+                this.game.lsystem = new LSystem(this.game.enemySpawner);
                 this.game.addEntity(new CommandCenter(this.game, 28, 35));              
                 break;
             case 2:
                 this.game.addEntity(new MapTwo(this.game));
-                this.game.enemySpawner = enemySpawner;
-                this.game.lsystem = new LSystem(enemySpawner);
+                this.game.enemySpawner = new EnemySpawner(this.game, mapNum);
+                this.game.lsystem = new LSystem(this.game.enemySpawner);
                 this.game.addEntity(new CommandCenter(this.game, 21, 30));              
                 break;
             case 3:
                 this.game.addEntity(new MapThree(this.game));
-                this.game.enemySpawner = enemySpawner;
-                this.game.lsystem = new LSystem(enemySpawner);
+                this.game.enemySpawner = new EnemySpawner(this.game, mapNum);
+                this.game.lsystem = new LSystem(this.game.enemySpawner);
                 this.game.addEntity(new CommandCenter(this.game, 24, 21));              
                 break;
           }
           
-        
+          this.game.addEntity(this.game.enemySpawner);
         /*this.game.addEntity(new MapOne(this.game));
-        this.game.addEntity(new EnemySpawner(this.game));   
+           
         this.game.addEntity(new CommandCenter(this.game, 28, 35));*/
     };
 
