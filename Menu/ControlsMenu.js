@@ -69,7 +69,7 @@ class ControlsMenu {
             
                             {header: "Unit Movement", text: [
                                                         {control: "Left Click", description: "Select Unit"},
-                                                        {control: "Left Click + Drag", description: "Rectangle Select units in rectangle"},
+                                                        {control: "Left Click + Drag", description: "Select units in rectangle"},
                                                         {control: "Right Click", description: "Move selected units to path if valid path"},
                                                         {control: "Left Click (away from selected units)", description: "Clear selected units"}    
                                                     ]
