@@ -31,6 +31,8 @@ class ControlsMenu {
 
         // add controls
 
+        this.addControlsDescription(ctx);
+
         if (this.game.mouse != null) {
             this.drawGoBack(ctx);
         }
@@ -50,4 +52,65 @@ class ControlsMenu {
         }
 
     };
+
+    // creates the descriptions for a given UI element
+    addControlsDescription(ctx) {
+
+        let controlTextArray = [
+
+                            {header: "Camera Control", text: [
+                                {control: "w", description: "Move Camera Up"},
+                                {control: "a", description: "Move Camera Left"},
+                                {control: "s", description: "Move Camera Down"},
+                                {control: "d", description: "Move Camera Right"}
+                                ]
+                            },
+
+            
+                            {header: "Unit Movement", text: [
+                                                        {control: "Left Click", description: "Select Unit"},
+                                                        {control: "Left Click + Drag", description: "Rectangle Select units in rectangle"},
+                                                        {control: "Right Click", description: "Move selected units to path if valid path"},
+                                                        {control: "Left Click (away from selected units)", description: "Clear selected units"}    
+                                                    ]
+                            },
+
+                            {header: "Other Mouse", text: [
+                                {control: "Double Click on Placed Building", description: "Removes Building (giving back some resources)"} 
+                                ]
+                            }
+                        ]
+
+
+
+
+        ctx.font = "25px SpaceMono-Regular";
+        ctx.fillStyle = "red";
+        //ctx.textBaseline = "bottom";
+        //ctx.fillText("Mouse", 100, 182);
+
+        let spacing = 30;
+
+        let posX = 100;
+        let posY = 182;
+        controlTextArray.forEach(controlDescriptionObject => {
+            posX = 100;
+            let header = controlDescriptionObject.header;
+            ctx.fillText(header + ":", posX, posY);
+            posY += spacing;
+
+            let controlDescriptionArray = controlDescriptionObject.text;
+
+            controlDescriptionArray.forEach(controlDescription => {
+                posX = 120;
+                let control = controlDescription.control;
+                let description = controlDescription.description;
+                ctx.fillText(control + ": " + description, posX, posY);
+                posY += spacing;
+            })
+
+            posY += spacing
+
+        });
+    }
 }
