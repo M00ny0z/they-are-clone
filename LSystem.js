@@ -15,55 +15,55 @@ class LSystem {
       const output = new Map();
       output.set(APARTMENTDEATH, (x, y) => {
          for (let i = 0; i < 5; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 28, y: 35 }]);
          }
       });
 
       output.set(BALLISTADEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(FARMDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(FISHERMANDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(MACHINEGUNDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(QUARRYDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(SAWMILLDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(STONEDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
       output.set(WOODDEATH, (x, y) => {
          for (let i = 0; i < 2; i++) {
-            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, this.spawner.copyPath(this.spawner.path1.path));
+            this.spawner.spawnEnemy(INFECTEDUNIT, x, y, [{ x: 21, y: 30 }]);
          }
       });
 
