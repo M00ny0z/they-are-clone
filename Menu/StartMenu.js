@@ -1,15 +1,29 @@
 class StartMenu {
 
-    TITLE_POS = { X: 150, Y: 150 };
+    TITLE_POS = { X: 300, Y: 100 };
 
-    MAPONE_POS = { X: 100, Y: 250, width: 350, height: 350 };
-    MAPTWO_POS = { X: 625, Y: 250, width: 350, height: 350 };
-    MAPTHREE_POS = { X: 1150, Y: 250, width: 350, height: 350 };
-    STUDIO_POS = { X: 600, Y: 750, width: 350, height: 50 };
+    MAPONE_POS = { X: 100, Y: 130, width: 350, height: 350 };
+    MAPTWO_POS = { X: 625, Y: 130, width: 350, height: 350 };
+    MAPTHREE_POS = { X: 1150, Y: 130, width: 350, height: 350 };
 
-    CONTROLS_POS = { X: 1290, Y: 700, width: 240, height: 45 };
-    GUIDE_POS = { X: 1340, Y: 780, width: 150, height: 45 };
-    CREDITS_POS = { X: 1320, Y: 860, width: 210, height: 45 };
+    // 1
+    MAPONE_TITLE_POS = {X: 160, Y: 515};
+    MAPONE_DESCRIPTION_POS = {X: 100, Y: 540};
+    // 2
+    MAPTWO_TITLE_POS = {X: 650, Y: 515};
+    MAPTWO_DESCRIPTION_POS = {X: 625, Y: 540};
+    // 3
+    MAPTHREE_TITLE_POS = {X: 1210, Y: 515};
+    MAPTHREE_DESCRIPTION_POS = {X: 1150, Y: 540};
+
+    STUDIO_POS = { X: 630, Y: 800, width: 350, height: 50 };
+
+    // CONTROLS_POS = { X: 1395, Y: 805, width: 130, height: 20 };
+    // GUIDE_POS = { X: 1420, Y: 835, width: 90, height: 20 };
+    // CREDITS_POS = { X: 1410, Y: 865, width: 110, height: 20 };
+    CONTROLS_POS = { X: 1100, Y: 835, width: 130, height: 20 };
+    GUIDE_POS = { X: 1270, Y: 835, width: 90, height: 20 };
+    CREDITS_POS = { X: 1400, Y: 835, width: 110, height: 20 };
 
     constructor(game) {
         Object.assign(this, { game });
@@ -69,28 +83,26 @@ class StartMenu {
 
     draw(ctx) {
         ctx.fillStyle = "darkslategray";
-        ctx.font = "120px Charcoal";
+        ctx.font = "100px Charcoal";
         ctx.fillText("THEY ARE MILLIONS", this.TITLE_POS.X, this.TITLE_POS.Y);
 
         this.drawMap(ctx, 1);
         this.drawMap(ctx, 2);
         this.drawMap(ctx, 3);
 
-        ctx.font = "50px Charcoal";
+        this.addDescription(ctx,1);
+        this.addDescription(ctx,2);
+        this.addDescription(ctx,3);
+
+        ctx.font = "38px Charcoal";
         this.drawControls(ctx);
         this.drawGuide(ctx);
         this.drawCredits(ctx);
+        
         ctx.drawImage(this.red5StudiosImg, this.STUDIO_POS.X, this.STUDIO_POS.Y, this.STUDIO_POS.width, this.STUDIO_POS.height);
-
     };
 
     drawMap(ctx, num) {
-        // ctx.beginPath();
-        // ctx.strokeStyle = "red";
-        // ctx.rect(this.MAPONE_POS.X, this.MAPONE_POS.Y, this.MAPONE_POS.width, this.MAPONE_POS.height);
-        // ctx.rect(this.MAPTWO_POS.X, this.MAPTWO_POS.Y, this.MAPTWO_POS.width, this.MAPTWO_POS.height);
-        // ctx.rect(this.MAPTHREE_POS.X, this.MAPTHREE_POS.Y, this.MAPTHREE_POS.width, this.MAPTHREE_POS.height);
-        // ctx.stroke();
         switch (num) {
             case 1:
                 if ((this.game.mouse != null) && (this.game.mouse.offsetX >= this.MAPONE_POS.X && this.game.mouse.offsetX <= this.MAPONE_POS.X + this.MAPONE_POS.width) &&
@@ -125,6 +137,97 @@ class StartMenu {
                 break;
         }
         ctx.globalAlpha = 1.0
+    }
+
+    addDescription(ctx, num) {
+        switch (num) {
+            case 1:
+                ctx.beginPath();
+                ctx.fillStyle = "darkgrey";
+                ctx.fillRect(this.MAPONE_DESCRIPTION_POS.X, this.MAPONE_TITLE_POS.Y - 30, 350, 310);
+                ctx.stroke();
+
+                ctx.fillStyle = "black";
+                ctx.font = "bold 30px Charcoal";
+                ctx.fillText("The Hidden Valley", this.MAPONE_TITLE_POS.X, this.MAPONE_TITLE_POS.Y);
+                ctx.font = "16px Charcoal";
+                ctx.fillStyle = "white";
+                ctx.fillText("Difficult: ", this.MAPONE_DESCRIPTION_POS.X + 10,  this.MAPONE_DESCRIPTION_POS.Y);
+                ctx.fillStyle = "green";
+                ctx.fillText("Easy", this.MAPONE_DESCRIPTION_POS.X + 75,  this.MAPONE_DESCRIPTION_POS.Y);
+                ctx.fillStyle = "white";
+                ctx.fillText("Days: 10", this.MAPONE_DESCRIPTION_POS.X + 10, this.MAPONE_DESCRIPTION_POS.Y + 20);
+
+                var descriptionTextY = this.MAPONE_DESCRIPTION_POS.Y + 50;
+                var descriptionStringArray = ["Our rangers found this small valley on the banks of", "a shallow river. It is undoubtedly where the capital", "city New Empire rises. On the map you will find" , "rich mineral deposits that are needed to defend the", "colony."];
+                descriptionStringArray.forEach(description => {
+                    ctx.fillText(description, this.MAPONE_DESCRIPTION_POS.X + 5, descriptionTextY);
+                    descriptionTextY += 20;
+                })
+                break;
+            case 2:
+                ctx.beginPath();
+                ctx.fillStyle = "darkgrey";
+                ctx.fillRect(this.MAPTWO_DESCRIPTION_POS.X, this.MAPTWO_TITLE_POS.Y - 30, 350, 310);
+                ctx.stroke();
+
+                ctx.fillStyle = "black";
+                ctx.font = "bold 30px Charcoal";
+                ctx.fillText("The Mines of the Raven", this.MAPTWO_TITLE_POS.X, this.MAPTWO_TITLE_POS.Y);
+                ctx.font = "16px Charcoal";
+                ctx.fillStyle = "white";
+                ctx.fillText("Difficult: ", this.MAPTWO_DESCRIPTION_POS.X + 10,  this.MAPTWO_DESCRIPTION_POS.Y);
+                ctx.fillStyle = "yellow";
+                ctx.fillText("Medium", this.MAPTWO_DESCRIPTION_POS.X + 75,  this.MAPTWO_DESCRIPTION_POS.Y);
+                ctx.fillStyle = "white";
+                ctx.fillText("Days: 15", this.MAPTWO_DESCRIPTION_POS.X + 10, this.MAPTWO_DESCRIPTION_POS.Y + 20);
+                var descriptionTextY = this.MAPTWO_DESCRIPTION_POS.Y + 50;
+                var descriptionStringArray = ["On this volcanic wasteland of sharp rocks, you'll", 
+                                            "find iron mines that were abandoned by humans a", 
+                                            "long time ago. Now, only the croaking of the ravens", 
+                                            "breaks the silence of these ash lands. Build a large", 
+                                            "colony and exploit its valuable mines to ensure a", 
+                                            "continuous supply of resources for the Empire.", 
+                                            "There are many points of entry between the", 
+                                            "mountains and the mines. You will have to build", 
+                                            "strong defenses at each entrance to protect the mines."];
+                descriptionStringArray.forEach(description => {
+                    ctx.fillText(description, this.MAPTWO_DESCRIPTION_POS.X + 5, descriptionTextY);
+                    descriptionTextY += 20;
+                })
+                break;   
+            case 3:
+                ctx.beginPath();
+                ctx.fillStyle = "darkgrey";
+                ctx.fillRect(this.MAPTHREE_DESCRIPTION_POS.X, this.MAPTHREE_TITLE_POS.Y - 30, 350, 310);
+                ctx.stroke();
+
+                ctx.fillStyle = "black";
+                ctx.font = "bold 30px Charcoal";
+                ctx.fillText("The Coast of Bones", this.MAPTHREE_TITLE_POS.X, this.MAPTHREE_TITLE_POS.Y);
+                ctx.font = "16px Charcoal";
+                ctx.fillStyle = "white";
+                ctx.fillText("Difficult: ", this.MAPTHREE_DESCRIPTION_POS.X + 10,  this.MAPTHREE_DESCRIPTION_POS.Y);
+                ctx.fillStyle = "red";
+                ctx.fillText("Hard", this.MAPTHREE_DESCRIPTION_POS.X + 75,  this.MAPTHREE_DESCRIPTION_POS.Y);
+                ctx.fillStyle = "white";
+                ctx.fillText("Days: 20", this.MAPTHREE_DESCRIPTION_POS.X + 10, this.MAPTHREE_DESCRIPTION_POS.Y + 20);
+                var descriptionTextY = this.MAPTHREE_DESCRIPTION_POS.Y + 50;
+                var descriptionStringArray = ["Thousands of human bones are scattered across the", 
+                                            "sands of this coast, like macabre witnesses of a battle", 
+                                            "of long ago. However, the waters that bathe the Coast", 
+                                            "of Bones are exceptionally rich in marine life and a", 
+                                            "very favorable environment to build a fishing-based", 
+                                            "colony. It's a relatively easy place to protect. To", 
+                                            "the North a great mountain range rises and, to the", 
+                                            "South, the great sea provides protection. Get rid of", 
+                                            "the infected in the region quickly, so you can defend", 
+                                            "your colony from the larger and ever vicious", "onslaught."];
+                descriptionStringArray.forEach(description => {
+                    ctx.fillText(description, this.MAPTHREE_DESCRIPTION_POS.X + 5, descriptionTextY);
+                    descriptionTextY += 20;
+                })
+        }
     }
 
     drawControls(ctx) {
