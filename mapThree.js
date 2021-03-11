@@ -2,7 +2,8 @@ class MapThree {
     constructor(game) {
         Object.assign(this, { game });
         this.game.mainMap = this;
-
+        this.game.camera.cameraX = 8;
+        this.game.camera.cameraY = 14;
         this.mapNum = 3;
 
         // indices in TileMaps object

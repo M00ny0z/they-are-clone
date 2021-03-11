@@ -2,7 +2,8 @@ class MapOne {
     constructor(game) {
         Object.assign(this, { game });
         this.game.mainMap = this;
-
+        this.game.camera.cameraX = 10;
+        this.game.camera.cameraY = 27;
         this.mapNum = 1;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/mapOneWithGrid.png");

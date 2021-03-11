@@ -2,8 +2,6 @@ class SceneManager {
     constructor(game) {
         this.game = game;
         this.game.camera = this;
-        this.cameraX = 10;
-        this.cameraY = 27;
 
         this.game.sceneManager = this;
 

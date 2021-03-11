@@ -2,7 +2,8 @@ class MapTwo {
     constructor(game) {
         Object.assign(this, { game });
         this.game.mainMap = this;
-
+        this.game.camera.cameraX = 5;
+        this.game.camera.cameraY = 23;
         this.mapNum = 2;
 
         // indices in TileMaps object
