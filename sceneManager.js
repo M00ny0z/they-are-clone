@@ -69,6 +69,9 @@ class SceneManager {
     };
 
     startMap(mapNum) {
+        var elem = document.getElementById('gameWorld');
+        elem.style.background = "grey";
+
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./music/backgroundMusic.mp3");
         this.game.entities = [];
