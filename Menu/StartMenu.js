@@ -32,6 +32,7 @@ class StartMenu {
         this.mapThreeImg = ASSET_MANAGER.getAsset("./sprites/mapThree.png");
         this.createdByImg = ASSET_MANAGER.getAsset("./sprites/createdBy.png");
         this.red5StudiosImg = ASSET_MANAGER.getAsset("./sprites/introScreen/red5Studios.png");
+        this.guideLink = document.getElementById("guide-link");
 
         this.priority = MISCELLANEOUSPRIORITY;
     };
@@ -71,7 +72,8 @@ class StartMenu {
             else if ((this.game.click.offsetX >= this.GUIDE_POS.X && this.game.click.offsetX <= this.GUIDE_POS.X + this.GUIDE_POS.width) &&
                 (this.game.click.offsetY >= this.GUIDE_POS.Y - this.GUIDE_POS.height && this.game.click.offsetY <= this.GUIDE_POS.Y)) {
                 console.log("guide menu clicked")
-                this.game.camera.loadGuideMenu();
+                //this.game.camera.loadGuideMenu();
+                this.guideLink.click();
                 this.game.click = null;
             }
             else if ((this.game.click.offsetX >= this.CREDITS_POS.X && this.game.click.offsetX <= this.CREDITS_POS.X + this.CREDITS_POS.width) &&
