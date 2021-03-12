@@ -189,7 +189,8 @@ class InfectedUnit {
         this.elapsedTime += this.game.clockTick;
         var dist = Math.max(distance(this, this.target), 1);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed};
-        //console.log(this.velocity);
+        this.state = 0;
+        
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
