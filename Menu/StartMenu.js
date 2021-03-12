@@ -42,6 +42,7 @@ class StartMenu {
                 (this.game.click.offsetY >= this.MAPONE_POS.Y && this.game.click.offsetY <= this.MAPONE_POS.Y + this.MAPONE_POS.height)) {
                 console.log("map one clicked");
                 this.game.camera.title = false;
+                this.game.currentMap = 1;
                 this.game.camera.startMap(1);
                 this.game.click = null;
             }
@@ -49,6 +50,7 @@ class StartMenu {
                 (this.game.click.offsetY >= this.MAPTWO_POS.Y && this.game.click.offsetY <= this.MAPTWO_POS.Y + this.MAPTWO_POS.height)) {
                 console.log("map two clicked");
                 this.game.camera.title = false;
+                this.game.currentMap = 2;
                 this.game.camera.startMap(2);
                 this.game.click = null;
             }
@@ -56,6 +58,7 @@ class StartMenu {
                 (this.game.click.offsetY >= this.MAPTHREE_POS.Y && this.game.click.offsetY <= this.MAPTHREE_POS.Y + this.MAPTHREE_POS.height)) {
                 console.log("map three clicked");
                 this.game.camera.title = false;
+                this.game.currentMap = 3;
                 this.game.camera.startMap(3);
                 this.game.click = null;
             }
