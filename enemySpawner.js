@@ -472,7 +472,7 @@ class EnemySpawner {
                 break;
 
             //Wave 4   
-            case !this.spawnedWaveFlags[3] && this.game.elapsedDay >= 6 && this.game.elapsedHour >= 12:
+            case !this.spawnedWaveFlags[3] && this.game.elapsedDay >= 7 && this.game.elapsedHour >= 12:
                 //Path 1
                 for (var i = 0; i < 11; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[0].startX, this.paths[0].startY + (i * -1), this.copyPath(this.paths[0].path)));
@@ -491,7 +491,7 @@ class EnemySpawner {
                 for (var i = 0; i < 6; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[1].startX, this.paths[1].startY + (i * 1), this.copyPath(this.paths[1].path)));
                 }
-                for (var i = 0; i < 3; i++) {
+                for (var i = 0; i < 1; i++) {
                     this.game.addEntity(new InfectedVenom(this.game, this.paths[1].startX, this.paths[1].startY + (i * 2 + 1), this.copyPath(this.paths[1].path)));
                 }
                 for (var i = 0; i < 4; i++) {
