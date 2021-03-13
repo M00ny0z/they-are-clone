@@ -42,7 +42,7 @@ class WoodWall {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false) {
+            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false && this.game.mainMap.map[y][x].gate === false) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -54,7 +54,7 @@ class WoodWall {
             var x = sanitizeCord(this.game.click.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.click.y + this.game.camera.cameraY);
             if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
-                this.game.collisionMap[y][x] = 0;
+                this.game.mainMap.map[y][x].gate = true
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;

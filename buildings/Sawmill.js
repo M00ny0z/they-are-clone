@@ -91,6 +91,8 @@ class Sawmill {
                 (this.game.collisionMap[y+1][x] === 1) &&
                 (this.game.mainMap.map[y][x].farm === false) &&
                 (this.game.mainMap.map[y+1][x].farm === false) &&
+                (this.game.mainMap.map[y][x].gate === false) &&
+                (this.game.mainMap.map[y+1][x].gate === false) &&
                 checkSameBuildingTypeInMapResourceGrid("Sawmill", x, y, 5, 2)) {
                     this.placeable = true;
             } else {

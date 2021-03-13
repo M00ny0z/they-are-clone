@@ -103,6 +103,8 @@ class FishermansCottage {
                 (this.game.mainMap.map[adjacentSquares.left.y][adjacentSquares.left.x].water == true) ||
                 (this.game.mainMap.map[adjacentSquares.above.y][adjacentSquares.above.x].water == true)) &&
                 this.game.collisionMap[y][x] === 1 &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y][x].gate === false) &&
                 checkSameBuildingTypeInMapResourceGrid("FishermansCottage", x, y, 4, 2)) {
                     this.placeable = true;
             } else {

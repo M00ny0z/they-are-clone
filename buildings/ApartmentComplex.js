@@ -49,7 +49,9 @@ class ApartmentComplex {
                 (this.game.collisionMap[y][x] === 1) &&
                 (this.game.collisionMap[y+1][x] === 1) &&
                 (this.game.mainMap.map[y][x].farm === false) &&
-                (this.game.mainMap.map[y+1][x].farm === false)) { // (no collision)
+                (this.game.mainMap.map[y+1][x].farm === false)&&
+                (this.game.mainMap.map[y][x].gate === false) &&
+                (this.game.mainMap.map[y+1][x].gate === false)) { // (no collision)
                     this.placeable = true;
             } else {
                 this.placeable = false;
