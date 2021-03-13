@@ -14,7 +14,7 @@ class FireBolt {
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
-        this.damage = 30;
+        this.damage = 20;
 
         this.elapsedTime = 0;
 
