@@ -13,7 +13,7 @@ class InfectedVenom {
         this.priority = ENEMYUNITPRIORITY;
 
         this.radius = 10;
-        this.visualRadius = 200;
+        this.visualRadius = 150;
 
         this.targetID = 0;
         if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point

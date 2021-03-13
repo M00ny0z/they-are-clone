@@ -642,7 +642,7 @@ class EnemySpawner {
                     this.game.addEntity(new InfectedVenom(this.game, this.paths[currentPath].startX + (i * 1 + 0.5), this.paths[currentPath].startY, this.copyPath(this.paths[currentPath].path)));
                 }
                 for (var i = 0; i < 10; i++) {
-                    this.game.addHarpy(new InfectedChubby(this.game, this.paths[currentPath].startX + (i * 1 + 0.5), this.paths[currentPath].startY, this.copyPath(this.paths[currentPath].path)));
+                    this.game.addEntity(new InfectedHarpy(this.game, this.paths[currentPath].startX + (i * 1 + 0.5), this.paths[currentPath].startY, this.copyPath(this.paths[currentPath].path)));
                 }
 
                 currentPath = 4;
