@@ -11,7 +11,7 @@ class Farm {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = this.game.stats["Farm"].health;
         this.foodRate = 0;
         this.radius = 30;
 
@@ -91,7 +91,7 @@ class Farm {
         ctx.fillRect(posX + 1, posY + 1, 68, 6);
 
         ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
+        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / this.game.stats["Farm"].health), 3);
         
         ctx.restore();
 
@@ -344,8 +344,8 @@ class Farm {
             }
         }
 
-        if (this.hitpoints < MAX_FARM_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FARM_HEALTH);
+        if (this.hitpoints < this.game.stats["Farm"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["Farm"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

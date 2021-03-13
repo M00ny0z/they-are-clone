@@ -10,9 +10,9 @@ class WoodGateVertical {
         this.placeable = false;
 
         this.radius = 30;
-        this.visualRadius = 75;
+        this.hitpoints = this.game.stats["WoodGate"].visualRadius;
 
-        this.hitpoints = 100;
+        this.hitpoints = this.game.stats["WoodGate"].health;
 
         //Gate is closed by default
         this.state = 0;
@@ -150,8 +150,8 @@ class WoodGateVertical {
             }
         }
 
-        if (this.hitpoints < MAX_WOODGATE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODGATE_HEALTH);
+        if (this.hitpoints < this.game.stats["WoodGate"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["WoodGate"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

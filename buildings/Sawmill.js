@@ -8,7 +8,7 @@ class Sawmill {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = this.game.stats["Sawmill"].health;
         this.radius = 30;
         
         this.woodRate = 0;
@@ -202,8 +202,8 @@ class Sawmill {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_SAWMILL_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SAWMILL_HEALTH);
+        if (this.hitpoints < this.game.stats["Sawmill"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["Sawmill"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

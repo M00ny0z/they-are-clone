@@ -8,15 +8,14 @@ class MachineGunTurret {
         this.priority = BUILDINGPRIORITY;
 
         this.radius = 30;
-        this.visualRadius = 250;
 
-        this.fireRate = 0.75
+        this.attackSpeedInSec =  this.game.stats["MachineGunTurret"].attackSpeedInSec
+        this.visualRadius = this.game.stats["MachineGunTurret"].visualRadius;
+        this.hitpoints = this.game.stats["MachineGunTurret"].health;
 
         this.facing = 2;
 
         this.elapsedTime = 0;
-
-        this.hitpoints = 250;
 
         this.followMouse = true;
         this.placeable = false;
@@ -108,7 +107,7 @@ class MachineGunTurret {
             for (var j = 0; j < this.game.entities[i].length; j++) {
                 var ent = this.game.entities[i][j];
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
-                    && this.elapsedTime > this.fireRate) {
+                    && this.elapsedTime > this.attackSpeedInSec) {
                     this.target = ent;
                     this.elapsedTime = 0;
                     this.game.addEntity(new CannonBall(this.game, this.x, this.y, ent, true));

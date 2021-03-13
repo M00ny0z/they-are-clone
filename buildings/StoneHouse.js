@@ -8,7 +8,7 @@ class StoneHouse {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 125;
+        this.hitpoints = this.game.stats["StoneHouse"].health;
         this.radius = 30;
         this.workers = 4;
 
@@ -136,8 +136,8 @@ class StoneHouse {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_STONEHOUSE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_STONEHOUSE_HEALTH);
+        if (this.hitpoints < this.game.stats["StoneHouse"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["StoneHouse"].health);
         }
 
         

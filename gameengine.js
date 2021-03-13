@@ -60,11 +60,11 @@ class GameEngine {
 
 
         // For testing:
-        this.food = 1000;
+        /*this.food = 1000;
         this.wood = 1000;
         this.stone = 1000;
         this.iron = 1000;
-
+        */
         //this.entities = {};
         /*this.entities["WoodHouse"] = {
             resources = {
@@ -97,6 +97,60 @@ class GameEngine {
         this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 40, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 40, iron: 0, enoughResource: false };
         this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 40, iron: 0, enoughResource: false };
+
+        this.stats = {};
+
+        // Projectiles:
+        this.stats["Arrow"] = { damage: 15, maxSpeed: 300, radius: 16};
+        this.stats["CannonBall"] = { damage: 15, maxSpeed: 200, radius: 8};
+        this.stats["FireBolt"] = { damage: 20, maxSpeed: 200, radius: 16};
+
+        this.stats["SniperArrow"] = { damage: 20, maxSpeed: 300, radius: 16};
+        this.stats["SoldierBolt"] = { damage: 5, maxSpeed: 300, radius: 16};
+        this.stats["TitanArrow"] = { damage: 30, maxSpeed: 200, radius: 16};
+
+
+        // Attacking Units:
+        this.stats["Ranger"] = { attack: this.stats["Arrow"].damage, attackSpeedInSec: 1.5, maxSpeed: 35*3, visualRadius: 200, health: 80};
+        this.stats["Ranger"].dps =  (this.stats["Arrow"].damage / this.stats["Ranger"].attackSpeedInSec)
+
+        this.stats["Sniper"] = {attack: this.stats["SniperArrow"].damage, attackSpeedInSec: 3, maxSpeed: 25*2, visualRadius: 250, health: 100};
+        this.stats["Sniper"].dps =  (this.stats["SniperArrow"].damage / this.stats["Sniper"].attackSpeedInSec)
+
+        this.stats["Soldier"] = {attack: this.stats["SoldierBolt"].damage,  attackSpeedInSec: 0.8, maxSpeed: 40, visualRadius: 150, health: 100};
+        this.stats["Soldier"].dps =  (this.stats["SoldierBolt"].damage / this.stats["Soldier"].attackSpeedInSec)
+
+        this.stats["Titan"] = {attack: this.stats["TitanArrow"].damage, attackSpeedInSec: 1, maxSpeed: 31, visualRadius: 200, health: 250};
+        this.stats["Titan"].dps =  (this.stats["TitanArrow"].damage / this.stats["Titan"].attackSpeedInSec)
+
+        this.stats["Ballista"] = {attack: this.stats["Arrow"].damage, attackSpeedInSec: 1.5, visualRadius: 250, health: 200};
+        this.stats["Ballista"].dps =  (this.stats["Arrow"].damage / this.stats["Ballista"].attackSpeedInSec)
+
+        this.stats["MachineGunTurret"] = {attack: this.stats["CannonBall"].damage, attackSpeedInSec: 0.8, visualRadius: 200, health: 250};
+        this.stats["MachineGunTurret"].dps =  (this.stats["CannonBall"].damage / this.stats["MachineGunTurret"].attackSpeedInSec)
+
+
+        // Static Units
+        let woodHealth = 100;
+        let gateVisualRadius = 75;
+        this.stats["WoodWall"] = {health: woodHealth};
+        this.stats["WoodGate"] = {health: woodHealth, visualRadius: gateVisualRadius};
+        this.stats["WoodHouse"] = {health: 125};
+
+        let stoneHealth = 200;
+        this.stats["StoneWall"] = {health: stoneHealth};
+        this.stats["StoneGate"] = {health: stoneHealth, visualRadius: gateVisualRadius};
+        this.stats["StoneHouse"] = {health: stoneHealth};
+        this.stats["ApartmentComplex"] = {health: 250};
+
+        // Resource Buildings:
+        this.stats["Farm"] = {health: 150};
+        this.stats["FishermansCottage"] = {health: 150};
+        this.stats["Quarry"] = {health: 150};
+        this.stats["Sawmill"] = {health: 150};
+
+
+
     };
 
     init(ctx) {

@@ -8,7 +8,7 @@ class FishermansCottage {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints =  this.game.stats["FishermansCottage"].health;
         this.radius = 30;
         this.foodRate = 0;
 
@@ -208,8 +208,8 @@ class FishermansCottage {
             ctx.drawImage(this.spritesheet, startX, startY, width, height,(this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_FISHERMANS_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FISHERMANS_HEALTH);
+        if (this.hitpoints < this.game.stats["FishermansCottage"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["FishermansCottage"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

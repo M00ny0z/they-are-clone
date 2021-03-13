@@ -8,7 +8,7 @@ class WoodWall {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 100;
+        this.hitpoints = this.game.stats["WoodWall"].health;
         this.radius = 30;
 
         //Performance Measuring Variables
@@ -125,8 +125,8 @@ class WoodWall {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_WOODWALL_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODWALL_HEALTH);
+        if (this.hitpoints < this.game.stats["WoodWall"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["WoodWall"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

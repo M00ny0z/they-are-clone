@@ -10,9 +10,9 @@ class StoneGateVertical {
         this.placeable = false;
 
         this.radius = 30;
-        this.visualRadius = 75;
+        this.visualRadius = this.game.stats["StoneGate"].visualRadius;
 
-        this.hitpoints = 200;
+        this.hitpoints = this.game.stats["StoneGate"].health;
 
         //Gate is closed by default
         this.state = 0;
@@ -145,8 +145,8 @@ class StoneGateVertical {
             }
         }
 
-        if (this.hitpoints < MAX_STONEGATE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_STONEGATE_HEALTH);
+        if (this.hitpoints < this.game.stats["StoneGate"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["StoneGate"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

@@ -2,19 +2,19 @@ class SoldierBolt {
     constructor(game, x, y, target, heatSeeking) {
         Object.assign(this, { game, x, y, target, heatSeeking});
 
-        this.radius = 16;
+        this.radius = this.game.stats["SoldierBolt"].radius;
         this.smooth = false;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/soldier_bolt.png");
         this.priority = EFFECTPRIORITY;
 
         var dist = distance(this, this.target);
-        this.maxSpeed = 300; // pixels per second
+        this.maxSpeed = this.game.stats["SoldierBolt"].maxSpeed; // pixels per second
 
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
-        this.damage = 5;
+        this.damage = this.game.stats["SoldierBolt"].damage;
 
         this.elapsedTime = 0;
 
