@@ -704,6 +704,7 @@ class SceneManager {
                 // descriptions
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) { // COLONISTS
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -718,6 +719,7 @@ class SceneManager {
                     ctx.fillText("Dwellings for the colonists.", 500, 812);
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) { // RESOURCES
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -732,6 +734,7 @@ class SceneManager {
                     ctx.fillText("Structures dedicated to the resources prodcution.", 500, 812);
                 } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {  // MILITARY
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -746,6 +749,7 @@ class SceneManager {
                     ctx.fillText("Military structures for attacking and units training.", 500, 812);
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) { // DEFENSE
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -997,6 +1001,7 @@ class SceneManager {
 
                 if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) {
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -1011,6 +1016,7 @@ class SceneManager {
                     ctx.fillText("Cancel the selected building.", 500, 812);
                 } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
