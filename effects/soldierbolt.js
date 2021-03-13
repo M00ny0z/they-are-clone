@@ -14,7 +14,7 @@ class SoldierBolt {
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
-        this.damage = 10;
+        this.damage = 5;
 
         this.elapsedTime = 0;
 

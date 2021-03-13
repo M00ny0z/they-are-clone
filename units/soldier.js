@@ -16,7 +16,7 @@ class Soldier {
 
         // Calculating the velocity
         //this.maxSpeed = 25; // pixels per second
-        this.maxSpeed = 25*3; // pixels per second
+        this.maxSpeed = 40; // pixels per second
         this.velocity = 0;
 
         this.state = 3; // 0 walking, 1 attacking, 2 dead, 3 idel
