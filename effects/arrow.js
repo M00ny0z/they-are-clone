@@ -2,20 +2,21 @@ class Arrow {
     constructor(game, x, y, target, heatSeeking) {
         Object.assign(this, { game, x, y, target, heatSeeking});
 
-        this.radius = 16;
+        this.radius = this.game.stats["Arrow"].radius;
         this.smooth = false;
 
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/arrow.png");
         this.priority = EFFECTPRIORITY;
 
         var dist = distance(this, this.target);
-        this.maxSpeed = 300; // pixels per second
+        this.maxSpeed = this.game.stats["Arrow"].maxSpeed // pixels per second
         
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
 
         this.elapsedTime = 0;
+        this.damage = this.game.stats["Arrow"].damage;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -100,9 +101,9 @@ class Arrow {
             for (var j = 0; j < this.game.entities[i].length; j++) {
                 var ent = this.game.entities[i][j];
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                    ent.hitpoints -= 20;
+                    ent.hitpoints -= this.damage;
                     this.removeFromWorld = true;
-                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), 20));
+                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), this.damage));
                 }
             }
         }

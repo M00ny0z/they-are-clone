@@ -8,7 +8,7 @@ class FishermansCottage {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints =  this.game.stats["FishermansCottage"].health;
         this.radius = 30;
         this.foodRate = 0;
 
@@ -44,7 +44,8 @@ class FishermansCottage {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 //console.log("x:" + j + " y:" + i + this.game.mainMap.map[i][j].water);
                 if (this.game.mainMap.map[i][j].water) {
-                    this.foodRate += 1;
+                    //this.foodRate += 1;
+                    this.foodRate += 0.33;
                 }
             }
         }
@@ -102,6 +103,8 @@ class FishermansCottage {
                 (this.game.mainMap.map[adjacentSquares.left.y][adjacentSquares.left.x].water == true) ||
                 (this.game.mainMap.map[adjacentSquares.above.y][adjacentSquares.above.x].water == true)) &&
                 this.game.collisionMap[y][x] === 1 &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y][x].gate === false) &&
                 checkSameBuildingTypeInMapResourceGrid("FishermansCottage", x, y, 4, 2)) {
                     this.placeable = true;
             } else {
@@ -198,15 +201,15 @@ class FishermansCottage {
             //ctx.fillText("Surround the water tiles to acquire food", (mouse.x-3) * PARAMS.BLOCKWIDTH, (mouse.y-1)*PARAMS.BLOCKWIDTH);
             ctx.fillText("Surround the water tiles", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.7)*PARAMS.BLOCKWIDTH);
             ctx.fillText("to gain food", (mouse.x-2) * PARAMS.BLOCKWIDTH, (mouse.y-1.4)*PARAMS.BLOCKWIDTH);
-            ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.foodRate.toFixed(2) + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y+3)*PARAMS.BLOCKWIDTH);
         }
 
         if (!this.followMouse) {
             ctx.drawImage(this.spritesheet, startX, startY, width, height,(this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_FISHERMANS_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FISHERMANS_HEALTH);
+        if (this.hitpoints < this.game.stats["FishermansCottage"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["FishermansCottage"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

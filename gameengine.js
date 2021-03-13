@@ -35,28 +35,37 @@ class GameEngine {
         // // Time: 1 hour is 1 second, 1 day is 24 seconds
         // this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
         // this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
-        // this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
-        // this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
+        //this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
+        this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
+        this.hourPrev = 1; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
         this.elapsedHour = 0;
         this.elapsedDay = 0;
         this.workers = 0;
-        this.maxWorkers = 50;
-        this.food = 500;
+        this.maxWorkers = 25;
+        this.food = 100;
         this.foodRate = 0;
         this.maxFood = 1000;
         this.wood = 100;
         this.woodRate = 0;
-        this.maxWood = 200;
-        this.stone = 100;
+        this.maxWood = 1000;
+        this.stone = 50;
         this.stoneRate = 0;
-        this.maxStone = 200;
+        this.maxStone = 1000;
         this.iron = 0;
         this.ironRate = 0;
-        this.maxIron = 200;
+        this.maxIron = 1000;
         this.elapsedHourPrev = 1;
         this.zoom = 1 // zoom factor of map, and all units.
         this.ready = false; // wait for game to load, before we let ui clickable.
 
+        //this.food=1000;
+
+        // For testing:
+        /*this.food = 1000;
+        this.wood = 1000;
+        this.stone = 1000;
+        this.iron = 1000;*/
+        
         //this.entities = {};
         /*this.entities["WoodHouse"] = {
             resources = {
@@ -69,26 +78,80 @@ class GameEngine {
 
         //this.requiredResourcesArray = ["workers", "food", "wood", "stone", "iron"]; // list of resources to traverse
         this.requiredResources = {};
-        this.requiredResources["WoodHouse"] = { workers: 0, food: 0, wood: 20, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 20, iron: 0, enoughResource: false };
-        this.requiredResources["ApartmentComplex"] = { workers: 0, food: 0, wood: 30, stone: 50, iron: 20, enoughResource: false };
+        this.requiredResources["WoodHouse"] = { workers: 0, food: 0, wood: 50, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 50, iron: 0, enoughResource: false };
+        this.requiredResources["ApartmentComplex"] = { workers: 0, food: 0, wood: 50, stone: 50, iron: 20, enoughResource: false };
 
         this.requiredResources["FishermansCottage"] = { workers: 1, food: 0, wood: 30, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Farm"] = { workers: 5, food: 0, wood: 30, stone: 10, iron: 0, enoughResource: false };
         this.requiredResources["Quarry"] = { workers: 6, food: 0, wood: 20, stone: 10, iron: 0, enoughResource: false };
         this.requiredResources["Sawmill"] = { workers: 3, food: 0, wood: 20, stone: 10, iron: 0, enoughResource: false };
         
-        this.requiredResources["Ranger"] = { workers: 1, food: 20, wood: 30, stone: 0, iron: 5, enoughResource: false };
-        this.requiredResources["Soldier"] = { workers: 1, food: 30, wood: 0, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["Sniper"] = { workers: 1, food: 20, wood: 40, stone: 0, iron: 10, enoughResource: false };
-        this.requiredResources["Titan"] = { workers: 1, food: 75, wood: 50, stone: 0, iron: 100, enoughResource: false };
+        this.requiredResources["Ranger"] = { workers: 1, food: 70, wood: 30, stone: 0, iron: 5, enoughResource: false };
+        this.requiredResources["Soldier"] = { workers: 1, food: 60, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Sniper"] = { workers: 1, food: 100, wood: 40, stone: 0, iron: 10, enoughResource: false };
+        this.requiredResources["Titan"] = { workers: 1, food: 200, wood: 50, stone: 0, iron: 100, enoughResource: false };
         this.requiredResources["Ballista"] = { workers: 1, food: 0, wood: 100, stone: 40, iron: 0, enoughResource: false };
         this.requiredResources["MachineGunTurret"] = { workers: 1, food: 0, wood: 0, stone: 100, iron: 50, enoughResource: false };
 
-        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 15, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 15, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 15, iron: 0, enoughResource: false };
-        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 15, iron: 0, enoughResource: false };
+        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 40, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 40, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 40, iron: 0, enoughResource: false };
+        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 40, iron: 0, enoughResource: false };
+
+        this.stats = {};
+
+        // Projectiles:
+        this.stats["Arrow"] = { damage: 15, maxSpeed: 300, radius: 16};
+        this.stats["CannonBall"] = { damage: 15, maxSpeed: 200, radius: 8};
+        this.stats["FireBolt"] = { damage: 20, maxSpeed: 200, radius: 16};
+
+        this.stats["SniperArrow"] = { damage: 20, maxSpeed: 300, radius: 16};
+        this.stats["SoldierBolt"] = { damage: 5, maxSpeed: 300, radius: 16};
+        this.stats["TitanArrow"] = { damage: 30, maxSpeed: 200, radius: 16};
+
+
+        // Attacking Units:
+        this.stats["Ranger"] = { attack: this.stats["Arrow"].damage, attackSpeedInSec: 1.5, maxSpeed: 35*3, visualRadius: 200, health: 80};
+        this.stats["Ranger"].dps =  (this.stats["Arrow"].damage / this.stats["Ranger"].attackSpeedInSec)
+
+        this.stats["Sniper"] = {attack: this.stats["SniperArrow"].damage, attackSpeedInSec: 3, maxSpeed: 25*2, visualRadius: 250, health: 100};
+        this.stats["Sniper"].dps =  (this.stats["SniperArrow"].damage / this.stats["Sniper"].attackSpeedInSec)
+
+        this.stats["Soldier"] = {attack: this.stats["SoldierBolt"].damage,  attackSpeedInSec: 0.8, maxSpeed: 40, visualRadius: 150, health: 100};
+        this.stats["Soldier"].dps =  (this.stats["SoldierBolt"].damage / this.stats["Soldier"].attackSpeedInSec)
+
+        this.stats["Titan"] = {attack: this.stats["TitanArrow"].damage, attackSpeedInSec: 1, maxSpeed: 31, visualRadius: 200, health: 250};
+        this.stats["Titan"].dps =  (this.stats["TitanArrow"].damage / this.stats["Titan"].attackSpeedInSec)
+
+        this.stats["Ballista"] = {attack: this.stats["Arrow"].damage, attackSpeedInSec: 1.5, visualRadius: 250, health: 200};
+        this.stats["Ballista"].dps =  (this.stats["Arrow"].damage / this.stats["Ballista"].attackSpeedInSec)
+
+        this.stats["MachineGunTurret"] = {attack: this.stats["CannonBall"].damage, attackSpeedInSec: 0.8, visualRadius: 200, health: 250};
+        this.stats["MachineGunTurret"].dps =  (this.stats["CannonBall"].damage / this.stats["MachineGunTurret"].attackSpeedInSec)
+
+
+        // Static Units
+        let woodHealth = 100;
+        let gateVisualRadius = 75;
+        this.stats["WoodWall"] = {health: woodHealth};
+        this.stats["WoodGate"] = {health: woodHealth, visualRadius: gateVisualRadius};
+        this.stats["WoodHouse"] = {health: 125};
+
+        let stoneHealth = 200;
+        this.stats["StoneWall"] = {health: stoneHealth};
+        this.stats["StoneGate"] = {health: stoneHealth, visualRadius: gateVisualRadius};
+        this.stats["StoneHouse"] = {health: stoneHealth};
+        this.stats["ApartmentComplex"] = {health: 250};
+
+        // Resource Buildings:
+        this.stats["Farm"] = {health: 150};
+        this.stats["FishermansCottage"] = {health: 150};
+        this.stats["Quarry"] = {health: 150};
+        this.stats["Sawmill"] = {health: 150};
+
+
+
     };
 
     init(ctx) {
@@ -104,18 +167,6 @@ class GameEngine {
         this.times = [];
         this.fps = 0;
         this.refreshLoop();
-
-        switch(this.currentMap) {
-            case 1:
-                this.daysToWin = 10;
-                break;
-            case 2:
-                this.daysToWin = 15;
-                break;
-            case 3:
-                this.daysToWin = 20;
-                break;
-        }
 
         //Spawners for use in game
         this.allyspawner = new AllySpawner(this);
@@ -311,6 +362,20 @@ class GameEngine {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
 
+        if(this.daysToWin == null) {
+            switch(this.currentMap) {
+                case 1:
+                    this.daysToWin = 10;
+                    break;
+                case 2:
+                    this.daysToWin = 14;
+                    break;
+                case 3:
+                    this.daysToWin = 23;
+                    break;
+            }
+        }
+        
         // Check if the game is over (when 10 days is reached. If it is, print some victory text)
         if(this.elapsedDay >= this.daysToWin && (this.gameOver == false)) {
             this.wonTheGameFlag = true;
@@ -361,12 +426,27 @@ class GameEngine {
                 }
             }
         } 
+        /*
         // update the ingame resources every 1 hour
-        if (this.elapsedHour >= this.elapsedHourPrev + 1) {
+        if (this.hour >= this.hourPRev + 1) {
+            //console.log("this.elapsedHour: " + this.elapsedHour + ", this.elapsedHourPrev + 3: " + this.elapsedHourPrev + 1);
             //console.log("update");
+            //this.elapsedHour = 
             this.elapsedHourPrev = (this.elapsedHourPrev + 1) %24; //cycle from 0 to 24
             this.updateResourceCount();
-        }
+        } else {
+            //console.log("ELSE: this.elapsedHour: " + this.elapsedHour + "this.elapsedHourPrev + 3: " + this.elapsedHourPrev + 1);
+        }*/
+
+        // update the ingame resources every 1 hour
+        let updateResourceEveryXHours = 3;
+        if (this.hour >= this.hourPrev + updateResourceEveryXHours) {
+            //console.log("this.elapsedHour: " + this.elapsedHour + ", this.elapsedHourPrev + 3: " + this.elapsedHourPrev + 1);
+            //console.log("update");
+            //this.elapsedHour = 
+            this.hourPrev = this.hourPrev + updateResourceEveryXHours;
+            this.updateResourceCount();
+        } 
 
         if(this.gameOver) {
             this.gameEnd(this.wonTheGameFlag);
@@ -392,7 +472,6 @@ class GameEngine {
         } else {
             this.addEntity(new GameOverText(this, false)); // lose
         }
-        this.gameOver = true;
     }
 
     // update inGame resources (Every 1 hour in game)

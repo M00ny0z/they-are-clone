@@ -8,7 +8,7 @@ class Quarry {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = this.game.stats["Quarry"].health;
         this.radius = 30;
         this.stoneRate = 0;
         this.ironRate = 0;
@@ -109,6 +109,10 @@ class Quarry {
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
                 (this.game.collisionMap[y][x] === 1) &&
                 (this.game.collisionMap[y+1][x] === 1) &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y+1][x].farm === false) &&
+                (this.game.mainMap.map[y][x].gate === false) &&
+                (this.game.mainMap.map[y+1][x].gate === false) &&
                 checkSameBuildingTypeInMapResourceGrid("Quarry", x, y, 5, 2)) {
                     this.placeable = true;
             } else {
@@ -224,8 +228,8 @@ class Quarry {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH,  2 * PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_QUARRY_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_QUARRY_HEALTH);
+        if (this.hitpoints < this.game.stats["Quarry"].healthF) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["Quarry"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

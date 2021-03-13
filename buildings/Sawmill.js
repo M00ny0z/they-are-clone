@@ -8,7 +8,7 @@ class Sawmill {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = this.game.stats["Sawmill"].health;
         this.radius = 30;
         
         this.woodRate = 0;
@@ -45,6 +45,7 @@ class Sawmill {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].green) {
                     this.woodRate += 1;
+                    //this.woodRate += 0.5;
                 }
             }
         }
@@ -88,6 +89,10 @@ class Sawmill {
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
                 (this.game.collisionMap[y][x] === 1) &&
                 (this.game.collisionMap[y+1][x] === 1) &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y+1][x].farm === false) &&
+                (this.game.mainMap.map[y][x].gate === false) &&
+                (this.game.mainMap.map[y+1][x].gate === false) &&
                 checkSameBuildingTypeInMapResourceGrid("Sawmill", x, y, 5, 2)) {
                     this.placeable = true;
             } else {
@@ -197,8 +202,8 @@ class Sawmill {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_SAWMILL_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_SAWMILL_HEALTH);
+        if (this.hitpoints < this.game.stats["Sawmill"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["Sawmill"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

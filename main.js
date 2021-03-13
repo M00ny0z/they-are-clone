@@ -32,6 +32,7 @@ function main() {
 
 	// ui
 	ASSET_MANAGER.queueDownload("./sprites/ui/icon_empty.png");
+	ASSET_MANAGER.queueDownload("./sprites/ui/icon_empty_red.png");
 	ASSET_MANAGER.queueDownload("./sprites/buildings_grayscale.png");
 	ASSET_MANAGER.queueDownload("./sprites/machinegun_turret_grayscale.png");
 	ASSET_MANAGER.queueDownload("./sprites/ballista_grayscale.png");

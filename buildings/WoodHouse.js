@@ -8,9 +8,9 @@ class WoodHouse {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 125;
+        this.hitpoints = this.game.stats["WoodHouse"].health;
         this.radius = 30;
-        this.workers = 1;
+        this.workers = 2;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -43,7 +43,7 @@ class WoodHouse {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1) {
+            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false && this.game.mainMap.map[y][x].gate === false) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -137,8 +137,8 @@ class WoodHouse {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_WOODHOUSE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODHOUSE_HEALTH);
+        if (this.hitpoints < this.game.stats["WoodHouse"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["WoodHouse"].health);
         }
 
         

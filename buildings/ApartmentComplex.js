@@ -9,9 +9,9 @@ class ApartmentComplex {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = this.game.stats["ApartmentComplex"].health;
         this.radius = 30;
-        this.workers = 5;
+        this.workers = 8;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -46,7 +46,12 @@ class ApartmentComplex {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of apartment)
-                this.game.collisionMap[y][x] === 1 && this.game.collisionMap[y+1][x] === 1) { // (no collision)
+                (this.game.collisionMap[y][x] === 1) &&
+                (this.game.collisionMap[y+1][x] === 1) &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y+1][x].farm === false)&&
+                (this.game.mainMap.map[y][x].gate === false) &&
+                (this.game.mainMap.map[y+1][x].gate === false)) { // (no collision)
                     this.placeable = true;
             } else {
                 this.placeable = false;
@@ -130,7 +135,7 @@ class ApartmentComplex {
         ctx.fillRect(posX + 1, posY + 1, 68, 6);
 
         ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_APARTMENT_HEATLH), 3);
+        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / this.game.stats["ApartmentComplex"].health), 3);
         
         ctx.restore();
 
@@ -179,8 +184,8 @@ class ApartmentComplex {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH/2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_APARTMENT_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_APARTMENT_HEALTH);
+        if (this.hitpoints < this.game.stats["ApartmentComplex"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["ApartmentComplex"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

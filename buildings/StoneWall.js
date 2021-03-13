@@ -9,7 +9,7 @@ class StoneWall {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 200;
+        this.hitpoints = this.game.stats["StoneWall"].health;
         this.radius = 30;
 
         //Performance Measuring Variables
@@ -44,7 +44,7 @@ class StoneWall {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1) {
+            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false && this.game.mainMap.map[y][x].gate === false) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -128,8 +128,8 @@ class StoneWall {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH / 2)  - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_STONEWALL_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_STONEWALL_HEALTH);
+        if (this.hitpoints < this.game.stats["StoneWall"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["StoneWall"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

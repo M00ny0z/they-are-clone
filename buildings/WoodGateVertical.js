@@ -10,9 +10,9 @@ class WoodGateVertical {
         this.placeable = false;
 
         this.radius = 30;
-        this.visualRadius = 75;
+        this.visualRadius = this.game.stats["WoodGate"].visualRadius;
 
-        this.hitpoints = 100;
+        this.hitpoints = this.game.stats["WoodGate"].health;
 
         //Gate is closed by default
         this.state = 0;
@@ -43,9 +43,7 @@ class WoodGateVertical {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.workers += this.game.requiredResources["WoodGate"].workers;
-            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH] = 1; // 1 = no collision
-
-
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].gate = false
          }
 
       //detect if an ally unit is in range. if so, open gate.
@@ -64,7 +62,7 @@ class WoodGateVertical {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1) {
+            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false && this.game.mainMap.map[y][x].gate === false) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -76,7 +74,7 @@ class WoodGateVertical {
             var x = sanitizeCord(this.game.click.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.click.y + this.game.camera.cameraY);
             if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
-                this.game.collisionMap[y][x] = 0;
+                this.game.mainMap.map[y][x].gate = true
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
@@ -99,7 +97,7 @@ class WoodGateVertical {
                 this.y === (doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2)) 
             {
 
-                this.game.collisionMap[doubleY][doubleX] = 1;
+                this.game.mainMap.map[doubleY][doubleX].gate = false
 
                 this.game.workers += this.game.requiredResources["WoodGate"].workers;
 
@@ -150,8 +148,8 @@ class WoodGateVertical {
             }
         }
 
-        if (this.hitpoints < MAX_WOODGATE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODGATE_HEALTH);
+        if (this.hitpoints < this.game.stats["WoodGate"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["WoodGate"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {
