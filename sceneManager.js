@@ -291,7 +291,7 @@ class SceneManager {
                 let clickedGridY = convertPixelCordToGridCord(clickedPoint.y); // path mouse click Y end grid coordinate
                 let clickedGridX = convertPixelCordToGridCord(clickedPoint.x); // path mouse click X end grid coordinate
 
-                if (this.game.collisionMap[clickedGridY][clickedGridX] == 1) { // if user clicks on a valid square to pathfind to, then pathfind. 
+                if (clickedGridX <= 49 && clickedGridY <= 49 && this.game.collisionMap[clickedGridY][clickedGridX] == 1) { // if user clicks on a valid square to pathfind to, then pathfind. 
                     for (var i = 0; i < this.selectedUnits.length; i++) {
                         let unitGridY = convertPixelCordToGridCord(this.selectedUnits[i].y); // selected unit's Y grid coordinate
                         let unitGridX =  convertPixelCordToGridCord(this.selectedUnits[i].x); // selected unit's X grid coordinate
