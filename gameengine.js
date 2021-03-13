@@ -35,19 +35,20 @@ class GameEngine {
         // // Time: 1 hour is 1 second, 1 day is 24 seconds
         // this.time = 0; // Elapsed time in Seconds (Decimal):  EX: 52.7345 
         // this.timeAsIntInSeconds = 0; // Elapsed Time in Seconds (Int):  EX: 52
-        // this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
-        // this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
+        //this.day = 0; // integer day value:  EX: 52 / 24 = 2 days
+        this.hour = 0; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
+        this.hourPrev = 1; // integer hour value of the current day (0-23): EX: 52%24 = 4 hours into day 3 (So the value is 4)
         this.elapsedHour = 0;
         this.elapsedDay = 0;
         this.workers = 0;
-        this.maxWorkers = 50;
-        this.food = 500;
+        this.maxWorkers = 25;
+        this.food = 100;
         this.foodRate = 0;
-        this.maxFood = 1000;
+        this.maxFood = 200;
         this.wood = 100;
         this.woodRate = 0;
         this.maxWood = 200;
-        this.stone = 100;
+        this.stone = 50;
         this.stoneRate = 0;
         this.maxStone = 200;
         this.iron = 0;
@@ -69,26 +70,26 @@ class GameEngine {
 
         //this.requiredResourcesArray = ["workers", "food", "wood", "stone", "iron"]; // list of resources to traverse
         this.requiredResources = {};
-        this.requiredResources["WoodHouse"] = { workers: 0, food: 0, wood: 20, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 20, iron: 0, enoughResource: false };
-        this.requiredResources["ApartmentComplex"] = { workers: 0, food: 0, wood: 30, stone: 50, iron: 20, enoughResource: false };
+        this.requiredResources["WoodHouse"] = { workers: 0, food: 0, wood: 50, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneHouse"] = { workers: 0, food: 0, wood: 0, stone: 50, iron: 0, enoughResource: false };
+        this.requiredResources["ApartmentComplex"] = { workers: 0, food: 0, wood: 50, stone: 50, iron: 20, enoughResource: false };
 
         this.requiredResources["FishermansCottage"] = { workers: 1, food: 0, wood: 30, stone: 0, iron: 0, enoughResource: false };
         this.requiredResources["Farm"] = { workers: 5, food: 0, wood: 30, stone: 10, iron: 0, enoughResource: false };
         this.requiredResources["Quarry"] = { workers: 6, food: 0, wood: 20, stone: 10, iron: 0, enoughResource: false };
         this.requiredResources["Sawmill"] = { workers: 3, food: 0, wood: 20, stone: 10, iron: 0, enoughResource: false };
         
-        this.requiredResources["Ranger"] = { workers: 1, food: 20, wood: 30, stone: 0, iron: 5, enoughResource: false };
-        this.requiredResources["Soldier"] = { workers: 1, food: 30, wood: 0, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["Sniper"] = { workers: 1, food: 20, wood: 40, stone: 0, iron: 10, enoughResource: false };
-        this.requiredResources["Titan"] = { workers: 1, food: 75, wood: 50, stone: 0, iron: 100, enoughResource: false };
+        this.requiredResources["Ranger"] = { workers: 1, food: 70, wood: 30, stone: 0, iron: 5, enoughResource: false };
+        this.requiredResources["Soldier"] = { workers: 1, food: 60, wood: 0, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["Sniper"] = { workers: 1, food: 100, wood: 40, stone: 0, iron: 10, enoughResource: false };
+        this.requiredResources["Titan"] = { workers: 1, food: 200, wood: 50, stone: 0, iron: 100, enoughResource: false };
         this.requiredResources["Ballista"] = { workers: 1, food: 0, wood: 100, stone: 40, iron: 0, enoughResource: false };
         this.requiredResources["MachineGunTurret"] = { workers: 1, food: 0, wood: 0, stone: 100, iron: 50, enoughResource: false };
 
-        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 15, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 15, stone: 0, iron: 0, enoughResource: false };
-        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 15, iron: 0, enoughResource: false };
-        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 15, iron: 0, enoughResource: false };
+        this.requiredResources["WoodWall"] = { workers: 0, food: 0, wood: 40, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["WoodGate"] = { workers: 0, food: 0, wood: 40, stone: 0, iron: 0, enoughResource: false };
+        this.requiredResources["StoneWall"] = { workers: 0, food: 0, wood: 0, stone: 40, iron: 0, enoughResource: false };
+        this.requiredResources["StoneGate"] = { workers: 0, food: 0, wood: 0, stone: 40, iron: 0, enoughResource: false };
     };
 
     init(ctx) {
@@ -361,12 +362,27 @@ class GameEngine {
                 }
             }
         } 
+        /*
         // update the ingame resources every 1 hour
-        if (this.elapsedHour >= this.elapsedHourPrev + 1) {
+        if (this.hour >= this.hourPRev + 1) {
+            //console.log("this.elapsedHour: " + this.elapsedHour + ", this.elapsedHourPrev + 3: " + this.elapsedHourPrev + 1);
             //console.log("update");
+            //this.elapsedHour = 
             this.elapsedHourPrev = (this.elapsedHourPrev + 1) %24; //cycle from 0 to 24
             this.updateResourceCount();
-        }
+        } else {
+            //console.log("ELSE: this.elapsedHour: " + this.elapsedHour + "this.elapsedHourPrev + 3: " + this.elapsedHourPrev + 1);
+        }*/
+
+        // update the ingame resources every 1 hour
+        let updateResourceEveryXHours = 3;
+        if (this.hour >= this.hourPrev + updateResourceEveryXHours) {
+            //console.log("this.elapsedHour: " + this.elapsedHour + ", this.elapsedHourPrev + 3: " + this.elapsedHourPrev + 1);
+            //console.log("update");
+            //this.elapsedHour = 
+            this.hourPrev = this.hourPrev + updateResourceEveryXHours;
+            this.updateResourceCount();
+        } 
 
         if(this.gameOver) {
             this.gameEnd(this.wonTheGameFlag);

@@ -10,7 +10,7 @@ class Ballista {
         this.radius = 30;
         this.visualRadius = 250;
 
-        this.fireRate = 1;
+        this.fireRate = 1.5;
 
         this.facing = 0;
 

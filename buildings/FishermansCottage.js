@@ -44,7 +44,8 @@ class FishermansCottage {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 //console.log("x:" + j + " y:" + i + this.game.mainMap.map[i][j].water);
                 if (this.game.mainMap.map[i][j].water) {
-                    this.foodRate += 1;
+                    //this.foodRate += 1;
+                    this.foodRate += 0.5;
                 }
             }
         }

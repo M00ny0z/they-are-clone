@@ -172,6 +172,7 @@ class SceneManager {
             this.updateAudio();
 
             this.game.elapsedHour += this.game.clockTick;
+            this.game.hour += this.game.clockTick;
 
             if (this.game.left) {
                 this.cameraX -= 1;

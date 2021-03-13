@@ -134,6 +134,7 @@ class Farm {
         for (var i = mapStartY; i <= mapEndY; i++) {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
+                    ////this.foodRate += 1;
                     this.foodRate += 1;
                 }
             }

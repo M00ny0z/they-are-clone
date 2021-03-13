@@ -14,6 +14,7 @@ class SoldierBolt {
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
+        this.damage = 10;
 
         this.elapsedTime = 0;
 
@@ -100,8 +101,8 @@ class SoldierBolt {
             for (var j = 0; j < this.game.entities[i].length; j++) {
                 var ent = this.game.entities[i][j];
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                    ent.hitpoints -= 10;
-                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), 10));
+                    ent.hitpoints -= this.damage;
+                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), this.damage));
                     this.removeFromWorld = true;
                 }
             }

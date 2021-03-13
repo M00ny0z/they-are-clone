@@ -9,14 +9,14 @@ class Sniper {
         this.priority = ALLYUNITPRIORITY;
 
         this.radius = 10;
-        this.visualRadius = 300;
+        this.visualRadius = 250;
 
         this.targetID = 0;
         this.target = null;         // if path is defined, set it as the target point
 
         // Calculating the velocity
         //this.maxSpeed = 25; // pixels per second
-        this.maxSpeed = 25*3; // pixels per second
+        this.maxSpeed = 25*2; // pixels per second
         this.velocity = 0;
 
         this.state = 3; // 0 walking, 1 attacking, 2 dead, 3 idel

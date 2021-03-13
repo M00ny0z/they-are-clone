@@ -45,6 +45,7 @@ class Sawmill {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].green) {
                     this.woodRate += 1;
+                    //this.woodRate += 0.5;
                 }
             }
         }

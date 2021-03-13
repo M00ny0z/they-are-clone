@@ -10,7 +10,7 @@ class MachineGunTurret {
         this.radius = 30;
         this.visualRadius = 250;
 
-        this.fireRate = 2.5;
+        this.fireRate = 0.75
 
         this.facing = 2;
 

@@ -14,6 +14,8 @@ class CannonBall {
 
         this.elapsedTime = 0;
 
+        this.damage = 15;
+
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
         if(PARAMS.PERFORMANCE_MEASURE) {
@@ -49,8 +51,8 @@ class CannonBall {
             for (var j = 0; j < this.game.entities[i].length; j++) {
                 var ent = this.game.entities[i][j];
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && collide(this, ent)) {
-                    ent.hitpoints -= 80;
-                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), 80));
+                    ent.hitpoints -= this.damage;
+                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), this.damage));
                     this.removeFromWorld = true;
                 }
             }

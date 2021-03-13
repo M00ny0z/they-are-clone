@@ -13,19 +13,20 @@ class InfectedHarpy {
         this.priority = ENEMYUNITPRIORITY;
 
         this.radius = 10;
-        this.visualRadius = 300;
+        this.visualRadius = 250;
 
         this.targetID = 0;
         if (this.path && this.path[this.targetID]) this.target = this.path[this.targetID];         // if path is defined, set it as the target point
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 65; // pixels per second
+        this.maxSpeed = 80; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
+        this.damage = 6;
 
         this.hitpoints = 50;
 
@@ -189,7 +190,6 @@ class InfectedHarpy {
         this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-        this.state = 0;
         
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
@@ -265,8 +265,8 @@ class InfectedHarpy {
                 this.state = 1;
                 this.elapsedTime = 0;
             } else if (this.elapsedTime > 0.5) {
-                closestEnt.hitpoints -= 12;
-                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 12));
+                closestEnt.hitpoints -= this.damage;
+                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), this.damage));
                 this.elapsedTime = 0;
             }
         }

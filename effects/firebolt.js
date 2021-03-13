@@ -14,6 +14,7 @@ class FireBolt {
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.cache = [];
+        this.damage = 30;
 
         this.elapsedTime = 0;
 
@@ -122,8 +123,8 @@ class FireBolt {
                     ent instanceof MachineGunTurret
                 );
                 if (enemyCheck && collide(this, ent)) {
-                    ent.hitpoints -= 30;
-                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), 30));
+                    ent.hitpoints -= this.damage;
+                    this.game.addEntity(new Score(this.game, (ent.x), (ent.y), this.damage));
                     this.removeFromWorld = true;
                 }
             }

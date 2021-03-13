@@ -16,7 +16,7 @@ class Titan {
 
         // Calculating the velocity
         //this.maxSpeed = 25; // pixels per second
-        this.maxSpeed = 25*3; // pixels per second
+        this.maxSpeed = 25*1.25; // pixels per second
 
         this.velocity = 0;
 

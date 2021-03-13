@@ -9,7 +9,7 @@ class Soldier {
         this.priority = ALLYUNITPRIORITY;
 
         this.radius = 10;
-        this.visualRadius = 100;
+        this.visualRadius = 150;
 
         this.targetID = 0;
         this.target = null;         // if path is defined, set it as the target point
@@ -29,7 +29,7 @@ class Soldier {
         this.calculatingPath = false; // calculating A* path (EasyStar)
         this.path = []; // A* path
 
-        this.hitpoints = 120;
+        this.hitpoints = 100;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
