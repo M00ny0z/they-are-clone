@@ -1043,8 +1043,8 @@ class SceneManager {
 
             // Food
             ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
-            this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food, this.game.maxFood);
-            ctx.fillText("+" + this.game.foodRate, 1510, 816);
+            this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food.toFixed(2), this.game.maxFood);
+            ctx.fillText("+" + this.game.foodRate.toFixed(2), 1510, 816);
 
 
             // Wood

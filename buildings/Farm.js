@@ -315,7 +315,7 @@ class Farm {
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Surround the dirt tiles", (mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 1.7) * PARAMS.BLOCKWIDTH);
             ctx.fillText("to gain food", (mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 1.4) * PARAMS.BLOCKWIDTH);
-            ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y + 3) * PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.foodRate.toFixed(2) + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y + 3) * PARAMS.BLOCKWIDTH);
 
         }
 
