@@ -206,7 +206,7 @@ class FishermansCottage {
         }
 
         if (this.hitpoints < MAX_FISHERMANS_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_FISHERMANS_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_FISHERMANS_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

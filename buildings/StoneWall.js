@@ -129,7 +129,7 @@ class StoneWall {
         }
 
         if (this.hitpoints < MAX_STONEWALL_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_STONEWALL_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_STONEWALL_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

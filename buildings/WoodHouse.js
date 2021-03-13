@@ -138,7 +138,7 @@ class WoodHouse {
         }
 
         if (this.hitpoints < MAX_WOODHOUSE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODHOUSE_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_WOODHOUSE_HEALTH);
         }
 
         

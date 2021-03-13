@@ -151,7 +151,7 @@ class WoodGateVertical {
         }
 
         if (this.hitpoints < MAX_WOODGATE_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_WOODGATE_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 15, this.game, MAX_WOODGATE_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

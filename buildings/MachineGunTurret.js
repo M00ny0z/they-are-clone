@@ -203,7 +203,7 @@ class MachineGunTurret {
         }
 
         if (this.hitpoints < MAX_MACHINEGUN_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_MACHINEGUN_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 15, this.game, MAX_MACHINEGUN_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

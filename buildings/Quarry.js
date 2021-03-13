@@ -225,7 +225,7 @@ class Quarry {
         }
 
         if (this.hitpoints < MAX_QUARRY_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_QUARRY_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_QUARRY_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {
