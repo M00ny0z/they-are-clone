@@ -304,8 +304,13 @@ class InfectedChubby {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
 
+
         var xOffset = 35;
         var yOffset = 35;
+        if(this.state == 1) {
+            xOffset = 60;
+            yOffset = 60;
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 
