@@ -182,9 +182,14 @@ class Farm {
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["Farm"].workers;
             this.game.foodRate -= this.foodRate;
+            let gridY = convertPixelCordToGridCord(this.y)
+            let gridX = convertPixelCordToGridCord(this.x);
+            this.game.collisionMap[gridY][gridX] = 1; // set farm position to be not a collision
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
+                    //this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
+                    //this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
+                    this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].farm = false
                 }
             }
         }

@@ -46,7 +46,10 @@ class ApartmentComplex {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of apartment)
-                this.game.collisionMap[y][x] === 1 && this.game.collisionMap[y+1][x] === 1) { // (no collision)
+                (this.game.collisionMap[y][x] === 1) &&
+                (this.game.collisionMap[y+1][x] === 1) &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y+1][x].farm === false)) { // (no collision)
                     this.placeable = true;
             } else {
                 this.placeable = false;
