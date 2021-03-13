@@ -106,18 +106,6 @@ class GameEngine {
         this.fps = 0;
         this.refreshLoop();
 
-        switch(this.currentMap) {
-            case 1:
-                this.daysToWin = 10;
-                break;
-            case 2:
-                this.daysToWin = 15;
-                break;
-            case 3:
-                this.daysToWin = 20;
-                break;
-        }
-
         //Spawners for use in game
         this.allyspawner = new AllySpawner(this);
         this.enemyspawner = new EnemySpawner(this);
@@ -312,6 +300,20 @@ class GameEngine {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
 
+        if(this.daysToWin == null) {
+            switch(this.currentMap) {
+                case 1:
+                    this.daysToWin = 10;
+                    break;
+                case 2:
+                    this.daysToWin = 14;
+                    break;
+                case 3:
+                    this.daysToWin = 20;
+                    break;
+            }
+        }
+        
         // Check if the game is over (when 10 days is reached. If it is, print some victory text)
         if(this.elapsedDay >= this.daysToWin && (this.gameOver == false)) {
             this.wonTheGameFlag = true;
@@ -408,7 +410,6 @@ class GameEngine {
         } else {
             this.addEntity(new GameOverText(this, false)); // lose
         }
-        this.gameOver = true;
     }
 
     // update inGame resources (Every 1 hour in game)
