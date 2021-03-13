@@ -1117,13 +1117,13 @@ class SceneManager {
         //if (unitType === "WoodHouse" || unitType === "StoneHouse || unitType === "ApartmentComplex") {
         switch(unitType) {
             case "WoodHouse":
-                ctx.fillText("Workers: 1", resourceStringX, 832);
-                break;
-            case "StoneHouse":
                 ctx.fillText("Workers: 2", resourceStringX, 832);
                 break;
+            case "StoneHouse":
+                ctx.fillText("Workers: 4", resourceStringX, 832);
+                break;
             case "ApartmentComplex":
-                ctx.fillText("Workers: 5", resourceStringX, 832);
+                ctx.fillText("Workers: 8", resourceStringX, 832);
                 break;
             case "FishermansCottage":
                 ctx.fillText("0 to 24 Food", resourceStringX, 832);

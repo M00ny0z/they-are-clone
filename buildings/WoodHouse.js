@@ -10,7 +10,7 @@ class WoodHouse {
         this.placeable = false;
         this.hitpoints = 125;
         this.radius = 30;
-        this.workers = 1;
+        this.workers = 2;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time

@@ -11,7 +11,7 @@ class ApartmentComplex {
         this.placeable = false;
         this.hitpoints = 150;
         this.radius = 30;
-        this.workers = 5;
+        this.workers = 8;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
