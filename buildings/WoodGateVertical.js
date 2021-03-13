@@ -43,9 +43,7 @@ class WoodGateVertical {
         if (this.hitpoints <= 0) {
             this.removeFromWorld = true;
             this.game.workers += this.game.requiredResources["WoodGate"].workers;
-            this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].gate  = false;
-
-
+            this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH][(this.x - PARAMS.BLOCKWIDTH/2)/PARAMS.BLOCKWIDTH].gate = false
          }
 
       //detect if an ally unit is in range. if so, open gate.
