@@ -246,13 +246,13 @@ class EnemySpawner {
                 this.spawnEnemy(INFECTEDUNIT, 43, 21, [{ x: 43, y: 22 }])
 
                 //Spawn zombies near bottom left mine
-                this.spawnEnemy(INFECTEDUNIT, 10, 40, [{ x: 10, y: 41 }])
-                this.spawnEnemy(INFECTEDUNIT, 9, 39, [{ x: 8, y: 38 }])
+                // this.spawnEnemy(INFECTEDUNIT, 10, 40, [{ x: 10, y: 41 }])
+                // this.spawnEnemy(INFECTEDUNIT, 9, 39, [{ x: 8, y: 38 }])
                 this.spawnEnemy(INFECTEDHARPY, 4, 44, [{ x: 5, y: 44 }])
                 this.spawnEnemy(INFECTEDHARPY, 4, 42, [{ x: 5, y: 42 }])
                 this.spawnEnemy(INFECTEDVENOM, 4, 43, [{ x: 5, y: 43 }])
-                this.spawnEnemy(INFECTEDUNIT, 10, 32, [{ x: 11, y: 32 }])
-                this.spawnEnemy(INFECTEDUNIT, 12, 29, [{ x: 12, y: 28 }])
+                // this.spawnEnemy(INFECTEDUNIT, 10, 32, [{ x: 11, y: 32 }])
+                // this.spawnEnemy(INFECTEDUNIT, 12, 29, [{ x: 12, y: 28 }])
 
                 // Testing:
 
