@@ -186,9 +186,10 @@ class InfectedVenom {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
         
-        this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
+        this.state = 0;
+
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -244,10 +245,10 @@ class InfectedVenom {
                     if (distance(this, closestEnt) > distance(this, ent)) {
                         closestEnt = ent;
                     }
-                    if (this.state === 0 || this.state === 3) {
-                        this.state = 1;
-                        this.elapsedTime = 0;
-                    } else if (this.elapsedTime > 2.0) {
+
+                    this.state = 1;
+                    this.elapsedTime += this.game.clockTick;
+                    if (this.elapsedTime > 2.0) {
                         this.game.addEntity(new FireBolt(this.game, this.x, this.y, closestEnt, true));
                         this.elapsedTime = 0;
                     }

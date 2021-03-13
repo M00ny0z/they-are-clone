@@ -228,6 +228,7 @@ class EnemySpawner {
                 //Open space upper left corner
                 this.spawnEnemy(INFECTEDUNIT, 12, 5, [{ x: 12, y: 6 }])
                 this.spawnEnemy(INFECTEDUNIT, 15, 4, [{ x: 16, y: 4 }])
+                this.spawnEnemy(INFECTEDCHUBBY, 20, 30, [{ x: 20, y: 35 }])
 
                 //Spawn zombies near upper left mine
                 this.spawnEnemy(INFECTEDUNIT, 10, 16, [{ x: 10, y: 17 }])

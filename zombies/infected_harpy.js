@@ -187,10 +187,10 @@ class InfectedHarpy {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
         
-        this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-        
+        this.state = 0;
+
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -261,10 +261,9 @@ class InfectedHarpy {
         }
 
         if (closestEnt && collide(this, closestEnt)) {
-            if (this.state === 0) {
-                this.state = 1;
-                this.elapsedTime = 0;
-            } else if (this.elapsedTime > 0.5) {
+            this.state = 1;
+            this.elapsedTime += this.game.clockTick;
+            if (this.elapsedTime > 0.5) {
                 closestEnt.hitpoints -= this.damage;
                 this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), this.damage));
                 this.elapsedTime = 0;
