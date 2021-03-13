@@ -109,6 +109,8 @@ class Quarry {
             if ((y+1 <= 49) && // cursor is not at bottom edge of map (and therefore can place 2nd half of building)
                 (this.game.collisionMap[y][x] === 1) &&
                 (this.game.collisionMap[y+1][x] === 1) &&
+                (this.game.mainMap.map[y][x].farm === false) &&
+                (this.game.mainMap.map[y+1][x].farm === false) &&
                 checkSameBuildingTypeInMapResourceGrid("Quarry", x, y, 5, 2)) {
                     this.placeable = true;
             } else {

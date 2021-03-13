@@ -58,6 +58,13 @@ class GameEngine {
         this.zoom = 1 // zoom factor of map, and all units.
         this.ready = false; // wait for game to load, before we let ui clickable.
 
+
+        // For testing:
+        this.food = 1000;
+        this.wood = 1000;
+        this.stone = 1000;
+        this.iron = 1000;
+
         //this.entities = {};
         /*this.entities["WoodHouse"] = {
             resources = {
