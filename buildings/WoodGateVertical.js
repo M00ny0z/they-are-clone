@@ -10,7 +10,7 @@ class WoodGateVertical {
         this.placeable = false;
 
         this.radius = 30;
-        this.hitpoints = this.game.stats["WoodGate"].visualRadius;
+        this.visualRadius = this.game.stats["WoodGate"].visualRadius;
 
         this.hitpoints = this.game.stats["WoodGate"].health;
 
