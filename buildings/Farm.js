@@ -203,8 +203,8 @@ class Farm {
                     } else {
                         console.log("false for: (" + yGrid + ", (" + xGrid);
                     }*/
-                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].farm === false && this.game.mainMap.map[yGrid][xGrid].dirt === true) { 
-                    //if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) {
+                    //if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].farm === false && this.game.mainMap.map[yGrid][xGrid].dirt === true) { 
+                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) {
                         this.placeable = true;
                     } else {
                         stop = true;

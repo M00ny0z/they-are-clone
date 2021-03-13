@@ -108,7 +108,7 @@ class MapOne {
             this.map.push([]);
             for (var y = 0; y < 50; y++) {
                 this.map[x].push({"green": false, "water": false, "dirt": false, "stone": false, "iron": false, "railroad": false,
-                    "FishermansCottage": false, "farm": false, "Quarry": false, "Sawmill": false
+                    "FishermansCottage": false, "farm": false, "Quarry": false, "Sawmill": false, "gate": false
                 });
             }
         }
