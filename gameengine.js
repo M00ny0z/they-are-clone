@@ -61,10 +61,10 @@ class GameEngine {
         //this.food=1000;
 
         // For testing:
-        this.food = 1000;
+        /*this.food = 1000;
         this.wood = 1000;
         this.stone = 1000;
-        this.iron = 1000;
+        this.iron = 1000;*/
         
         //this.entities = {};
         /*this.entities["WoodHouse"] = {
