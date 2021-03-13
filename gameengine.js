@@ -309,7 +309,7 @@ class GameEngine {
                     this.daysToWin = 14;
                     break;
                 case 3:
-                    this.daysToWin = 20;
+                    this.daysToWin = 23;
                     break;
             }
         }

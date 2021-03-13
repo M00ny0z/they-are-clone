@@ -472,7 +472,7 @@ class EnemySpawner {
                 break;
 
             //Wave 4   
-            case !this.spawnedWaveFlags[3] && this.game.elapsedDay >= 7 && this.game.elapsedHour >= 12:
+            case !this.spawnedWaveFlags[3] && this.game.elapsedDay >= 6 && this.game.elapsedHour >= 12:
                 //Path 1
                 for (var i = 0; i < 11; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[0].startX, this.paths[0].startY + (i * -1), this.copyPath(this.paths[0].path)));
@@ -491,7 +491,7 @@ class EnemySpawner {
                 for (var i = 0; i < 6; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[1].startX, this.paths[1].startY + (i * 1), this.copyPath(this.paths[1].path)));
                 }
-                for (var i = 0; i < 1; i++) {
+                for (var i = 0; i < 3; i++) {
                     this.game.addEntity(new InfectedVenom(this.game, this.paths[1].startX, this.paths[1].startY + (i * 2 + 1), this.copyPath(this.paths[1].path)));
                 }
                 for (var i = 0; i < 4; i++) {
@@ -677,45 +677,45 @@ class EnemySpawner {
         let currentPath;
         switch(true) {
             //Wave 1
-            case !this.spawnedWaveFlags[0] && this.game.elapsedDay >= 1:
+            case !this.spawnedWaveFlags[0] && this.game.elapsedDay >= 1 && this.game.elapsedHour >= 12:
                 currentPath = 1;
-                for (var i = 0; i < 4; i++) {
+                for (var i = 0; i < 3; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
                 }
 
                 currentPath = 3;
-                for (var i = 0; i < 3; i++) {
+                for (var i = 0; i < 2; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
                 }
                 this.spawnedWaveFlags[0] = true;
                 break;
 
             //Wave 2
-            case !this.spawnedWaveFlags[1] && this.game.elapsedDay >= 2 && this.game.elapsedHour >= 12:
+            case !this.spawnedWaveFlags[1] && this.game.elapsedDay >= 3 && this.game.elapsedHour >= 12:
                 currentPath = 0;
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
                 }
 
                 currentPath = 1;
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
                 }
 
                 currentPath = 3;
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
                 }
 
                 currentPath = 4;
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
                 }
                 this.spawnedWaveFlags[1] = true;
                 break;
 
             //Wave 3
-            case !this.spawnedWaveFlags[2] && this.game.elapsedDay >= 4:
+            case !this.spawnedWaveFlags[2] && this.game.elapsedDay >= 6 && this.game.elapsedHour >= 0:
                 currentPath = 0;
                 for (var i = 0; i < 6; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
@@ -756,7 +756,7 @@ class EnemySpawner {
                 break;
 
             //Wave 4   
-            case !this.spawnedWaveFlags[3] && this.game.elapsedDay >= 6 && this.game.elapsedHour >= 12:
+            case !this.spawnedWaveFlags[3] && this.game.elapsedDay >= 9 && this.game.elapsedHour >= 12:
                 currentPath = 0;
                 for (var i = 0; i < 8; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
@@ -800,7 +800,7 @@ class EnemySpawner {
                 break;  
 
             //Wave 5   
-            case !this.spawnedWaveFlags[4] && this.game.elapsedDay >= 9 && this.game.elapsedHour >= 12:
+            case !this.spawnedWaveFlags[4] && this.game.elapsedDay >= 13 && this.game.elapsedHour >= 0:
                 currentPath = 0;
                 for (var i = 0; i < 10; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
@@ -874,7 +874,7 @@ class EnemySpawner {
                 break;  
 
             //Wave 6   
-            case !this.spawnedWaveFlags[5] && this.game.elapsedDay >= 13 && this.game.elapsedHour >= 0:
+            case !this.spawnedWaveFlags[5] && this.game.elapsedDay >= 16 && this.game.elapsedHour >= 12:
                 currentPath = 0;
                 for (var i = 0; i < 0; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[currentPath].startX, this.paths[currentPath].startY + (i * -1), this.copyPath(this.paths[currentPath].path)));
