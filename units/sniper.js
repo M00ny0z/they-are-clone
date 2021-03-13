@@ -29,7 +29,7 @@ class Sniper {
         this.calculatingPath = false; // calculating A* path (EasyStar)
         this.path = []; // A* path
 
-        this.hitpoints = 100;
+        this.hitpoints = MAX_SNIPER_HEALTH;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time

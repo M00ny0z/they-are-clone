@@ -28,7 +28,7 @@ class InfectedHarpy {
         this.elapsedTime = 0;
         this.damage = 6;
 
-        this.hitpoints = 50;
+        this.hitpoints = MAX_HARPY_HEALTH;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time

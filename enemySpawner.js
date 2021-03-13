@@ -459,13 +459,13 @@ class EnemySpawner {
                 for (var i = 0; i < 9; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[1].startX, this.paths[1].startY + (i * 1), this.copyPath(this.paths[1].path)));
                 }
-                for (var i = 0; i < 3; i++) {
+                for (var i = 0; i < 1; i++) {
                     this.game.addEntity(new InfectedVenom(this.game, this.paths[1].startX, this.paths[1].startY + (i * 2 + 1), this.copyPath(this.paths[1].path)));
                 }
                 for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedHarpy(this.game, this.paths[1].startX, this.paths[1].startY + (i * 1.5), this.copyPath(this.paths[1].path)));
                 }
-                for (var i = 0; i < 2; i++) {
+                for (var i = 0; i < 1; i++) {
                     this.game.addEntity(new InfectedChubby(this.game, this.paths[1].startX, this.paths[1].startY + (i * 5), this.copyPath(this.paths[1].path)));
                 }
                 this.spawnedWaveFlags[2] = true;
@@ -477,7 +477,7 @@ class EnemySpawner {
                 for (var i = 0; i < 11; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[0].startX, this.paths[0].startY + (i * -1), this.copyPath(this.paths[0].path)));
                 }
-                for (var i = 0; i < 5; i++) {
+                for (var i = 0; i < 4; i++) {
                     this.game.addEntity(new InfectedVenom(this.game, this.paths[0].startX, this.paths[0].startY + (i * -2 - 3), this.copyPath(this.paths[0].path)));
                 }
                 for (var i = 0; i < 5; i++) {
@@ -491,7 +491,7 @@ class EnemySpawner {
                 for (var i = 0; i < 6; i++) {
                     this.game.addEntity(new InfectedUnit(this.game, this.paths[1].startX, this.paths[1].startY + (i * 1), this.copyPath(this.paths[1].path)));
                 }
-                for (var i = 0; i < 4; i++) {
+                for (var i = 0; i < 3; i++) {
                     this.game.addEntity(new InfectedVenom(this.game, this.paths[1].startX, this.paths[1].startY + (i * 2 + 1), this.copyPath(this.paths[1].path)));
                 }
                 for (var i = 0; i < 4; i++) {
