@@ -134,8 +134,8 @@ class Farm {
         for (var i = mapStartY; i <= mapEndY; i++) {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
-                    ////this.foodRate += 1;
-                    this.foodRate += 1;
+                    this.foodRate += 0.5;
+                    //this.foodRate += 1;
                 }
             }
         }
@@ -193,11 +193,18 @@ class Farm {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             var stop = false;
+            //console.log()
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
                     let yGrid = sanitizeCord(y + i - 2);
                     let xGrid = sanitizeCord(x + j - 2);
-                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) { 
+                    /*if (this.game.mainMap.map[yGrid][xGrid].farm === false) {
+
+                    } else {
+                        console.log("false for: (" + yGrid + ", (" + xGrid);
+                    }*/
+                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].farm === false && this.game.mainMap.map[yGrid][xGrid].dirt === true) { 
+                    //if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) {
                         this.placeable = true;
                     } else {
                         stop = true;
@@ -215,10 +222,12 @@ class Farm {
         if (this.game.click && this.followMouse) {
             const x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            this.game.collisionMap[y][x] = 0 // set collision for farm building
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
-                        this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] = 0;
+                        //this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] = 0;
+                        this.game.mainMap.map[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)].farm = true;
                     }
                 }
                 this.followMouse = false;
@@ -244,9 +253,11 @@ class Farm {
             if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
                 this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
             {
+                this.game.collisionMap[sanitizeCord(doubleY)][sanitizeCord(doubleX)] = 1; // set farm position to be not a collision
                 for (let i = 0; i < 5; i++) {
                     for (let j = 0; j < 5; j++) {
-                        this.game.collisionMap[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)] = 1;
+                        //this.game.collisionMap[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)] = 1;
+                        this.game.mainMap.map[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)].farm = false;
                     }
                 }
 

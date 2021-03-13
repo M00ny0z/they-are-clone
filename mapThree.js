@@ -302,7 +302,7 @@ class MapThree {
                for (var y = 0; y < 50; y++) {
                    console.log("(" + x + ", " + y + "): " + ", green: " + this.map[y][x].green +
                        ", water: " + this.map[y][x].water + ", dirt: " + this.map[y][x].dirt + ", stone: " + this.map[y][x].stone + ", iron: " + this.map[y][x].iron +
-                       ", fishermansCottage: " + this.map[y][x].fishermansCottage + ", farm: " + this.map[y][x].farm +
+                       ", fishermansCottage: " + this.map[y][x].fishermansCottage + ", farm: " + this.map[y][x].Farm +
                        ", quarry: " + this.map[y][x].quarry + ", sawmill: " + this.map[y][x].sawmill);
                }
            }
