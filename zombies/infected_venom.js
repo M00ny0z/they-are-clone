@@ -20,14 +20,14 @@ class InfectedVenom {
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 20; // pixels per second
+        this.maxSpeed = 25; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 80;
+        this.hitpoints = MAX_VENOM_HEALTH;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -186,10 +186,10 @@ class InfectedVenom {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
         
-        this.elapsedTime += this.game.clockTick;
         var dist = distance(this, this.target);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
-           
+        this.state = 0;
+
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -245,10 +245,10 @@ class InfectedVenom {
                     if (distance(this, closestEnt) > distance(this, ent)) {
                         closestEnt = ent;
                     }
-                    if (this.state === 0 || this.state === 3) {
-                        this.state = 1;
-                        this.elapsedTime = 0;
-                    } else if (this.elapsedTime > 2.0) {
+
+                    this.state = 1;
+                    this.elapsedTime += this.game.clockTick;
+                    if (this.elapsedTime > 2.0) {
                         this.game.addEntity(new FireBolt(this.game, this.x, this.y, closestEnt, true));
                         this.elapsedTime = 0;
                     }

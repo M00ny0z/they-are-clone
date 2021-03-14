@@ -9,15 +9,16 @@ class Titan {
         this.priority = ALLYUNITPRIORITY;
 
         this.radius = 10;
-        this.visualRadius = 200;
+
+        this.attackSpeedInSec =  this.game.stats["Titan"].attackSpeedInSec
+        this.visualRadius = this.game.stats["Titan"].visualRadius;
+        this.maxSpeed = this.game.stats["Titan"].maxSpeed; // pixels per second
+        this.hitpoints = this.game.stats["Titan"].health;
 
         this.targetID = 0;
         this.target = null;         // if path is defined, set it as the target point
 
         // Calculating the velocity
-        //this.maxSpeed = 25; // pixels per second
-        this.maxSpeed = 25*3; // pixels per second
-
         this.velocity = 0;
 
         this.state = 3; // 0 walking, 1 attacking, 2 dead, 3 idel
@@ -29,8 +30,6 @@ class Titan {
 
         this.calculatingPath = false; // calculating A* path (EasyStar)
         this.path = []; // A* path
-
-        this.hitpoints = 250;
 
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
@@ -244,7 +243,7 @@ class Titan {
               this.state = 1; // set state to attacking
               this.target = closestEnt; // target the closest entity for attack
               this.elapsedTime = 0; // set elapsedTime to 0 at start of attack to sync attack animation and projectile.
-            } else if (this.elapsedTime > 1.0) { // attack the enemy (send out aa projectile) every 1.0 seconds.
+            } else if (this.elapsedTime > this.attackSpeedInSec) { // attack the enemy (send out aa projectile) every 1.0 seconds.
               this.game.addEntity(new TitanArrow(this.game, this.x, this.y, closestEnt, true)); // attack.
               this.elapsedTime = 0; // reset counter, so that you can attack again using given timer.
             }
@@ -309,8 +308,8 @@ class Titan {
                 break;
         }
 
-        if (this.hitpoints < MAX_TITAN_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, MAX_TITAN_HEALTH);
+        if (this.hitpoints < this.game.stats["Titan"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["Titan"].health);
         }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);

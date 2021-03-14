@@ -8,7 +8,7 @@ class WoodWall {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 100;
+        this.hitpoints = this.game.stats["WoodWall"].health;
         this.radius = 30;
 
         //Performance Measuring Variables
@@ -42,7 +42,7 @@ class WoodWall {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1) {
+            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false && this.game.mainMap.map[y][x].gate === false) {
                 this.placeable = true;
             } else {
                 this.placeable = false;
@@ -54,7 +54,7 @@ class WoodWall {
             var x = sanitizeCord(this.game.click.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.click.y + this.game.camera.cameraY);
             if (this.game.collisionMap[y][x] === 1 && this.game.click.y < 15 && this.placeable) {
-                this.game.collisionMap[y][x] = 0;
+                this.game.mainMap.map[y][x].gate = true
                 this.followMouse = false;
                 this.x = x * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
                 this.y = y * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2;
@@ -125,8 +125,8 @@ class WoodWall {
             ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
         }
 
-        if (this.hitpoints < MAX_WOODWALL_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_WOODWALL_HEALTH);
+        if (this.hitpoints < this.game.stats["WoodWall"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, this.game.stats["WoodWall"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

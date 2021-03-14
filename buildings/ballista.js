@@ -8,15 +8,15 @@ class Ballista {
         this.priority = BUILDINGPRIORITY;
 
         this.radius = 30;
-        this.visualRadius = 250;
 
-        this.fireRate = 1;
+
+        this.attackSpeedInSec =  this.game.stats["MachineGunTurret"].attackSpeedInSec
+        this.visualRadius = this.game.stats["MachineGunTurret"].visualRadius;
+        this.hitpoints = this.game.stats["MachineGunTurret"].health;
 
         this.facing = 0;
 
         this.elapsedTime = 0;
-
-        this.hitpoints = 200;
 
         this.followMouse = true;
         this.placeable = false;
@@ -133,7 +133,7 @@ class Ballista {
             for (var j = 0; j < this.game.entities[i].length; j++) {
                 var ent = this.game.entities[i][j];
                 if ((ent instanceof InfectedUnit || ent instanceof InfectedHarpy || ent instanceof InfectedVenom || ent instanceof InfectedChubby) && canSee(this, ent)
-                    && this.elapsedTime > this.fireRate) {
+                    && this.elapsedTime > this.attackSpeedInSec) {
                     this.target = ent;
                     this.elapsedTime = 0;
                     this.game.addEntity(new Arrow(this.game, this.x, this.y, ent, true));
@@ -149,7 +149,7 @@ class Ballista {
         if (this.game.mouse && this.followMouse) {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
-            if (this.game.collisionMap[y][x] === 1) {
+            if (this.game.collisionMap[y][x] === 1 && this.game.mainMap.map[y][x].farm === false  && this.game.mainMap.map[y][x].gate === false) {
                 this.placeable = true;
             } else {
                 this.placeable = false;

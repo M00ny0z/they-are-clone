@@ -10,6 +10,7 @@ class SceneManager {
         this.title = true;
 
         this.emptyIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_empty.png");
+        this.emptyRedIcon = ASSET_MANAGER.getAsset("./sprites/ui/icon_empty_red.png");
         this.buildingsImg = ASSET_MANAGER.getAsset("./sprites/buildings.png");
         this.buildingsGreyImg = ASSET_MANAGER.getAsset("./sprites/buildings_grayscale.png");
         this.machinegunTurretGreyImg = ASSET_MANAGER.getAsset("./sprites/machinegun_turret_grayscale.png");
@@ -172,6 +173,7 @@ class SceneManager {
             this.updateAudio();
 
             this.game.elapsedHour += this.game.clockTick;
+            this.game.hour += this.game.clockTick;
 
             if (this.game.left) {
                 this.cameraX -= 1;
@@ -289,7 +291,7 @@ class SceneManager {
                 let clickedGridY = convertPixelCordToGridCord(clickedPoint.y); // path mouse click Y end grid coordinate
                 let clickedGridX = convertPixelCordToGridCord(clickedPoint.x); // path mouse click X end grid coordinate
 
-                if (this.game.collisionMap[clickedGridY][clickedGridX] == 1) { // if user clicks on a valid square to pathfind to, then pathfind. 
+                if (clickedGridX <= 49 && clickedGridY <= 49 && this.game.collisionMap[clickedGridY][clickedGridX] == 1) { // if user clicks on a valid square to pathfind to, then pathfind. 
                     for (var i = 0; i < this.selectedUnits.length; i++) {
                         let unitGridY = convertPixelCordToGridCord(this.selectedUnits[i].y); // selected unit's Y grid coordinate
                         let unitGridX =  convertPixelCordToGridCord(this.selectedUnits[i].x); // selected unit's X grid coordinate
@@ -702,6 +704,7 @@ class SceneManager {
                 // descriptions
                 if ((x >= 1037 && x <= 1037 + 45) && (y >= 739 && y <= 739 + 45)) { // COLONISTS
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -716,6 +719,7 @@ class SceneManager {
                     ctx.fillText("Dwellings for the colonists.", 500, 812);
                 } else if ((x >= 1087 && x <= 1087 + 45) && (y >= 739 && y <= 739 + 45)) { // RESOURCES
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -730,6 +734,7 @@ class SceneManager {
                     ctx.fillText("Structures dedicated to the resources prodcution.", 500, 812);
                 } else if ((x >= 1134 && x <= 1134 + 45) && (y >= 739 && y <= 739 + 45)) {  // MILITARY
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -744,6 +749,7 @@ class SceneManager {
                     ctx.fillText("Military structures for attacking and units training.", 500, 812);
                 } else if ((x >= 1184 && x <= 1184 + 45) && (y >= 739 && y <= 739 + 45)) { // DEFENSE
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -759,29 +765,32 @@ class SceneManager {
                 }
             } else if (this.display == 1) {
                 // Wood House icon
-                ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                 if (this.game.requiredResources["WoodHouse"].enoughResource) {
                     //ctx.drawImage(this.buildingsImg, 96, 395, 32, 39, 1042, 744, 35, 35);
+                    ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 192, 128, 32, 32, 1042, 744, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 96, 395, 32, 39, 1042, 744, 35, 35);
                 }
                 // Stone House icon
-                ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                 if (this.game.requiredResources["StoneHouse"].enoughResource) {
                     //ctx.drawImage(this.buildingsImg, 56, 387, 32, 47, 1092, 744, 35, 35);
+                    ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 224, 128, 32, 32, 1092, 744, 35, 35);
 
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 56, 387, 32, 47, 1092, 744, 35, 35);
                 }
                 // Apartment Complex icon
-                ctx.drawImage(this.emptyIcon, 1134, 739, 45, 95);
                 //ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
                 if (this.game.requiredResources["ApartmentComplex"].enoughResource) {
                     // ctx.drawImage(this.buildingsImg, 0, 393, 48, 41, 1139, 744, 35, 35);
+                    ctx.drawImage(this.emptyIcon, 1134, 739, 45, 95);
                     ctx.drawImage(this.buildingsImg, 160, 96, 32, 64, 1139, 744, 35, 80);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1134, 739, 45, 95);
                     ctx.drawImage(this.buildingsGreyImg, 160, 96, 32, 64, 1139, 744, 35, 80);
                     //ctx.drawImage(this.buildingsGreyImg, 0, 393, 48, 41, 1139, 744, 35, 35);
                 }
@@ -798,31 +807,35 @@ class SceneManager {
                 }
             } else if (this.display == 2) {
                 // fishermanCottage icon
-                ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                 if (this.game.requiredResources["FishermansCottage"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 32, 4 * 32, 32, 32, 1042, 744, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 32, 4 * 32, 32, 32, 1042, 744, 35, 35);
                 }
                 // farm icon
-                ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                 if (this.game.requiredResources["Farm"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 64, 4 * 32, 32, 32, 1092, 744, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 64, 4 * 32, 32, 32, 1092, 744, 35, 35);
                 }
                 // quarry icon
-                ctx.drawImage(this.emptyIcon, 1134, 739, 45, 95);
                 if (this.game.requiredResources["Quarry"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1134, 739, 45, 95);
                     ctx.drawImage(this.buildingsImg, 0, 3 * 32, 32, 64, 1139, 744, 35, 80);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1134, 739, 45, 95);
                     ctx.drawImage(this.buildingsGreyImg, 0, 3 * 32, 32, 64, 1139, 744, 35, 80);
                 }
                 // sawmill icon
-                ctx.drawImage(this.emptyIcon, 1184, 739, 45, 95);
                 if (this.game.requiredResources["Sawmill"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1184, 739, 45, 95);
                     ctx.drawImage(this.buildingsImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 80);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1184, 739, 45, 95);
                     ctx.drawImage(this.buildingsGreyImg, 3 * 32, 3 * 32, 32, 64, 1189, 744, 35, 80);
                 }
 
@@ -842,45 +855,51 @@ class SceneManager {
                 }
             } else if (this.display == 3) {
                 // soldier icon
-                ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                 if (this.game.requiredResources["Soldier"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.soldierIcon, 1061, 16, 60, 65, 1046, 744, 28, 33);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.soldierGreyImg, 1061, 16, 60, 65, 1046, 744, 28, 33);
                 }
                 // ranger icon
-                ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                 if (this.game.requiredResources["Ranger"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.rangerIcon, 22, 1043, 73, 69, 1096, 743, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.rangerGreyImg, 22, 1043, 73, 69, 1096, 743, 35, 35);
                 }
                 // sniper icon
-                ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
                 if (this.game.requiredResources["Sniper"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
                     ctx.drawImage(this.sniperIcon, 717, 14, 64, 82, 1145, 742, 28, 40);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1134, 739, 45, 45);
                     ctx.drawImage(this.sniperGreyImg, 717, 14, 64, 82, 1145, 742, 28, 40);
                 }
                 // titan icon
-                ctx.drawImage(this.emptyIcon, 1184, 739, 45, 45);
                 if (this.game.requiredResources["Titan"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1184, 739, 45, 45);
                     ctx.drawImage(this.titanIcon, 3651, 795, 96, 87, 1184, 739, 45, 43);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1184, 739, 45, 45);
                     ctx.drawImage(this.titanGreyImg, 3651, 795, 96, 87, 1184, 739, 45, 43);
                 }
                 // ballista icon
-                ctx.drawImage(this.emptyIcon, 1037, 789, 45, 45);
                 if (this.game.requiredResources["Ballista"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1037, 789, 45, 45);
                     ctx.drawImage(this.ballistaIcon, 0, 0, 64, 64, 1042, 794, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1037, 789, 45, 45);
                     ctx.drawImage(this.ballistaGreyImg, 0, 0, 64, 64, 1042, 794, 35, 35);
                 }
                 // machine gun turret icon
-                ctx.drawImage(this.emptyIcon, 1087, 789, 45, 45);
                 if (this.game.requiredResources["MachineGunTurret"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1087, 789, 45, 45);
                     ctx.drawImage(this.machineGunTurretIcon, 0, 0, 110, 125, 1092, 794, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1087, 789, 45, 45);
                     ctx.drawImage(this.machinegunTurretGreyImg, 0, 0, 110, 125, 1092, 794, 35, 35);
                 }
 
@@ -906,45 +925,51 @@ class SceneManager {
                 }
             } else if (this.display == 4) {
                 // wood wall icon
-                ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                 if (this.game.requiredResources["WoodWall"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 128, 32, 32, 32, 1042, 744, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1037, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 128, 64, 32, 32, 1042, 744, 35, 35);
                 }
                 // wood gate horizontal icon
-                ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                 if (this.game.requiredResources["WoodGate"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 0, 32, 32, 32, 1092, 744, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1087, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 0, 32, 32, 32, 1092, 744, 35, 35);
                 }
                 // wood gate vertical icon
-                ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
                 if (this.game.requiredResources["WoodGate"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1134, 739, 45, 45);
                     ctx.drawImage(this.buildingsImg, 64, 32, 32, 32, 1139, 744, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1134, 739, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 64, 32, 32, 32, 1139, 744, 35, 35);
                 }
                 // stone wall icon
-                ctx.drawImage(this.emptyIcon, 1037, 789, 45, 45);
                 if (this.game.requiredResources["StoneWall"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1037, 789, 45, 45);
                     ctx.drawImage(this.buildingsImg, 128, 0, 32, 32, 1042, 794, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1037, 789, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 128, 0, 32, 32, 1042, 794, 35, 35);
                 }
                 // stone gate horizontal icon
-                ctx.drawImage(this.emptyIcon, 1087, 789, 45, 45);
                 if (this.game.requiredResources["StoneGate"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1087, 789, 45, 45);
                     ctx.drawImage(this.buildingsImg, 0, 0, 32, 32, 1092, 794, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1087, 789, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 0, 0, 32, 32, 1092, 794, 35, 35);
                 }
                 // stone gate vertical icon
-                ctx.drawImage(this.emptyIcon, 1134, 789, 45, 45);
                 if (this.game.requiredResources["StoneGate"].enoughResource) {
+                    ctx.drawImage(this.emptyIcon, 1134, 789, 45, 45);
                     ctx.drawImage(this.buildingsImg, 64, 0, 32, 32, 1139, 794, 35, 35);
                 } else {
+                    ctx.drawImage(this.emptyRedIcon, 1134, 789, 45, 45);
                     ctx.drawImage(this.buildingsGreyImg, 96, 0, 32, 32, 1139, 794, 35, 35);
                 }
 
@@ -976,6 +1001,7 @@ class SceneManager {
 
                 if ((x >= 1184 && x <= 1184 + 45) && (y >= 837 && y <= 837 + 45)) {
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -990,6 +1016,7 @@ class SceneManager {
                     ctx.fillText("Cancel the selected building.", 500, 812);
                 } else if ((x >= 1233 && x <= 1233 + 45) && (y >= 837 && y <= 837 + 45)) {
                     ctx.strokeStyle = "grey";
+                    ctx.beginPath();
                     ctx.moveTo(500, 782);
                     ctx.lineTo(985, 782);
                     ctx.stroke();
@@ -1016,8 +1043,12 @@ class SceneManager {
 
             // Food
             ctx.drawImage(this.foodIcon, 1365, 800, 20, 18);
-            this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food, this.game.maxFood);
-            ctx.fillText("+" + this.game.foodRate, 1510, 816);
+            if (this.game.food.toFixed(2) === "1000.00") {
+                this.drawHealthbar(ctx, 1400, 800, 100, 15, 1000, this.game.maxFood);
+            } else {
+                this.drawHealthbar(ctx, 1400, 800, 100, 15, this.game.food.toFixed(2), this.game.maxFood);
+            }
+            ctx.fillText("+" + this.game.foodRate.toFixed(2), 1510, 816);
 
 
             // Wood
@@ -1062,23 +1093,31 @@ class SceneManager {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
 
-
+        let y = 772;
         ctx.strokeStyle = "grey";
-        ctx.moveTo(500, 782);
-        ctx.lineTo(985, 782);
+        ctx.beginPath();
+        ctx.moveTo(500, y);
+        ctx.lineTo(985, y);
         ctx.stroke();
 
+
+        /*ctx.strokeStyle = "grey";
+        ctx.moveTo(500, 772);
+        ctx.lineTo(985, 772);
+        ctx.stroke();
+*/
         ctx.font = "25px SpaceMono-Regular";
         ctx.fillStyle = "lightgreen";
         ctx.textBaseline = "bottom";
-        ctx.fillText(headerText, 500, 782);
+        ctx.fillText(headerText, 500, y);
 
         ctx.font = "15px SpaceMono-Regular";
 
+        y += 25;
         // traverse each resource
         ctx.fillStyle = "orange";
         let resourceStringX = 500;
-        ctx.fillText("Requires: ", resourceStringX, 812);
+        ctx.fillText("Requires: ", resourceStringX, y);
         resourceStringX += 100;
         //console.log(unitType);
         //console.log(this.game.requiredResources);
@@ -1090,51 +1129,55 @@ class SceneManager {
             //console.log("resourceStr: " + resourceStr);
             //console.log("availableResourceAmount: " + availableResourceAmount);
             //console.log("requiredResourceAmount: " + requiredResourceAmount);
-            if (resourceStr === "workers") {
-                if (this.game.workers + requiredResourceAmount > this.game.maxWorkers) { // a required resource
-                    ctx.fillStyle = "#fc8583";
-                } else {
-                    ctx.fillStyle = "lightgreen";
-                }
-            
-            } else {
-                if (requiredResourceAmount > availableResourceAmount) { // a required resource
-                    ctx.fillStyle = "#fc8583";
-                } else {
-                    ctx.fillStyle = "lightgreen";
-                }
-            }
-            ctx.fillText(resourceStrUpperCase + ": " + requiredResourceAmount, resourceStringX, 812);
-            resourceStringX += 100;
 
+            if (requiredResourceAmount != 0) {
+                if (resourceStr === "workers") {
+                    if (this.game.workers + requiredResourceAmount > this.game.maxWorkers) { // a required resource
+                        ctx.fillStyle = "#fc8583";
+                    } else {
+                        ctx.fillStyle = "lightgreen";
+                    }
+                
+                } else {
+                    if (requiredResourceAmount > availableResourceAmount) { // a required resource
+                        ctx.fillStyle = "#fc8583";
+                    } else {
+                        ctx.fillStyle = "lightgreen";
+                    }
+                }
+                ctx.fillText(resourceStrUpperCase + ": " + requiredResourceAmount, resourceStringX, y);
+                resourceStringX += 100;
+            }
         });
         ctx.fillStyle = "orange";
+        
+        y += 20;
         resourceStringX = 500;
-        ctx.fillText("Provides: ", resourceStringX, 832);
+        ctx.fillText("Provides: ", resourceStringX, y);
         ctx.fillStyle = "lightgreen";
         resourceStringX += 100;
         //if (unitType === "WoodHouse" || unitType === "StoneHouse || unitType === "ApartmentComplex") {
         switch(unitType) {
             case "WoodHouse":
-                ctx.fillText("Workers: 1", resourceStringX, 832);
+                ctx.fillText("Workers: 2", resourceStringX, y);
                 break;
             case "StoneHouse":
-                ctx.fillText("Workers: 2", resourceStringX, 832);
+                ctx.fillText("Workers: 4", resourceStringX, y);
                 break;
             case "ApartmentComplex":
-                ctx.fillText("Workers: 5", resourceStringX, 832);
+                ctx.fillText("Workers: 8", resourceStringX, y);
                 break;
             case "FishermansCottage":
-                ctx.fillText("0 to 24 Food", resourceStringX, 832);
+                ctx.fillText("Food", resourceStringX, y);
                 break;
             case "Farm":
-                ctx.fillText("0 to 25 Food", resourceStringX, 832);
+                ctx.fillText("Food", resourceStringX, y);
                 break;
             case "Quarry":
-                ctx.fillText("Stone, Iron", resourceStringX, 832);
+                ctx.fillText("Stone, Iron", resourceStringX, y);
                 break;
             case "Sawmill":
-                ctx.fillText("0 to 28 Wood", resourceStringX, 832);
+                ctx.fillText("Wood", resourceStringX, y);
                 break;
             default:
                 break;
@@ -1149,7 +1192,36 @@ class SceneManager {
         if (unitType === "ApartmentComplex") {
             ctx.fillText("Workers: 5", resourceStringX, 832);
         }*/
-        let descriptionTextY = 852;
+
+        y += 20;
+        ctx.fillStyle = "orange";
+        resourceStringX = 500;
+        ctx.fillText("Stats: ", resourceStringX, y);
+
+        ctx.fillStyle = "lightgreen";
+
+        if (unitType === "Soldier" || unitType === "Ranger" || unitType === "Sniper" || unitType == "Titan") {
+            resourceStringX += 60;
+            ctx.fillText("HP: " + this.game.stats[unitType].health, resourceStringX, y);
+            ctx.fillText("AtkDmg: " + this.game.stats[unitType].attack, resourceStringX + 70, y);
+            ctx.fillText("AtkSpd: " + this.game.stats[unitType].attackSpeedInSec, resourceStringX + 170, y);
+            ctx.fillText("Sight: " + this.game.stats[unitType].visualRadius, resourceStringX + 275, y);
+            ctx.fillText("Speed: " + this.game.stats[unitType].maxSpeed, resourceStringX + 375, y);
+
+        } else if(unitType === "Ballista" || unitType === "MachineGunTurret") {
+            resourceStringX += 60;
+            ctx.fillText("HP: " + this.game.stats[unitType].health, resourceStringX, y);
+            ctx.fillText("AtkDmg: " + this.game.stats[unitType].attack, resourceStringX + 70, y);
+            ctx.fillText("AtkSpd: " + this.game.stats[unitType].attackSpeedInSec, resourceStringX + 170, y);
+            ctx.fillText("Sight: " + this.game.stats[unitType].visualRadius, resourceStringX + 275, y);
+        } else { // resource building, wall, or house
+            resourceStringX += 100;
+            ctx.fillText("HP: " + this.game.stats[unitType].health, resourceStringX, y);
+        }
+
+        
+        
+        let descriptionTextY = y + 20;
         ctx.font = "15px SpaceMono-Regular";
         ctx.fillStyle = "white";
 
@@ -1197,7 +1269,8 @@ class SceneManager {
         }
         ctx.font = "10px SpaceMono-Regular";
         ctx.fillStyle = "white";
-        ctx.fillText(val + "/" + maxVal, x + 30, y + 12);
+        
+        ctx.fillText(val + "/" + maxVal, x + 28, y + 12);
 
 
         ctx.restore();

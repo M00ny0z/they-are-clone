@@ -22,6 +22,7 @@ class CreditsMenu {
         this.seoungdeokImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/devs/npc.png");
         this.mannyImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/devs/npc.png");
         this.garyImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/devs/npc.png");
+        //this.garyImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/devs/garyKono.png");
         this.gregImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/devs/gregHablutzel.png");
         this.gregsDogImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/gregsDog.jpg");
         this.devBackgroundImg = ASSET_MANAGER.getAsset("./sprites/introScreen/credits/devBackground.png");

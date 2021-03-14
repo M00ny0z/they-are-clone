@@ -20,15 +20,15 @@ class InfectedChubby {
 
         // Calculating the velocity
         var dist = distance(this, this.target);
-        this.maxSpeed = 15; // pixels per second
+        this.maxSpeed = 30; // pixels per second
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed };
 
         this.state = 0; // 0 walking, 1 attacking, 2 dead, 3 idel
         this.facing = 0; // 0 E, 1 NE, 2 N, 3 NW, 4 W, 5 SW, 6 S, 7 SE
         this.elapsedTime = 0;
 
-        this.hitpoints = 300;
-
+        this.hitpoints = MAX_CHUBBY_HEALTH;
+        this.damage = 25;
         //Performance Measuring Variables
         //2d array where first dimension is each function, second dimension: 0 = function name, 1 = start time
         if(PARAMS.PERFORMANCE_MEASURE) {
@@ -186,10 +186,10 @@ class InfectedChubby {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
 
-        this.elapsedTime += this.game.clockTick;
         var dist = Math.max(distance(this, this.target), 1);
         this.velocity = { x: (this.target.x - this.x) / dist * this.maxSpeed, y: (this.target.y - this.y) / dist * this.maxSpeed};
-        //console.log(this.velocity);
+        this.state = 0;
+
         if (this.hitpoints <= 0) this.removeFromWorld = true;
 
         if (this.target.removeFromWorld) {
@@ -197,6 +197,7 @@ class InfectedChubby {
             this.target = this.path[this.targetID];
         }
 
+        
         // If the entity arrived at the target, change to the next target.
         if (dist < 5) {
             // Check if enetity reached the last target, and there is no more target. If so, then state = idle.
@@ -261,12 +262,11 @@ class InfectedChubby {
         }
 
         if (closestEnt && collide(this, closestEnt)) {
-            if (this.state === 0) {
-                this.state = 1;
-                this.elapsedTime = 0;
-            } else if (this.elapsedTime > 2.0) {
-                closestEnt.hitpoints -= 40;
-                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), 40));
+            this.state = 1;
+            this.elapsedTime += this.game.clockTick;
+            if (this.elapsedTime > 2.0) {
+                closestEnt.hitpoints -= this.damage;
+                this.game.addEntity(new Score(this.game, (closestEnt.x), (closestEnt.y), this.damage));
                 this.elapsedTime = 0;
             }
         } 
@@ -304,8 +304,13 @@ class InfectedChubby {
             this.performanceMeasuresStruct[nameOfThisFunction]["startTime"] = new Date();
         }
 
+
         var xOffset = 35;
         var yOffset = 35;
+        if(this.state == 1) {
+            xOffset = 60;
+            yOffset = 60;
+        }
 
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - xOffset - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), this.y - yOffset - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), 0.5);
 

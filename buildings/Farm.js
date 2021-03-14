@@ -11,7 +11,7 @@ class Farm {
         this.priority = BUILDINGPRIORITY;
         this.followMouse = true;
         this.placeable = false;
-        this.hitpoints = 150;
+        this.hitpoints = this.game.stats["Farm"].health;
         this.foodRate = 0;
         this.radius = 30;
 
@@ -91,7 +91,7 @@ class Farm {
         ctx.fillRect(posX + 1, posY + 1, 68, 6);
 
         ctx.fillStyle = this.hitpoints >= 50 ? 'green' : 'red';
-        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / MAX_UNIT_HEALTH), 3);
+        ctx.fillRect(posX + 2, posY + 2, 66 * (this.hitpoints / this.game.stats["Farm"].health), 3);
         
         ctx.restore();
 
@@ -134,7 +134,8 @@ class Farm {
         for (var i = mapStartY; i <= mapEndY; i++) {
             for (var j = mapStartX; j <= mapEndX; j++) {
                 if (this.game.mainMap.map[i][j].dirt) {
-                    this.foodRate += 1;
+                    this.foodRate += 0.33;
+                    //this.foodRate += 1;
                 }
             }
         }
@@ -181,9 +182,14 @@ class Farm {
             this.removeFromWorld = true;
             this.game.workers -= this.game.requiredResources["Farm"].workers;
             this.game.foodRate -= this.foodRate;
+            let gridY = convertPixelCordToGridCord(this.y)
+            let gridX = convertPixelCordToGridCord(this.x);
+            this.game.collisionMap[gridY][gridX] = 1; // set farm position to be not a collision
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
-                    this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
+                    //this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
+                    //this.game.collisionMap[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2] = 1;
+                    this.game.mainMap.map[(this.y - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + i - 2][(this.x - PARAMS.BLOCKWIDTH / 2) / PARAMS.BLOCKWIDTH + j - 2].farm = false
                 }
             }
         }
@@ -192,11 +198,19 @@ class Farm {
             var x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             var y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
             var stop = false;
+            //console.log()
             for (var i = 0; i < 5; i++) {
                 for (var j = 0; j < 5; j++) {
                     let yGrid = sanitizeCord(y + i - 2);
                     let xGrid = sanitizeCord(x + j - 2);
-                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) { 
+                    /*if (this.game.mainMap.map[yGrid][xGrid].farm === false) {
+
+                    } else {
+                        console.log("false for: (" + yGrid + ", (" + xGrid);
+                    }*/
+                    if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].farm === false && this.game.mainMap.map[yGrid][xGrid].dirt === true
+                        && this.game.mainMap.map[yGrid][xGrid].gate === false) { 
+                    //if (this.game.collisionMap[yGrid][xGrid] === 1 && this.game.mainMap.map[yGrid][xGrid].dirt === true) {
                         this.placeable = true;
                     } else {
                         stop = true;
@@ -214,10 +228,12 @@ class Farm {
         if (this.game.click && this.followMouse) {
             const x = sanitizeCord(this.game.mouse.x + this.game.camera.cameraX);
             const y = sanitizeCord(this.game.mouse.y + this.game.camera.cameraY);
+            this.game.collisionMap[y][x] = 0 // set collision for farm building
             if (this.game.click.y < 15 && this.placeable) {
                 for (var i = 0; i < 5; i++) {
                     for (var j = 0; j < 5; j++) {
-                        this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] = 0;
+                        //this.game.collisionMap[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)] = 0;
+                        this.game.mainMap.map[sanitizeCord(y + i - 2)][sanitizeCord(x + j - 2)].farm = true;
                     }
                 }
                 this.followMouse = false;
@@ -243,9 +259,11 @@ class Farm {
             if (doubleX * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2 === this.x &&
                 this.y === doubleY * PARAMS.BLOCKWIDTH + PARAMS.BLOCKWIDTH / 2) 
             {
+                this.game.collisionMap[sanitizeCord(doubleY)][sanitizeCord(doubleX)] = 1; // set farm position to be not a collision
                 for (let i = 0; i < 5; i++) {
                     for (let j = 0; j < 5; j++) {
-                        this.game.collisionMap[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)] = 1;
+                        //this.game.collisionMap[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)] = 1;
+                        this.game.mainMap.map[sanitizeCord(doubleY + i - 2)][sanitizeCord(doubleX + j - 2)].farm = false;
                     }
                 }
 
@@ -297,7 +315,7 @@ class Farm {
             ctx.fillStyle = "lightgreen";
             ctx.fillText("Surround the dirt tiles", (mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 1.7) * PARAMS.BLOCKWIDTH);
             ctx.fillText("to gain food", (mouse.x - 2) * PARAMS.BLOCKWIDTH, (mouse.y - 1.4) * PARAMS.BLOCKWIDTH);
-            ctx.fillText(this.foodRate + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y + 3) * PARAMS.BLOCKWIDTH);
+            ctx.fillText(this.foodRate.toFixed(2) + " food", (mouse.x) * PARAMS.BLOCKWIDTH, (mouse.y + 3) * PARAMS.BLOCKWIDTH);
 
         }
 
@@ -326,8 +344,8 @@ class Farm {
             }
         }
 
-        if (this.hitpoints < MAX_FARM_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_FARM_HEALTH);
+        if (this.hitpoints < this.game.stats["Farm"].health) {
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, this.game.stats["Farm"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {
