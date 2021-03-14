@@ -68,7 +68,7 @@ class CommandCenter {
       ctx.drawImage(this.spritesheet, startX, startY, width, height, (this.x - PARAMS.BLOCKWIDTH / 2 - PARAMS.BLOCKWIDTH) - (this.game.camera.cameraX * PARAMS.BLOCKWIDTH), (this.y - PARAMS.BLOCKWIDTH / 2 - PARAMS.BLOCKWIDTH) - (this.game.camera.cameraY * PARAMS.BLOCKWIDTH), PARAMS.BLOCKWIDTH * 3, PARAMS.BLOCKWIDTH * 3);
 
       if (this.hitpoints < MAX_COMMANDCENTER_HEALTH) {
-         drawHealthbar(ctx, this.hitpoints, this.x, this.y - 50, this.game, MAX_COMMANDCENTER_HEALTH);
+         drawHealthbar(ctx, this.hitpoints, this.x, this.y - 70, this.game, MAX_COMMANDCENTER_HEALTH);
       }
 
 

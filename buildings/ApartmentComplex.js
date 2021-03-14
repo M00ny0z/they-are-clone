@@ -185,7 +185,7 @@ class ApartmentComplex {
         }
 
         if (this.hitpoints < this.game.stats["ApartmentComplex"].health) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["ApartmentComplex"].health);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, this.game.stats["ApartmentComplex"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

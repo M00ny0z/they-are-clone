@@ -265,7 +265,7 @@ class Ballista {
         }
 
         if (this.hitpoints < MAX_BALLISTA_HEALTH) {
-            drawHealthbar(ctx, this.hitpoints, this.x + 10, this.y - 15, this.game, MAX_BALLISTA_HEALTH);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, MAX_BALLISTA_HEALTH);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

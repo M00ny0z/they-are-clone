@@ -144,7 +144,7 @@ class StoneGateHorizontal {
         }
 
         if (this.hitpoints < this.game.stats["StoneGate"].health) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["StoneGate"].health);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 15, this.game, this.game.stats["StoneGate"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

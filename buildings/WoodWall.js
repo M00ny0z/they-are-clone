@@ -126,7 +126,7 @@ class WoodWall {
         }
 
         if (this.hitpoints < this.game.stats["WoodWall"].health) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["WoodWall"].health);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, this.game.stats["WoodWall"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

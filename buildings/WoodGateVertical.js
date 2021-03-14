@@ -149,7 +149,7 @@ class WoodGateVertical {
         }
 
         if (this.hitpoints < this.game.stats["WoodGate"].health) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["WoodGate"].health);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 15, this.game, this.game.stats["WoodGate"].health);
         }
 
         if (PARAMS.DEBUG && !this.followMouse) {

@@ -137,7 +137,7 @@ class StoneHouse {
         }
 
         if (this.hitpoints < this.game.stats["StoneHouse"].health) {
-            drawHealthbar(ctx, this.hitpoints, this.x, this.y, this.game, this.game.stats["StoneHouse"].health);
+            drawHealthbar(ctx, this.hitpoints, this.x, this.y - 25, this.game, this.game.stats["StoneHouse"].health);
         }
 
         
